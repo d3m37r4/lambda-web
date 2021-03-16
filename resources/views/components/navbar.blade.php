@@ -17,13 +17,16 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 @guest
                     @if (Route::has('login'))
-                        <a class="btn btn-sm btn-outline-light me-md-2" href="{{ route('login') }}">Войти</a>
+                        <a class="btn btn-sm btn-outline-light me-md-2" href="{{ route('login') }}">
+                            {{ ('Войти') }}
+                        </a>
                     @endif
                     @if (Route::has('register'))
-                        <a class="btn btn-sm btn-primary" href="{{ route('register') }}">Зарегистрироваться</a>
+                        <a class="btn btn-sm btn-primary" href="{{ route('register') }}">
+                            {{ ('Зарегистрироваться') }}
+                        </a>
                     @endif
                 @else
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
