@@ -1,7 +1,7 @@
 <!-- Fixed navbar -->
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
     <div class="container-xxl">
-        <a class="navbar-brand" href="#">{{ config('app.name') }}</a>
+        <a class="navbar-brand" href="/">{{ config('app.name') }}</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,7 +17,7 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 @guest
                     @if (Route::has('login'))
-                        <a class="btn btn-sm btn-outline-light" href="{{ route('login') }}">Войти</a>
+                        <a class="btn btn-sm btn-outline-light me-md-2" href="{{ route('login') }}">Войти</a>
                     @endif
                     @if (Route::has('register'))
                         <a class="btn btn-sm btn-primary" href="{{ route('register') }}">Зарегистрироваться</a>
