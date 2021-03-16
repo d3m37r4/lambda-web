@@ -27,36 +27,27 @@
                         </a>
                     @endif
                 @else
+                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ Auth::user()->name }}
                             </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <h6 class="dropdown-header">Dropdown header</h6>
-{{--                                <span class="dropdown-item-text badge badge-info">--}}
-                                <span class="dropdown-item-text">
-                                    {{ Auth::user()->getRoleNames()->first() }}
-                                </span>
-                                <div class="dropdown-divider"></div>
-{{--                                            @can('enter_control_panel')--}}
-{{--                                                <a class="dropdown-item" href="{{ route('admin.index') }}">--}}
-{{--                                                    {{ __('main.control_panel') }}--}}
-{{--                                                </a>--}}
-{{--                                            @endcan--}}
-{{--                                            <a class="dropdown-item" href="{{ route('admin.index') }}">{{ ('Профиль пользователя') }}</a>--}}
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
-                                    {{ ('Выход') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
+                                        {{ ('Выход') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 @endguest
