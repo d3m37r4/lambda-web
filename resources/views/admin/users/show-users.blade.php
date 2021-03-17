@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="table-responsive-xxl">
+        <div class="table-responsive-lg">
             <table class="table">
                 <thead>
                     <tr>
@@ -41,9 +41,11 @@
 {{--                            <td>{{ $loop->iteration }}</td>--}}
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
                             <td>
-                                <span class="badge badge-info">
+                                <a href="mailto:{{ $user->email }}" title="email {{ $user->email }}">{{ $user->email }}</a>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary">
                                     {{ $user->getRoleNames()->first() }}
                                 </span>
                             </td>
@@ -71,7 +73,7 @@
     <div class="card-footer">
         <a href="#" class="btn btn-success btn-sm">
             <i class="fas fa-plus"></i>
-            <span class="ml-1">Создать нового пользователя</span>
+            <span class="ml-1">text</span>
         </a>
     </div>
 </div>
