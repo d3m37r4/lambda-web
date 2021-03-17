@@ -10,7 +10,7 @@
 {{--    </nav>--}}
 
     <div class="row justify-content-center">
-        <div class="col-4">
+        <div class="col-sm-4 mb-3">
             <div class="card">
                 <div class="card-header">{{ ('Список разделов панели управления') }}</div>
                 <div class="list-group list-group-flush">
@@ -32,8 +32,8 @@
             </div>
         </div>
 {{--        @include('admin.components.sidebar')--}}
-        <div class="col-8">
-			@yield('admin_content')
+        <div class="col-sm-8">
+			@yield('admin.content')
         </div>
     </div>
 @endsection
