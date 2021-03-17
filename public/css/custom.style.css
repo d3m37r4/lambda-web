@@ -1,0 +1,40 @@
+body {
+	padding-top: 100px;
+}
+
+
+/*body {
+    background-color: #EBEFF2 !important;
+}
+
+.navbar {
+    background-color: #172D40 !important;
+}
+*/
+/*.footer {
+	height: 20px;
+    background-color: #172D40 !important;
+}*/
+
+
+
+/* Color Theme Swatches in Hex */
+/*.color-theme_AdobeStock_87994331_Preview-1-hex { color: #172D40; }*/
+/*.color-theme_AdobeStock_87994331_Preview-2-hex { color: #365673; }*/
+/*.color-theme_AdobeStock_87994331_Preview-3-hex { color: #6D8BA6; }*/
+/*.color-theme_AdobeStock_87994331_Preview-4-hex { color: #EBEFF2; }*/
+/*.color-theme_AdobeStock_87994331_Preview-5-hex { color: #A9C6D9; }*/
+
+/* Color Theme Swatches in RGBA */
+/*.color-theme_AdobeStock_87994331_Preview-1-rgba { color: rgba(23, 45, 64, 1); }*/
+/*.color-theme_AdobeStock_87994331_Preview-2-rgba { color: rgba(54, 86, 115, 1); }*/
+/*.color-theme_AdobeStock_87994331_Preview-3-rgba { color: rgba(109, 139, 166, 1); }*/
+/*.color-theme_AdobeStock_87994331_Preview-4-rgba { color: rgba(235, 239, 242, 1); }*/
+/*.color-theme_AdobeStock_87994331_Preview-5-rgba { color: rgba(169, 198, 217, 1); }*/
+
+/* Color Theme Swatches in HSLA */
+/*.color-theme_AdobeStock_87994331_Preview-1-hsla { color: hsla(207, 47, 17, 1); }*/
+/*.color-theme_AdobeStock_87994331_Preview-2-hsla { color: hsla(208, 36, 33, 1); }*/
+/*.color-theme_AdobeStock_87994331_Preview-3-hsla { color: hsla(208, 24, 53, 1); }*/
+/*.color-theme_AdobeStock_87994331_Preview-4-hsla { color: hsla(205, 21, 93, 1); }*/
+/*.color-theme_AdobeStock_87994331_Preview-5-hsla { color: hsla(203, 38, 75, 1); }*/
