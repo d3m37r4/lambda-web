@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main_layout')
 
 @section('content')
     <div class="card justify-content-center">
