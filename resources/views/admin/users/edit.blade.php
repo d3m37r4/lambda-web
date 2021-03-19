@@ -1,6 +1,6 @@
-@extends('admin.layouts.main')
+@extends('layouts.admin_layout')
 
-@section('admin_content')
+@section('admin.content')
     <div class="card">
         <div class="card-header">{{ ('Редактирование пользователя ') .$user->name }}</div>
         <div class="card-body">
@@ -12,7 +12,7 @@
                         <label for="name">{{ ('Имя пользователя') }}</label>
                     </div>
                     <div class="col-sm">
-                        <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" 
+                        <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror"
                                value="{{ old('name', isset($user) ? $user->name : '') }}" required autocomplete="name">
                         @error('name')
                             <span class="invalid-feedback" role="alert">

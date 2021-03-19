@@ -1,6 +1,6 @@
-@extends('admin.layouts.main')
+@extends('layouts.admin_layout')
 
-@section('admin_content')
+@section('admin.content')
     <div class="card">
         <div class="card-header">{{ ('Создание нового пользователя') }}</div>
         <div class="card-body">
