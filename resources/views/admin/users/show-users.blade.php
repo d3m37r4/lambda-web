@@ -1,4 +1,4 @@
-@extends('layouts.admin_layout')
+@extends('layouts.admin-layout')
 
 @section('admin.content')
 {{--    @if (session('status'))--}}

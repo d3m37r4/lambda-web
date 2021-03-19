@@ -1,4 +1,4 @@
-@extends('layouts.main_layout')
+@extends('layouts.main-layout')
 
 @section('content')
     {{--    @include('admin.components.breadcrubms')--}}
