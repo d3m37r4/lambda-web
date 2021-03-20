@@ -27,10 +27,9 @@ class UsersManagementController extends Controller {
      *
      * @return Application|Factory|View
      */
-    public function showUsers() {
-        $users = User::all();
+    public function index() {
+        $users = User::paginate(env('USER_LIST_PAGINATION_SIZE'));
         $roles = Role::all();
-//        $roles = \Auth::user()->getRoleNames();
 
         return view('admin.users.show-users', compact('users', 'roles'));
     }

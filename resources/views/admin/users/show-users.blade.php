@@ -71,10 +71,7 @@
         </div>
     </div>
     <div class="card-footer">
-        <a href="#" class="btn btn-success btn-sm">
-            <i class="fas fa-plus"></i>
-            <span class="ml-1">text</span>
-        </a>
+        {{ $users->links('components.pagination') }}
     </div>
 </div>
 

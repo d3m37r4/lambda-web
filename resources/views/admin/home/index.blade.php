@@ -13,7 +13,7 @@
                     </div>
                 @endif
 
-                {{ __('You are logged in!') }}
+                {{ ('Зарегистрировано пользователей: ') .$usersCount }}
             </div>
         </div>
     </div>
