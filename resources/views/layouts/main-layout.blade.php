@@ -22,7 +22,7 @@
 <body class="d-flex flex-column min-vh-100">
 <!-- Header content -->
 <header>
-    @include('components.navbar')
+    @include('layouts.navbar')
 </header>
 
 <!-- Main content -->
@@ -34,7 +34,7 @@
 
 <!-- Footer content -->
 <footer class="footer mt-auto py-3 bg-light">
-    @include('components.footer')
+    @include('layouts.footer')
 </footer>
 
 <!-- Scripts -->

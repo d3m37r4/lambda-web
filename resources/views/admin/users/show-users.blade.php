@@ -71,7 +71,7 @@
         </div>
     </div>
     <div class="card-footer">
-        {{ $users->links('components.pagination') }}
+        {{ $users->links() }}
     </div>
 </div>
 
