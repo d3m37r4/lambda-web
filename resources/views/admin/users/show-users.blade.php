@@ -1,5 +1,9 @@
 @extends('layouts.admin-layout')
 
+@section('admin.title')
+    {{ 'Управление пользователями сайта' }}
+@endsection
+
 @section('admin.content')
 {{--    @if (session('status'))--}}
 {{--        <div class="alert alert-info alert-dismissible fade show" role="alert">--}}
