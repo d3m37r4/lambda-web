@@ -42,7 +42,7 @@
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>
-                                <a href="mailto:{{ $user->email }}" title="email {{ $user->email }}">{{ $user->email }}</a>
+                                <a class="link-primary" title="email {{ $user->email }}" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                             </td>
                             <td>
                                 <span class="badge bg-primary">
