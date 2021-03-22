@@ -1,10 +1,10 @@
 @extends('layouts.admin-layout')
 
 @section('admin.content')
-<div class="row justify-content-center">
-    <div class="col-md-8">
         <div class="card">
-            <div class="card-header">{{ __('Dashboard') }}</div>
+            <div class="card-header">
+                {{ ('Панель управления') }}
+            </div>
 
             <div class="card-body">
                 @if (session('status'))
@@ -16,6 +16,4 @@
                 {{ ('Зарегистрировано пользователей: ') .$usersCount }}
             </div>
         </div>
-    </div>
-</div>
 @endsection

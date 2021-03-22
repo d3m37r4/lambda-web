@@ -1,25 +1,25 @@
-@extends('layouts.admin-layout')
-
-@section('admin_content')
-    <div class="col-4">
-        <div class="card">
-            <div class="card-header">{{ ('Список разделов панели управления') }}</div>
-            <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action">
-                    {{ ('Главная страница панели управления') }}
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    {{ ('Управление ролями пользователей') }}
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    {{ ('Управление пользователями') }}
-                </a>
-                {{--<a href="/" class="list-group-item list-group-item-action">
-                    {{ ('Управление игровыми серверами') }}
-                </a>--}}
-                <!--<a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-                <a href="#" class="list-group-item list-group-item-action active">Cras justo odio</a>-->
-            </div>
-        </div>
-    </div>
-@endsection
+<div class="list-group">
+    <a class="list-group-item list-group-item-action {{ request()->routeIs('admin.index') ? 'active' : '' }}"
+       href="{{ route('admin.index') }}">
+        <i class="bi bi-tools"></i>
+        {{ ('Панель управления') }}
+    </a>
+    <a class="list-group-item list-group-item-action {{ request()->routeIs('admin.users.index') ? 'active' : '' }}"
+       href="{{ route('admin.users.index') }}">
+        <i class="bi bi-people-fill"></i>
+        {{ ('Управление пользователями') }}
+    </a>
+    <a class="list-group-item list-group-item-action"
+       href="#">
+        <i class="bi bi-shield-lock-fill"></i>
+        {{ ('Управление ролями') }}
+    </a>
+    <a class="list-group-item list-group-item-action"
+       href="#">
+        <i class="bi bi-server"></i>
+        {{ ('Управление серверами') }}
+    </a>
+{{--        <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">--}}
+{{--            A disabled link item--}}
+{{--        </a>--}}
+</div>

@@ -1,84 +1,90 @@
 @extends('layouts.admin-layout')
 
-@section('admin.title')
+@section('title')
     {{ 'Управление пользователями сайта' }}
 @endsection
 
 @section('admin.content')
-{{--    @if (session('status'))--}}
-{{--        <div class="alert alert-info alert-dismissible fade show" role="alert">--}}
-{{--            {{ session('status') }}--}}
-{{--            <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
-{{--                <span aria-hidden="true">&times;</span>--}}
-{{--            </button>--}}
-{{--        </div>--}}
-{{--    @endif--}}
-<div class="card">
-    <div class="card-header">
-        <div class="d-flex">
-            <div class="w-100">
-                {{ ('Управление пользователями сайта') }}
+    {{--    @if (session('status'))--}}
+    {{--        <div class="alert alert-info alert-dismissible fade show" role="alert">--}}
+    {{--            {{ session('status') }}--}}
+    {{--            <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
+    {{--                <span aria-hidden="true">&times;</span>--}}
+    {{--            </button>--}}
+    {{--        </div>--}}
+    {{--    @endif--}}
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between pb-3">
+                <div>
+                    <h5 class="card-title">
+                        {{ ('Пользователи') }}
+                    </h5>
+                </div>
+                <div class="d-grid gap-2 d-md-block">
+                    <a class="btn btn-success btn-sm" href="#" title="{{ ('Создать нового пользователя') }}">
+                        <i class="bi bi-person-plus-fill"></i>
+                        {{ ('Новый пользователь') }}
+                    </a>
+                </div>
             </div>
-            <div class="flex-shrink-1">
-                <a class="btn btn-success btn-sm" href="#" title="Создать нового пользователя">
-                    <i class="bi bi-person-plus"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive-lg">
-            <table class="table">
-                <thead>
-                    <tr>
-{{--                        <th class="p-2">{{ ('#') }}</th>--}}
-                        <th>{{ ('ID') }}</th>
-                        <th>{{ ('Имя пользователя') }}</th>
-                        <th>{{ ('E-mail') }}</th>
-                        <th>{{ ('Группа') }}</th>
-                        <th>{{ ('Действие') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $key => $user)
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-{{--                            <td>{{ $loop->iteration }}</td>--}}
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>
-                                <a class="link-primary" title="email {{ $user->email }}" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
-                            </td>
-                            <td>
-                                <span class="badge bg-primary">
-                                    {{ $user->getRoleNames()->first() }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="#" class="btn btn-primary btn-sm">
-                                    <i class="far fa-edit"></i>
-                                </a>
-                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary btn-sm">
-                                    <i class="far fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" onsubmit="return confirm('{{ ('Вы действительно хотите удалить пользователя ' .$user->name. '?') }}');" style="display: inline-block;">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
+                            <th class="col-2">{{ ('#') }}</th>
+                            <th class="col-3">{{ ('Имя') }}</th>
+                            <th class="col-3">{{ ('E-mail') }}</th>
+                            <th class="col-2">{{ ('Роль') }}</th>
+                            <th class="col-2">{{ ('Действия') }}</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach($users as $key => $user)
+                            <tr>
+                                <td>
+                                    {{ $loop->iteration }}
+                                </td>
+                                <td>
+                                    {{ $user->name }}
+                                </td>
+                                <td>
+                                    <a class="link-primary" title="email {{ $user->email }}"
+                                       href="mailto:{{ $user->email }}">
+                                        {{ $user->email }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary">
+                                        {{ $user->getRoleNames()->first() }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm"
+                                       href="#">
+                                        <i class="bi bi-view-stacked"></i>
+                                    </a>
+                                    <a class="btn btn-warning btn-sm"
+                                       href="{{ route('admin.users.edit', $user->id) }}">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <form action="{{ route('admin.users.delete', $user->id) }}" method="POST"
+                                          onsubmit="return confirm('{{ ('Вы действительно хотите удалить пользователя ' .$user->name. '?') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <div class="card-footer">
-        {{ $users->links() }}
-    </div>
-</div>
-
+    {{ $users->links() }}
 {{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--}}
 {{--    <script>--}}
 {{--    $(".alert").delay(2000).slideUp(500, function() {--}}

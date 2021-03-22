@@ -1,8 +1,9 @@
 <!-- Fixed navbar -->
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
     <div class="container-xxl">
-        <a class="navbar-brand" href="/">{{ config('app.name') }}</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name') }}</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -30,16 +31,46 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <div class="container">
+                                        <span class="badge bg-primary">
+                                            {{ Auth::user()->getRoleNames()->first() }}
+                                        </span>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                @can('enter_control_panel')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('admin.index') }}">
+                                            <i class="bi bi-tools"></i>
+                                            {{ ('Панель управления') }}
+                                        </a>
+                                    </li>
+                                @endcan
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bi bi-person-fill"></i>
+                                        {{ ('Профиль') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bi bi-controller"></i>
+                                        {{ ('Игровые аккаунты') }}
+                                    </a>
+                                </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ ('Выход') }}
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                       document.getElementById('logout-form').submit();">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        {{ ('Выйти') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
