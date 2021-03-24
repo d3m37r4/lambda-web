@@ -1,7 +1,7 @@
 @extends('layouts.admin-layout')
 
 @section('title')
-    {{ 'Управление пользователями сайта' }}
+    {{ 'Управление пользователями' }}
 @endsection
 
 @section('admin.content')
@@ -14,20 +14,49 @@
     {{--        </div>--}}
     {{--    @endif--}}
     <div class="card mb-3">
-        <div class="card-body">
-            <div class="d-flex justify-content-between pb-3">
+        <div class="card-header bg-white">
+            <div class="d-flex justify-content-between">
                 <div>
                     <h5 class="card-title">
-                        {{ ('Пользователи') }}
+                        <i class="bi bi-people-fill"></i>
+                        {{ ('Управление пользователями') }}
                     </h5>
                 </div>
                 <div class="d-grid gap-2 d-md-block">
-                    <a class="btn btn-success btn-sm" href="#" title="{{ ('Создать нового пользователя') }}">
+                    <a class="btn btn-success btn-sm" title="{{ ('Создать нового пользователя') }}"
+                        href="{{ route('admin.users.create') }}">
                         <i class="bi bi-person-plus-fill"></i>
                         {{ ('Новый пользователь') }}
                     </a>
                 </div>
             </div>
+        </div>
+        <div class="card-body">
+{{--            <div class="d-flex justify-content-between pb-3">--}}
+{{--                <div>--}}
+{{--                    <h5 class="card-title">--}}
+{{--                        <i class="bi bi-people-fill"></i>--}}
+{{--                        {{ ('Пользователи') }}--}}
+{{--                    </h5>--}}
+{{--                </div>--}}
+{{--                <div class="d-grid gap-2 d-md-block">--}}
+{{--                    <a class="btn btn-success btn-sm" href="#" title="{{ ('Создать нового пользователя') }}">--}}
+{{--                        <i class="bi bi-person-plus-fill"></i>--}}
+{{--                        {{ ('Новый пользователь') }}--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="border-bottom"></div>--}}
+{{--            <nav class="navbar">--}}
+{{--                <div class="container-fluid">--}}
+{{--                    <form class="d-flex">--}}
+{{--                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">--}}
+{{--                        <button class="btn btn-outline-success" type="submit">Search</button>--}}
+{{--                    </form>--}}
+{{--                </div>--}}
+{{--            </nav>--}}
+{{--            @include('components.search-users-form')--}}
+
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -68,7 +97,7 @@
                                        href="{{ route('admin.users.edit', $user->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <form action="{{ route('admin.users.delete', $user->id) }}" method="POST"
+                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
                                           onsubmit="return confirm('{{ ('Вы действительно хотите удалить пользователя ' .$user->name. '?') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
