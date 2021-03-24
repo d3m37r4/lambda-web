@@ -12,6 +12,8 @@ use Illuminate\Notifications\Notifiable;
  * @method static paginate(mixed $env)
  * @method static find(int $id)
  * @method static findOrFail(int $id)
+ * @property int $Id
+ * @property int id
  */
 class User extends Authenticatable
 {
