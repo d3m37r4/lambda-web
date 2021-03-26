@@ -14,7 +14,7 @@
                     </h5>
                 </div>
                 <div class="d-grid gap-2 d-md-block">
-                    <a class="btn btn-success btn-sm" title="{{ ('Создать нового пользователя') }}"
+                    <a class="btn btn-success btn-sm"
                         href="{{ route('admin.users.create') }}">
                         <i class="bi bi-person-plus-fill"></i>
                         {{ ('Новый пользователь') }}
