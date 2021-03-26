@@ -40,7 +40,6 @@ class UsersManagementController extends Controller {
         return view('admin.users.index', compact('users', 'roles'));
     }
 
-
     /**
      * Show the form for creating a new user.
      *
@@ -54,10 +53,35 @@ class UsersManagementController extends Controller {
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(Request $request): Response {
-        //
+    public function store(Request $request): RedirectResponse {
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'password_confirmation' => ['required', 'string', 'same:password'],
+        ];
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::create([
+            'name' => strip_tags($request->input('name')),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+//        TODO: add choice of roles and permissions
+        $user->assignRole('User');
+        $user->save();
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('type', "danger")
+            ->with('status', "Пользователь '$user->name' успешно создан!");
     }
 
     /**
@@ -76,7 +100,6 @@ class UsersManagementController extends Controller {
      * @param int $id
      * @return Response
      */
-
     public function edit(int $id): Response {
         //
     }
@@ -88,7 +111,6 @@ class UsersManagementController extends Controller {
      * @param int $id
      * @return RedirectResponse|Response
      */
-
     public function update(Request $request, int $id) {
         $user = User::find($id);
         $emailCheck = ($request->input('email') != '') && ($request->input('email') != $user->email);

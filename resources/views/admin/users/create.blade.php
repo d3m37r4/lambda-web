@@ -1,10 +1,9 @@
 @extends('layouts.admin-layout')
 
-@section('title')
-    {{ 'Новый пользователь' }}
-@endsection
+@section('title', 'Новый пользователь')
 
 @section('admin.content')
+    @include('admin.components.alert')
     <div class="card mb-3">
         <div class="card-header bg-white">
             <div class="d-flex justify-content-between">
@@ -14,23 +13,27 @@
                         {{ 'Новый пользователь' }}
                     </h5>
                 </div>
+                <div>
+                    <a class="btn btn-primary btn-sm" href="{{ route('admin.users.index') }}">
+                        <i class="bi bi-arrow-90deg-left"></i>
+                        {{ ('Вернуться назад') }}
+                    </a>
+                </div>
             </div>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.users.create') }}">
+            <form action="{{ route('admin.users.store') }}" method="POST">
                 @csrf
                 <div class="row form-group mb-3">
                     <label for="name" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('Имя') }}
+                        {{ ('Имя пользователя') }}
                     </label>
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                               name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                               name="name" placeholder="{{ 'Введите имя пользователя' }}" required>
                         @error('name')
                             <span class="invalid-feedback" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
+                                <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
@@ -41,12 +44,10 @@
                     </label>
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                               name="email" value="{{ old('email') }}" required autocomplete="email">
+                               name="email" placeholder="{{ 'Введите E-mail' }}" required>
                         @error('email')
                             <span class="invalid-feedback" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
+                                <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
@@ -58,45 +59,30 @@
                     <div class="col-md-6">
                         <input id="password" type="password"
                                class="form-control @error('password') is-invalid @enderror"
-                               name="password" required autocomplete="new-password">
+                               name="password" placeholder="{{ 'Введите пароль' }}" required>
                         @error('password')
                             <span class="invalid-feedback" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
+                                <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                 </div>
                 <div class="row form-group mb-3">
                     <label for="password-confirm" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('Подтвердите пароль') }}
+                        {{ ('Подтверждение пароля') }}
                     </label>
                     <div class="col-md-6">
                         <input id="password-confirm" type="password" class="form-control"
-                               name="password_confirmation" required autocomplete="new-password">
+                               name="password_confirmation" placeholder="{{ 'Подтвердите пароль' }}" required>
                     </div>
                 </div>
-                <div class="form-group row mb-0">
-                    <div class="col-md-6 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('Register') }}
-                        </button>
-                    </div>
+                <div>
+                    <button type="submit" class="btn btn-success btn-sm">
+                        <i class="bi bi-person-plus-fill"></i>
+                        <span class="ml-1">{{ ('Создать пользователя') }}</span>
+                    </button>
                 </div>
             </form>
-        </div>
-        <div class="card-footer">
-            <a class="btn btn-success btn-sm" href="{{ route('admin.users.create') }}"
-                  onclick="event.preventDefault(); document.getElementById('create-new-role').submit();">
-                <i class="fas fa-save"></i>
-                <span class="ml-1">{{ ('Создать пользователя') }}</span>
-            </a>
-
-            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary btn-sm">
-                <i class="fas fa-undo-alt"></i>
-                <span class="ml-1">{{ ('Отмена') }}</span>
-            </a>
         </div>
     </div>
 @endsection

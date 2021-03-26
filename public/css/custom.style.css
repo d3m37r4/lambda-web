@@ -3,6 +3,10 @@ body {
     overflow-y: scroll;
 }
 
+.fade {
+    transition: opacity 0.5s linear;
+}
+
 /*body {
     background-color: #EBEFF2 !important;
 }
