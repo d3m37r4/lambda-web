@@ -80,7 +80,7 @@ class UsersManagementController extends Controller {
 
         return redirect()
             ->route('admin.users.index')
-            ->with('type', "danger")
+            ->with('type', "success")
             ->with('status', "Пользователь '$user->name' успешно создан!");
     }
 
