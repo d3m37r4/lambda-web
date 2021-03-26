@@ -3,7 +3,6 @@
 @section('title', 'Новый пользователь')
 
 @section('admin.content')
-    @include('admin.components.alert')
     <div class="card mb-3">
         <div class="card-header bg-white">
             <div class="d-flex justify-content-between">
