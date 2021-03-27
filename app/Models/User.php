@@ -15,6 +15,9 @@ use Illuminate\Notifications\Notifiable;
  * @method static create(array $array)
  * @property int $Id
  * @property int id
+ * @property string email
+ * @property string name
+ * @property string password
  */
 class User extends Authenticatable
 {
