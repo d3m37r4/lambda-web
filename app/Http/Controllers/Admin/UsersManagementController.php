@@ -50,7 +50,7 @@ class UsersManagementController extends Controller {
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
      *
      * @param Request $request
      * @return RedirectResponse
@@ -80,39 +80,38 @@ class UsersManagementController extends Controller {
 
         return redirect()
             ->route('admin.users.index')
-            ->with('type', "success")
-            ->with('status', "Пользователь '$user->name' успешно создан!");
+            ->with('type', 'success')
+            ->with('status', "Пользователь {$user->name} успешно создан!");
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user.
      *
-     * @param int $id
+     * @param User $user
      * @return Response
      */
-    public function show(int $id): Response {
+    public function show(User $user): Response {
         //
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified user.
      *
-     * @param int $id
-     * @return Response
+     * @param User $user
+     * @return Application|Factory|View|Response
      */
-    public function edit(int $id): Response {
-        //
+    public function edit(User $user) {
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified user in storage.
      *
      * @param Request $request
-     * @param int $id
+     * @param User $user
      * @return RedirectResponse|Response
      */
-    public function update(Request $request, int $id) {
-        $user = User::find($id);
+    public function update(Request $request, User $user) {
         $emailCheck = ($request->input('email') != '') && ($request->input('email') != $user->email);
         $passwordCheck = $request->input('password') != null;
 
@@ -147,90 +146,40 @@ class UsersManagementController extends Controller {
 
         $user->save();
 
-        return back()->with('success', "Информация о пользователе '$user->name' была обновлена!");
+        return back()
+            ->with('type', 'success')
+            ->with('status', "Информация о пользователе {$user->name} была успешно обновлена!");
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified user from storage.
      *
-     * @param int $id
+     * @param User $user
      * @return Application|RedirectResponse|Response|Redirector|void
-     * @throws Exception
      * @noinspection PhpVoidFunctionResultUsedInspection
+     * @throws Exception
      */
-    public function destroy(int $id) {
+    public function destroy(User $user) {
         $currentUser = Auth::user();
-        $user = User::findOrFail($id);
 
         if ($currentUser == null) {
             return abort(500);
         }
 
         if ($currentUser->id !== $user->id) {
+            $user->save();
             $user->delete();
 
-            return back()->with('success', "Пользователь '$user->name' был удален!");
+            return back()
+                ->with('type', 'success')
+                ->with('status', "Пользователь {$user->name} был удален!");
         }
 
-        return back()->with('error', "Вы не можете удалить свой профиль!");
+        return back()
+            ->with('type', 'warning')
+            ->with('status', "Вы не можете удалить свой профиль!");
     }
 
-//    /**
-//     * Display form for creating a new user.
-//     */
-//    public function createNewUser(Request $request) {
-//        if ($request->isMethod('post')) {
-//            $data = $request->all();
-//            dd($data);
-////            $validator = Validator::make($data, [
-////                'name' => 'required|string|unique:roles|max:30',
-////                'permissions' => 'required',
-////            ]);
-////            if ($validator->fails()) {
-////                return redirect()->route('admin.create_role')
-////                        ->withErrors($validator)
-////                        ->withInput();
-////            }
-////            $role = Role::create(['name' => $data['name']]);
-////            $role->syncPermissions($data['permissions']);
-////            return redirect()->route('admin.roleslist')->
-////                with('status', "Новая роль '$role->name' создана!");
-//        }
-////        $permissions = Permission::all();
-//
-//        return view('admin.users.create');
-//    }
-//
-//    public function editUser(Request $request, User $user) {
-////        if ($request->isMethod('post')) {
-////            $input = $request->all();
-////            $validator = Validator::make($input, [
-////                'name' => ['required', 'string', 'max:255'],
-////                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,id,' .$user->id],
-////                'password' => ['required', 'string', 'min:6'],
-////                'role' => ['required', 'string'],
-////            ]);
-////
-////            if ($validator->fails()) {
-////                return redirect()->route('admin.users.edit', $user->id)
-////                    ->withErrors($validator)
-////                    ->withInput();
-////            }
-////
-////            $input['password'] = bcrypt($request->get('password'));
-////            $user->update($input);
-////            $user->syncRoles($request->input('role'));
-////
-////            return redirect()->route('admin.users.index')->
-////            with('status', "Информация о пользователе '$user->name' была обновлена!");
-////        }
-//
-//        $roles = Role::get()->pluck('name', 'name');
-////        $permissions = Permission::all();
-//        $permissions = Permission::get()->pluck('name', 'name');
-//
-//        return view('admin.users.edit', compact('user', 'roles', 'permissions'));
-//    }
 //
 //    /**
 //     * Delete user from storage.
