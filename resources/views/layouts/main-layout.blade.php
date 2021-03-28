@@ -43,26 +43,10 @@
     </footer>
 
     <!-- Scripts -->
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous">
     </script>
-
-    <script type="text/javascript">
-        const delay = 2000;
-        var alertList = document.querySelectorAll('.alert');
-        alertList.forEach(function (alert) {
-            new bootstrap.Alert(alert);
-        });
-
-        function closeAlert() {
-            var alertNode = document.querySelector('.alert');
-            var alert = bootstrap.Alert.getInstance(alertNode);
-            alert.close();
-        }
-        setTimeout(closeAlert, delay);
-    </script>
+    <script src="{{ asset('js/custom.scripts.js') }}"></script>
 </body>
 </html>
