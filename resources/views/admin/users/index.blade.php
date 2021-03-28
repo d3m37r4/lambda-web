@@ -55,11 +55,11 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm"
+                                    <a class="btn btn-info btn-sm"
                                        href="#">
                                         <i class="bi bi-view-stacked"></i>
                                     </a>
-                                    <a class="btn btn-warning btn-sm"
+                                    <a class="btn btn-primary btn-sm"
                                        href="{{ route('admin.users.edit', $user->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
