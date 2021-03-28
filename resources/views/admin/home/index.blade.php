@@ -14,6 +14,18 @@
                 @endif
 
                 {{ ('Зарегистрировано пользователей: ') .$usersCount }}
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+
+                        @foreach($envs as $env)
+                            <tr>
+                                <td width="120px">{{ $env['name'] }}</td>
+                                <td>{{ $env['value'] }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
             </div>
         </div>
 @endsection
