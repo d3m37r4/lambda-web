@@ -91,7 +91,8 @@ class UsersManagementController extends Controller {
      * @return Response
      */
     public function show(User $user): Response {
-        //
+        // TODO: Adding a user profile display form to control panel
+        return abort(404);
     }
 
     /**
