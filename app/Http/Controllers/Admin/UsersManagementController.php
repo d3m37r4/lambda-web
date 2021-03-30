@@ -176,21 +176,10 @@ class UsersManagementController extends Controller {
         }
 
         return back()
-            ->with('type', 'warning')
+            ->with('type', 'danger')
             ->with('status', "Вы не можете удалить свой профиль!");
     }
 
-//
-//    /**
-//     * Delete user from storage.
-//     */
-//    public function deleteUser(User $user) {
-//        $user->delete();
-//
-//        return redirect()->route('admin.users.index')->
-//        with('status', "Пользователь '$user->name' был удален!");
-//    }
-//
 //    /**
 //     * Method to search the users.
 //     *
