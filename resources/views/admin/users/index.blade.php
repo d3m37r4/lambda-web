@@ -3,7 +3,7 @@
 @section('title', 'Управление пользователями')
 
 @section('admin.content')
-    @include('admin.modals.delete-confirm')
+    @include('admin.modals.confirm-delete-user')
     @include('admin.components.alert')
     <div class="card mb-3">
         <div class="card-header bg-white">
