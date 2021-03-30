@@ -4,18 +4,5 @@ body {
 }
 
 .fade {
-    transition: opacity 0.5s linear;
+    transition: opacity 0.25s linear;
 }
-
-/*body {
-    background-color: #EBEFF2 !important;
-}
-
-.navbar {
-    background-color: #172D40 !important;
-}
-*/
-/*.footer {
-	height: 20px;
-    background-color: #172D40 !important;
-}*/
