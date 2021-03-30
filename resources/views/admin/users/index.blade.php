@@ -3,6 +3,7 @@
 @section('title', 'Управление пользователями')
 
 @section('admin.content')
+    @include('admin.modals.delete-confirm')
     @include('admin.components.alert')
     <div class="card mb-3">
         <div class="card-header bg-white">
@@ -55,24 +56,20 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-info btn-sm"
-                                       href="#">
-                                        <i class="bi bi-view-stacked"></i>
-                                    </a>
                                     <a class="btn btn-primary btn-sm"
+                                       href="#">
+                                        <i class="bi bi-info-square"></i>
+                                    </a>
+                                    <a class="btn btn-success btn-sm"
                                        href="{{ route('admin.users.edit', $user->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-
-                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
-                                          onsubmit="return confirm('{{ ('Вы действительно хотите удалить пользователя' .$user->name. '?') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <button type="button" class="btn btn-danger btn-sm"
-                                                data-bs-toggle="modal" data-bs-target="#confirmDelete">
-                                            <i class="bi bi-trash-fill"></i>
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#confirmDelete"
+                                            data-route="{{ route('admin.users.destroy', $user->id) }}"
+                                            data-username="{{ $user->name }}">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach

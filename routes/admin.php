@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Auth\Middleware\Authorize;
+//use Illuminate\Auth\Middleware\Authorize;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UsersManagementController;
 
