@@ -9,8 +9,8 @@
         <i class="bi bi-people-fill"></i>
         {{ ('Управление пользователями') }}
     </a>
-    <a class="list-group-item list-group-item-action"
-       href="#">
+    <a class="list-group-item list-group-item-action {{ request()->routeIs('admin.roles.index') ? 'active' : '' }}"
+       href="{{ route('admin.roles.index') }}">
         <i class="bi bi-shield-lock-fill"></i>
         {{ ('Управление ролями') }}
     </a>
