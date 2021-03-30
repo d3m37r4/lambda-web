@@ -1,102 +1,89 @@
-@extends('admin.layouts.main')
+@extends('layouts.admin-layout')
 
-@section('admin_content')
-    <div class="card">
-        <div class="card-header">{{ ('Редактирование пользователя ') .$user->name }}</div>
+@section('title', 'Редактирование пользователя')
+
+@section('admin.content')
+    @include('admin.components.alert')
+    <div class="card mb-3">
+        <div class="card-header bg-white">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h5 class="card-title">
+                        <i class="bi bi-pencil-square"></i>
+                        {{ ('Редактирование пользователя: ') }} {{ $user->name }}
+                    </h5>
+                </div>
+                <div>
+                    <a class="btn btn-primary btn-sm" href="{{ route('admin.users.index') }}">
+                        <i class="bi bi-arrow-90deg-left"></i>
+                        {{ ('Вернуться назад') }}
+                    </a>
+                </div>
+            </div>
+        </div>
         <div class="card-body">
-            <form id="edit-user-form" action="{{ route('admin.users.edit', $user->id) }}" method="POST">
+            <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
                 @csrf
-
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="name">{{ ('Имя пользователя') }}</label>
-                    </div>
-                    <div class="col-sm">
-                        <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" 
-                               value="{{ old('name', isset($user) ? $user->name : '') }}" required autocomplete="name">
+                @method('PUT')
+                <div class="row form-group mb-3">
+                    <label for="name" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Имя пользователя') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                               name="name" value="{{ old('name', $user->name) }}" required>
                         @error('name')
-                            <span class="invalid-feedback" role="alert">
+                        <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="email">{{ ('Email') }}</label>
-                    </div>
-                    <div class="col-sm">
-                        <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror"       value="{{ old('email', isset($user) ? $user->email : '') }}" required autocomplete="email">
+                <div class="row form-group mb-3">
+                    <label for="email" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('E-Mail') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                               name="email" value="{{ old('email', $user->email) }}" required>
                         @error('email')
-                            <span class="invalid-feedback" role="alert">
+                        <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="password">{{ ('Пароль') }}</label>
-                    </div>
-                    <div class="col-sm">
-                        <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror">
+                <div class="row form-group mb-3">
+                    <label for="password" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Пароль') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="password" type="password"
+                               class="form-control @error('password') is-invalid @enderror"
+                               name="password">
                         @error('password')
-                            <span class="invalid-feedback" role="alert">
+                        <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="role">{{ ('Роль пользователя') }}</label>
-                    </div>
-                    <div class="col-sm">
-                        <select id="role" name="role" class="form-control @error('role') is-invalid @enderror" required>
-                            @foreach($roles as $roleId => $roleName)
-                                <option value="{{ $roleId }}" {{ (in_array($roleId, old('roles', [])) || isset($user) && $user->roles()->pluck('name', 'id')->contains($roleId)) ? 'selected' : '' }}>
-                                    {{ $roleName }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('role')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                <div class="row form-group mb-3">
+                    <label for="password-confirm" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Подтверждение пароля') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="password-confirm" type="password" class="form-control"
+                               name="password_confirmation">
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="permissions">{{ ('Разрешения') }}</label>
-                    </div>
-                    <div class="col-sm">
-                        <select id="permissions" name="permission[]" class="form-control" multiple>
-                        <option selected disabled>{{ ('Выберите разрешения ...') }}</option>
-                            @foreach($permissions as $permissionId => $permissionName)
-                                <option value="{{ $permissionId }}" {{ (in_array($permissionId, old('permissions', [])) || isset($role) && $role->permissions->contains($permissionId)) ? 'selected' : '' }}>
-                                    {{ $permissionName }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div>
+                    <button type="submit" class="btn btn-success btn-sm">
+                        <i class="bi bi-save"></i>
+                        <span class="ml-1">{{ ('Обновить') }}</span>
+                    </button>
                 </div>
             </form>
-        </div>
-        <div class="card-footer">
-            <a class="btn btn-success btn-sm" href="{{ route('admin.users.edit', $user->id) }}"
-                  onclick="event.preventDefault(); document.getElementById('edit-user-form').submit();">
-                <i class="fas fa-save"></i>
-                <span class="ml-1">{{ ('Сохранить изменения') }}</span>
-            </a>
-            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary btn-sm">
-                <i class="fas fa-undo-alt"></i>
-                <span class="ml-1">{{ ('Отмена') }}</span>
-            </a>
         </div>
     </div>
 @endsection

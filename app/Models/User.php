@@ -2,12 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @method static paginate(mixed $env)
+ * @method static find(int $id)
+ * @method static findOrFail(int $id)
+ * @method static create(array $array)
+ * @property int $Id
+ * @property int id
+ * @property string email
+ * @property string name
+ * @property string password
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;

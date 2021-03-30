@@ -1,16 +1,8 @@
 body {
 	padding-top: 70px;
+    overflow-y: scroll;
 }
 
-/*body {
-    background-color: #EBEFF2 !important;
+.fade {
+    transition: opacity 0.25s linear;
 }
-
-.navbar {
-    background-color: #172D40 !important;
-}
-*/
-/*.footer {
-	height: 20px;
-    background-color: #172D40 !important;
-}*/
