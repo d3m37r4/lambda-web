@@ -25,10 +25,10 @@ class RolesManagementController extends Controller {
     /**
      * Show the form for creating a new role.
      *
-     * @return Response
+     * @return Application|Factory|View|Response
      */
-    public function create(): Response {
-
+    public function create() {
+        return view('admin.roles.create');
     }
 
     /**
