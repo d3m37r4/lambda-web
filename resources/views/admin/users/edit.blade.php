@@ -15,7 +15,7 @@
                 </div>
                 <div>
                     <a class="btn btn-primary btn-sm" href="{{ route('admin.users.index') }}">
-                        <i class="bi bi-arrow-90deg-left"></i>
+                        <i class="bi bi-reply"></i>
                         {{ ('Вернуться назад') }}
                     </a>
                 </div>
