@@ -79,7 +79,7 @@
                 </div>
                 <div>
                     <button type="submit" class="btn btn-success btn-sm">
-                        <i class="bi bi-save"></i>
+                        <i class="bi bi-person-check"></i>
                         <span class="ml-1">{{ ('Обновить') }}</span>
                     </button>
                 </div>
