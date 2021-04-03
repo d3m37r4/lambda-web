@@ -15,7 +15,7 @@
                 </div>
                 <div>
                     <a class="btn btn-primary btn-sm" href="{{ route('admin.users.index') }}">
-                        <i class="bi bi-arrow-90deg-left"></i>
+                        <i class="bi bi-reply"></i>
                         {{ ('Вернуться назад') }}
                     </a>
                 </div>
@@ -79,7 +79,7 @@
                 </div>
                 <div>
                     <button type="submit" class="btn btn-success btn-sm">
-                        <i class="bi bi-save"></i>
+                        <i class="bi bi-person-check"></i>
                         <span class="ml-1">{{ ('Обновить') }}</span>
                     </button>
                 </div>
