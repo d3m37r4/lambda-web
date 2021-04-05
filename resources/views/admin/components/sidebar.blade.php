@@ -11,7 +11,7 @@
     </a>
     <a class="list-group-item list-group-item-action {{ request()->routeIs('admin.roles.index') ? 'active' : '' }}"
        href="{{ route('admin.roles.index') }}">
-        <i class="bi bi-shield-lock-fill"></i>
+        <i class="bi bi-shield-fill"></i>
         {{ ('Управление ролями') }}
     </a>
     <a class="list-group-item list-group-item-action"

@@ -9,14 +9,14 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h5 class="card-title">
-                        <i class="bi bi-people-fill"></i>
+                        <i class="bi bi-shield-fill"></i>
                         {{ ('Управление ролями') }}
                     </h5>
                 </div>
                 <div class="d-grid gap-2 d-md-block">
                     <a class="btn btn-success btn-sm"
                         href="{{ route('admin.roles.create') }}">
-                        <i class="bi bi-person-plus-fill"></i>
+                        <i class="bi bi-shield-plus"></i>
                         {{ ('Создать роль') }}
                     </a>
                 </div>

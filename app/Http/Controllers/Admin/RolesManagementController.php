@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RolesManagementController extends Controller {
     /**
@@ -28,17 +31,37 @@ class RolesManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function create() {
-        return view('admin.roles.create');
+        $permissions = Permission::all();
+
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
      * Store a newly created role in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(Request $request): Response {
-        //
+    public function store(Request $request): RedirectResponse {
+        $rules = [
+            'name' => ['required', 'string', 'max:255', 'unique:roles'],
+        ];
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $role = Role::create([
+            'name' => strip_tags($request->input('name')),
+        ]);
+        $role->givePermissionTo($request->input('permissions'));
+        $role->save();
+
+        return redirect()
+            ->route('admin.roles.index')
+            ->with('type', 'success')
+            ->with('status', "Новая роль {$role->name} успешно создана!");
     }
 
     /**
