@@ -44,7 +44,7 @@
                     <div class="col-md-6">
                         <select id="permissions" class="form-select @error('permissions') is-invalid @enderror"
                                 name="permissions[]" size="6" aria-describedby="permissionsHelp" multiple>
-                            <option selected disabled>{{ ('Назначьте разрешения для новой роли...') }}</option>
+                            <option disabled>{{ ('Назначьте разрешения для новой роли...') }}</option>
                             @foreach ($permissions as $permission)
                                 <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                             @endforeach
