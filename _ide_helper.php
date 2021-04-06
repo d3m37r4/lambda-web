@@ -12,7 +12,10 @@
  */
 
     namespace Illuminate\Support\Facades {
-            /**
+
+        use Psr\Container\NotFoundExceptionInterface;
+
+        /**
      *
      *
      * @see \Illuminate\Contracts\Foundation\Application
@@ -1132,7 +1135,7 @@
          * Resolve all of the bindings for a given tag.
          *
          * @param string $tag
-         * @return \Illuminate\Container\iterable
+         * @return array|\Illuminate\Container\iterable|\Illuminate\Container\RewindableGenerator|iterable
          * @static
          */
         public static function tagged($tag)
@@ -1362,8 +1365,8 @@
                     /**
          * Get the globally available instance of the container.
          *
-         * @return static
-         * @static
+         * @return \Illuminate\Foundation\Application|App
+                     * @static
          */
         public static function getInstance()
         {            //Method inherited from \Illuminate\Container\Container

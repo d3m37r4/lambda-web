@@ -23,3 +23,16 @@ modalEl.addEventListener('show.bs.modal', function (event) {
     msg = msg.replace('@username', name);
     this.querySelector('.modal-msg').textContent = msg;
 });
+
+/*          Passing the route and name of role being deleted to body of modal window          */
+let modalRole = document.getElementById('confirmDeleteRole');
+modalRole.addEventListener('show.bs.modal', function (event) {
+    let btn = event.relatedTarget;
+    this.querySelector('.route-delete-role').action = btn.getAttribute('data-route-delete-role');
+
+    let msg = document.querySelector('.data-msg-confirm-delete-role').value;
+    let name = btn.getAttribute('data-rolename');
+
+    msg = msg.replace('@rolename', name);
+    this.querySelector('.msg-confirm-delete-role').textContent = msg;
+});

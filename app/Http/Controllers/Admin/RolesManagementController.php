@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -20,7 +22,7 @@ class RolesManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function index() {
-        $roles = Role::all();
+        $roles = Role::paginate(env('USER_LIST_PAGINATION_SIZE'));
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -70,18 +72,20 @@ class RolesManagementController extends Controller {
      * @param Role $role
      * @return Response
      */
-    public function show(Role $role): Response {
-        //
-    }
+//    public function show(Role $role): Response {
+//        //
+//    }
 
     /**
      * Show the form for editing the specified role.
      *
      * @param Role $role
-     * @return Response
+     * @return Application|Factory|View|Response
      */
-    public function edit(Role $role): Response {
-        //
+    public function edit(Role $role) {
+        $permissions = Permission::all();
+
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -89,19 +93,29 @@ class RolesManagementController extends Controller {
      *
      * @param Request $request
      * @param Role $role
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, Role $role): Response {
-        //
+    public function update(Request $request, Role $role): RedirectResponse {
+        $role->update($request->except('permission'));
+        $role->syncPermissions($request->input('permissions'));
+
+        return back()
+            ->with('type', 'success')
+            ->with('status', "Информация о роли {$role->name} была успешно обновлена!");
     }
 
     /**
      * Remove the specified role from storage.
      *
      * @param Role $role
-     * @return Response
+     * @return Application|RedirectResponse|Response|Redirector|void
+     * @throws Exception
      */
-    public function destroy(Role $role): Response {
-        //
+    public function destroy(Role $role) {
+        $role->delete();
+
+        return back()
+            ->with('type', 'success')
+            ->with('status', "Роль {$role->name} была удалена!");
     }
 }

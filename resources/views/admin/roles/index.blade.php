@@ -3,6 +3,7 @@
 @section('title', 'Управление ролями')
 
 @section('admin.content')
+    @include('admin.modals.confirm-delete-role')
     @include('admin.components.alert')
     <div class="card mb-3">
         <div class="card-header bg-white">
@@ -57,9 +58,9 @@
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                     <button type="button" class="btn btn-danger btn-sm"
-                                            data-bs-toggle="modal" data-bs-target="#confirmDelete"
-                                            data-route="{{ route('admin.roles.destroy', $role->id) }}"
-                                            data-username="{{ $role->name }}">
+                                            data-bs-toggle="modal" data-bs-target="#confirmDeleteRole"
+                                            data-route-delete-role="{{ route('admin.roles.destroy', $role->id) }}"
+                                            data-rolename="{{ $role->name }}">
                                         <i class="bi bi-trash-fill"></i>
                                     </button>
                                 </td>
@@ -70,5 +71,5 @@
             </div>
         </div>
     </div>
-{{--    {{ $role->links() }}--}}
+    {{ $roles->links() }}
 @endsection
