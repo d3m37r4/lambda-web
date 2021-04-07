@@ -14,10 +14,10 @@
                 <p class="modal-msg"></p>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
-                   <i class="bi bi-x-circle"></i>
-                   {{ ('Отмена') }}
-               </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i>
+                    {{ ('Отмена') }}
+                </button>
                 <form method="POST" class="route">
                     @csrf
                     @method('DELETE')
