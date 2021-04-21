@@ -48,5 +48,6 @@
             crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/custom.scripts.js') }}"></script>
+    @stack('secondary-scripts')
 </body>
 </html>
