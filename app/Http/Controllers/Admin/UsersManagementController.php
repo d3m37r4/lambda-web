@@ -90,10 +90,10 @@ class UsersManagementController extends Controller {
      * @param User $user
      * @return Response
      */
-    public function show(User $user): Response {
-        // TODO: Adding a user profile display form to control panel
-        return abort(404);
-    }
+//    public function show(User $user): Response {
+//        // TODO: Adding a user profile display form to control panel
+//        return abort(404);
+//    }
 
     /**
      * Show the form for editing the specified user.
@@ -163,7 +163,7 @@ class UsersManagementController extends Controller {
     public function destroy(User $user) {
         $currentUser = Auth::user();
 
-        if ($currentUser == null) {
+        if (is_null($currentUser)) {
             return abort(500);
         }
 

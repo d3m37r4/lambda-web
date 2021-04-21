@@ -28,11 +28,11 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th class="col-2">{{ ('#') }}</th>
+                            <th class="col-1">{{ ('#') }}</th>
                             <th class="col-3">{{ ('Имя') }}</th>
                             <th class="col-3">{{ ('E-mail') }}</th>
-                            <th class="col-2">{{ ('Роль') }}</th>
-                            <th class="col-2">{{ ('Действия') }}</th>
+                            <th class="col-3">{{ ('Роль') }}</th>
+                            <th style="width: 15%;">{{ ('Действия') }}</th>
                         </tr>
                     </thead>
                     <tbody>

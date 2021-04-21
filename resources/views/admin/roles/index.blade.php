@@ -31,7 +31,7 @@
                             <th class="col-1">{{ ('#') }}</th>
                             <th class="col-1">{{ ('ID') }}</th>
                             <th class="col-5">{{ ('Роль') }}</th>
-                            <th class="col-1">{{ ('Действия') }}</th>
+                            <th style="width: 15%;">{{ ('Действия') }}</th>
                         </tr>
                     </thead>
                     <tbody>
