@@ -22,7 +22,7 @@ class RolesManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function index() {
-        $roles = Role::paginate(env('USER_LIST_PAGINATION_SIZE'));
+        $roles = Role::paginate(env('PAGINATION_SIZE'));
 
         return view('admin.roles.index', compact('roles'));
     }

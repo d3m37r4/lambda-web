@@ -34,7 +34,7 @@ class UsersManagementController extends Controller {
      * @return Application|Factory|View
      */
     public function index() {
-        $users = User::paginate(env('USER_LIST_PAGINATION_SIZE'));
+        $users = User::paginate(env('PAGINATION_SIZE'));
         $roles = Role::all();
 
         return view('admin.users.index', compact('users', 'roles'));
