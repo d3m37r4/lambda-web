@@ -102,7 +102,10 @@ class UsersManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function edit(User $user) {
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::all();
+//        $permissions = Permission::all();
+
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -145,6 +148,7 @@ class UsersManagementController extends Controller {
             $user->password = Hash::make($request->input('password'));
         }
 
+        $user->syncRoles($request->input('role'));
         $user->save();
 
         return back()

@@ -77,6 +77,28 @@
                                name="password_confirmation">
                     </div>
                 </div>
+                <div class="row form-group mb-3">
+                    <label for="role" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Роль пользователя') }}
+                    </label>
+                    <div class="col-md-6">
+                        <select id="role" class="form-select @error('role') is-invalid @enderror"
+                                name="role" size="6">
+                            <option disabled>{{ ('Назначьте роль пользователю...') }}</option>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}"
+                                        @if (isset($user) && $user->hasRole($role)) selected @endif>
+                                    {{ $role->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('role')
+                        <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
                 <div>
                     <button type="submit" class="btn btn-success btn-sm">
                         <i class="bi bi-person-check"></i>
