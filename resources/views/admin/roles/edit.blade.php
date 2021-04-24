@@ -45,8 +45,7 @@
                             <option disabled>{{ ('Назначьте разрешения для роли...') }}</option>
                             @foreach ($permissions as $permission)
                                 <option value="{{ $permission->id }}"
-                                    {{ (isset($role) &&
-                                        $role->permissions->contains('id', $permission->id)) ? 'selected' : '' }}>
+                                        @if (isset($role) && $role->hasPermissionTo($permission)) selected @endif>
                                     {{ $permission->name }}
                                 </option>
                             @endforeach
