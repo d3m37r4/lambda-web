@@ -46,7 +46,9 @@ class UsersManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function create() {
-        return view('admin.users.create');
+        $roles = Role::all();
+
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -61,6 +63,7 @@ class UsersManagementController extends Controller {
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'password_confirmation' => ['required', 'string', 'same:password'],
+            'role' => ['required', 'string'],
         ];
         $validator = Validator::make($request->all(), $rules);
 
@@ -74,8 +77,8 @@ class UsersManagementController extends Controller {
             'password' => Hash::make($request->input('password')),
         ]);
 
-//        TODO: add choice of roles and permissions
-        $user->assignRole('User');
+//        TODO: add choice of permissions
+        $user->assignRole($request->input('role'));
         $user->save();
 
         return redirect()
