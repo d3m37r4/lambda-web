@@ -119,12 +119,15 @@ class UsersManagementController extends Controller {
      * @return RedirectResponse|Response
      */
     public function update(Request $request, User $user) {
+        $nameCheck = ($request->input('name') != '') && ($request->input('name') != $user->name);
         $emailCheck = ($request->input('email') != '') && ($request->input('email') != $user->email);
-        $passwordCheck = $request->input('password') != null;
+        $passwordCheck = empty($request->input('password'));
 
-        $rules = [
-            'name' => ['required', 'string', 'max:255', 'unique:users'],
-        ];
+        $rules = [];
+
+        if ($nameCheck) {
+            $rules['name'] = ['required', 'string', 'max:255', 'unique:users'];
+        }
 
         if ($emailCheck) {
             $rules['email'] = ['required', 'string', 'email', 'max:255', 'unique:users'];
@@ -141,7 +144,9 @@ class UsersManagementController extends Controller {
             return back()->withErrors($validator)->withInput();
         }
 
-        $user->name = strip_tags($request->input('name'));
+        if ($nameCheck) {
+            $user->name = strip_tags($request->input('name'));
+        }
 
         if ($emailCheck) {
             $user->email = $request->input('email');
