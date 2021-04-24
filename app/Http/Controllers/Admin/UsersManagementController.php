@@ -57,7 +57,7 @@ class UsersManagementController extends Controller {
      */
     public function store(Request $request): RedirectResponse {
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'password_confirmation' => ['required', 'string', 'same:password'],
@@ -120,7 +120,7 @@ class UsersManagementController extends Controller {
         $passwordCheck = $request->input('password') != null;
 
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:users'],
         ];
 
         if ($emailCheck) {
