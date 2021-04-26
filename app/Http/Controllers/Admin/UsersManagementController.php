@@ -16,7 +16,6 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
-//use Spatie\Permission\Models\Permission;
 
 class UsersManagementController extends Controller {
     /**
@@ -119,11 +118,9 @@ class UsersManagementController extends Controller {
      * @return RedirectResponse|Response
      */
     public function update(Request $request, User $user) {
-        $nameCheck = ($request->input('name') != '') && ($request->input('name') != $user->name);
-        $emailCheck = ($request->input('email') != '') && ($request->input('email') != $user->email);
-        $passwordCheck = empty($request->input('password'));
-
-        $rules = [];
+        $nameCheck = !empty($request->input('name')) && ($request->input('name') != $user->name);
+        $emailCheck = !empty($request->input('email')) && ($request->input('email') != $user->email);
+        $passwordCheck = !empty($request->input('password'));
 
         if ($nameCheck) {
             $rules['name'] = ['required', 'string', 'max:255', 'unique:users'];
@@ -138,10 +135,12 @@ class UsersManagementController extends Controller {
             $rules['password_confirmation'] = ['required', 'string', 'same:password'];
         }
 
-        $validator = Validator::make($request->all(), $rules);
+        if(isset($rules)) {
+            $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
         }
 
         if ($nameCheck) {
@@ -192,48 +191,4 @@ class UsersManagementController extends Controller {
             ->with('type', 'danger')
             ->with('status', "Вы не можете удалить свой профиль!");
     }
-
-//    /**
-//     * Method to search the users.
-//     *
-//     * @param Request $request
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function search(Request $request)
-//    {
-//        $searchTerm = $request->input('user_search_box');
-//        $searchRules = [
-//            'user_search_box' => 'required|string|max:255',
-//        ];
-//        $searchMessages = [
-//            'user_search_box.required' => 'Search term is required',
-//            'user_search_box.string'   => 'Search term has invalid characters',
-//            'user_search_box.max'      => 'Search term has too many characters - 255 allowed',
-//        ];
-//
-//        $validator = Validator::make($request->all(), $searchRules, $searchMessages);
-//
-//        if ($validator->fails()) {
-//            return response()->json([
-//                json_encode($validator),
-//            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-//        }
-//
-//        $results = config('laravelusers.defaultUserModel')::where('id', 'like', $searchTerm.'%')
-//            ->orWhere('name', 'like', $searchTerm.'%')
-//            ->orWhere('email', 'like', $searchTerm.'%')->get();
-//
-//        // Attach roles to results
-//        foreach ($results as $result) {
-//            $roles = [
-//                'roles' => $result->roles,
-//            ];
-//            $result->push($roles);
-//        }
-//
-//        return response()->json([
-//            json_encode($results),
-//        ], Response::HTTP_OK);
-//    }
 }
