@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Exception;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -12,8 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class RolesManagementController extends Controller {
     /**
@@ -52,16 +52,16 @@ class RolesManagementController extends Controller {
             return back()->withErrors($validator)->withInput();
         }
 
-        $role = Role::create([
-            'name' => strip_tags($request->input('name')),
-        ]);
+        $roleName = strip_tags($request->input('name'));
+
+        $role = Role::create(['name' => $roleName]);
         $role->givePermissionTo($request->input('permissions'));
         $role->save();
 
         return redirect()
             ->route('admin.roles.index')
             ->with('status', 'success')
-            ->with('message', "Новая роль {$role->name} успешно создана!");
+            ->with('message', "Новая роль {$roleName} успешно создана!");
     }
 
     /**
