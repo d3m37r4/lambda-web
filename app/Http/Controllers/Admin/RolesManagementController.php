@@ -45,9 +45,7 @@ class RolesManagementController extends Controller {
      * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse {
-        $rules = [
-            'name' => ['required', 'string', 'max:255', 'unique:roles'],
-        ];
+        $rules['name'] = ['required', 'string', 'max:255', 'unique:roles'];
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
