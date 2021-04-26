@@ -62,8 +62,8 @@ class RolesManagementController extends Controller {
 
         return redirect()
             ->route('admin.roles.index')
-            ->with('type', 'success')
-            ->with('status', "Новая роль {$role->name} успешно создана!");
+            ->with('status', 'success')
+            ->with('message', "Новая роль {$role->name} успешно создана!");
     }
 
     /**
@@ -96,12 +96,26 @@ class RolesManagementController extends Controller {
      * @return RedirectResponse
      */
     public function update(Request $request, Role $role): RedirectResponse {
+        $nameCheck = !empty($request->input('name')) && ($request->input('name') != $role->name);
+
+        if($nameCheck) {
+            $rules['name'] = ['required', 'string', 'max:255', 'unique:roles'];
+        }
+
+        if(isset($rules)) {
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+        }
+
         $role->update($request->except('permission'));
         $role->syncPermissions($request->input('permissions'));
 
         return back()
-            ->with('type', 'success')
-            ->with('status', "Информация о роли {$role->name} была успешно обновлена!");
+            ->with('status', 'success')
+            ->with('message', "Информация о роли {$role->name} была успешно обновлена!");
     }
 
     /**
@@ -115,7 +129,7 @@ class RolesManagementController extends Controller {
         $role->delete();
 
         return back()
-            ->with('type', 'success')
-            ->with('status', "Роль {$role->name} была удалена!");
+            ->with('status', 'success')
+            ->with('message', "Роль {$role->name} была удалена!");
     }
 }

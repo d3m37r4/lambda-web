@@ -82,8 +82,8 @@ class UsersManagementController extends Controller {
 
         return redirect()
             ->route('admin.users.index')
-            ->with('type', 'success')
-            ->with('status', "Пользователь {$user->name} успешно создан!");
+            ->with('status', 'success')
+            ->with('message', "Пользователь {$user->name} успешно создан!");
     }
 
     /**
@@ -159,8 +159,8 @@ class UsersManagementController extends Controller {
         $user->save();
 
         return back()
-            ->with('type', 'success')
-            ->with('status', "Информация о пользователе {$user->name} была успешно обновлена!");
+            ->with('status', 'success')
+            ->with('message', "Информация о пользователе {$user->name} была успешно обновлена!");
     }
 
     /**
@@ -183,12 +183,12 @@ class UsersManagementController extends Controller {
             $user->delete();
 
             return back()
-                ->with('type', 'success')
-                ->with('status', "Пользователь {$user->name} был удален!");
+                ->with('status', 'success')
+                ->with('message', "Пользователь {$user->name} был удален!");
         }
 
         return back()
-            ->with('type', 'danger')
-            ->with('status', "Вы не можете удалить свой профиль!");
+            ->with('status', 'danger')
+            ->with('message', "Вы не можете удалить свой профиль!");
     }
 }
