@@ -38,6 +38,13 @@ class Server extends Model {
     protected $hidden = ['rcon', 'token', 'created_at', 'updated_at'];
 
     /**
+     * @var array
+     */
+    protected $casts = [
+        'port' => 'int',
+    ];
+
+    /**
      * @return string
      * @throws Exception
      */
