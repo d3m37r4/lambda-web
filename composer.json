@@ -1,10 +1,19 @@
 {
-    "name": "laravel/laravel",
+    "name": "lambda/lambda-web",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Lambda CMS",
+    "authors": [
+        {
+            "name": "d3m37r4",
+            "role": "Developer"
+        }
+    ],
     "keywords": [
-        "framework",
-        "laravel"
+        "web",
+        "amxx",
+        "goldsrc",
+        "laravel",
+        "cms"
     ],
     "license": "MIT",
     "require": {
