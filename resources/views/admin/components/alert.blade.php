@@ -1,6 +1,6 @@
-@if (session('status'))
-    <div class="alert alert-{{ session('type') }} alert-dismissible fade show" role="alert" id="alert">
-        {{ session('status') }}
+@if (session('message'))
+    <div class="alert alert-{{ session('status') }} alert-dismissible fade show" role="alert" id="alert">
+        {{ session('message') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif

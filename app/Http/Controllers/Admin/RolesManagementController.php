@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Exception;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -12,8 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class RolesManagementController extends Controller {
     /**
@@ -22,7 +22,7 @@ class RolesManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function index() {
-        $roles = Role::paginate(env('USER_LIST_PAGINATION_SIZE'));
+        $roles = Role::paginate(env('PAGINATION_SIZE'));
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -45,25 +45,23 @@ class RolesManagementController extends Controller {
      * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse {
-        $rules = [
-            'name' => ['required', 'string', 'max:255', 'unique:roles'],
-        ];
+        $rules['name'] = ['required', 'string', 'max:255', 'unique:roles'];
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
-        $role = Role::create([
-            'name' => strip_tags($request->input('name')),
-        ]);
+        $roleName = strip_tags($request->input('name'));
+
+        $role = Role::create(['name' => $roleName]);
         $role->givePermissionTo($request->input('permissions'));
         $role->save();
 
         return redirect()
             ->route('admin.roles.index')
-            ->with('type', 'success')
-            ->with('status', "Новая роль {$role->name} успешно создана!");
+            ->with('status', 'success')
+            ->with('message', "Новая роль {$roleName} успешно создана!");
     }
 
     /**
@@ -96,12 +94,26 @@ class RolesManagementController extends Controller {
      * @return RedirectResponse
      */
     public function update(Request $request, Role $role): RedirectResponse {
+        $nameCheck = !empty($request->input('name')) && ($request->input('name') != $role->name);
+
+        if($nameCheck) {
+            $rules['name'] = ['required', 'string', 'max:255', 'unique:roles'];
+        }
+
+        if(isset($rules)) {
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+        }
+
         $role->update($request->except('permission'));
         $role->syncPermissions($request->input('permissions'));
 
         return back()
-            ->with('type', 'success')
-            ->with('status', "Информация о роли {$role->name} была успешно обновлена!");
+            ->with('status', 'success')
+            ->with('message', "Информация о роли {$role->name} была успешно обновлена!");
     }
 
     /**
@@ -115,7 +127,7 @@ class RolesManagementController extends Controller {
         $role->delete();
 
         return back()
-            ->with('type', 'success')
-            ->with('status', "Роль {$role->name} была удалена!");
+            ->with('status', 'success')
+            ->with('message', "Роль {$role->name} была удалена!");
     }
 }

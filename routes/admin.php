@@ -19,15 +19,19 @@ use App\Http\Controllers\Admin\RolesManagementController;
 
 Auth::routes();
 
-Route::group(
-    ['middleware' => ['auth','can:enter_control_panel'],
-        'prefix' => env('APP_ADMIN_PATH'), 'as' => 'admin.'],
-    function () {
+Route::group([
+    'middleware' => ['auth','can:enter_control_panel'],
+    'prefix' => env('APP_ADMIN_PATH'), 'as' => 'admin.'
+], function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
-    Route::middleware(['middleware' => 'can:manage_users'])->group(function () {
+    Route::middleware([
+        'middleware' => 'can:manage_users'
+    ])->group(function () {
         Route::resource('users', UsersManagementController::class);
     });
-    Route::middleware(['middleware' => 'can:manage_roles'])->group(function () {
+    Route::middleware([
+        'middleware' => 'can:manage_roles'
+    ])->group(function () {
         Route::resource('roles', RolesManagementController::class);
     });
 });

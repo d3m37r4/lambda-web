@@ -16,7 +16,6 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
-//use Spatie\Permission\Models\Permission;
 
 class UsersManagementController extends Controller {
     /**
@@ -34,7 +33,7 @@ class UsersManagementController extends Controller {
      * @return Application|Factory|View
      */
     public function index() {
-        $users = User::paginate(env('USER_LIST_PAGINATION_SIZE'));
+        $users = User::paginate(env('PAGINATION_SIZE'));
         $roles = Role::all();
 
         return view('admin.users.index', compact('users', 'roles'));
@@ -46,7 +45,9 @@ class UsersManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function create() {
-        return view('admin.users.create');
+        $roles = Role::all();
+
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -57,10 +58,11 @@ class UsersManagementController extends Controller {
      */
     public function store(Request $request): RedirectResponse {
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'password_confirmation' => ['required', 'string', 'same:password'],
+            'role' => ['required', 'string'],
         ];
         $validator = Validator::make($request->all(), $rules);
 
@@ -74,14 +76,14 @@ class UsersManagementController extends Controller {
             'password' => Hash::make($request->input('password')),
         ]);
 
-//        TODO: add choice of roles and permissions
-        $user->assignRole('User');
+//        TODO: add choice of permissions
+        $user->assignRole($request->input('role'));
         $user->save();
 
         return redirect()
             ->route('admin.users.index')
-            ->with('type', 'success')
-            ->with('status', "Пользователь {$user->name} успешно создан!");
+            ->with('status', 'success')
+            ->with('message', "Пользователь {$user->name} успешно создан!");
     }
 
     /**
@@ -90,10 +92,10 @@ class UsersManagementController extends Controller {
      * @param User $user
      * @return Response
      */
-    public function show(User $user): Response {
-        // TODO: Adding a user profile display form to control panel
-        return abort(404);
-    }
+//    public function show(User $user): Response {
+//        // TODO: Adding a user profile display form to control panel
+//        return abort(404);
+//    }
 
     /**
      * Show the form for editing the specified user.
@@ -102,7 +104,10 @@ class UsersManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function edit(User $user) {
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::all();
+//        $permissions = Permission::all();
+
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -113,12 +118,13 @@ class UsersManagementController extends Controller {
      * @return RedirectResponse|Response
      */
     public function update(Request $request, User $user) {
-        $emailCheck = ($request->input('email') != '') && ($request->input('email') != $user->email);
-        $passwordCheck = $request->input('password') != null;
+        $nameCheck = !empty($request->input('name')) && ($request->input('name') != $user->name);
+        $emailCheck = !empty($request->input('email')) && ($request->input('email') != $user->email);
+        $passwordCheck = !empty($request->input('password'));
 
-        $rules = [
-            'name' => ['required', 'string', 'max:255'],
-        ];
+        if ($nameCheck) {
+            $rules['name'] = ['required', 'string', 'max:255', 'unique:users'];
+        }
 
         if ($emailCheck) {
             $rules['email'] = ['required', 'string', 'email', 'max:255', 'unique:users'];
@@ -129,13 +135,17 @@ class UsersManagementController extends Controller {
             $rules['password_confirmation'] = ['required', 'string', 'same:password'];
         }
 
-        $validator = Validator::make($request->all(), $rules);
+        if(isset($rules)) {
+            $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
         }
 
-        $user->name = strip_tags($request->input('name'));
+        if ($nameCheck) {
+            $user->name = strip_tags($request->input('name'));
+        }
 
         if ($emailCheck) {
             $user->email = $request->input('email');
@@ -145,11 +155,12 @@ class UsersManagementController extends Controller {
             $user->password = Hash::make($request->input('password'));
         }
 
+        $user->syncRoles($request->input('role'));
         $user->save();
 
         return back()
-            ->with('type', 'success')
-            ->with('status', "Информация о пользователе {$user->name} была успешно обновлена!");
+            ->with('status', 'success')
+            ->with('message', "Информация о пользователе {$user->name} была успешно обновлена!");
     }
 
     /**
@@ -163,7 +174,7 @@ class UsersManagementController extends Controller {
     public function destroy(User $user) {
         $currentUser = Auth::user();
 
-        if ($currentUser == null) {
+        if (is_null($currentUser)) {
             return abort(500);
         }
 
@@ -172,56 +183,12 @@ class UsersManagementController extends Controller {
             $user->delete();
 
             return back()
-                ->with('type', 'success')
-                ->with('status', "Пользователь {$user->name} был удален!");
+                ->with('status', 'success')
+                ->with('message', "Пользователь {$user->name} был удален!");
         }
 
         return back()
-            ->with('type', 'danger')
-            ->with('status', "Вы не можете удалить свой профиль!");
+            ->with('status', 'danger')
+            ->with('message', "Вы не можете удалить свой профиль!");
     }
-
-//    /**
-//     * Method to search the users.
-//     *
-//     * @param Request $request
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function search(Request $request)
-//    {
-//        $searchTerm = $request->input('user_search_box');
-//        $searchRules = [
-//            'user_search_box' => 'required|string|max:255',
-//        ];
-//        $searchMessages = [
-//            'user_search_box.required' => 'Search term is required',
-//            'user_search_box.string'   => 'Search term has invalid characters',
-//            'user_search_box.max'      => 'Search term has too many characters - 255 allowed',
-//        ];
-//
-//        $validator = Validator::make($request->all(), $searchRules, $searchMessages);
-//
-//        if ($validator->fails()) {
-//            return response()->json([
-//                json_encode($validator),
-//            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-//        }
-//
-//        $results = config('laravelusers.defaultUserModel')::where('id', 'like', $searchTerm.'%')
-//            ->orWhere('name', 'like', $searchTerm.'%')
-//            ->orWhere('email', 'like', $searchTerm.'%')->get();
-//
-//        // Attach roles to results
-//        foreach ($results as $result) {
-//            $roles = [
-//                'roles' => $result->roles,
-//            ];
-//            $result->push($roles);
-//        }
-//
-//        return response()->json([
-//            json_encode($results),
-//        ], Response::HTTP_OK);
-//    }
 }

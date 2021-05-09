@@ -3,7 +3,7 @@
 @section('title', 'Управление ролями')
 
 @section('admin.content')
-    @include('admin.modals.confirm-delete-role')
+    @include('admin.modals.confirm-delete')
     @include('admin.components.alert')
     <div class="card mb-3">
         <div class="card-header bg-white">
@@ -31,7 +31,7 @@
                             <th class="col-1">{{ ('#') }}</th>
                             <th class="col-1">{{ ('ID') }}</th>
                             <th class="col-5">{{ ('Роль') }}</th>
-                            <th class="col-1">{{ ('Действия') }}</th>
+                            <th style="width: 15%;">{{ ('Действия') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,8 +58,8 @@
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                     <button type="button" class="btn btn-danger btn-sm"
-                                            data-bs-toggle="modal" data-bs-target="#confirmDeleteRole"
-                                            data-route-delete-role="{{ route('admin.roles.destroy', $role->id) }}"
+                                            data-bs-toggle="modal" data-bs-target="#confirmDelete"
+                                            data-route="{{ route('admin.roles.destroy', $role->id) }}"
                                             data-rolename="{{ $role->name }}">
                                         <i class="bi bi-trash-fill"></i>
                                     </button>
@@ -73,3 +73,22 @@
     </div>
     {{ $roles->links() }}
 @endsection
+
+@push('secondary-scripts')
+    <script>
+        let modalDeleteRole = document.getElementById('confirmDelete');
+        modalDeleteRole.addEventListener('show.bs.modal', function (event) {
+            let confirmMsg = "{{ ('Вы действительно хотите удалить роль @rolename?') }}";
+            let btn = event.relatedTarget;
+            this.querySelector('.route').action = btn.getAttribute('data-route');
+
+            let name = btn.getAttribute('data-rolename');
+            confirmMsg = confirmMsg.replace('@rolename', name);
+
+            this.querySelector('.modal-title').textContent = "{{ ('Удаление роли') }}";
+            this.querySelector('.modal-msg').textContent = confirmMsg;
+            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить роль') }}";
+        });
+    </script>
+@endpush
+

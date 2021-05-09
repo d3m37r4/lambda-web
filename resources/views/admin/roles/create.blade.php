@@ -30,11 +30,7 @@
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
                                name="name" placeholder="{{ 'Введите имя новой роли' }}" required>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        @include('components.field-filling-error', ['error' => 'name'])
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -49,11 +45,6 @@
                                 <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                             @endforeach
                         </select>
-                        @error('permissions')
-                        <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                         <div class="form-text" id="permissionsHelp">
                             {{ ('Вы можете назначить одновременно несколько разрешений для одной роли.') }}
                         </div>

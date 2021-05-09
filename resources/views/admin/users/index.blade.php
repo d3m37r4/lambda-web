@@ -3,7 +3,7 @@
 @section('title', 'Управление пользователями')
 
 @section('admin.content')
-    @include('admin.modals.confirm-delete-user')
+    @include('admin.modals.confirm-delete')
     @include('admin.components.alert')
     <div class="card mb-3">
         <div class="card-header bg-white">
@@ -28,11 +28,11 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th class="col-2">{{ ('#') }}</th>
+                            <th class="col-1">{{ ('#') }}</th>
                             <th class="col-3">{{ ('Имя') }}</th>
                             <th class="col-3">{{ ('E-mail') }}</th>
-                            <th class="col-2">{{ ('Роль') }}</th>
-                            <th class="col-2">{{ ('Действия') }}</th>
+                            <th class="col-3">{{ ('Роль') }}</th>
+                            <th style="width: 15%;">{{ ('Действия') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,3 +80,21 @@
     </div>
     {{ $users->links() }}
 @endsection
+
+@push('secondary-scripts')
+    <script>
+        let modalDeleteUser = document.getElementById('confirmDelete');
+        modalDeleteUser.addEventListener('show.bs.modal', function (event) {
+            let confirmMsg = "{{ ('Вы действительно хотите удалить пользователя @username?') }}";
+            let btn = event.relatedTarget;
+            this.querySelector('.route').action = btn.getAttribute('data-route');
+
+            let name = btn.getAttribute('data-username');
+            confirmMsg = confirmMsg.replace('@username', name);
+
+            this.querySelector('.modal-title').textContent = "{{ ('Удаление пользователя') }}";
+            this.querySelector('.modal-msg').textContent = confirmMsg;
+            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить пользователя') }}";
+        });
+    </script>
+@endpush

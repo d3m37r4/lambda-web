@@ -32,11 +32,7 @@
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
                                name="name" value="{{ old('name', $user->name) }}" required>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        @include('components.field-filling-error', ['error' => 'name'])
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -46,11 +42,7 @@
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                name="email" value="{{ old('email', $user->email) }}" required>
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        @include('components.field-filling-error', ['error' => 'email'])
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -61,11 +53,7 @@
                         <input id="password" type="password"
                                class="form-control @error('password') is-invalid @enderror"
                                name="password">
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        @include('components.field-filling-error', ['error' => 'password'])
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -73,8 +61,27 @@
                         {{ ('Подтверждение пароля') }}
                     </label>
                     <div class="col-md-6">
-                        <input id="password-confirm" type="password" class="form-control"
+                        <input id="password-confirm" type="password"
+                               class="form-control @error('password_confirmation') is-invalid @enderror"
                                name="password_confirmation">
+                        @include('components.field-filling-error', ['error' => 'password_confirmation'])
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="role" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Роль пользователя') }}
+                    </label>
+                    <div class="col-md-6">
+                        <select id="role" class="form-select @error('role') is-invalid @enderror"
+                                name="role" size="6">
+                            <option disabled>{{ ('Назначьте роль пользователю...') }}</option>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}"
+                                        @if (isset($user) && $user->hasRole($role)) selected @endif>
+                                    {{ $role->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div>

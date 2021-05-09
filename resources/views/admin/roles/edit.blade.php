@@ -32,11 +32,7 @@
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
                                name="name" value="{{ old('name', $role->name) }}" required>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        @include('components.field-filling-error', ['error' => 'name'])
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -49,17 +45,11 @@
                             <option disabled>{{ ('Назначьте разрешения для роли...') }}</option>
                             @foreach ($permissions as $permission)
                                 <option value="{{ $permission->id }}"
-                                    {{ (isset($role) &&
-                                        $role->permissions->contains('id', $permission->id)) ? 'selected' : '' }}>
+                                        @if (isset($role) && $role->hasPermissionTo($permission)) selected @endif>
                                     {{ $permission->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('permissions')
-                        <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                         <div class="form-text" id="permissionsHelp">
                             {{ ('Вы можете назначить одновременно несколько разрешений для одной роли.') }}
                         </div>
