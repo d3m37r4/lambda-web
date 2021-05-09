@@ -105,10 +105,13 @@ class ServersManagementController extends Controller {
      * Remove the specified server from storage.
      *
      * @param Server $server
-     * @return Response
+     * @return RedirectResponse
      */
-//    public function destroy(Server $server)
-//    {
-//
-//    }
+    public function destroy(Server $server): RedirectResponse {
+        $server->delete();
+
+        return back()
+            ->with('status', 'success')
+            ->with('message', "Сервер {$server->name} был удален!");
+    }
 }
