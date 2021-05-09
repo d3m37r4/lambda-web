@@ -4,24 +4,28 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Server;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class ServersManagementController extends Controller
-{
+class ServersManagementController extends Controller {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the servers.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
-//    public function index()
-//    {
-//
-//    }
+    public function index() {
+        $servers = Server::paginate(env('PAGINATION_SIZE'));
+
+        return view('admin.servers.index', compact('servers'));
+    }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new server.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
 //    public function create()
 //    {
@@ -29,10 +33,10 @@ class ServersManagementController extends Controller
 //    }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created server in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
 //    public function store(Request $request)
 //    {
@@ -40,10 +44,10 @@ class ServersManagementController extends Controller
 //    }
 
     /**
-     * Display the specified resource.
+     * Display the specified server.
      *
-     * @param  \App\Models\Server  $server
-     * @return \Illuminate\Http\Response
+     * @param Server $server
+     * @return Response
      */
 //    public function show(Server $server)
 //    {
@@ -51,10 +55,10 @@ class ServersManagementController extends Controller
 //    }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified server.
      *
-     * @param  \App\Models\Server  $server
-     * @return \Illuminate\Http\Response
+     * @param Server $server
+     * @return Response
      */
 //    public function edit(Server $server)
 //    {
@@ -62,11 +66,11 @@ class ServersManagementController extends Controller
 //    }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified server in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Server  $server
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param Server $server
+     * @return Response
      */
 //    public function update(Request $request, Server $server)
 //    {
@@ -74,10 +78,10 @@ class ServersManagementController extends Controller
 //    }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified server from storage.
      *
-     * @param  \App\Models\Server  $server
-     * @return \Illuminate\Http\Response
+     * @param Server $server
+     * @return Response
      */
 //    public function destroy(Server $server)
 //    {
