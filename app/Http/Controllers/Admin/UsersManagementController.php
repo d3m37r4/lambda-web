@@ -135,7 +135,7 @@ class UsersManagementController extends Controller {
             $rules['password_confirmation'] = ['required', 'string', 'same:password'];
         }
 
-        if(isset($rules)) {
+        if (isset($rules)) {
             $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {

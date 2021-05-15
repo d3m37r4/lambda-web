@@ -96,11 +96,11 @@ class RolesManagementController extends Controller {
     public function update(Request $request, Role $role): RedirectResponse {
         $nameCheck = !empty($request->input('name')) && ($request->input('name') != $role->name);
 
-        if($nameCheck) {
+        if ($nameCheck) {
             $rules['name'] = ['required', 'string', 'max:255', 'unique:roles'];
         }
 
-        if(isset($rules)) {
+        if (isset($rules)) {
             $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {

@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static where(string $string, string $token)
  * @method static paginate(mixed $env)
  * @property mixed name
+ * @property mixed ip
+ * @property mixed port
+ * @property mixed rcon
  */
 class Server extends Model {
     /**

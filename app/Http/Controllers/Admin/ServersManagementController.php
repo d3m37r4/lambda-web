@@ -50,7 +50,7 @@ class ServersManagementController extends Controller {
 
         $rconCheck = !empty($request->input('rcon'));
 
-        if($rconCheck) {
+        if ($rconCheck) {
             $rules['rcon'] = ['string', 'max:128'];
         }
 
@@ -65,6 +65,7 @@ class ServersManagementController extends Controller {
             'name' => strip_tags($request->input('name')),
             'ip' => $request->input('ip'),
             'port' => $request->input('port'),
+            'rcon' => $request->input('rcon'),
             'token' => (new Server)->generateSecurityToken(),
         ]);
 
@@ -89,24 +90,64 @@ class ServersManagementController extends Controller {
      * Show the form for editing the specified server.
      *
      * @param Server $server
-     * @return Response
+     * @return Application|Factory|View|Response
      */
-//    public function edit(Server $server)
-//    {
-//
-//    }
+    public function edit(Server $server) {
+        return view('admin.servers.edit', compact('server'));
+    }
 
     /**
      * Update the specified server in storage.
      *
      * @param  Request  $request
      * @param Server $server
-     * @return Response
+     * @return RedirectResponse
      */
-//    public function update(Request $request, Server $server)
-//    {
-//
-//    }
+    public function update(Request $request, Server $server): RedirectResponse {
+        $nameCheck = !empty($request->input('name')) && ($request->input('name') != $server->name);
+        $ipCheck = !empty($request->input('ip')) && ($request->input('ip') != $server->ip);
+        $portCheck = !empty($request->input('port')) && ($request->input('port') != $server->port);
+
+        if ($nameCheck) {
+            $rules['name'] = ['required', 'string', 'max:255', 'unique:servers'];
+        }
+
+        if ($ipCheck) {
+            $rules['ip'] = ['required', 'ip'];
+        }
+
+        if ($portCheck) {
+            $rules['port'] = ['required', 'integer', 'between:1,65535'];
+        }
+
+
+        if (isset($rules)) {
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+        }
+
+        if ($nameCheck) {
+            $server->name = strip_tags($request->input('name'));
+        }
+
+        if ($ipCheck) {
+            $server->ip = $request->input('ip');
+        }
+
+        if ($portCheck) {
+            $server->port = $request->input('port');
+        }
+
+        $server->rcon = $request->input('rcon');
+        $server->save();
+
+        return back()
+            ->with('status', 'success')
+            ->with('message', "Информация о сервере {$server->name} успешно обновлена!");
+    }
 
     /**
      * Remove the specified server from storage.
@@ -119,6 +160,6 @@ class ServersManagementController extends Controller {
 
         return back()
             ->with('status', 'success')
-            ->with('message', "Сервер {$server->name} был удален!");
+            ->with('message', "Сервер {$server->name} удален!");
     }
 }
