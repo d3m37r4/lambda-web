@@ -46,8 +46,15 @@ class ServersManagementController extends Controller {
             'name' => ['required', 'string', 'max:255', 'unique:servers'],
             'ip' => ['required', 'ip'],
             'port' => ['required', 'integer', 'between:1,65535'],
-            'rcon' => ['string', 'max:128'],
         ];
+
+        $rconCheck = !empty($request->input('rcon'));
+
+        if($rconCheck) {
+            $rules['rcon'] = ['string', 'max:128'];
+        }
+
+//        TODO: Add IP+port pair verification
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
