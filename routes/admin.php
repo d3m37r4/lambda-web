@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-//use Illuminate\Auth\Middleware\Authorize;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UsersManagementController;
 use App\Http\Controllers\Admin\RolesManagementController;
+use App\Http\Controllers\Admin\ServersManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +33,10 @@ Route::group([
         'middleware' => 'can:manage_roles'
     ])->group(function () {
         Route::resource('roles', RolesManagementController::class);
+    });
+    Route::middleware([
+        'middleware' => 'can:manage_servers'
+    ])->group(function () {
+        Route::resource('servers', ServersManagementController::class);
     });
 });

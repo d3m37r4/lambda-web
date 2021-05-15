@@ -14,8 +14,8 @@
         <i class="bi bi-shield-fill"></i>
         {{ ('Управление ролями') }}
     </a>
-    <a class="list-group-item list-group-item-action"
-       href="#">
+    <a class="list-group-item list-group-item-action {{ request()->routeIs('admin.servers.index') ? 'active' : '' }}"
+       href="{{ route('admin.servers.index') }}">
         <i class="bi bi-server"></i>
         {{ ('Управление серверами') }}
     </a>
