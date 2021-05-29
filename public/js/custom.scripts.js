@@ -10,3 +10,9 @@ function closeAlert() {
     alert.close();
 }
 setTimeout(closeAlert, delay);
+
+// Generate token
+const tokenLength = 64;
+function generateToken(element, len) {
+    element.value = secureRandomPassword.randomString({length: len});
+}
