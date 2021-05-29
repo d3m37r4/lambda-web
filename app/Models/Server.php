@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed ip
  * @property mixed port
  * @property mixed rcon
+ * @property mixed|string token
  */
 class Server extends Model {
     /**

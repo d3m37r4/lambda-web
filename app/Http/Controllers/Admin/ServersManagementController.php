@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ServersManagementController extends Controller {
@@ -49,16 +50,19 @@ class ServersManagementController extends Controller {
         ];
 
         $rconCheck = !empty($request->input('rcon'));
-
         if ($rconCheck) {
             $rules['rcon'] = ['string', 'max:128'];
         }
 
 //        TODO: Add IP+port pair verification
         $validator = Validator::make($request->all(), $rules);
-
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
+        }
+
+        $tokenHash = Hash::make($request->input('token'));
+        if (!$this->checkTokenUniqueByHash($tokenHash)) {
+            return $this->redirectBack();
         }
 
         $server = Server::create([
@@ -66,7 +70,7 @@ class ServersManagementController extends Controller {
             'ip' => $request->input('ip'),
             'port' => $request->input('port'),
             'rcon' => $request->input('rcon'),
-            'token' => (new Server)->generateSecurityToken(),
+            'token' => $tokenHash,
         ]);
 
         return redirect()
@@ -120,10 +124,8 @@ class ServersManagementController extends Controller {
             $rules['port'] = ['required', 'integer', 'between:1,65535'];
         }
 
-
         if (isset($rules)) {
             $validator = Validator::make($request->all(), $rules);
-
             if ($validator->fails()) {
                 return back()->withErrors($validator)->withInput();
             }
@@ -139,6 +141,13 @@ class ServersManagementController extends Controller {
 
         if ($portCheck) {
             $server->port = $request->input('port');
+        }
+
+        $tokenHash = Hash::make($request->input('token'));
+        if ($this->checkTokenUniqueByHash($tokenHash)) {
+            $server->token = $tokenHash;
+        } else {
+            return $this->redirectBack();
         }
 
         $server->rcon = $request->input('rcon');
@@ -157,9 +166,29 @@ class ServersManagementController extends Controller {
      */
     public function destroy(Server $server): RedirectResponse {
         $server->delete();
-
         return back()
             ->with('status', 'success')
             ->with('message', "Сервер {$server->name} удален!");
+    }
+
+    /**
+     * Checks uniqueness of token by hash.
+     *
+     * @param $hash
+     * @return bool
+     */
+    protected function checkTokenUniqueByHash($hash): bool {
+        return (bool)Server::where('token', $hash)->exists();
+    }
+
+    /**
+     * Redirects to previous page and shows notification.
+     *
+     * @return RedirectResponse
+     */
+    protected function redirectBack(): RedirectResponse {
+        return back()
+            ->with('status', 'danger')
+            ->with('message', "Токен уже используется системой! Пожалуйста, сгенерируйте новый токен.");
     }
 }
