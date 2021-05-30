@@ -178,7 +178,7 @@ class ServersManagementController extends Controller {
      * @return bool
      */
     protected function checkTokenUniqueByHash($hash): bool {
-        return (bool)Server::where('token', $hash)->exists();
+        return (bool)Server::where('token', $hash)->doesntExist();
     }
 
     /**
