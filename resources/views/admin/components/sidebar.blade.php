@@ -16,7 +16,7 @@
     </a>
     <a class="list-group-item list-group-item-action {{ request()->routeIs('admin.servers.index') ? 'active' : '' }}"
        href="{{ route('admin.servers.index') }}">
-        <i class="bi bi-server"></i>
+        <i class="fas fa-server"></i>
         {{ ('Управление серверами') }}
     </a>
 {{--        <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">--}}
