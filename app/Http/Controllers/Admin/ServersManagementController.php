@@ -22,7 +22,6 @@ class ServersManagementController extends Controller {
      */
     public function index() {
         $servers = Server::paginate(env('PAGINATION_SIZE'));
-
         return view('admin.servers.index', compact('servers'));
     }
 
@@ -173,6 +172,7 @@ class ServersManagementController extends Controller {
 
     /**
      * Checks uniqueness of token by hash.
+     * If record is not found, it returns true, otherwise false.
      *
      * @param $hash
      * @return bool
