@@ -10,14 +10,13 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h5 class="card-title">
-                        <i class="bi bi-server"></i>
+                        <i class="fas fa-server"></i>
                         {{ ('Управление серверами') }}
                     </h5>
                 </div>
                 <div class="d-grid gap-2 d-md-block">
-                    <a class="btn btn-success btn-sm"
-                        href="{{ route('admin.servers.create') }}">
-                        <i class="bi bi-shield-plus"></i>
+                    <a class="btn btn-success btn-sm" href="{{ route('admin.servers.create') }}">
+                        <i class="fas fa-plus"></i>
                         {{ ('Добавить сервер') }}
                     </a>
                 </div>
@@ -28,38 +27,36 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th class="col-1">{{ ('#') }}</th>
-                            <th class="col-1">{{ ('ID') }}</th>
-                            <th class="col-5">{{ ('Сервер') }}</th>
-                            <th style="width: 15%;">{{ ('Действия') }}</th>
+                            <th style="width:50%;">{{ ('Сервер') }}</th>
+                            <th style="width:35%;">{{ ('IP') }}</th>
+                            <th style="width:15%;">{{ ('Действия') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($servers as $server)
                             <tr>
                                 <td>
-                                    {{ $loop->iteration }}
-                                </td>
-                                <td>
-                                    {{ $server->id }}
-                                </td>
-                                <td>
                                     {{ $server->name }}
+                                </td>
+                                <td>
+                                    {{ $server->ip }}:{{ $server->port }}
                                 </td>
                                 <td>
                                     <a class="btn btn-primary btn-sm"
                                        href="#">
-                                        <i class="bi bi-info-square"></i>
+                                        <i class="fas fa-window-maximize"></i>
                                     </a>
                                     <a class="btn btn-success btn-sm"
-                                       href="{{ route('admin.servers.edit', $server->id) }}">
-                                        <i class="bi bi-pencil-square"></i>
+                                       href="{{ route('admin.servers.edit', $server->id) }}"
+                                       title="{{ ('Редактировать сервер') }}">
+                                        <i class="fas fa-edit"></i>
                                     </a>
                                     <button type="button" class="btn btn-danger btn-sm"
                                             data-bs-toggle="modal" data-bs-target="#confirmDelete"
                                             data-route="{{ route('admin.servers.destroy', $server->id) }}"
-                                            data-servername="{{ $server->name }}">
-                                        <i class="bi bi-trash-fill"></i>
+                                            data-servername="{{ $server->name }}"
+                                            title="{{ ('Удалить сервер') }}">
+                                        <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
                             </tr>

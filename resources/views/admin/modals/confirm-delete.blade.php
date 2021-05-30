@@ -10,14 +10,13 @@
                 <p class="modal-msg"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
-                    <i class="bi bi-x-circle"></i>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     {{ ('Отмена') }}
                 </button>
                 <form method="POST" class="route">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm modal-btn-title">
+                    <button type="submit" class="btn btn-danger modal-btn-title">
                         <i class="bi bi-trash-fill"></i>
                     </button>
                 </form>
