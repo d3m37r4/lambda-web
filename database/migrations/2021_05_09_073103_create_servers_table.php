@@ -20,6 +20,7 @@ class CreateServersTable extends Migration
             $table->integer('port');
             $table->string('rcon', 128)->nullable();
             $table->string('token', 255)->nullable();
+            $table->unsignedTinyInteger('active')->default('1');
             $table->timestamps();
         });
     }
