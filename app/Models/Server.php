@@ -49,18 +49,4 @@ class Server extends Model {
     protected $casts = [
         'port' => 'int',
     ];
-
-    /**
-     * @return string
-     * @throws Exception
-     */
-    public function generateSecurityToken(): string {
-        $tries = 0;
-
-        do {
-            $token = bin2hex(random_bytes(32));
-        } while (++$tries < 3 && Server::where('token', $token)->exists());
-
-        return $token;
-    }
 }
