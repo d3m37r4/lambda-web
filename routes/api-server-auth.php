@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-    'middleware' => 'api-server-auth',
+//    'middleware' => 'api-server-auth',
     'prefix' => 'server',
 ], function () {
     Route::post('auth', [ServerController::class, 'auth']);

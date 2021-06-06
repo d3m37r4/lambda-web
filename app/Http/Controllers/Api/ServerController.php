@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use Carbon\Traits\Date;
 use Exception;
 use App\Models\Server;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ServerController extends Controller {
     /**
@@ -18,7 +16,7 @@ class ServerController extends Controller {
      * @return void
      */
     public function __construct() {
-        $this->middleware('api-server-auth', ['except' => ['auth']]);
+        $this->middleware('api-server-auth', ['except' => 'auth']);
     }
 
     /**
@@ -34,22 +32,22 @@ class ServerController extends Controller {
             ->first();
 
         if (empty($server)) {
-            throw new HttpException(404,'Server not found');
+            return response()->json(['message' =>'Server not found'], 404);
         }
 
         $authToken = $request->input('auth_token');
         if (empty($authToken)) {
-            throw new HttpException(400,'Token required');
+            return response()->json(['message' =>'Token required'], 400);
         }
 
         if (!Hash::check($authToken, $server->auth_token)) {
-            throw new HttpException(401,'Unauthorized');
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         $accessToken = $this->generateAccessToken();
 
         $server->access_token = Hash::make($accessToken);
-        $server->access_token_expires = Date::now()->addHours(12);
+        $server->access_token_expires = now()->addHours(12);
         $server->save();
 
         $response = [
