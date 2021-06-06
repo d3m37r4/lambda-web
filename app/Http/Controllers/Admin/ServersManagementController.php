@@ -59,8 +59,8 @@ class ServersManagementController extends Controller {
             return back()->withErrors($validator)->withInput();
         }
 
-        $tokenHash = Hash::make($request->input('token'));
-        if (!$this->checkTokenUniqueByHash($tokenHash)) {
+        $authTokenHash = Hash::make($request->input('auth_token'));
+        if (!$this->checkAuthTokenUniqueByHash($authTokenHash)) {
             return $this->redirectBack();
         }
 
@@ -69,7 +69,7 @@ class ServersManagementController extends Controller {
             'ip' => $request->input('ip'),
             'port' => $request->input('port'),
             'rcon' => $request->input('rcon'),
-            'token' => $tokenHash,
+            'auth_token' => $authTokenHash,
         ]);
 
         return redirect()
@@ -142,9 +142,9 @@ class ServersManagementController extends Controller {
             $server->port = $request->input('port');
         }
 
-        $tokenHash = Hash::make($request->input('token'));
-        if ($this->checkTokenUniqueByHash($tokenHash)) {
-            $server->token = $tokenHash;
+        $authTokenHash = Hash::make($request->input('auth_token'));
+        if ($this->checkAuthTokenUniqueByHash($authTokenHash)) {
+            $server->auth_token = $authTokenHash;
         } else {
             return $this->redirectBack();
         }
@@ -177,8 +177,8 @@ class ServersManagementController extends Controller {
      * @param $hash
      * @return bool
      */
-    protected function checkTokenUniqueByHash($hash): bool {
-        return (bool)Server::where('token', $hash)->doesntExist();
+    protected function checkAuthTokenUniqueByHash($hash): bool {
+        return (bool)Server::where('auth_token', $hash)->doesntExist();
     }
 
     /**

@@ -75,7 +75,7 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             <input id="token" type="text" class="form-control"
-                                   name="token" aria-describedby="tokenHelp"
+                                   name="auth_token" aria-describedby="tokenHelp"
                                    readonly>
                             <button type="button" class="btn btn-outline-success" id="copyToken"
                                     title="{{ ('Скопировать токен в буфер обмена') }}">
