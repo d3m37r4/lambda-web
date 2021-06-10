@@ -22,7 +22,6 @@ class ServerSeeder extends Seeder
                 'name' => 'Server #' .$i,
                 'ip' => '127.0.0.1',
                 'port' => (27000 + $i),
-                'active' => 0,
             ]);
         }
     }

@@ -2,63 +2,74 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use Exception;
 use App\Models\Server;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ServerController extends Controller {
     /**
-     * Display a listing of the resource.
+     * Create a new AuthController instance.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-//    public function index()
-//    {
-//
-//    }
+    public function __construct() {
+        $this->middleware('api-server-auth', ['except' => 'auth']);
+    }
 
     /**
-     * Store a newly created resource in storage.
+     * Get a token via given credentials.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
+     * @throws Exception
      */
-//    public function store(Request $request)
-//    {
-//
-//    }
+    public function auth(Request $request): JsonResponse {
+        $server = Server::where('ip', $request->ip())
+            ->where('port', $request->input('port'))
+            ->first();
+
+        if (empty($server)) {
+            return response()->json(['message' =>'Server not found'], 404);
+        }
+
+        $authToken = $request->input('auth_token');
+        if (empty($authToken)) {
+            return response()->json(['message' =>'Token required'], 400);
+        }
+
+        if (!Hash::check($authToken, $server->auth_token)) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $accessToken = $this->generateAccessToken();
+
+        $server->access_token = Hash::make($accessToken);
+        $server->access_token_expires = now()->addHours(12);
+        $server->save();
+
+        $response = [
+            'access_token' => $accessToken,
+            'expires_in' => $server->access_token_expires
+        ];
+
+        return response()->json($response);
+    }
 
     /**
-     * Display the specified resource.
+     * Generate a unique access token for server.
      *
-     * @param  \App\Models\Server  $server
-     * @return \Illuminate\Http\Response
+     * @return string
+     * @throws Exception
      */
-//    public function show(Server $server)
-//    {
-//
-//    }
+    protected function generateAccessToken(): string {
+        $tries = 0;
+        do {
+            $token = bin2hex(random_bytes(64));
+        } while (++$tries < 3 && Server::where('access_token', $token)->exists());
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Server  $server
-     * @return \Illuminate\Http\Response
-     */
-//    public function update(Request $request, Server $server)
-//    {
-//
-//    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Server  $server
-     * @return \Illuminate\Http\Response
-     */
-//    public function destroy(Server $server)
-//    {
-//
-//    }
+        return $token;
+    }
 }
