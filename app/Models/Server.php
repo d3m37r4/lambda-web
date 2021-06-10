@@ -48,5 +48,6 @@ class Server extends Model {
      */
     protected $casts = [
         'port' => 'int',
+        'access_token_expires' => 'timestamp',
     ];
 }
