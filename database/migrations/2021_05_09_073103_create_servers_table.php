@@ -19,7 +19,9 @@ class CreateServersTable extends Migration
             $table->string('ip', 32);
             $table->integer('port');
             $table->string('rcon', 128)->nullable();
-            $table->string('token', 255)->nullable();
+            $table->string('auth_token', 255)->nullable();
+            $table->string('access_token', 255)->nullable();
+            $table->timestamp('access_token_expires')->nullable();
             $table->timestamps();
         });
     }

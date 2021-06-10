@@ -1,8 +1,6 @@
 @extends('layouts.main-layout')
 
-@section('title')
-    {{ 'Панель управления' }}
-@endsection
+@section('title', 'Панель управления')
 
 @section('content')
 {{--    @include('admin.components.breadcrubms')--}}

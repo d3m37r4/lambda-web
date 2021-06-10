@@ -9,15 +9,13 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h5 class="card-title">
-                        <i class="bi bi-pencil-square"></i>
+                        <i class="fas fa-server"></i>
                         {{ ('Редактирование сервера: ') }} {{ $server->name }}
                     </h5>
                 </div>
                 <div>
-                    <a class="btn btn-primary btn-sm" href="{{ route('admin.servers.index') }}">
-                        <i class="bi bi-arrow-90deg-left"></i>
-                        {{ ('Вернуться назад') }}
-                    </a>
+                    @include('admin.components.btn-back',
+                        ['title' => 'Вернуться назад', 'route' => 'admin.servers.index'])
                 </div>
             </div>
         </div>
@@ -61,19 +59,59 @@
                     </label>
                     <div class="col-md-6">
                         <input id="rcon" type="text" class="form-control @error('rcon') is-invalid @enderror"
-                               name="rcon" value="{{ old('rcon', $server->rcon) }}"
-{{--                               placeholder="{{ 'Введите RCON пароль' }}"--}}
-                        >
+                                @isset($server->rcon)
+                                    value="{{ old('rcon', $server->rcon) }}"
+                                @else
+                                    placeholder="{{ 'Введите RCON пароль' }}"
+                                @endisset
+                               name="rcon">
                         @include('components.field-filling-error', ['error' => 'rcon'])
                     </div>
                 </div>
+                <div class="row form-group mb-3">
+                    <label for="token" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Токен авторизации') }}
+                    </label>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <input id="token" type="text" class="form-control"
+                                   name="auth_token" aria-describedby="tokenHelp"
+                                   readonly>
+                            <button type="button" class="btn btn-outline-success" id="copyToken"
+                                    title="{{ ('Скопировать токен в буфер обмена') }}">
+                                <i class="far fa-clone"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" id="refreshToken"
+                                    title="{{ ('Сгенерировать новый токен') }}">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <div class="form-text" id="tokenHelp">
+                            {{ ('Запишите данный токен в поле "token" файлa "lambda-core.json" на сервере.') }}
+                            {{ ('Токен хранится в базе данных в зашифрованном виде. Если Вы утратили токен, необходимо сгенерировать новый.') }}
+                        </div>
+                    </div>
+                </div>
                 <div>
-                    <button type="submit" class="btn btn-success btn-sm">
-                        <i class="bi bi-save"></i>
-                        <span class="ml-1">{{ ('Обновить') }}</span>
-                    </button>
+                    @include('admin.components.btn-upd', ['title' => 'Обновить'])
                 </div>
             </form>
         </div>
     </div>
 @endsection
+
+@push('secondary-scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let tokenForm = document.querySelector("#token");
+            document.getElementById('refreshToken')
+                .addEventListener('click', () => generateToken(tokenForm, tokenLength));
+
+            document.getElementById('copyToken')
+                .addEventListener('click', function () {
+                    tokenForm.select();
+                    document.execCommand("copy");
+                });
+        });
+    </script>
+@endpush

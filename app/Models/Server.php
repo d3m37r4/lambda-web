@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static create(array $array)
  * @method static where(string $string, string $token)
  * @method static paginate(mixed $env)
- * @property mixed name
- * @property mixed ip
- * @property mixed port
- * @property mixed rcon
+ * @property string name
+ * @property string ip
+ * @property int port
+ * @property string rcon
+ * @property string auth_token
+ * @property string access_token
  */
 class Server extends Model {
     /**
@@ -30,17 +31,17 @@ class Server extends Model {
     /**
      * @var array
      */
-    protected $fillable = ['name', 'ip', 'port', 'rcon', 'token'];
+    protected $fillable = ['name', 'ip', 'port', 'rcon', 'auth_token', 'access_token'];
 
     /**
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = ['access_token_expires', 'created_at', 'updated_at'];
 
     /**
      * @var array
      */
-    protected $hidden = ['rcon', 'token', 'created_at', 'updated_at'];
+    protected $hidden = ['rcon', 'auth_token', 'access_token', 'access_token_expires','created_at', 'updated_at'];
 
     /**
      * @var array
@@ -48,18 +49,4 @@ class Server extends Model {
     protected $casts = [
         'port' => 'int',
     ];
-
-    /**
-     * @return string
-     * @throws Exception
-     */
-    public function generateSecurityToken(): string {
-        $tries = 0;
-
-        do {
-            $token = bin2hex(random_bytes(32));
-        } while (++$tries < 3 && Server::where('token', $token)->exists());
-
-        return $token;
-    }
 }
