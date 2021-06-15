@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 /**
  * @method static create(array $array)
  * @method static where(string $string, string $token)
  * @method static paginate(mixed $env)
+ * @method static find(array|Application|Request|string|null $request)
  * @property string name
  * @property string ip
  * @property int port
