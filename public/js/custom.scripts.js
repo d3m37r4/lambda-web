@@ -1,15 +1,19 @@
-// Hide notification after a specified time
-const delay = 2000;
+// Initializing alerts
 let alertList = document.querySelectorAll('.alert');
 alertList.forEach(function (alert) {
-    new bootstrap.Alert(alert);
+    new mdb.Alert(alert);
 });
-function closeAlert() {
-    let alertNode = document.querySelector('.alert');
-    let alert = bootstrap.Alert.getInstance(alertNode);
-    alert.close();
-}
-setTimeout(closeAlert, delay);
+
+const alertHidingDelay = 2000;  // Delay before hiding alert
+document.addEventListener("DOMContentLoaded", function() {
+    // Hide alert after a specified time
+    let alert = mdb.Alert.getInstance(document.querySelector('.alert'));
+    if (alert) {
+        setTimeout(() => {
+            alert.close();
+        }, alertHidingDelay);
+    }
+});
 
 // Generate token
 const tokenLength = 64;
