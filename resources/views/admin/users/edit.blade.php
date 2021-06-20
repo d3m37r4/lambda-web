@@ -4,24 +4,22 @@
 
 @section('admin.content')
     @include('admin.components.alert')
-    <div class="card mb-3">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h5 class="card-title">
-                        <i class="bi bi-pencil-square"></i>
+    <div class="card shadow-2 border">
+        <div class="card-header">
+            <div class="d-sm-flex justify-content-between">
+                <div class="me-auto align-self-center">
+                    <h5 class="card-title m-0">
+                        <i class="fas fa-user-edit"></i>
                         {{ ('Редактирование пользователя: ') }} {{ $user->name }}
                     </h5>
                 </div>
-                <div>
-                    <a class="btn btn-primary btn-sm" href="{{ route('admin.users.index') }}">
-                        <i class="bi bi-reply"></i>
-                        {{ ('Вернуться назад') }}
-                    </a>
+                <div class="d-grid">
+                    @include('admin.components.link-back', ['route' => 'admin.users.index', 'title' => 'Назад'])
                 </div>
             </div>
         </div>
         <div class="card-body">
+            {{ $previousUrl }}
             <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -37,7 +35,7 @@
                 </div>
                 <div class="row form-group mb-3">
                     <label for="email" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('E-Mail') }}
+                        {{ ('Эл. почта') }}
                     </label>
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
@@ -84,11 +82,8 @@
                         </select>
                     </div>
                 </div>
-                <div>
-                    <button type="submit" class="btn btn-success btn-sm">
-                        <i class="bi bi-person-check"></i>
-                        <span class="ml-1">{{ ('Обновить') }}</span>
-                    </button>
+                <div class="d-flex justify-content-center mt-4">
+                    @include('admin.components.btn-upd', ['title' => 'Обновить пользователя'])
                 </div>
             </form>
         </div>

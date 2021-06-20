@@ -14,7 +14,7 @@
                     </h5>
                 </div>
                 <div>
-                    @include('admin.components.btn-back',
+                    @include('admin.components.link-back',
                         ['title' => 'Вернуться назад', 'route' => 'admin.servers.index'])
                 </div>
             </div>

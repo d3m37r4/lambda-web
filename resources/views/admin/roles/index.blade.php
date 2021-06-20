@@ -10,7 +10,7 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h5 class="card-title">
-                        <i class="bi bi-shield-fill"></i>
+                        <i class="fas fa-user-shield"></i>
                         {{ ('Управление ролями') }}
                     </h5>
                 </div>
