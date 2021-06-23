@@ -13,6 +13,10 @@ body {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05) !important;
 }
 
+.page-link:focus {
+    color: #212529;
+}
+
 .page-item.clickable:focus .page-link, .page-item.clickable:hover .page-link {
     background-color: #e8e8e8;
 }

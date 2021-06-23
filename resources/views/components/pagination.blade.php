@@ -10,8 +10,8 @@
                 </li>
             @else
                 <li class="page-item clickable pe-1">
-                    <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev"
-                       aria-label="@lang('pagination.previous')">
+                    <a class="page-link ripple" href="{{ $paginator->previousPageUrl() }}" rel="prev"
+                       aria-label="@lang('pagination.previous')" data-mdb-ripple-color="light">
                         {{ ('Назад') }}
                     </a>
                 </li>
@@ -33,13 +33,13 @@
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
                             <li class="page-item active px-1" aria-current="page">
-                                <span class="page-link">
+                                <span class="page-link ripple" data-mdb-ripple-color="light">
                                     {{ $page }}
                                 </span>
                             </li>
                         @else
                             <li class="page-item clickable px-1">
-                                <a class="page-link" href="{{ $url }}">
+                                <a class="page-link ripple" href="{{ $url }}" data-mdb-ripple-color="light">
                                     {{ $page }}
                                 </a>
                             </li>
@@ -51,8 +51,8 @@
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
                 <li class="page-item clickable ps-1">
-                    <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next"
-                       aria-label="@lang('pagination.next')">
+                    <a class="page-link ripple" href="{{ $paginator->nextPageUrl() }}" rel="next"
+                       aria-label="@lang('pagination.next')" data-mdb-ripple-color="light">
                         {{ ('Далее') }}
                     </a>
                 </li>
