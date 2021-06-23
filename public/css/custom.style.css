@@ -6,3 +6,19 @@ body {
 .fade {
     transition: opacity 0.25s linear;
 }
+
+.page-item.clickable .page-link {
+    background-color: #fbfbfb;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05) !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05) !important;
+}
+
+.page-item.clickable:focus .page-link, .page-item.clickable:hover .page-link {
+    background-color: #e8e8e8;
+}
+
+.page-item.disabled .page-link {
+    background-color: transparent;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05) !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05) !important;
+}

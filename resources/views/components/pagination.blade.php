@@ -9,8 +9,8 @@
                     </span>
                 </li>
             @else
-                <li class="page-item">
-                    <a class="page-link pe-1" href="{{ $paginator->previousPageUrl() }}" rel="prev"
+                <li class="page-item clickable pe-1">
+                    <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev"
                        aria-label="@lang('pagination.previous')">
                         {{ ('Назад') }}
                     </a>
@@ -38,7 +38,7 @@
                                 </span>
                             </li>
                         @else
-                            <li class="page-item px-1">
+                            <li class="page-item clickable px-1">
                                 <a class="page-link" href="{{ $url }}">
                                     {{ $page }}
                                 </a>
@@ -50,7 +50,7 @@
 
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
-                <li class="page-item ps-1">
+                <li class="page-item clickable ps-1">
                     <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next"
                        aria-label="@lang('pagination.next')">
                         {{ ('Далее') }}
