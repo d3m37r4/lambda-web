@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
 use App\Http\Controllers\Controller;
 use App\Models\Server;
-use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
