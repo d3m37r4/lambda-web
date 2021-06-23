@@ -14,12 +14,11 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['route' => 'admin.users.index', 'title' => 'Назад'])
+                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
                 </div>
             </div>
         </div>
         <div class="card-body">
-            {{ $previousUrl }}
             <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
                 @csrf
                 @method('PUT')

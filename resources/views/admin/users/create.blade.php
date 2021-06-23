@@ -13,12 +13,12 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['route' => 'admin.users.index', 'title' => 'Назад'])
+                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.users.store') }}" method="POST">
+            <form action="{{ route('admin.users.store', ['redirect' => $redirect]) }}" method="POST">
                 @csrf
                 <div class="row form-group mb-3">
                     <label for="name" class="col-md-4 col-form-label text-sm-end">
