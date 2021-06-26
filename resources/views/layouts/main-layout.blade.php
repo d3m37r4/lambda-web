@@ -26,7 +26,7 @@
           integrity="sha512-IOy/HxeKfBflRjSsh+pYnEtfnV1lDN6HmazKjAOPlTfLHMoIAGPAvIo/7dH9sXu2kE0QV91HtAMVaLloM0aeCA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/custom.style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lambda.style.css') }}">
 </head>
 <body class="d-flex flex-column min-vh-100">
     <!-- Navbar content -->
@@ -48,7 +48,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
     <script src="{{ asset('js/secure-random-password.min.js') }}"></script>
-    <script src="{{ asset('js/custom.scripts.js') }}"></script>
+    <script src="{{ asset('js/lambda.scripts.js') }}"></script>
     @stack('secondary-scripts')
 </body>
 </html>
