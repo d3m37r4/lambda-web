@@ -104,9 +104,9 @@
             let name = btn.getAttribute('data-username');
             confirmMsg = confirmMsg.replace('@username', name);
 
-            this.querySelector('.modal-title').textContent = "{{ ('Удаление пользователя') }}";
+            this.querySelector('.modal-title').textContent = "{{ ('Подтверждение действия') }}";
             this.querySelector('.modal-msg').textContent = confirmMsg;
-            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить пользователя') }}";
+            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить') }}";
         });
     </script>
 @endpush
