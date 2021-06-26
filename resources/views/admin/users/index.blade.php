@@ -108,7 +108,5 @@
             this.querySelector('.modal-msg').textContent = confirmMsg;
             this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить пользователя') }}";
         });
-
-
     </script>
 @endpush
