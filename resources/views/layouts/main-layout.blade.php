@@ -28,7 +28,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/custom.style.css') }}">
 </head>
-<body class="d-flex flex-column min-vh-100" style="background-color: hsl(0, 0%, 95%);">
+<body class="d-flex flex-column min-vh-100">
     <!-- Navbar content -->
     @include('components.navbar')
 

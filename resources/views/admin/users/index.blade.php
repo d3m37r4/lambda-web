@@ -27,15 +27,19 @@
                 <table class="table align-middle">
                     <thead class="table-dark">
                         <tr>
-                            <th class="col-2">{{ ('Имя') }}</th>
-                            <th class="col-2">{{ ('Эл. почта') }}</th>
-                            <th class="col-2">{{ ('Роль') }}</th>
-                            <th class="col-1">{{ ('Действия') }}</th>
+                            <th class="col-2">{{ ('UID') }}</th>
+                            <th class="col-3">{{ ('Пользователь') }}</th>
+                            <th class="col-3">{{ ('Эл. почта') }}</th>
+                            <th class="col-3">{{ ('Роль') }}</th>
+                            <th style="min-width: 140px;">{{ ('Действия') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($users as $user)
                             <tr>
+                                <td>
+                                    {{ $user->id }}
+                                </td>
                                 <td>
                                     {{ $user->name }}
                                 </td>
