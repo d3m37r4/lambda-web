@@ -37,8 +37,6 @@ body {
 }
 
 .list-group-item.active {
-    z-index: 2;
     color: #fff;
     background-color: #1266f1;
-    border-color: #1266f1;
 }
