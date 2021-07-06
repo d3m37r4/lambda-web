@@ -27,7 +27,7 @@
                 <table class="table align-middle">
                     <thead class="table-dark">
                         <tr>
-                            <th class="col-2">{{ ('UID') }}</th>
+                            <th class="col-2">{{ ('ID') }}</th>
                             <th class="col-3">{{ ('Пользователь') }}</th>
                             <th class="col-3">{{ ('Эл. почта') }}</th>
                             <th class="col-3">{{ ('Роль') }}</th>
