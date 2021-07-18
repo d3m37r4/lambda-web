@@ -47,7 +47,6 @@
                                        href="{{ route('admin.users.show', $user->id) }}">
                                         {{ $user->name }}
                                     </a>
-
                                 </td>
                                 <td>
                                     <a class="link-primary"
