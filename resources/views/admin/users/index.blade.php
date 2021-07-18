@@ -41,7 +41,13 @@
                                     {{ $user->id }}
                                 </td>
                                 <td>
-                                    {{ $user->name }}
+                                    <a class="link-primary"
+                                       data-mdb-toggle="tooltip"
+                                       title="{{ ('Показать профиль пользователя') }}"
+                                       href="{{ route('admin.users.show', $user->id) }}">
+                                        {{ $user->name }}
+                                    </a>
+
                                 </td>
                                 <td>
                                     <a class="link-primary"
