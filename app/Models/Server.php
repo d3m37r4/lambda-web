@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 
 /**
@@ -34,7 +35,7 @@ class Server extends Model {
     /**
      * @var array
      */
-    protected $fillable = ['name', 'ip', 'port', 'rcon', 'auth_token', 'access_token'];
+    protected $fillable = ['name', 'ip', 'port', 'rcon', 'map_id', 'auth_token', 'access_token'];
 
     /**
      * @var array
@@ -51,6 +52,14 @@ class Server extends Model {
      */
     protected $casts = [
         'port' => 'int',
+        'map_id' => 'int',
         'access_token_expires' => 'timestamp',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function map(): BelongsTo {
+        return $this->belongsTo(Map::class);
+    }
 }

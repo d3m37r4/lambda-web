@@ -59,7 +59,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    de_dust2
+                                    {{ $server->map['name'] ?? 'Не определена' }}
                                 </td>
                                 <td class="text-center">
                                     32/32
