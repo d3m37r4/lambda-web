@@ -42,6 +42,6 @@ class Map extends Model {
      * @return HasMany
      */
     public function servers(): HasMany {
-        return $this->hasMany(Server::class, 'map_id');
+        return $this->hasMany(Server::class);
     }
 }
