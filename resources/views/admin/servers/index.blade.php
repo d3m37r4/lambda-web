@@ -53,7 +53,7 @@
                                         </div>
                                         <div>
                                             <span class="text-muted">
-                                                {{ $server->ip }}:{{ $server->port }}
+                                                {{ $server->full_address }}
                                             </span>
                                         </div>
                                     </div>

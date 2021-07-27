@@ -50,10 +50,18 @@ class Server extends Model {
     /**
      * @var array
      */
+    protected $appends = [
+        'full_address',
+    ];
+
+    /**
+     * @var array
+     */
     protected $casts = [
         'port' => 'int',
         'map_id' => 'int',
         'access_token_expires' => 'timestamp',
+        'full_address' => 'string',
     ];
 
     /**
@@ -61,5 +69,14 @@ class Server extends Model {
      */
     public function map(): BelongsTo {
         return $this->belongsTo(Map::class);
+    }
+
+    /**
+     * Gets full server address.
+     *
+     * @return string
+     */
+    public function getFullAddressAttribute(): string {
+        return $this->ip . ':' . $this->port;
     }
 }
