@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class ServersManagementController extends Controller {
@@ -82,12 +83,13 @@ class ServersManagementController extends Controller {
      * Display the specified server.
      *
      * @param Server $server
-     * @return Response
+     * @return Application|Factory|View|Response
      */
-//    public function show(Server $server)
-//    {
-//
-//    }
+    public function show(Server $server) {
+        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
+
+        return view('admin.servers.show', compact('server', 'redirect'));
+    }
 
     /**
      * Show the form for editing the specified server.
@@ -190,5 +192,16 @@ class ServersManagementController extends Controller {
         return back()
             ->with('status', 'danger')
             ->with('message', "Токен уже используется системой! Пожалуйста, сгенерируйте новый токен.");
+    }
+
+    /**
+     * Gets previous url or, if previous url is equal to current one, sets desired standard value
+     *
+     * @param string $defaultUrl
+     * @return string
+     */
+    function getPreviousUrl(string $defaultUrl): string {
+        $previous = URL::previous();
+        return (($previous !== URL::current()) ? $previous : $defaultUrl);
     }
 }

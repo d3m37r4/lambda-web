@@ -59,7 +59,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{ $server->map['name'] ?? 'Не определена' }}
+                                    {{ $server->map_name }}
                                 </td>
                                 <td class="text-center">
                                     32/32

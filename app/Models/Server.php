@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
  * @property string rcon
  * @property string auth_token
  * @property string access_token
+ * @property mixed map
  */
 class Server extends Model {
     /**
@@ -62,6 +63,7 @@ class Server extends Model {
         'map_id' => 'int',
         'access_token_expires' => 'timestamp',
         'full_address' => 'string',
+        'map_name' => 'string',
     ];
 
     /**
@@ -69,6 +71,15 @@ class Server extends Model {
      */
     public function map(): BelongsTo {
         return $this->belongsTo(Map::class);
+    }
+
+    /**
+     * Gets map name.
+     *
+     * @return string
+     */
+    public function getMapNameAttribute(): string {
+        return $this->map['name'] ?? 'Не определена';
     }
 
     /**
