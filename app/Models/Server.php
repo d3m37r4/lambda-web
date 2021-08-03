@@ -46,13 +46,14 @@ class Server extends Model {
     /**
      * @var array
      */
-    protected $hidden = ['rcon', 'auth_token', 'access_token', 'access_token_expires','created_at', 'updated_at'];
+    protected $hidden = ['rcon', 'auth_token', 'access_token', 'access_token_expires', 'created_at', 'updated_at'];
 
     /**
      * @var array
      */
     protected $appends = [
         'full_address',
+        'map_name',
     ];
 
     /**
