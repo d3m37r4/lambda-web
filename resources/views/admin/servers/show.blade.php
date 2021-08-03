@@ -17,10 +17,7 @@
                 </div>
             </div>
         </div>
-
-
         <div class="card-body">
-
             <div class="row mb-3">
                 <div class="col-md-4">
                     <svg class="img-fluid shadow-2-strong rounded"
@@ -32,31 +29,55 @@
                         </text>
                     </svg>
                 </div>
-                <div class="col-md-5">
-                    <div class="pb-3">
-                        <table class="server-info-table">
-                            <tbody>
-                            <tr>
-                                <td>Адрес сервера</td>
-                                <td>127.0.0.1:27015</td>
-                            </tr>
-                            <tr>
-                                <td>Игроков онлайн</td>
-                                <td id="online">11/32 (34%)</td>
-                            </tr>
-                            <tr>
-                                <td>Текущая карта</td>
-                                <td id="map">de_dust2_2x2</td>
-                            </tr>
-                            <tr>
-                                <td>Обновлен</td>
-                                <td id="time">4 минуты 3 секунды назад</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                <div class="col-md-8">
+                    <div class="d-sm-flex justify-content-between">
+                        <div class="me-auto align-self-center">
+                            {{ ('Адрес сервера') }}
+                        </div>
+                        <div class="d-grid">
+                            <a class="link-primary"
+                               data-mdb-toggle="tooltip"
+                               title="{{ ('Подключиться к серверу') }}"
+                               href="steam://connect/{{ $server->full_address }}">
+                                {{ $server->full_address }}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-sm-flex justify-content-between">
+                        <div class="me-auto align-self-center">
+                            {{ ('Игроков онлайн') }}
+                        </div>
+                        <div class="d-grid">
+                            11/32 (34%)
+                        </div>
+                    </div>
+                    <div class="d-sm-flex justify-content-between">
+                        <div class="me-auto align-self-center">
+                            {{ ('Текущая карта') }}
+                        </div>
+                        <div class="d-grid">
+                            {{ $server->map_name }}
+                        </div>
+                    </div>
+                    <div class="d-sm-flex justify-content-between">
+                        <div class="me-auto align-self-center">
+                            {{ ('Добавлен') }}
+                        </div>
+                        <div class="d-grid">
+                            {{ $server->created_at->format('d.m.Y - H:i:s') }}
+                        </div>
+                    </div>
+                    <div class="d-sm-flex justify-content-between">
+                        <div class="me-auto align-self-center">
+                            {{ ('Последнее обновление') }}
+                        </div>
+                        <div class="d-grid">
+                            {{ $server->updated_at->format('d.m.Y - H:i:s') }}
+                        </div>
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div>
                     <ul class="nav nav-tabs nav-justified mb-3" id="ex1">
