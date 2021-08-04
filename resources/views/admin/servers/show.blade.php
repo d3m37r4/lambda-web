@@ -255,8 +255,9 @@
                                     </table>
                                 </div>
                             @else
-                                <div class="alert alert-info">
-                                    {{ ('Причины наказаний для этого сервера не заданы ') }}
+                                <div class="d-flex alert alert-info align-items-center">
+                                    <i class="fas fa-info-circle fa-2x me-1"></i>
+                                    {{ ('Причины наказаний для данного сервера еще не заданы.') }}
                                 </div>
                             @endif
                         </div>
