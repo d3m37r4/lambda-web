@@ -3,6 +3,8 @@
 @section('title', "$server->name")
 
 @section('admin.content')
+    @include('admin.modals.confirm-delete')
+    @include('admin.components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">
@@ -94,8 +96,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#ex1-tabs-3" id="ex1-tab-3" data-mdb-toggle="tab"
-                               aria-controls="ex1-tabs-3" aria-selected="false">
+                            <a class="nav-link" href="#reasons" id="ex1-tab-3" data-mdb-toggle="tab"
+                               aria-controls="reasons" aria-selected="false">
                                 {{ ('Причины наказаний') }}
                             </a>
                         </li>
@@ -213,52 +215,41 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="ex1-tabs-3" aria-labelledby="ex1-tab-3">
+                        <div class="tab-pane fade" id="reasons" aria-labelledby="reasons">
                             <div class="table-responsive">
                                 <table class="table align-middle">
                                     <thead class="table-dark">
                                     <tr>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
+                                        <th>#</th>
+                                        <th>Название причины</th>
+                                        <th>Время</th>
+                                        <th>Действия</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
+                                    @foreach($server->reasons as $reason)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $reason->title }}</td>
+                                            <td>{{ $reason->time }}</td>
+                                            <td>
+                                                <span class="d-inline-block" tabindex="0"
+                                                      data-mdb-toggle="tooltip" title="{{ ('Удалить причину') }}">
+                                                    <button class="btn btn-danger btn-floating btn-sm"
+                                                            type="button"
+                                                            data-mdb-toggle="modal"
+                                                            data-mdb-target="#confirmDelete"
+                                                            data-route="{{ route('admin.servers.reasons.destroy', [
+                                                                    'server' => $server,
+                                                                    'reason' => $reason,
+                                                            ]) }}"
+                                                            data-reasonname="{{ $reason->title }}">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -369,3 +360,21 @@
         </div>
     </div>
 @endsection
+
+@push('secondary-scripts')
+    <script>
+        let modalDeleteServer = document.getElementById('confirmDelete');
+        modalDeleteServer.addEventListener('show.bs.modal', function (event) {
+            let confirmMsg = "{{ ('Вы действительно хотите удалить причину @reasonname?') }}";
+            let btn = event.relatedTarget;
+            this.querySelector('.route').action = btn.getAttribute('data-route');
+
+            let name = btn.getAttribute('data-reasonname');
+            confirmMsg = confirmMsg.replace('@reasonname', name);
+
+            this.querySelector('.modal-title').textContent = "{{ ('Удаление причины') }}";
+            this.querySelector('.modal-msg').textContent = confirmMsg;
+            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить причину') }}";
+        });
+    </script>
+@endpush
