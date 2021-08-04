@@ -1,6 +1,6 @@
 @extends('layouts.admin-layout')
 
-@section('title', "Сервер $server->name")
+@section('title', "$server->name")
 
 @section('admin.content')
     <div class="card shadow-2 border">
@@ -8,8 +8,8 @@
             <div class="d-sm-flex justify-content-between">
                 <div class="me-auto align-self-center">
                     <h5 class="card-title m-0">
-                        <i class="fas fa-user"></i>
-                        {{ ("Сервер: $server->name") }}
+                        <i class="fas fa-hdd"></i>
+                        {{ ("$server->name") }}
                     </h5>
                 </div>
                 <div class="d-grid">
