@@ -87,8 +87,9 @@ class ServersManagementController extends Controller {
      */
     public function show(Server $server) {
         $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
+        $reasons = $server->reasons;
 
-        return view('admin.servers.show', compact('server', 'redirect'));
+        return view('admin.servers.show', compact('server', 'reasons', 'redirect'));
     }
 
     /**
