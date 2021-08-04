@@ -76,6 +76,6 @@ class ReasonsManagementController extends Controller {
         $reason->delete();
         return back()
             ->with('status', 'success')
-            ->with('message', "Причина {$reason->name} удалена!");
+            ->with('message', "Причина {$reason->title} удалена!");
     }
 }

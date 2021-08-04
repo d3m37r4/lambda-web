@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static create(array $array)
- * @property string name
+ * @property string title
  */
 class Reason extends Model {
     /**
