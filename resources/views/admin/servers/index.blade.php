@@ -53,13 +53,13 @@
                                         </div>
                                         <div>
                                             <span class="text-muted">
-                                                {{ $server->ip }}:{{ $server->port }}
+                                                {{ $server->full_address }}
                                             </span>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    de_dust2
+                                    {{ $server->map_name }}
                                 </td>
                                 <td class="text-center">
                                     32/32
