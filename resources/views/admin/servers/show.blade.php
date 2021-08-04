@@ -216,43 +216,49 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="reasons" aria-labelledby="reasons">
-                            <div class="table-responsive">
-                                <table class="table align-middle">
-                                    <thead class="table-dark">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Название причины</th>
-                                        <th>Время</th>
-                                        <th>Действия</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($server->reasons as $reason)
+                            @if(!$reasons->isEmpty())
+                                <div class="table-responsive">
+                                    <table class="table align-middle">
+                                        <thead class="table-dark">
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $reason->title }}</td>
-                                            <td>{{ $reason->time }}</td>
-                                            <td>
-                                                <span class="d-inline-block" tabindex="0"
-                                                      data-mdb-toggle="tooltip" title="{{ ('Удалить причину') }}">
-                                                    <button class="btn btn-danger btn-floating btn-sm"
-                                                            type="button"
-                                                            data-mdb-toggle="modal"
-                                                            data-mdb-target="#confirmDelete"
-                                                            data-route="{{ route('admin.servers.reasons.destroy', [
-                                                                    'server' => $server,
-                                                                    'reason' => $reason,
-                                                            ]) }}"
-                                                            data-reasonname="{{ $reason->title }}">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </span>
-                                            </td>
+                                            <th>#</th>
+                                            <th>Название причины</th>
+                                            <th>Время</th>
+                                            <th>Действия</th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($reasons as $reason)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $reason->title }}</td>
+                                                <td>{{ $reason->time }}</td>
+                                                <td>
+                                                    <span class="d-inline-block" tabindex="0"
+                                                          data-mdb-toggle="tooltip" title="{{ ('Удалить причину') }}">
+                                                        <button class="btn btn-danger btn-floating btn-sm"
+                                                                type="button"
+                                                                data-mdb-toggle="modal"
+                                                                data-mdb-target="#confirmDelete"
+                                                                data-route="{{ route('admin.servers.reasons.destroy', [
+                                                                        'server' => $server,
+                                                                        'reason' => $reason,
+                                                                ]) }}"
+                                                                data-reasonname="{{ $reason->title }}">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                                <div class="alert alert-info">
+                                    {{ ('Причины наказаний для этого сервера не заданы ') }}
+                                </div>
+                            @endif
                         </div>
                         <div class="tab-pane fade" id="ex1-tabs-4" aria-labelledby="ex1-tab-4">
                             <div class="table-responsive">
