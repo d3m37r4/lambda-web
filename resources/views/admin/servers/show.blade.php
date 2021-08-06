@@ -223,16 +223,16 @@
                                     {{ ('Добавить причину наказаний') }}
                                 </a>
                             </div>
-
                             @if(!$reasons->isEmpty())
                                 <div class="border table-responsive rounded">
                                     <table class="table align-middle">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Название причины</th>
-                                                <th>Время</th>
-                                                <th>Действия</th>
+                                                <th class="col-1">{{ ('#') }}</th>
+                                                <th class="col-1">{{ ('ID') }}</th>
+                                                <th class="col-4">{{ ('Название причины') }}</th>
+                                                <th class="col-4">{{ ('Длительность наказания') }}</th>
+                                                <th class="text-center" style="min-width: 30px;">{{ ('Действия') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -242,12 +242,15 @@
                                                         {{ $loop->iteration }}
                                                     </td>
                                                     <td>
+                                                        {{ $reason->id }}
+                                                    </td>
+                                                    <td>
                                                         {{ $reason->title }}
                                                     </td>
                                                     <td>
                                                         {{ $reason->time }}
                                                     </td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <a class="btn btn-primary btn-floating btn-sm"
                                                            data-mdb-toggle="tooltip"
                                                            title="{{ ('Редактировать причину') }}"
