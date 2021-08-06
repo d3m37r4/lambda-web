@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Reason;
 use App\Models\Server;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,36 +15,48 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-
 class ReasonsManagementController extends Controller {
     /**
      * Show the form for creating a new reason.
      *
-     * @return Response
+     * @param Server $server
+     * @return Application|Factory|View
      */
-//    public function create() {
-//
-//    }
+    public function create(Server $server) {
+        $createdTime = Carbon::now()->format('d.m.Y - H:i:s');
+        return view('admin.servers.reasons.create', compact('server', 'createdTime'));
+    }
 
     /**
      * Store a newly created reason in storage.
      *
      * @param Request $request
-     * @return Response
+     * @param Server $server
+     * @return RedirectResponse
      */
-//    public function store(Request $request) {
-//
-//    }
+    public function store(Request $request, Server $server): RedirectResponse {
+        $validator = Validator::make($request->all(), [
+            'title' => ['required', 'string', 'max:255',
+                Rule::unique('reasons')
+                    ->where('server_id', $server->id)
+            ],
+            'time' => ['required', 'numeric', 'min:0'],
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
-    /**
-     * Display the specified reason.
-     *
-     * @param Reason $reason
-     * @return Response
-     */
-//    public function show(Reason $reason) {
-//        dd($reason);
-//    }
+        $reason = Reason::create([
+            'title' => strip_tags($request->input('title')),
+            'server_id' => $server->id,
+            'time' => $request->input('time'),
+        ]);
+
+        return redirect()
+            ->route('admin.servers.show', $server->id)
+            ->with('status', 'success')
+            ->with('message', "Причина наказания {$reason->title} успешно добавлена!");
+    }
 
     /**
      * Show the form for editing the specified reason.
