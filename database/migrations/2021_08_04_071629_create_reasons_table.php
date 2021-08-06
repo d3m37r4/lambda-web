@@ -15,8 +15,10 @@ class CreateReasonsTable extends Migration
     {
         Schema::create('reasons', function (Blueprint $table) {
             $table->id();
-//            $table->unsignedInteger('server_id')->references('id')->on('servers');
-            $table->foreignId('server_id')->nullable()->constrained('servers');
+            $table->foreignId('server_id')->nullable()
+                ->constrained('servers')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('title');
             $table->unsignedInteger('time')->nullable();
 //            $table->unsignedTinyInteger('overall');
