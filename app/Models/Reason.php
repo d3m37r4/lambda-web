@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @method static create(array $array)
  * @property string title
+ * @property int time
  */
 class Reason extends Model {
     /**
