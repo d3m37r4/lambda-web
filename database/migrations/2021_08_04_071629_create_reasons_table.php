@@ -17,8 +17,7 @@ class CreateReasonsTable extends Migration
             $table->id();
             $table->foreignId('server_id')->nullable()
                 ->constrained('servers')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->cascadeOnDelete();
             $table->string('title');
             $table->unsignedInteger('time')->nullable();
 //            $table->unsignedTinyInteger('overall');
