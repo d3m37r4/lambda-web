@@ -16,7 +16,7 @@ class ReasonSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 10; $i++)
+        for ($i = 1; $i <= 100; $i++)
         {
             Reason::create([
                 'server_id' => random_int(1, 30),
