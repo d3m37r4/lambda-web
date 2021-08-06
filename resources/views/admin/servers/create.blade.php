@@ -3,18 +3,17 @@
 @section('title', 'Добавить сервер')
 
 @section('admin.content')
-    <div class="card mb-3">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h5 class="card-title">
+    <div class="card shadow-2 border">
+        <div class="card-header">
+            <div class="d-sm-flex justify-content-between">
+                <div class="me-auto align-self-center">
+                    <h5 class="card-title m-0">
                         <i class="fas fa-server"></i>
                         {{ 'Добавить сервер' }}
                     </h5>
                 </div>
-                <div>
-                    @include('admin.components.link-back',
-                        ['title' => 'Вернуться назад', 'route' => 'admin.servers.index'])
+                <div class="d-grid">
+                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
                 </div>
             </div>
         </div>
