@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpVoidFunctionResultUsedInspection */
+<?php
 
 namespace App\Http\Controllers\Admin;
 
@@ -66,11 +66,13 @@ class ReasonsManagementController extends Controller {
      *
      * @param Server $server
      * @param Reason $reason
-     * @return RedirectResponse|void
+     * @return RedirectResponse
      */
     public function destroy(Server $server, Reason $reason): RedirectResponse {
         if (!$server) {
-            return abort(500);
+            return back()
+                ->with('status', 'danger')
+                ->with('message', 'Ошибка!');
         }
 
         $reason->delete();
