@@ -46,7 +46,7 @@
                 </div>
                 <div class="row form-group mb-3">
                     <label for="time" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('Время наказания') }}
+                        {{ ('Длительность наказания') }}
                     </label>
                     <div class="col-md-6">
                         <input id="time" type="number" class="form-control @error('time') is-invalid @enderror"
