@@ -40,6 +40,7 @@ Route::group([
         'middleware' => 'can:manage_servers'
     ])->group(function () {
         Route::resource('servers', ServersManagementController::class);
-        Route::resource('servers.reasons', ReasonsManagementController::class)->except(['index']);
+        Route::resource('servers.reasons', ReasonsManagementController::class)
+            ->except(['index', 'show']);
     });
 });
