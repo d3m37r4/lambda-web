@@ -26,7 +26,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                               name="name" placeholder="{{ 'Введите имя сервера' }}" required>
+                               name="name" value="{{ old('name') }}"
+                               placeholder="{{ 'Введите имя сервера' }}" required>
                         @include('components.field-filling-error', ['error' => 'name'])
                     </div>
                 </div>
@@ -36,7 +37,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="ip" type="text" class="form-control @error('ip') is-invalid @enderror"
-                               name="ip" placeholder="{{ 'Введите IP сервера' }}" required>
+                               name="ip" value="{{ old('ip') }}"
+                               placeholder="{{ 'Введите IP сервера' }}" required>
                         @include('components.field-filling-error', ['error' => 'ip'])
                     </div>
                 </div>
@@ -46,7 +48,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="port" type="text" class="form-control @error('port') is-invalid @enderror"
-                               name="port" placeholder="{{ 'Введите порт' }}" required>
+                               name="port" value="{{ old('port') }}"
+                               placeholder="{{ 'Введите порт' }}" required>
                         @include('components.field-filling-error', ['error' => 'port'])
                     </div>
                 </div>
@@ -56,7 +59,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="rcon" type="text" class="form-control @error('rcon') is-invalid @enderror"
-                               name="rcon" placeholder="{{ 'Введите RCON пароль' }}">
+                               name="rcon" value="{{ old('rcon') }}"
+                               placeholder="{{ 'Введите RCON пароль' }}">
                         @include('components.field-filling-error', ['error' => 'rcon'])
                     </div>
                 </div>
