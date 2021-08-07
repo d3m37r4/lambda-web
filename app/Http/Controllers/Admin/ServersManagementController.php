@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Exception;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\Server;
 use Illuminate\Contracts\Foundation\Application;
@@ -32,8 +32,10 @@ class ServersManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function create() {
+        $createdTime = Carbon::now()->format('d.m.Y - H:i:s');
         $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
-        return view('admin.servers.create', compact('redirect'));
+
+        return view('admin.servers.create', compact('redirect', 'createdTime'));
     }
 
     /**
@@ -41,7 +43,6 @@ class ServersManagementController extends Controller {
      *
      * @param Request $request
      * @return RedirectResponse
-     * @throws Exception
      */
     public function store(Request $request): RedirectResponse {
         $rules = [

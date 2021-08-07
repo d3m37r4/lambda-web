@@ -88,6 +88,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="row form-group mb-3">
+                    <label for="created" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Сервер добавлен') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="created" type="text" class="form-control"
+                               name="created" value="{{ $createdTime }}" disabled>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="updated" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Последнее обновление') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="updated" type="text" class="form-control"
+                               name="updated" value="{{ $createdTime }}" disabled>
+                    </div>
+                </div>
                 <div>
                     @include('admin.components.btn-add', ['title' => 'Добавить сервер'])
                 </div>
