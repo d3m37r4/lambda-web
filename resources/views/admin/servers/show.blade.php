@@ -3,6 +3,8 @@
 @section('title', "$server->name")
 
 @section('admin.content')
+    @include('admin.modals.confirm-delete')
+    @include('admin.components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">
@@ -94,8 +96,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#ex1-tabs-3" id="ex1-tab-3" data-mdb-toggle="tab"
-                               aria-controls="ex1-tabs-3" aria-selected="false">
+                            <a class="nav-link" href="#reasons" id="ex1-tab-3" data-mdb-toggle="tab"
+                               aria-controls="reasons" aria-selected="false">
                                 {{ ('Причины наказаний') }}
                             </a>
                         </li>
@@ -213,55 +215,79 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="ex1-tabs-3" aria-labelledby="ex1-tab-3">
-                            <div class="table-responsive">
-                                <table class="table align-middle">
-                                    <thead class="table-dark">
-                                    <tr>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                        <div class="tab-pane fade" id="reasons" aria-labelledby="reasons">
+                            <div class="mb-3">
+                                <a class="btn btn-success"
+                                   href="{{ route('admin.servers.reasons.create', $server->id) }}">
+                                    <i class="fas fa-plus"></i>
+                                    {{ ('Добавить причину наказаний') }}
+                                </a>
                             </div>
+                            @if(!$reasons->isEmpty())
+                                <div class="border table-responsive rounded">
+                                    <table class="table align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-1">{{ ('#') }}</th>
+                                                <th class="col-1">{{ ('ID') }}</th>
+                                                <th class="col-4">{{ ('Название причины') }}</th>
+                                                <th class="col-4">{{ ('Длительность наказания') }}</th>
+                                                <th class="text-center" style="min-width: 30px;">{{ ('Действия') }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($reasons as $reason)
+                                                <tr>
+                                                    <td>
+                                                        {{ $loop->iteration }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $reason->id }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $reason->title }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $reason->time_for_humans }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a class="btn btn-primary btn-floating btn-sm"
+                                                           data-mdb-toggle="tooltip"
+                                                           title="{{ ('Редактировать причину') }}"
+                                                           href="{{ route('admin.servers.reasons.edit', [
+                                                                $server->id,
+                                                                $reason->id,
+                                                           ]) }}">
+                                                            <i class="fas fa-pen"></i>
+                                                        </a>
+                                                        <span class="d-inline-block"
+                                                              tabindex="0"
+                                                              data-mdb-toggle="tooltip"
+                                                              title="{{ ('Удалить причину') }}">
+                                                            <button class="btn btn-danger btn-floating btn-sm"
+                                                                    type="button"
+                                                                    data-mdb-toggle="modal"
+                                                                    data-mdb-target="#confirmDelete"
+                                                                    data-route="{{ route('admin.servers.reasons.destroy', [
+                                                                        $server->id,
+                                                                        $reason->id,
+                                                                    ]) }}"
+                                                                    data-reasonname="{{ $reason->title }}">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                                <div class="d-flex alert alert-info align-items-center">
+                                    <i class="fas fa-info-circle fa-2x me-1"></i>
+                                    {{ ('Причины наказаний для этого сервера еще не заданы.') }}
+                                </div>
+                            @endif
                         </div>
                         <div class="tab-pane fade" id="ex1-tabs-4" aria-labelledby="ex1-tab-4">
                             <div class="table-responsive">
@@ -369,3 +395,21 @@
         </div>
     </div>
 @endsection
+
+@push('secondary-scripts')
+    <script>
+        let modalDeleteServer = document.getElementById('confirmDelete');
+        modalDeleteServer.addEventListener('show.bs.modal', function (event) {
+            let confirmMsg = "{{ ('Вы действительно хотите удалить причину @reasonname?') }}";
+            let btn = event.relatedTarget;
+            this.querySelector('.route').action = btn.getAttribute('data-route');
+
+            let name = btn.getAttribute('data-reasonname');
+            confirmMsg = confirmMsg.replace('@reasonname', name);
+
+            this.querySelector('.modal-title').textContent = "{{ ('Удаление причины') }}";
+            this.querySelector('.modal-msg').textContent = confirmMsg;
+            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить причину') }}";
+        });
+    </script>
+@endpush

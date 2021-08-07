@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
 /**
@@ -18,7 +19,9 @@ use Illuminate\Http\Request;
  * @property string rcon
  * @property string auth_token
  * @property string access_token
- * @property mixed map
+ * @property array map
+ * @property array reasons
+ * @property int id
  */
 class Server extends Model {
     /**
@@ -72,6 +75,13 @@ class Server extends Model {
      */
     public function map(): BelongsTo {
         return $this->belongsTo(Map::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function reasons(): HasMany {
+        return $this->hasMany(Reason::class);
     }
 
     /**

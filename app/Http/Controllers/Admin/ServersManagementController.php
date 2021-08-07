@@ -32,7 +32,8 @@ class ServersManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function create() {
-        return view('admin.servers.create');
+        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
+        return view('admin.servers.create', compact('redirect'));
     }
 
     /**
@@ -87,8 +88,9 @@ class ServersManagementController extends Controller {
      */
     public function show(Server $server) {
         $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
+        $reasons = $server->reasons;
 
-        return view('admin.servers.show', compact('server', 'redirect'));
+        return view('admin.servers.show', compact('server', 'reasons', 'redirect'));
     }
 
     /**

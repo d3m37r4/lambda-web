@@ -1,5 +1,5 @@
 // Initializing alerts
-let alertList = document.querySelectorAll('.alert');
+let alertList = document.querySelectorAll('#alert');
 alertList.forEach(function (alert) {
     new mdb.Alert(alert);
 });
@@ -7,7 +7,7 @@ alertList.forEach(function (alert) {
 const alertHidingDelay = 2000;  // Delay before hiding alert
 document.addEventListener("DOMContentLoaded", function() {
     // Hide alert after a specified time
-    let alert = mdb.Alert.getInstance(document.querySelector('.alert'));
+    let alert = mdb.Alert.getInstance(document.querySelector('#alert'));
     if (alert) {
         setTimeout(() => {
             alert.close();
