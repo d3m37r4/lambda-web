@@ -41,16 +41,24 @@ class ReasonsManagementController extends Controller {
                 Rule::unique('reasons')
                     ->where('server_id', $server->id)
             ],
-            'time' => ['required', 'numeric', 'min:0'],
+            'months' => ['required', 'numeric', 'min:0'],
+            'days' => ['required', 'numeric', 'min:0'],
+            'hours' => ['required', 'numeric', 'min:0'],
+            'minutes' => ['required', 'numeric', 'min:0'],
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
+        $time = CarbonInterval::months($request->input('months'))
+            ->days($request->input('days'))
+            ->hours($request->input('hours'))
+            ->minutes($request->input('minutes'))
+            ->totalMinutes;
         $reason = Reason::create([
             'title' => strip_tags($request->input('title')),
             'server_id' => $server->id,
-            'time' => $request->input('time'),
+            'time' => $time,
         ]);
 
         return redirect()
@@ -94,7 +102,7 @@ class ReasonsManagementController extends Controller {
             return back()->withErrors($validator)->withInput();
         }
 
-        $reason->title = $request->input('title');
+        $reason->title = strip_tags($request->input('title'));
         $reason->time = CarbonInterval::months($request->input('months'))
             ->days($request->input('days'))
             ->hours($request->input('hours'))
