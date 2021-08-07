@@ -49,14 +49,40 @@
                         {{ ('Длительность наказания') }}
                     </label>
                     <div class="col-md-6">
-                        <input id="time" type="number" class="form-control @error('time') is-invalid @enderror"
-                               name="time" value="{{ old('time', $reason->time) }}" required>
-                        @include('components.field-filling-error', ['error' => 'time'])
+                        <div class="input-group d-flex flex-nowrap">
+                            <div class="form-outline">
+                                <input id="months" class="form-control @error('months') is-invalid @enderror"
+                                       name="months" type="number" min="0"
+                                       value="{{ $reason->getTimeSpecialFormatted('%m') }}" required>
+                                <label for="months" class="form-label">Месяцы</label>
+                            </div>
+                            <div class="form-outline">
+                                <input id="days" class="form-control @error('days') is-invalid @enderror"
+                                       name="days" type="number" min="0"
+                                       value="{{ $reason->getTimeSpecialFormatted('%d') }}" required>
+                                <label for="days" class="form-label">Дни</label>
+                            </div>
+                            <div class="form-outline">
+                                <input id="hours" class="form-control @error('hours') is-invalid @enderror"
+                                       name="hours" type="number" min="0"
+                                       value="{{ $reason->getTimeSpecialFormatted('%h') }}" required>
+                                <label for="hours" class="form-label">Часы</label>
+                            </div>
+                            <div class="form-outline">
+                                <input id="minutes" class="form-control @error('minutes') is-invalid @enderror"
+                                       name="minutes" type="number" min="0"
+                                       value="{{ $reason->getTimeSpecialFormatted('%i') }}" required>
+                                <label for="minutes" class="form-label">Минуты</label>
+                            </div>
+                        </div>
+                        <div class="form-text">
+                            {{ ('Оставьте все значения равными нулю для указания бессрочного действия.') }}
+                        </div>
                     </div>
                 </div>
                 <div class="row form-group mb-3">
                     <label for="created" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('Добавлена') }}
+                        {{ ('Причина добавлена') }}
                     </label>
                     <div class="col-md-6">
                         <input id="created" type="text" class="form-control"

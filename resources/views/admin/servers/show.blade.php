@@ -248,7 +248,7 @@
                                                         {{ $reason->title }}
                                                     </td>
                                                     <td>
-                                                        {{ $reason->time }}
+                                                        {{ $reason->time_for_humans }}
                                                     </td>
                                                     <td class="text-center">
                                                         <a class="btn btn-primary btn-floating btn-sm"

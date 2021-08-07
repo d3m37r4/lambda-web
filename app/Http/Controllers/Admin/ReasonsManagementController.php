@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Reason;
 use App\Models\Server;
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -84,14 +85,21 @@ class ReasonsManagementController extends Controller {
                     ->where('server_id', $server->id)
                     ->whereNot('title', $reason->title)
             ],
-            'time' => ['required', 'numeric', 'min:0'],
+            'months' => ['required', 'numeric', 'min:0'],
+            'days' => ['required', 'numeric', 'min:0'],
+            'hours' => ['required', 'numeric', 'min:0'],
+            'minutes' => ['required', 'numeric', 'min:0'],
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
         $reason->title = $request->input('title');
-        $reason->time = $request->input('time');
+        $reason->time = CarbonInterval::months($request->input('months'))
+            ->days($request->input('days'))
+            ->hours($request->input('hours'))
+            ->minutes($request->input('minutes'))
+            ->totalMinutes;
         $reason->save();
 
         return back()

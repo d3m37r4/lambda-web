@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Exception;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -42,6 +44,7 @@ class Reason extends Model {
 //        'overall' => 'bool',
 //        'menu' => 'bool',
 //        'active' => 'bool',
+        'time_for_humans' => 'string',
     ];
 
     /**
@@ -50,9 +53,38 @@ class Reason extends Model {
     protected $hidden = ['server_id', /*'overall', 'active',*/ 'created_at', 'updated_at'];
 
     /**
+     * Gets servers associated with this reason.
      * @return BelongsTo
      */
     public function server(): BelongsTo {
         return $this->belongsTo(Server::class);
+    }
+
+    /**
+     * Gets formatted time.
+     *
+     * @return string
+     * @throws Exception
+     */
+    public function getTimeForHumansAttribute(): string {
+        $minutes = $this->time;
+        return $minutes ?
+            CarbonInterval::minutes($minutes)
+            ->cascade()
+            ->forHumans(['short' => true, 'minimumUnit' => 'minute']) : 'Бессрочно';
+    }
+
+    /**
+     * Gets special formatted time.
+     * See the constant $formats in Carbon/CarbonInterval.php
+     *
+     * @param $format
+     * @return string
+     * @link https://php.net/manual/en/dateinterval.format.php
+     */
+    public function getTimeSpecialFormatted($format): string {
+        return CarbonInterval::minutes($this->time)
+            ->cascade()
+            ->format($format);
     }
 }
