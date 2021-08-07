@@ -100,7 +100,8 @@ class ServersManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function edit(Server $server) {
-        return view('admin.servers.edit', compact('server'));
+        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
+        return view('admin.servers.edit', compact('server','redirect'));
     }
 
     /**
