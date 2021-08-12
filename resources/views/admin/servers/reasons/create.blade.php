@@ -84,8 +84,8 @@
                                name="updated" value="{{ $createdTime }}" disabled>
                     </div>
                 </div>
-                <div>
-                    @include('admin.components.btn-add', ['title' => 'Добавить'])
+                <div class="d-flex justify-content-center mt-4">
+                    @include('admin.components.btn-add', ['title' => 'Добавить причину'])
                 </div>
             </form>
         </div>

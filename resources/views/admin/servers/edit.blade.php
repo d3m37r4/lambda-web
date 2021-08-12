@@ -118,8 +118,8 @@
                                name="updated" value="{{ $server->updated_at->format('d.m.Y - H:i:s') }}" disabled>
                     </div>
                 </div>
-                <div>
-                    @include('admin.components.btn-upd', ['title' => 'Обновить'])
+                <div class="d-flex justify-content-center mt-4">
+                    @include('admin.components.btn-upd', ['title' => 'Обновить сервер'])
                 </div>
             </form>
         </div>
