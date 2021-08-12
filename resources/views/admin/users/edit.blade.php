@@ -81,6 +81,24 @@
                         </select>
                     </div>
                 </div>
+                <div class="row form-group mb-3">
+                    <label for="created" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Пользователь добавлен') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="created" type="text" class="form-control"
+                               name="created" value="{{ $user->created_at->format('d.m.Y - H:i:s') }}" disabled>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="updated" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Последнее обновление') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="updated" type="text" class="form-control"
+                               name="updated" value="{{ $user->updated_at->format('d.m.Y - H:i:s') }}" disabled>
+                    </div>
+                </div>
                 <div class="d-flex justify-content-center mt-4">
                     @include('admin.components.btn-upd', ['title' => 'Обновить пользователя'])
                 </div>

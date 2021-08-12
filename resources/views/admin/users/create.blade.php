@@ -26,7 +26,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                               name="name" placeholder="{{ 'Введите имя пользователя' }}" required>
+                               name="name" value="{{ old('name') }}"
+                               placeholder="{{ 'Введите имя пользователя' }}" required>
                         @include('components.field-filling-error', ['error' => 'name'])
                     </div>
                 </div>
@@ -36,7 +37,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                               name="email" placeholder="{{ 'Введите E-mail' }}" required>
+                               name="email" value="{{ old('email') }}"
+                               placeholder="{{ 'Введите E-mail' }}" required>
                         @include('components.field-filling-error', ['error' => 'email'])
                     </div>
                 </div>
@@ -78,6 +80,24 @@
                             @endforeach
                         </select>
                         @include('components.field-filling-error', ['error' => 'role'])
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="created" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Пользователь добавлен') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="created" type="text" class="form-control"
+                               name="created" value="{{ $createdTime }}" disabled>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="updated" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Последнее обновление') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="updated" type="text" class="form-control"
+                               name="updated" value="{{ $createdTime }}" disabled>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-4">

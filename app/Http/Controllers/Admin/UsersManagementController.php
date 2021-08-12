@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
+use Carbon\Carbon;
 use Exception;
 use App\Models\Role;
 use App\Models\User;
@@ -47,9 +48,10 @@ class UsersManagementController extends Controller {
      */
     public function create() {
         $roles = Role::all();
+        $createdTime = Carbon::now()->format('d.m.Y - H:i:s');
         $redirect = $this->getPreviousUrl(action([UsersManagementController::class, 'index']));
 
-        return view('admin.users.create', compact('roles', 'redirect'));
+        return view('admin.users.create', compact('roles', 'redirect', 'createdTime'));
     }
 
     /**
