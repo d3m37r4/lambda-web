@@ -5,41 +5,38 @@
 @section('admin.content')
     @include('admin.modals.confirm-delete')
     @include('admin.components.alert')
-    <div class="card mb-3">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h5 class="card-title">
+    <div class="card shadow-2 border">
+        <div class="card-header">
+            <div class="d-sm-flex justify-content-between">
+                <div class="me-auto align-self-center">
+                    <h5 class="card-title m-0">
                         <i class="fas fa-user-shield"></i>
                         {{ ('Управление ролями') }}
                     </h5>
                 </div>
-                <div class="d-grid gap-2 d-md-block">
-                    <a class="btn btn-success btn-sm"
-                        href="{{ route('admin.roles.create') }}">
-                        <i class="bi bi-shield-plus"></i>
-                        {{ ('Создать роль') }}
-                    </a>
+                <div class="d-grid">
+                    @include('admin.components.link-add', ['route' => 'admin.roles.create', 'title' => 'Добавить'])
                 </div>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body p-0">
+            <div class="d-flex m-3">
+                @include('admin.components.search-form')
+            </div>
             <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
+                <table class="table align-middle">
+                    <thead class="table-dark">
                         <tr>
-                            <th class="col-1">{{ ('#') }}</th>
-                            <th class="col-1">{{ ('ID') }}</th>
-                            <th class="col-5">{{ ('Роль') }}</th>
-                            <th style="width: 15%;">{{ ('Действия') }}</th>
+                            <th class="col-2">{{ ('ID') }}</th>
+                            <th class="col-3">{{ ('Роль') }}</th>
+                            <th class="col-3">{{ ('Время создания') }}</th>
+                            <th class="col-3">{{ ('Последнее обновление') }}</th>
+                            <th style="min-width: 140px;">{{ ('Действия') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($roles as $role)
                             <tr>
-                                <td>
-                                    {{ $loop->iteration }}
-                                </td>
                                 <td>
                                     {{ $role->id }}
                                 </td>
@@ -49,20 +46,35 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm"
+                                    {{ $role->created_at->format('d.m.Y - H:i:s') }}
+                                </td>
+                                <td>
+                                    {{ $role->updated_at->format('d.m.Y - H:i:s') }}
+                                </td>
+                                <td>
+                                    <a class="btn btn-info btn-floating btn-sm"
+                                       data-mdb-toggle="tooltip"
+                                       title="{{ ('Показать разрешения доступные для данной роли') }}"
                                        href="#">
-                                        <i class="bi bi-info-square"></i>
+                                        <i class="fas fa-info"></i>
                                     </a>
-                                    <a class="btn btn-success btn-sm"
+                                    <a class="btn btn-primary btn-floating btn-sm"
+                                       data-mdb-toggle="tooltip"
+                                       title="{{ ('Редактировать роль') }}"
                                        href="{{ route('admin.roles.edit', $role->id) }}">
-                                        <i class="bi bi-pencil-square"></i>
+                                        <i class="fas fa-pen"></i>
                                     </a>
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                            data-bs-toggle="modal" data-bs-target="#confirmDelete"
-                                            data-route="{{ route('admin.roles.destroy', $role->id) }}"
-                                            data-rolename="{{ $role->name }}">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </button>
+                                    <span class="d-inline-block" tabindex="0"
+                                          data-mdb-toggle="tooltip" title="{{ ('Удалить роль') }}">
+                                        <button class="btn btn-danger btn-floating btn-sm"
+                                                type="button"
+                                                data-mdb-toggle="modal"
+                                                data-mdb-target="#confirmDelete"
+                                                data-route="{{ route('admin.roles.destroy', $role->id) }}"
+                                                data-rolename="{{ $role->name }}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </span>
                                 </td>
                             </tr>
                         @endforeach
@@ -91,4 +103,3 @@
         });
     </script>
 @endpush
-
