@@ -1,21 +1,20 @@
 @extends('layouts.admin-layout')
 
-@section('title', 'Редактирование сервера')
+@section('title', "Редактирование сервера: $server->name")
 
 @section('admin.content')
     @include('admin.components.alert')
-    <div class="card mb-3">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h5 class="card-title">
+    <div class="card shadow-2 border">
+        <div class="card-header">
+            <div class="d-sm-flex justify-content-between">
+                <div class="me-auto align-self-center">
+                    <h5 class="card-title m-0">
                         <i class="fas fa-server"></i>
-                        {{ ('Редактирование сервера: ') }} {{ $server->name }}
+                        {{ ("Редактирование сервера: $server->name") }}
                     </h5>
                 </div>
-                <div>
-                    @include('admin.components.btn-back',
-                        ['title' => 'Вернуться назад', 'route' => 'admin.servers.index'])
+                <div class="d-grid">
+                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
                 </div>
             </div>
         </div>
@@ -23,6 +22,15 @@
             <form action="{{ route('admin.servers.update', $server->id) }}" method="POST">
                 @csrf
                 @method('PUT')
+                <div class="row form-group mb-3">
+                    <label for="index" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('ID') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="index" type="text" class="form-control"
+                               name="index" value="{{ $server->id }}" disabled>
+                    </div>
+                </div>
                 <div class="row form-group mb-3">
                     <label for="name" class="col-md-4 col-form-label text-sm-end">
                         {{ ('Имя сервера') }}
@@ -35,7 +43,7 @@
                 </div>
                 <div class="row form-group mb-3">
                     <label for="ip" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('IP') }}
+                        {{ ('IP адрес') }}
                     </label>
                     <div class="col-md-6">
                         <input id="ip" type="text" class="form-control @error('ip') is-invalid @enderror"
@@ -92,8 +100,26 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    @include('admin.components.btn-upd', ['title' => 'Обновить'])
+                <div class="row form-group mb-3">
+                    <label for="created" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Сервер добавлен') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="created" type="text" class="form-control"
+                               name="created" value="{{ $server->created_at->format('d.m.Y - H:i:s') }}" disabled>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="updated" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Последнее обновление') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="updated" type="text" class="form-control"
+                               name="updated" value="{{ $server->updated_at->format('d.m.Y - H:i:s') }}" disabled>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    @include('admin.components.btn-upd', ['title' => 'Обновить сервер'])
                 </div>
             </form>
         </div>

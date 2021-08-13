@@ -1,23 +1,20 @@
 @extends('layouts.admin-layout')
 
-@section('title', 'Редактирование роли')
+@section('title', "Редактирование роли: $role->name")
 
 @section('admin.content')
     @include('admin.components.alert')
-    <div class="card mb-3">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h5 class="card-title">
-                        <i class="bi bi-pencil-square"></i>
-                        {{ ('Редактирование роли: ') }} {{ $role->name }}
+    <div class="card shadow-2 border">
+        <div class="card-header">
+            <div class="d-sm-flex justify-content-between">
+                <div class="me-auto align-self-center">
+                    <h5 class="card-title m-0">
+                        <i class="fas fa-shield-alt"></i>
+                        {{ ("Редактирование роли: $role->name") }}
                     </h5>
                 </div>
-                <div>
-                    <a class="btn btn-primary btn-sm" href="{{ route('admin.roles.index') }}">
-                        <i class="bi bi-arrow-90deg-left"></i>
-                        {{ ('Вернуться назад') }}
-                    </a>
+                <div class="d-grid">
+                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
                 </div>
             </div>
         </div>
@@ -25,6 +22,15 @@
             <form action="{{ route('admin.roles.update', $role->id) }}" method="POST">
                 @csrf
                 @method('PUT')
+                <div class="row form-group mb-3">
+                    <label for="index" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('ID') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="index" type="text" class="form-control"
+                               name="index" value="{{ $role->id }}" disabled>
+                    </div>
+                </div>
                 <div class="row form-group mb-3">
                     <label for="name" class="col-md-4 col-form-label text-sm-end">
                         {{ ('Имя роли') }}
@@ -45,7 +51,7 @@
                             <option disabled>{{ ('Назначьте разрешения для роли...') }}</option>
                             @foreach ($permissions as $permission)
                                 <option value="{{ $permission->id }}"
-                                        @if (isset($role) && $role->hasPermissionTo($permission)) selected @endif>
+                                        @if(isset($role) && $role->hasPermissionTo($permission)) selected @endif>
                                     {{ $permission->name }}
                                 </option>
                             @endforeach
@@ -55,11 +61,26 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <button type="submit" class="btn btn-success btn-sm">
-                        <i class="bi bi-save"></i>
-                        <span class="ml-1">{{ ('Обновить') }}</span>
-                    </button>
+                <div class="row form-group mb-3">
+                    <label for="created" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Роль добавлена') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="created" type="text" class="form-control"
+                               name="created" value="{{ $role->created_at->format('d.m.Y - H:i:s') }}" disabled>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="updated" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Последнее обновление') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="updated" type="text" class="form-control"
+                               name="updated" value="{{ $role->updated_at->format('d.m.Y - H:i:s') }}" disabled>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    @include('admin.components.btn-upd', ['title' => 'Обновить роль'])
                 </div>
             </form>
         </div>

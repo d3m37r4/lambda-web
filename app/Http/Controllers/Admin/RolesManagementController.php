@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class RolesManagementController extends Controller {
@@ -82,8 +83,9 @@ class RolesManagementController extends Controller {
      */
     public function edit(Role $role) {
         $permissions = Permission::all();
+        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
 
-        return view('admin.roles.edit', compact('role', 'permissions'));
+        return view('admin.roles.edit', compact('role', 'permissions','redirect'));
     }
 
     /**
@@ -129,5 +131,16 @@ class RolesManagementController extends Controller {
         return back()
             ->with('status', 'success')
             ->with('message', "Роль {$role->name} была удалена!");
+    }
+
+    /**
+     * Gets previous url or, if previous url is equal to current one, sets desired standard value
+     *
+     * @param string $defaultUrl
+     * @return string
+     */
+    function getPreviousUrl(string $defaultUrl): string {
+        $previous = URL::previous();
+        return (($previous !== URL::current()) ? $previous : $defaultUrl);
     }
 }

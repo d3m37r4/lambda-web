@@ -3,25 +3,22 @@
 @section('title', 'Новый пользователь')
 
 @section('admin.content')
-    <div class="card mb-3">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h5 class="card-title">
-                        <i class="bi bi-person-plus-fill"></i>
+    <div class="card shadow-2 border">
+        <div class="card-header">
+            <div class="d-sm-flex justify-content-between">
+                <div class="me-auto align-self-center">
+                    <h5 class="card-title m-0">
+                        <i class="fas fa-user-plus"></i>
                         {{ 'Новый пользователь' }}
                     </h5>
                 </div>
-                <div>
-                    <a class="btn btn-primary btn-sm" href="{{ route('admin.users.index') }}">
-                        <i class="bi bi-reply"></i>
-                        {{ ('Вернуться назад') }}
-                    </a>
+                <div class="d-grid">
+                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.users.store') }}" method="POST">
+            <form action="{{ route('admin.users.store', ['redirect' => $redirect]) }}" method="POST">
                 @csrf
                 <div class="row form-group mb-3">
                     <label for="name" class="col-md-4 col-form-label text-sm-end">
@@ -29,17 +26,19 @@
                     </label>
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                               name="name" placeholder="{{ 'Введите имя пользователя' }}" required>
+                               name="name" value="{{ old('name') }}"
+                               placeholder="{{ 'Введите имя пользователя' }}" required>
                         @include('components.field-filling-error', ['error' => 'name'])
                     </div>
                 </div>
                 <div class="row form-group mb-3">
                     <label for="email" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('E-Mail') }}
+                        {{ ('Эл. почта') }}
                     </label>
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                               name="email" placeholder="{{ 'Введите E-mail' }}" required>
+                               name="email" value="{{ old('email') }}"
+                               placeholder="{{ 'Введите E-mail' }}" required>
                         @include('components.field-filling-error', ['error' => 'email'])
                     </div>
                 </div>
@@ -83,11 +82,26 @@
                         @include('components.field-filling-error', ['error' => 'role'])
                     </div>
                 </div>
-                <div>
-                    <button type="submit" class="btn btn-success btn-sm">
-                        <i class="bi bi-person-plus-fill"></i>
-                        <span class="ml-1">{{ ('Создать пользователя') }}</span>
-                    </button>
+                <div class="row form-group mb-3">
+                    <label for="created" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Пользователь добавлен') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="created" type="text" class="form-control"
+                               name="created" value="{{ $createdTime }}" disabled>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="updated" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Последнее обновление') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="updated" type="text" class="form-control"
+                               name="updated" value="{{ $createdTime }}" disabled>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    @include('admin.components.btn-add', ['title' => 'Добавить пользователя'])
                 </div>
             </form>
         </div>

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\Server;
-use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class ServersManagementController extends Controller {
@@ -31,7 +32,10 @@ class ServersManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function create() {
-        return view('admin.servers.create');
+        $createdTime = Carbon::now()->format('d.m.Y - H:i:s');
+        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
+
+        return view('admin.servers.create', compact('redirect', 'createdTime'));
     }
 
     /**
@@ -39,7 +43,6 @@ class ServersManagementController extends Controller {
      *
      * @param Request $request
      * @return RedirectResponse
-     * @throws Exception
      */
     public function store(Request $request): RedirectResponse {
         $rules = [
@@ -82,12 +85,14 @@ class ServersManagementController extends Controller {
      * Display the specified server.
      *
      * @param Server $server
-     * @return Response
+     * @return Application|Factory|View|Response
      */
-//    public function show(Server $server)
-//    {
-//
-//    }
+    public function show(Server $server) {
+        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
+        $reasons = $server->reasons;
+
+        return view('admin.servers.show', compact('server', 'reasons', 'redirect'));
+    }
 
     /**
      * Show the form for editing the specified server.
@@ -96,7 +101,8 @@ class ServersManagementController extends Controller {
      * @return Application|Factory|View|Response
      */
     public function edit(Server $server) {
-        return view('admin.servers.edit', compact('server'));
+        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
+        return view('admin.servers.edit', compact('server','redirect'));
     }
 
     /**
@@ -190,5 +196,16 @@ class ServersManagementController extends Controller {
         return back()
             ->with('status', 'danger')
             ->with('message', "Токен уже используется системой! Пожалуйста, сгенерируйте новый токен.");
+    }
+
+    /**
+     * Gets previous url or, if previous url is equal to current one, sets desired standard value
+     *
+     * @param string $defaultUrl
+     * @return string
+     */
+    function getPreviousUrl(string $defaultUrl): string {
+        $previous = URL::previous();
+        return (($previous !== URL::current()) ? $previous : $defaultUrl);
     }
 }

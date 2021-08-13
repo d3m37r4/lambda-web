@@ -3,18 +3,17 @@
 @section('title', 'Добавить сервер')
 
 @section('admin.content')
-    <div class="card mb-3">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h5 class="card-title">
+    <div class="card shadow-2 border">
+        <div class="card-header">
+            <div class="d-sm-flex justify-content-between">
+                <div class="me-auto align-self-center">
+                    <h5 class="card-title m-0">
                         <i class="fas fa-server"></i>
                         {{ 'Добавить сервер' }}
                     </h5>
                 </div>
-                <div>
-                    @include('admin.components.btn-back',
-                        ['title' => 'Вернуться назад', 'route' => 'admin.servers.index'])
+                <div class="d-grid">
+                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
                 </div>
             </div>
         </div>
@@ -27,7 +26,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                               name="name" placeholder="{{ 'Введите имя сервера' }}" required>
+                               name="name" value="{{ old('name') }}"
+                               placeholder="{{ 'Введите имя сервера' }}" required>
                         @include('components.field-filling-error', ['error' => 'name'])
                     </div>
                 </div>
@@ -37,7 +37,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="ip" type="text" class="form-control @error('ip') is-invalid @enderror"
-                               name="ip" placeholder="{{ 'Введите IP сервера' }}" required>
+                               name="ip" value="{{ old('ip') }}"
+                               placeholder="{{ 'Введите IP сервера' }}" required>
                         @include('components.field-filling-error', ['error' => 'ip'])
                     </div>
                 </div>
@@ -47,7 +48,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="port" type="text" class="form-control @error('port') is-invalid @enderror"
-                               name="port" placeholder="{{ 'Введите порт' }}" required>
+                               name="port" value="{{ old('port') }}"
+                               placeholder="{{ 'Введите порт' }}" required>
                         @include('components.field-filling-error', ['error' => 'port'])
                     </div>
                 </div>
@@ -57,7 +59,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="rcon" type="text" class="form-control @error('rcon') is-invalid @enderror"
-                               name="rcon" placeholder="{{ 'Введите RCON пароль' }}">
+                               name="rcon" value="{{ old('rcon') }}"
+                               placeholder="{{ 'Введите RCON пароль' }}">
                         @include('components.field-filling-error', ['error' => 'rcon'])
                     </div>
                 </div>
@@ -85,7 +88,25 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="row form-group mb-3">
+                    <label for="created" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Сервер добавлен') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="created" type="text" class="form-control"
+                               name="created" value="{{ $createdTime }}" disabled>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="updated" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Последнее обновление') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="updated" type="text" class="form-control"
+                               name="updated" value="{{ $createdTime }}" disabled>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
                     @include('admin.components.btn-add', ['title' => 'Добавить сервер'])
                 </div>
             </form>

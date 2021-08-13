@@ -1,0 +1,42 @@
+body {
+	padding-top: 70px;
+    overflow-y: scroll;
+    background-color: hsl(0, 0%, 95%);
+}
+
+.fade {
+    transition: opacity 0.25s linear;
+}
+
+.card-header {
+    padding: .75rem 1.0rem;
+}
+
+.page-item.clickable .page-link {
+    background-color: #fbfbfb;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05) !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05) !important;
+}
+
+.page-link:focus {
+    color: #212529;
+}
+
+.page-item.clickable:focus .page-link, .page-item.clickable:hover .page-link {
+    background-color: #e8e8e8;
+}
+
+.page-item.disabled .page-link {
+    background-color: #eee;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05) !important;
+}
+.list-group-item-action:focus, .list-group-item-action:hover {
+    color: #262626;
+    background-color: #eee;
+}
+
+.list-group-item.active {
+    color: #fff;
+    background-color: #1266f1;
+}

@@ -16,7 +16,7 @@ class ServerController extends Controller {
      * @return void
      */
     public function __construct() {
-        $this->middleware('api-server-auth', ['except' => 'auth']);
+        $this->middleware('api-server-auth')->except('auth');
     }
 
     /**
@@ -44,15 +44,25 @@ class ServerController extends Controller {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $accessToken = $this->generateAccessToken();
-
-        $server->access_token = Hash::make($accessToken);
+        $server->access_token = $this->generateAccessToken();
         $server->access_token_expires = now()->addHours(12);
         $server->save();
 
         $response = [
-            'access_token' => $accessToken,
-            'expires_in' => $server->access_token_expires
+            'access_token' => $server->access_token,
+            'expires_in' => $server->access_token_expires,
+        ];
+
+        return response()->json($response);
+    }
+
+    public function test(Request $request): JsonResponse {
+        $testString = $request->input('test_string');
+        $server = Server::find($request->get('id'));
+
+        $response = [
+            'test_string' => $testString,
+            'server' => $server,
         ];
 
         return response()->json($response);

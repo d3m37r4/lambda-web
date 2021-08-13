@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
+use Carbon\Carbon;
+use Exception;
+use App\Models\Role;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,8 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
 
 class UsersManagementController extends Controller {
     /**
@@ -46,8 +48,10 @@ class UsersManagementController extends Controller {
      */
     public function create() {
         $roles = Role::all();
+        $createdTime = Carbon::now()->format('d.m.Y - H:i:s');
+        $redirect = $this->getPreviousUrl(action([UsersManagementController::class, 'index']));
 
-        return view('admin.users.create', compact('roles'));
+        return view('admin.users.create', compact('roles', 'redirect', 'createdTime'));
     }
 
     /**
@@ -80,8 +84,7 @@ class UsersManagementController extends Controller {
         $user->assignRole($request->input('role'));
         $user->save();
 
-        return redirect()
-            ->route('admin.users.index')
+        return redirect($request->input('redirect'))
             ->with('status', 'success')
             ->with('message', "Пользователь {$user->name} успешно создан!");
     }
@@ -90,12 +93,14 @@ class UsersManagementController extends Controller {
      * Display the specified user.
      *
      * @param User $user
-     * @return Response
+     * @return Application|Factory|View|Response
      */
-//    public function show(User $user): Response {
-//        // TODO: Adding a user profile display form to control panel
-//        return abort(404);
-//    }
+    public function show(User $user) {
+        $permissions = $user->getAllPermissions();
+        $redirect = $this->getPreviousUrl(action([UsersManagementController::class, 'index']));
+
+        return view('admin.users.show', compact('user', 'permissions', 'redirect'));
+    }
 
     /**
      * Show the form for editing the specified user.
@@ -105,9 +110,9 @@ class UsersManagementController extends Controller {
      */
     public function edit(User $user) {
         $roles = Role::all();
-//        $permissions = Permission::all();
+        $redirect = $this->getPreviousUrl(action([UsersManagementController::class, 'index']));
 
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.users.edit', compact('user', 'roles', 'redirect'));
     }
 
     /**
@@ -190,5 +195,16 @@ class UsersManagementController extends Controller {
         return back()
             ->with('status', 'danger')
             ->with('message', "Вы не можете удалить свой профиль!");
+    }
+
+    /**
+     * Gets previous url or, if previous url is equal to current one, sets desired standard value
+     *
+     * @param string $defaultUrl
+     * @return string
+     */
+    function getPreviousUrl(string $defaultUrl): string {
+        $previous = URL::previous();
+        return (($previous !== URL::current()) ? $previous : $defaultUrl);
     }
 }
