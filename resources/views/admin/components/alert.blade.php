@@ -1,5 +1,6 @@
 @if (session('message'))
-    <div class="alert alert-{{ session('status') }} alert-dismissible fade show" id="alert" role="alert">
+    <div class="d-flex alert alert-{{ session('status') }} alert-dismissible align-items-center fade show" id="alert">
+        <i class="far fa-check-circle fa-2x me-1"></i>
         {{ session('message') }}
         <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
     </div>
