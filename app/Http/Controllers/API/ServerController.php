@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
-use Exception;
 use App\Models\Server;
+use App\Models\AccessToken;
 use App\Http\Controllers\Controller;
+use App\Helpers\HelperAccessToken;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
+use Exception;
 
 class ServerController extends Controller {
     /**
@@ -27,59 +30,34 @@ class ServerController extends Controller {
      * @throws Exception
      */
     public function auth(Request $request): JsonResponse {
-        $server = Server::where('ip', $request->ip())
-            ->where('port', $request->input('port'))
-            ->first();
+        // mb firstOr?????
+        // https://laravel.demiart.ru/secret-method-firstor/
+        $server = Server::where([
+            ['ip', $request->ip()],
+            ['port', $request->input('port')],
+        ])->firstOrFail();      // Need custom message!
 
-        if (empty($server)) {
-            return response()->json(['message' =>'Server not found'], 404);
-        }
+//        if (empty($server)) {
+//            return Response::json(['message' =>'Server not found'], 404);
+//        }
 
         $authToken = $request->input('auth_token');
         if (empty($authToken)) {
-            return response()->json(['message' =>'Token required'], 400);
+            return Response::json(['message' =>'Token required'], 400);
         }
 
         if (!Hash::check($authToken, $server->auth_token)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return Response::json(['message' => 'Unauthorized'], 401);
         }
 
-        $server->access_token = $this->generateAccessToken();
-        $server->access_token_expires = now()->addHours(12);
-        $server->save();
+        AccessToken::updateOrCreate(
+            ['server_id' => $server->id],
+            ['token' => HelperAccessToken::generateAccessToken(64), 'expires_in' => now()->addHours(12)],
+        );
 
-        $response = [
-            'access_token' => $server->access_token,
-            'expires_in' => $server->access_token_expires,
-        ];
-
-        return response()->json($response);
-    }
-
-    public function test(Request $request): JsonResponse {
-        $testString = $request->input('test_string');
-        $server = Server::find($request->get('id'));
-
-        $response = [
-            'test_string' => $testString,
-            'server' => $server,
-        ];
-
-        return response()->json($response);
-    }
-
-    /**
-     * Generate a unique access token for server.
-     *
-     * @return string
-     * @throws Exception
-     */
-    protected function generateAccessToken(): string {
-        $tries = 0;
-        do {
-            $token = bin2hex(random_bytes(64));
-        } while (++$tries < 3 && Server::where('access_token', $token)->exists());
-
-        return $token;
+        return Response::json([
+            'access_token' => $server->access_token_string,
+            'expires_in' => $server->access_token_expires_in,
+        ]);
     }
 }
