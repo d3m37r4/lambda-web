@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Map;
 use App\Models\Server;
 use App\Models\AccessToken;
 use App\Http\Controllers\Controller;
@@ -58,6 +59,33 @@ class ServerController extends Controller {
         return Response::json([
             'access_token' => $server->access_token_string,
             'expires_in' => $server->access_token_expires_in,
+        ]);
+    }
+
+    /**
+     * Gets information about server when a new map is launched or when server is started.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function info(Request $request): JsonResponse {
+        $server = Server::find($request->attributes->get('server_id'));
+
+        if ($request->has('map')) {
+            $map = Map::firstOrCreate(
+                ['name' => $request->query('map')],
+                ['name' => $request->query('map')],
+            );
+            $server->map_id = $map->id;
+        }
+
+        $server->save();
+
+        return Response::json([
+            'success' => true,
+            'server_id' => $server->id,
+            'map' => $server->map_name,
+            'time' => time(),
         ]);
     }
 }

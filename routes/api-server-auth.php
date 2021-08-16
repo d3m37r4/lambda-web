@@ -19,4 +19,5 @@ Route::group([
     'prefix' => 'server',
 ], function () {
     Route::post('auth', [ServerController::class, 'auth']);
+    Route::post('info', [ServerController::class, 'info']);
 });
