@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\JsonResponse;
+use App\Models\AccessToken;
 use Illuminate\Http\Request;
-use App\Models\Server;
+use Illuminate\Support\Facades\Response;
 
 class ApiTokenMiddleware {
     /**
@@ -15,20 +15,21 @@ class ApiTokenMiddleware {
      * @param  Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next): JsonResponse {
-        $accessToken = $request->header('X-Access-Token');
-
-        if (empty($accessToken)) {
-            return response()->json(['message' => 'Access token required'], 400);
+    public function handle(Request $request, Closure $next) {
+        $accessTokenString = $request->header('X-Access-Token');
+        if (empty($accessTokenString)) {
+            return Response::json(['message' => 'Access token required'], 400);
         }
 
-        $server = Server::where('access_token', $accessToken)->first();
+        $accessToken = AccessToken::where('token', $accessTokenString)
+            ->firstOrFail();    // Need custom message!
         // Should request ip be checked against server ip?
-        if (empty($server)) {
-            return response()->json(['message' =>'Invalid token'], 404);
-        }
+        // added check token expires time
+//        if (empty($accessToken)) {
+//            return Response::json(['message' =>'Invalid token'], 404);
+//        }
 
-        $request->attributes->set('id', $server->id);
+        $request->attributes->set('server_id', $accessToken->server->id);
         return $next($request);
     }
 }
