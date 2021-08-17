@@ -73,10 +73,14 @@ class ServerController extends Controller {
 
         if ($request->has('map')) {
             $map = Map::firstOrCreate(
-                ['name' => $request->query('map')],
-                ['name' => $request->query('map')],
+                ['name' => $request->input('map')],
+                ['name' => $request->input('map')],
             );
             $server->map_id = $map->id;
+        }
+
+        if ($request->has('max_players')) {
+            $server->max_players = $request->input('max_players');
         }
 
         $server->save();
