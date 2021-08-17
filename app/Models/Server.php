@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
  * @method static where(array[] $array)
  * @property int id
  * @property int port
+ * @property int num_players
+ * @property int max_players
  * @property string name
  * @property string ip
  * @property string rcon
@@ -28,7 +30,7 @@ class Server extends Model {
     /**
      * @var array
      */
-    protected $fillable = ['name', 'ip', 'port', 'rcon', 'map_id', 'auth_token'];
+    protected $fillable = ['name', 'ip', 'port', 'rcon', 'map_id', 'auth_token', 'num_players', 'max_players'];
 
     /**
      * @var array
@@ -56,6 +58,8 @@ class Server extends Model {
     protected $casts = [
         'port' => 'int',
         'map_id' => 'int',
+        'num_players' => 'int',
+        'max_players' => 'int',
         'full_address' => 'string',
         'map_name' => 'string',
         'access_token_string' => 'string',

@@ -62,7 +62,7 @@
                                     {{ $server->map_name }}
                                 </td>
                                 <td class="text-center">
-                                    32/32
+                                    {{ "31/$server->max_players" }}
                                 </td>
                                 <td class="text-center">
                                     <span class="btn btn-success btn-floating btn-sm pe-none">
