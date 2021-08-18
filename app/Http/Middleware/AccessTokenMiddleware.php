@@ -3,33 +3,38 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\AccessToken;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Carbon;
+use App\Models\AccessToken;
+use App\Exceptions\InvalidAccessTokenException;
 
-class ApiTokenMiddleware {
+class AccessTokenMiddleware {
     /**
      * Handle an incoming request.
      *
-     * @param  $request
-     * @param  Closure  $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
+     * @throws InvalidAccessTokenException
      */
     public function handle(Request $request, Closure $next) {
         $accessTokenString = $request->header('X-Access-Token');
         if (empty($accessTokenString)) {
-            return Response::json(['message' => 'Access token required'], 400);
+            throw new InvalidAccessTokenException('Access token required', 400);
         }
 
         $accessToken = AccessToken::where('token', $accessTokenString)
-            ->firstOrFail();    // Need custom message!
+            ->firstOr(function() {
+            throw new InvalidAccessTokenException('Invalid token', 404);
+        });
+
         // Should request ip be checked against server ip?
-        // added check token expires time
-//        if (empty($accessToken)) {
-//            return Response::json(['message' =>'Invalid token'], 404);
-//        }
+        if ($accessToken->expires_in <= Carbon::now()) {
+            throw new InvalidAccessTokenException('Bad access token', 403);
+        }
 
         $request->attributes->set('server_id', $accessToken->server->id);
+
         return $next($request);
     }
 }
