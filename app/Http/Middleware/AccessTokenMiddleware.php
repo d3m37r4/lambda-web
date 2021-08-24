@@ -28,12 +28,15 @@ class AccessTokenMiddleware {
             throw new InvalidAccessTokenException('Invalid token', 404);
         });
 
+        $server = $accessToken->server;
+
         // Should request ip be checked against server ip?
         if ($accessToken->expires_in <= Carbon::now()) {
+            $server->update(['active' => false]);
             throw new InvalidAccessTokenException('Bad access token', 403);
         }
 
-        $request->attributes->set('server_id', $accessToken->server->id);
+        $request->attributes->set('server_id', $server->id);
 
         return $next($request);
     }

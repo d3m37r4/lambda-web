@@ -31,24 +31,21 @@ class ServerController extends Controller {
      * @throws Exception
      */
     public function auth(Request $request): JsonResponse {
-        // mb firstOr?????
-        // https://laravel.demiart.ru/secret-method-firstor/
         $server = Server::where([
             ['ip', $request->ip()],
             ['port', $request->input('port')],
-        ])->firstOrFail();      // Need custom message!
-
-//        if (empty($server)) {
-//            return Response::json(['message' =>'Server not found'], 404);
-//        }
+        ])->firstOr(function() {
+            return Response::json(['error' =>'Server not found'], 404);
+        });
 
         $authToken = $request->input('auth_token');
         if (empty($authToken)) {
-            return Response::json(['message' =>'Token required'], 400);
+            return Response::json(['error' => 'Token required'], 400);
         }
 
         if (!Hash::check($authToken, $server->auth_token)) {
-            return Response::json(['message' => 'Unauthorized'], 401);
+            $server->update(['active' => false]);
+            return Response::json(['error' => 'Unauthorized'], 401);
         }
 
         AccessToken::updateOrCreate(
@@ -56,7 +53,10 @@ class ServerController extends Controller {
             ['token' => HelperAccessToken::generateAccessToken(64), 'expires_in' => now()->addHours(12)],
         );
 
+        $server->update(['active' => true]);
+
         return Response::json([
+            'success' => true,
             'access_token' => $server->access_token_string,
             'expires_in' => $server->access_token_expires_in,
         ]);
