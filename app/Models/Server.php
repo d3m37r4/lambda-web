@@ -28,9 +28,28 @@ use Illuminate\Http\Request;
  */
 class Server extends Model {
     /**
+     * The attributes that are mass assignable.
+     *
      * @var array
      */
-    protected $fillable = ['name', 'ip', 'port', 'rcon', 'map_id', 'auth_token', 'num_players', 'max_players'];
+    protected $fillable = [
+        'name',
+        'ip',
+        'port',
+        'rcon',
+        'map_id',
+        'auth_token',
+        'num_players',
+        'max_players',
+        'active',
+    ];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
 
     /**
      * @var array
@@ -64,6 +83,7 @@ class Server extends Model {
         'map_name' => 'string',
         'access_token_string' => 'string',
         'access_token_expires_in' => 'datetime',
+        'active' => 'boolean',
     ];
 
     /**

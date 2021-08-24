@@ -23,6 +23,7 @@ class CreateServersTable extends Migration
             $table->string('auth_token', 255)->nullable();
             $table->unsignedTinyInteger('num_players')->default(0);
             $table->unsignedTinyInteger('max_players')->default(0);
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }
