@@ -62,10 +62,11 @@
                                     {{ $server->map_name }}
                                 </td>
                                 <td class="text-center">
-                                    32/32
+                                    {{ "$server->num_players/$server->max_players" }}
                                 </td>
                                 <td class="text-center">
-                                    <span class="btn btn-success btn-floating btn-sm pe-none">
+                                    <span class="btn {{ $server->active ? 'btn-success' : 'btn-danger' }}
+                                        btn-floating btn-sm pe-none">
                                         <i class="fas fa-power-off"></i>
                                     </span>
                                 </td>

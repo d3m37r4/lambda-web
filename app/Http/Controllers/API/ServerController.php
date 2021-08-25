@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\API;
 
-use Exception;
+use App\Models\Map;
 use App\Models\Server;
+use App\Models\AccessToken;
 use App\Http\Controllers\Controller;
+use App\Helpers\HelperAccessToken;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
+use Exception;
 
 class ServerController extends Controller {
     /**
@@ -27,59 +31,65 @@ class ServerController extends Controller {
      * @throws Exception
      */
     public function auth(Request $request): JsonResponse {
-        $server = Server::where('ip', $request->ip())
-            ->where('port', $request->input('port'))
-            ->first();
-
-        if (empty($server)) {
-            return response()->json(['message' =>'Server not found'], 404);
-        }
+        $server = Server::where([
+            ['ip', $request->ip()],
+            ['port', $request->input('port')],
+        ])->firstOr(function() {
+            return Response::json(['error' =>'Server not found'], 404);
+        });
 
         $authToken = $request->input('auth_token');
         if (empty($authToken)) {
-            return response()->json(['message' =>'Token required'], 400);
+            return Response::json(['error' => 'Token required'], 400);
         }
 
         if (!Hash::check($authToken, $server->auth_token)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            $server->update(['active' => false]);
+            return Response::json(['error' => 'Unauthorized'], 401);
         }
 
-        $server->access_token = $this->generateAccessToken();
-        $server->access_token_expires = now()->addHours(12);
-        $server->save();
+        AccessToken::updateOrCreate(
+            ['server_id' => $server->id],
+            ['token' => HelperAccessToken::generateAccessToken(64), 'expires_in' => now()->addHours(12)],
+        );
 
-        $response = [
-            'access_token' => $server->access_token,
-            'expires_in' => $server->access_token_expires,
-        ];
+        $server->update(['active' => true]);
 
-        return response()->json($response);
-    }
-
-    public function test(Request $request): JsonResponse {
-        $testString = $request->input('test_string');
-        $server = Server::find($request->get('id'));
-
-        $response = [
-            'test_string' => $testString,
-            'server' => $server,
-        ];
-
-        return response()->json($response);
+        return Response::json([
+            'success' => true,
+            'access_token' => $server->access_token_string,
+            'expires_in' => $server->access_token_expires_in,
+        ]);
     }
 
     /**
-     * Generate a unique access token for server.
+     * Gets information about server when a new map is launched or when server is started.
      *
-     * @return string
-     * @throws Exception
+     * @param Request $request
+     * @return JsonResponse
      */
-    protected function generateAccessToken(): string {
-        $tries = 0;
-        do {
-            $token = bin2hex(random_bytes(64));
-        } while (++$tries < 3 && Server::where('access_token', $token)->exists());
+    public function info(Request $request): JsonResponse {
+        $server = Server::find($request->attributes->get('server_id'));
 
-        return $token;
+        if ($request->has('map')) {
+            $map = Map::firstOrCreate(
+                ['name' => $request->input('map')],
+                ['name' => $request->input('map')],
+            );
+            $server->map_id = $map->id;
+        }
+
+        if ($request->has('max_players')) {
+            $server->max_players = $request->input('max_players');
+        }
+
+        $server->save();
+
+        return Response::json([
+            'success' => true,
+            'server_id' => $server->id,
+            'map' => $server->map_name,
+            'time' => time(),
+        ]);
     }
 }

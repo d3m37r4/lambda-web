@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @method static create(array $array)
+ * @method static firstOrCreate(array $array, array $array1)
  */
 class Map extends Model {
     /**

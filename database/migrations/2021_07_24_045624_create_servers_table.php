@@ -21,8 +21,9 @@ class CreateServersTable extends Migration
             $table->string('rcon', 128)->nullable();
             $table->foreignId('map_id')->nullable()->constrained('maps');
             $table->string('auth_token', 255)->nullable();
-            $table->string('access_token', 255)->nullable();
-            $table->timestamp('access_token_expires')->nullable();
+            $table->unsignedTinyInteger('num_players')->default(0);
+            $table->unsignedTinyInteger('max_players')->default(0);
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }
