@@ -20,4 +20,5 @@ Route::group([
 ], function () {
     Route::post('auth', [ServerController::class, 'auth']);
     Route::post('info', [ServerController::class, 'info']);
+    Route::post('ping', [ServerController::class, 'ping']);
 });
