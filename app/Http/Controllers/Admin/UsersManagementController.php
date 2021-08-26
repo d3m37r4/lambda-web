@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Arr;
 use Auth;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -57,32 +59,17 @@ class UsersManagementController extends Controller {
     /**
      * Store a newly created user in storage.
      *
-     * @param Request $request
+     * @param StoreUserRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse {
-        $rules = [
-            'name' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'password_confirmation' => ['required', 'string', 'same:password'],
-            'role' => ['required', 'string'],
-        ];
-        $validator = Validator::make($request->all(), $rules);
+    public function store(StoreUserRequest $request): RedirectResponse {
+        // TODO: add choice of permissions
+        $data = $request->validated();
+        $data['password'] = Hash::make($data['password']);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $user = User::create([
-            'name' => strip_tags($request->input('name')),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-        ]);
-
-//        TODO: add choice of permissions
-        $user->assignRole($request->input('role'));
-        $user->save();
+        $user = User::create(
+            Arr::except($data, ['password_confirmation', 'role'])
+        )->assignRole($request->only('role'));
 
         return redirect($request->input('redirect'))
             ->with('status', 'success')
