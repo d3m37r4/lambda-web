@@ -3,19 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
-use Exception;
 use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\StoreUserRequest;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\URL;
 
 class UsersManagementController extends Controller {
@@ -31,9 +26,9 @@ class UsersManagementController extends Controller {
     /**
      * Display a listing of users
      *
-     * @return Application|Factory|View
+     * @return View
      */
-    public function index() {
+    public function index(): View {
         $users = User::paginate(env('PAGINATION_SIZE'));
         $roles = Role::all();
 
@@ -43,9 +38,9 @@ class UsersManagementController extends Controller {
     /**
      * Show the form for creating a new user.
      *
-     * @return Application|Factory|View|Response
+     * @return View
      */
-    public function create() {
+    public function create(): View {
         $roles = Role::all();
         $createdTime = Carbon::now()->format('d.m.Y - H:i:s');
         $redirect = $this->getPreviousUrl(action([UsersManagementController::class, 'index']));
@@ -74,9 +69,9 @@ class UsersManagementController extends Controller {
      * Display the specified user.
      *
      * @param User $user
-     * @return Application|Factory|View|Response
+     * @return View
      */
-    public function show(User $user) {
+    public function show(User $user): View {
         $permissions = $user->getAllPermissions();
         $redirect = $this->getPreviousUrl(action([UsersManagementController::class, 'index']));
 
@@ -87,9 +82,9 @@ class UsersManagementController extends Controller {
      * Show the form for editing the specified user.
      *
      * @param User $user
-     * @return Application|Factory|View|Response
+     * @return View
      */
-    public function edit(User $user) {
+    public function edit(User $user): View {
         $roles = Role::all();
         $redirect = $this->getPreviousUrl(action([UsersManagementController::class, 'index']));
 
@@ -117,10 +112,9 @@ class UsersManagementController extends Controller {
      * Remove the specified user from storage.
      *
      * @param User $user
-     * @return Application|RedirectResponse|Response|Redirector|void
-     * @throws Exception
+     * @return RedirectResponse
      */
-    public function destroy(User $user) {
+    public function destroy(User $user): RedirectResponse {
         $currentUser = Auth::user();
         abort_if(is_null($currentUser), 500);
 
