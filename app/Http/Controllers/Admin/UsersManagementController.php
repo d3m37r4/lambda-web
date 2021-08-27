@@ -64,9 +64,10 @@ class UsersManagementController extends Controller {
         $user = User::create($request->safe()->except('role'));
         $user->assignRole($request->safe()->only('role'));
 
-        return redirect($request->input('redirect'))
-            ->with('status', 'success')
-            ->with('message', "Пользователь {$user->name} успешно создан!");
+        return redirect($request->input('redirect'))->with([
+            'status' => 'success',
+            'message' => "Пользователь {$user->name} успешно создан!"
+        ]);
     }
 
     /**
@@ -106,9 +107,10 @@ class UsersManagementController extends Controller {
         $user->update($request->safe()->except('role'));
         $user->syncRoles($request->safe()->only('role'));
 
-        return back()
-            ->with('status', 'success')
-            ->with('message', "Информация о пользователе {$user->name} была успешно обновлена!");
+        return back()->with([
+            'status' => 'success',
+            'message' => "Информация о пользователе {$user->name} была успешно обновлена!"
+        ]);
     }
 
     /**
@@ -116,28 +118,24 @@ class UsersManagementController extends Controller {
      *
      * @param User $user
      * @return Application|RedirectResponse|Response|Redirector|void
-     * @noinspection PhpVoidFunctionResultUsedInspection
      * @throws Exception
      */
     public function destroy(User $user) {
         $currentUser = Auth::user();
-
-        if (is_null($currentUser)) {
-            return abort(500);
-        }
+        abort_if(is_null($currentUser), 500);
 
         if ($currentUser->id !== $user->id) {
-            $user->save();
             $user->delete();
-
-            return back()
-                ->with('status', 'success')
-                ->with('message', "Пользователь {$user->name} был удален!");
+            return back()->with([
+                'status' => 'success',
+                'message' => "Пользователь {$user->name} был удален!"
+            ]);
         }
 
-        return back()
-            ->with('status', 'danger')
-            ->with('message', "Вы не можете удалить свой профиль!");
+        return back()->with([
+            'status' => 'danger',
+            'message' => "Вы не можете удалить свой профиль!"
+        ]);
     }
 
     /**
