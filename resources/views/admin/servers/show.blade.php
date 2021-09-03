@@ -223,7 +223,7 @@
                                     {{ ('Добавить причину наказаний') }}
                                 </a>
                             </div>
-                            @if(!$reasons->isEmpty())
+                            @if(!$server->reasons->isEmpty())
                                 <div class="border table-responsive rounded">
                                     <table class="table align-middle">
                                         <thead>
@@ -236,7 +236,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($reasons as $reason)
+                                            @foreach($server->reasons as $reason)
                                                 <tr>
                                                     <td>
                                                         {{ $loop->iteration }}

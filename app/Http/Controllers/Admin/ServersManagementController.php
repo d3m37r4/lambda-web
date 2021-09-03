@@ -48,6 +48,7 @@ class ServersManagementController extends Controller {
      */
     public function store(StoreServerRequest $request): RedirectResponse {
         $server = Server::create($request->validated());
+
         return redirect()->route('admin.servers.index')->with([
             'status' => 'success',
             'message' => "Сервер {$server->name} успешно добавлен!"
@@ -62,9 +63,8 @@ class ServersManagementController extends Controller {
      */
     public function show(Server $server) {
         $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
-        $reasons = $server->reasons;
 
-        return view('admin.servers.show', compact('server', 'reasons', 'redirect'));
+        return view('admin.servers.show', compact('server', 'redirect'));
     }
 
     /**
