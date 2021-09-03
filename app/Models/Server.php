@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Hash;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -147,5 +148,16 @@ class Server extends Model {
      */
     public function getAccessTokenExpiresInAttribute(): int {
         return $this->access_token['expires_in']->getTimestamp();
+    }
+
+    /**
+     * Sets a hash instead of a valid auth token.
+     *
+     * @param $authToken
+     */
+    public function setAuthTokenAttribute($authToken) {
+        if (!empty($authToken)) {
+            $this->attributes['auth_token'] = Hash::make($authToken);
+        }
     }
 }

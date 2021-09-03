@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
-use App\Http\Controllers\Controller;
 use App\Models\Server;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreServerRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
@@ -23,6 +24,7 @@ class ServersManagementController extends Controller {
      */
     public function index() {
         $servers = Server::paginate(env('PAGINATION_SIZE'));
+
         return view('admin.servers.index', compact('servers'));
     }
 
@@ -41,44 +43,15 @@ class ServersManagementController extends Controller {
     /**
      * Store a newly created server in storage.
      *
-     * @param Request $request
+     * @param StoreServerRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse {
-        $rules = [
-            'name' => ['required', 'string', 'max:255', 'unique:servers'],
-            'ip' => ['required', 'ip'],
-            'port' => ['required', 'integer', 'between:1,65535'],
-        ];
-
-        $rconCheck = !empty($request->input('rcon'));
-        if ($rconCheck) {
-            $rules['rcon'] = ['string', 'max:128'];
-        }
-
-//        TODO: Add IP+port pair verification
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $authTokenHash = Hash::make($request->input('auth_token'));
-        if (!$this->checkAuthTokenUniqueByHash($authTokenHash)) {
-            return $this->redirectBack();
-        }
-
-        $server = Server::create([
-            'name' => strip_tags($request->input('name')),
-            'ip' => $request->input('ip'),
-            'port' => $request->input('port'),
-            'rcon' => $request->input('rcon'),
-            'auth_token' => $authTokenHash,
+    public function store(StoreServerRequest $request): RedirectResponse {
+        $server = Server::create($request->validated());
+        return redirect()->route('admin.servers.index')->with([
+            'status' => 'success',
+            'message' => "Сервер {$server->name} успешно добавлен!"
         ]);
-
-        return redirect()
-            ->route('admin.servers.index')
-            ->with('status', 'success')
-            ->with('message', "Сервер {$server->name} успешно добавлен!");
     }
 
     /**
