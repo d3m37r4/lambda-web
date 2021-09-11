@@ -69,7 +69,7 @@
                         {{ ('Роль пользователя') }}
                     </label>
                     <div class="col-md-6">
-                        <select id="role" class="form-select @error('role') is-invalid @enderror"
+                        <select id="role" class="form-control form-select @error('role') is-invalid @enderror"
                                 name="role" size="6">
                             <option disabled>{{ ('Назначьте роль пользователю...') }}</option>
                             @foreach ($roles as $role)
@@ -79,6 +79,7 @@
                                 </option>
                             @endforeach
                         </select>
+                        @include('components.field-filling-error', ['error' => 'role'])
                     </div>
                 </div>
                 <div class="row form-group mb-3">
