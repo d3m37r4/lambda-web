@@ -14,7 +14,6 @@ use Illuminate\Notifications\Notifiable;
  * @method static find(int $id)
  * @method static findOrFail(int $id)
  * @method static create(array $array)
- * @property int $Id
  * @property int id
  * @property string email
  * @property string name
