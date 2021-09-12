@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Exception;
+use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+Carbon::setToStringFormat('d.m.Y - H:i:s');
 
 /**
  * @method static create(array $array)
@@ -13,18 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int time
  */
 class Reason extends Model {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'reasons';
-
-    /**
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
     /**
      * @var array
      */
@@ -67,9 +58,8 @@ class Reason extends Model {
      * @throws Exception
      */
     public function getTimeForHumansAttribute(): string {
-        $minutes = $this->time;
-        return $minutes ?
-            CarbonInterval::minutes($minutes)
+        return $this->time ?
+            CarbonInterval::minutes($this->time)
             ->cascade()
             ->forHumans(['short' => true, 'minimumUnit' => 'minute']) : 'Бессрочно';
     }
