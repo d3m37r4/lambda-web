@@ -7,6 +7,7 @@ use Hash;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -20,7 +21,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string password
  */
 class User extends Authenticatable {
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, HasPermissions;
 
     /**
      * The attributes that are mass assignable.
