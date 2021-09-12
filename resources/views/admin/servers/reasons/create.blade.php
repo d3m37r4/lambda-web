@@ -13,7 +13,7 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    <a class="btn btn-primary" href="{{ route('admin.servers.show', $server->id) }}">
+                    <a class="btn btn-primary" href="{{ route('admin.servers.show', $server) }}">
                         <i class="fas fa-reply"></i>
                         {{ ('Назад') }}
                     </a>
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.servers.reasons.store', $server->id) }}" method="POST">
+            <form action="{{ route('admin.servers.reasons.store', $server) }}" method="POST">
                 @csrf
                 <div class="row form-group mb-3">
                     <label for="title" class="col-md-4 col-form-label text-sm-end">
@@ -72,7 +72,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="created" type="text" class="form-control"
-                               name="created" value="{{ $createdTime }}" disabled>
+                               name="created" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -81,7 +81,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="updated" type="text" class="form-control"
-                               name="updated" value="{{ $createdTime }}" disabled>
+                               name="updated" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-4">
