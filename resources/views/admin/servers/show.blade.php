@@ -50,7 +50,8 @@
                             {{ ('Игроков онлайн') }}
                         </div>
                         <div class="d-grid">
-                            {{ "11/$server->max_players" }} (34%)
+                            {{ "$server->num_players/$server->max_players" }}
+                            {{ "($server->percent_players%)" }}
                         </div>
                     </div>
                     <div class="d-sm-flex justify-content-between">
@@ -79,7 +80,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div>
                     <ul class="nav nav-tabs nav-justified mb-3" id="ex1">

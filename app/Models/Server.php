@@ -74,6 +74,7 @@ class Server extends Model
         'map_name',
         'access_token_string',
         'access_token_expires_in',
+        'percent_players',
     ];
 
     /**
@@ -89,6 +90,7 @@ class Server extends Model
         'access_token_string' => 'string',
         'access_token_expires_in' => 'datetime',
         'active' => 'boolean',
+        'percent_players' => 'int',
     ];
 
     /**
@@ -171,5 +173,15 @@ class Server extends Model
         if (!empty($authToken)) {
             $this->attributes['auth_token'] = Hash::make($authToken);
         }
+    }
+  
+    /**
+     * Gets players online as a percentage.
+     *
+     * @return int
+     */
+    public function getPercentPlayersAttribute(): int 
+    {
+        return round(100/($this->max_players/$this->num_players));
     }
 }

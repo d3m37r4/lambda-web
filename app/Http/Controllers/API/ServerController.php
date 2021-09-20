@@ -75,6 +75,7 @@ class ServerController extends Controller
     {
         $server = Server::find($request->attributes->get('server_id'));
 
+        // mb add validator?
         if ($request->has('map')) {
             $map = Map::firstOrCreate(
                 ['name' => $request->input('map')],
@@ -87,13 +88,35 @@ class ServerController extends Controller
             $server->max_players = $request->input('max_players');
         }
 
-        $server->save();
+        // mb use mass assignment of valid data?
+        $server->update();
 
         return Response::json([
             'success' => true,
             'server_id' => $server->id,
             'map' => $server->map_name,
             'time' => time(),
+        ]);
+    }
+
+    /**
+     * Gets additional information about server.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ping(Request $request): JsonResponse {
+        $server = Server::find($request->attributes->get('server_id'));
+
+        // mb add validator?
+        if ($request->has('num_players')) {
+            $server->num_players = $request->input('num_players');
+        }
+
+        $server->update();
+
+        return Response::json([
+            'success' => true,
         ]);
     }
 }
