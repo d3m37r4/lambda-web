@@ -8,8 +8,10 @@ use Request;
 /**
  * @property mixed reason
  */
-class UpdateReasonRequest extends StoreReasonRequest {
-    public function rules(): array {
+class UpdateReasonRequest extends StoreReasonRequest
+{
+    public function rules(): array
+    {
         return array_merge(parent::rules(), [
             'title' => ['required', 'string', 'max:255',
                 /* Here it is intentionally used to get index of Server model through router.

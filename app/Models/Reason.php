@@ -15,7 +15,8 @@ Carbon::setToStringFormat('d.m.Y - H:i:s');
  * @property string title
  * @property int time
  */
-class Reason extends Model {
+class Reason extends Model
+{
     /**
      * @var array
      */
@@ -41,13 +42,15 @@ class Reason extends Model {
     /**
      * @var array
      */
-    protected $hidden = ['server_id', /*'overall', 'active',*/ 'created_at', 'updated_at'];
+    protected $hidden = ['server_id', /*'overall', 'active',*/
+        'created_at', 'updated_at'];
 
     /**
      * Gets servers associated with this reason.
      * @return BelongsTo
      */
-    public function server(): BelongsTo {
+    public function server(): BelongsTo
+    {
         return $this->belongsTo(Server::class);
     }
 
@@ -57,11 +60,12 @@ class Reason extends Model {
      * @return string
      * @throws Exception
      */
-    public function getTimeForHumansAttribute(): string {
+    public function getTimeForHumansAttribute(): string
+    {
         return $this->time ?
             CarbonInterval::minutes($this->time)
-            ->cascade()
-            ->forHumans(['short' => true, 'minimumUnit' => 'minute']) : 'Бессрочно';
+                ->cascade()
+                ->forHumans(['short' => true, 'minimumUnit' => 'minute']) : 'Бессрочно';
     }
 
     /**
@@ -72,7 +76,8 @@ class Reason extends Model {
      * @return string
      * @link https://php.net/manual/en/dateinterval.format.php
      */
-    public function getTimeSpecialFormatted($format): string {
+    public function getTimeSpecialFormatted($format): string
+    {
         return CarbonInterval::minutes($this->time)
             ->cascade()
             ->format($format);

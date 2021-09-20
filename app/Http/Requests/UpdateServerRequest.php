@@ -2,20 +2,21 @@
 
 namespace App\Http\Requests;
 
-use Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Request;
 
 /**
-
  */
-class UpdateServerRequest extends FormRequest {
+class UpdateServerRequest extends FormRequest
+{
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool {
+    public function authorize(): bool
+    {
         return true;
     }
 
@@ -24,7 +25,8 @@ class UpdateServerRequest extends FormRequest {
      *
      * @return array
      */
-    public function rules(): array {
+    public function rules(): array
+    {
         return [
             'name' => ['required', 'string', 'max:255'],
             'ip' => ['required', 'ip',

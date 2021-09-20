@@ -8,7 +8,8 @@ use Illuminate\Support\Carbon;
 use App\Models\AccessToken;
 use App\Exceptions\InvalidAccessTokenException;
 
-class AccessTokenMiddleware {
+class AccessTokenMiddleware
+{
     /**
      * Handle an incoming request.
      *
@@ -17,16 +18,17 @@ class AccessTokenMiddleware {
      * @return mixed
      * @throws InvalidAccessTokenException
      */
-    public function handle(Request $request, Closure $next) {
+    public function handle(Request $request, Closure $next)
+    {
         $accessTokenString = $request->header('X-Access-Token');
         if (empty($accessTokenString)) {
             throw new InvalidAccessTokenException('Access token required', 400);
         }
 
         $accessToken = AccessToken::where('token', $accessTokenString)
-            ->firstOr(function() {
-            throw new InvalidAccessTokenException('Invalid token', 404);
-        });
+            ->firstOr(function () {
+                throw new InvalidAccessTokenException('Invalid token', 404);
+            });
 
         $server = $accessToken->server;
 

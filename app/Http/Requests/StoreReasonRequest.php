@@ -7,13 +7,15 @@ use Illuminate\Validation\Rule;
 use Carbon\CarbonInterval;
 use Request;
 
-class StoreReasonRequest extends FormRequest {
+class StoreReasonRequest extends FormRequest
+{
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool {
+    public function authorize(): bool
+    {
         return true;
     }
 
@@ -22,7 +24,8 @@ class StoreReasonRequest extends FormRequest {
      *
      * @return array
      */
-    public function rules(): array {
+    public function rules(): array
+    {
         return [
             'title' => ['required', 'string', 'max:255',
                 /* Here it is intentionally used to get index of Server model through router.
@@ -46,13 +49,14 @@ class StoreReasonRequest extends FormRequest {
      *
      * @return void
      */
-    protected function prepareForValidation() {
+    protected function prepareForValidation()
+    {
         $this->merge([
             'server_id' => Request::route('server')->id,
-            'time' => CarbonInterval::months(request()->input('months'))
-                ->days(request()->input('days'))
-                ->hours(request()->input('hours'))
-                ->minutes(request()->input('minutes'))
+            'time' => CarbonInterval::months(Request::input('months'))
+                ->days(Request::input('days'))
+                ->hours(Request::input('hours'))
+                ->minutes(Request::input('minutes'))
                 ->totalMinutes,
         ]);
     }
