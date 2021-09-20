@@ -10,14 +10,16 @@ use App\Http\Requests\UpdateReasonRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class ReasonsManagementController extends Controller {
+class ReasonsManagementController extends Controller
+{
     /**
      * Show the form for creating a new reason.
      *
      * @param Server $server
      * @return View
      */
-    public function create(Server $server): View {
+    public function create(Server $server): View
+    {
         return view('admin.servers.reasons.create', compact('server'));
     }
 
@@ -28,7 +30,8 @@ class ReasonsManagementController extends Controller {
      * @param Server $server
      * @return RedirectResponse
      */
-    public function store(StoreReasonRequest $request, Server $server): RedirectResponse {
+    public function store(StoreReasonRequest $request, Server $server): RedirectResponse
+    {
         $reason = Reason::create($request->safe()->except('months', 'days', 'hours', 'minutes'));
 
         return redirect()->route('admin.servers.show', $server->id)->with([
@@ -44,7 +47,8 @@ class ReasonsManagementController extends Controller {
      * @param Reason $reason
      * @return View
      */
-    public function edit(Server $server, Reason $reason): View {
+    public function edit(Server $server, Reason $reason): View
+    {
         return view('admin.servers.reasons.edit', compact('server', 'reason'));
     }
 
@@ -56,7 +60,8 @@ class ReasonsManagementController extends Controller {
      * @param Reason $reason
      * @return RedirectResponse
      */
-    public function update(UpdateReasonRequest $request, Server $server, Reason $reason): RedirectResponse {
+    public function update(UpdateReasonRequest $request, Server $server, Reason $reason): RedirectResponse
+    {
         $reason->update($request->safe()->except('months', 'days', 'hours', 'minutes'));
 
         return back()->with([
@@ -72,7 +77,8 @@ class ReasonsManagementController extends Controller {
      * @param Reason $reason
      * @return RedirectResponse
      */
-    public function destroy(Server $server, Reason $reason): RedirectResponse {
+    public function destroy(Server $server, Reason $reason): RedirectResponse
+    {
         if (!$server) {
             return back()->with([
                 'status' => 'danger',
