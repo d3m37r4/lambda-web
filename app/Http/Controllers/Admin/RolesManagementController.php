@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Request;
+use Session;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Http\Controllers\Controller;
@@ -10,16 +12,19 @@ use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\URL;
 
-class RolesManagementController extends Controller {
+class RolesManagementController extends Controller
+{
     /**
      * Display a listing of the roles.
      *
      * @return View
      */
-    public function index(): View {
+    public function index(): View
+    {
         $roles = Role::paginate(env('PAGINATION_SIZE'));
+
+        Session::put('redirect_url', Request::fullUrl());
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -29,7 +34,8 @@ class RolesManagementController extends Controller {
      *
      * @return View
      */
-    public function create(): View {
+    public function create(): View
+    {
         $permissions = Permission::all();
 
         return view('admin.roles.create', compact('permissions'));
@@ -41,11 +47,12 @@ class RolesManagementController extends Controller {
      * @param StoreRoleRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreRoleRequest $request): RedirectResponse {
+    public function store(StoreRoleRequest $request): RedirectResponse
+    {
         $role = Role::create($request->safe()->only('name'))
             ->givePermissionTo($request->safe()->only('permissions'));
 
-        return redirect() ->route('admin.roles.index')->with([
+        return redirect()->route('admin.roles.index')->with([
             'status' => 'success',
             'message' => "Новая роль {$role->name} успешно создана!"
         ]);
@@ -67,11 +74,11 @@ class RolesManagementController extends Controller {
      * @param Role $role
      * @return View
      */
-    public function edit(Role $role): View {
+    public function edit(Role $role): View
+    {
         $permissions = Permission::all();
-        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
 
-        return view('admin.roles.edit', compact('role', 'permissions','redirect'));
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -81,7 +88,8 @@ class RolesManagementController extends Controller {
      * @param Role $role
      * @return RedirectResponse
      */
-    public function update(UpdateRoleRequest $request, Role $role): RedirectResponse {
+    public function update(UpdateRoleRequest $request, Role $role): RedirectResponse
+    {
         $role->update($request->safe()->only('name'));
         $role->syncPermissions($request->safe()->only('permissions'));
 
@@ -97,23 +105,13 @@ class RolesManagementController extends Controller {
      * @param Role $role
      * @return RedirectResponse
      */
-    public function destroy(Role $role): RedirectResponse {
+    public function destroy(Role $role): RedirectResponse
+    {
         $role->delete();
 
         return back()->with([
             'status' => 'success',
             'message' => "Роль {$role->name} была удалена!"
         ]);
-    }
-
-    /**
-     * Gets previous url or, if previous url is equal to current one, sets desired standard value
-     *
-     * @param string $defaultUrl
-     * @return string
-     */
-    function getPreviousUrl(string $defaultUrl): string {
-        $previous = URL::previous();
-        return (($previous !== URL::current()) ? $previous : $defaultUrl);
     }
 }

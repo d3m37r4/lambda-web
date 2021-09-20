@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
+use Request;
+use Session;
 use App\Models\Server;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreServerRequest;
 use App\Http\Requests\UpdateServerRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\URL;
 
-class ServersManagementController extends Controller {
+class ServersManagementController extends Controller
+{
     /**
      * Display a listing of the servers.
      *
      * @return View
      */
-    public function index(): View {
+    public function index(): View
+    {
         $servers = Server::paginate(env('PAGINATION_SIZE'));
+
+        Session::put('redirect_url', Request::fullUrl());
 
         return view('admin.servers.index', compact('servers'));
     }
@@ -28,11 +32,9 @@ class ServersManagementController extends Controller {
      *
      * @return View
      */
-    public function create(): View {
-        $createdTime = Carbon::now()->format('d.m.Y - H:i:s');
-        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
-
-        return view('admin.servers.create', compact('redirect', 'createdTime'));
+    public function create(): View
+    {
+        return view('admin.servers.create');
     }
 
     /**
@@ -41,10 +43,11 @@ class ServersManagementController extends Controller {
      * @param StoreServerRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreServerRequest $request): RedirectResponse {
+    public function store(StoreServerRequest $request): RedirectResponse
+    {
         $server = Server::create($request->validated());
 
-        return redirect()->route('admin.servers.index')->with([
+        return redirect(session('redirect_url'))->with([
             'status' => 'success',
             'message' => "Сервер {$server->name} успешно добавлен!"
         ]);
@@ -56,10 +59,9 @@ class ServersManagementController extends Controller {
      * @param Server $server
      * @return View
      */
-    public function show(Server $server): View {
-        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
-
-        return view('admin.servers.show', compact('server', 'redirect'));
+    public function show(Server $server): View
+    {
+        return view('admin.servers.show', compact('server'));
     }
 
     /**
@@ -68,10 +70,9 @@ class ServersManagementController extends Controller {
      * @param Server $server
      * @return View
      */
-    public function edit(Server $server): View {
-        $redirect = $this->getPreviousUrl(action([ServersManagementController::class, 'index']));
-
-        return view('admin.servers.edit', compact('server','redirect'));
+    public function edit(Server $server): View
+    {
+        return view('admin.servers.edit', compact('server'));
     }
 
     /**
@@ -81,7 +82,8 @@ class ServersManagementController extends Controller {
      * @param Server $server
      * @return RedirectResponse
      */
-    public function update(UpdateServerRequest $request, Server $server): RedirectResponse {
+    public function update(UpdateServerRequest $request, Server $server): RedirectResponse
+    {
         $server->update($request->validated());
 
         return back()->with([
@@ -96,23 +98,13 @@ class ServersManagementController extends Controller {
      * @param Server $server
      * @return RedirectResponse
      */
-    public function destroy(Server $server): RedirectResponse {
+    public function destroy(Server $server): RedirectResponse
+    {
         $server->delete();
 
         return back()->with([
             'status' => 'success',
             'message' => "Сервер {$server->name} удален!"
         ]);
-    }
-
-    /**
-     * Gets previous url or, if previous url is equal to current one, sets desired standard value
-     *
-     * @param string $defaultUrl
-     * @return string
-     */
-    function getPreviousUrl(string $defaultUrl): string {
-        $previous = URL::previous();
-        return (($previous !== URL::current()) ? $previous : $defaultUrl);
     }
 }

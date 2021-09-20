@@ -20,7 +20,8 @@ use Illuminate\Notifications\Notifiable;
  * @property string name
  * @property string password
  */
-class User extends Authenticatable {
+class User extends Authenticatable
+{
     use HasFactory, Notifiable, HasRoles, HasPermissions;
 
     /**
@@ -45,12 +46,20 @@ class User extends Authenticatable {
     ];
 
     /**
+     * @var array
+     */
+    protected $appends = [
+        'role_name',
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'role_name' => 'string',
     ];
 
     /**
@@ -58,9 +67,20 @@ class User extends Authenticatable {
      *
      * @param $password
      */
-    public function setPasswordAttribute($password) {
+    public function setPasswordAttribute($password)
+    {
         if (!empty($password)) {
             $this->attributes['password'] = Hash::make($password);
         }
+    }
+
+    /**
+     * Gets role name of a specific user.
+     *
+     * @return string
+     */
+    public function getRoleNameAttribute(): string
+    {
+        return $this->getRoleNames()->first();
     }
 }

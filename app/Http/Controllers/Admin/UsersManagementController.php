@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
-use Carbon\Carbon;
+use Request;
+use Session;
 use App\Models\Role;
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -11,15 +12,16 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\URL;
 
-class UsersManagementController extends Controller {
+class UsersManagementController extends Controller
+{
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -28,9 +30,12 @@ class UsersManagementController extends Controller {
      *
      * @return View
      */
-    public function index(): View {
+    public function index(): View
+    {
         $users = User::paginate(env('PAGINATION_SIZE'));
         $roles = Role::all();
+
+        Session::put('redirect_url', Request::fullUrl());
 
         return view('admin.users.index', compact('users', 'roles'));
     }
@@ -40,12 +45,11 @@ class UsersManagementController extends Controller {
      *
      * @return View
      */
-    public function create(): View {
+    public function create(): View
+    {
         $roles = Role::all();
-        $createdTime = Carbon::now()->format('d.m.Y - H:i:s');
-        $redirect = $this->getPreviousUrl(action([UsersManagementController::class, 'index']));
 
-        return view('admin.users.create', compact('roles', 'redirect', 'createdTime'));
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -54,7 +58,8 @@ class UsersManagementController extends Controller {
      * @param StoreUserRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreUserRequest $request): RedirectResponse {
+    public function store(StoreUserRequest $request): RedirectResponse
+    {
         // TODO: add choice of permissions
         $user = User::create($request->safe()->except('role'));
         $user->assignRole($request->safe()->only('role'));
@@ -71,11 +76,11 @@ class UsersManagementController extends Controller {
      * @param User $user
      * @return View
      */
-    public function show(User $user): View {
+    public function show(User $user): View
+    {
         $permissions = $user->getAllPermissions();
-        $redirect = $this->getPreviousUrl(action([UsersManagementController::class, 'index']));
 
-        return view('admin.users.show', compact('user', 'permissions', 'redirect'));
+        return view('admin.users.show', compact('user', 'permissions'));
     }
 
     /**
@@ -84,11 +89,11 @@ class UsersManagementController extends Controller {
      * @param User $user
      * @return View
      */
-    public function edit(User $user): View {
+    public function edit(User $user): View
+    {
         $roles = Role::all();
-        $redirect = $this->getPreviousUrl(action([UsersManagementController::class, 'index']));
 
-        return view('admin.users.edit', compact('user', 'roles', 'redirect'));
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -98,7 +103,8 @@ class UsersManagementController extends Controller {
      * @param User $user
      * @return RedirectResponse
      */
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse {
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    {
         $user->update($request->safe()->except('role'));
         $user->syncRoles($request->safe()->only('role'));
 
@@ -114,7 +120,8 @@ class UsersManagementController extends Controller {
      * @param User $user
      * @return RedirectResponse
      */
-    public function destroy(User $user): RedirectResponse {
+    public function destroy(User $user): RedirectResponse
+    {
         $currentUser = Auth::user();
         abort_if(is_null($currentUser), 500);
 
@@ -130,16 +137,5 @@ class UsersManagementController extends Controller {
             'status' => 'danger',
             'message' => "Вы не можете удалить свой профиль!"
         ]);
-    }
-
-    /**
-     * Gets previous url or, if previous url is equal to current one, sets desired standard value
-     *
-     * @param string $defaultUrl
-     * @return string
-     */
-    function getPreviousUrl(string $defaultUrl): string {
-        $previous = URL::previous();
-        return (($previous !== URL::current()) ? $previous : $defaultUrl);
     }
 }
