@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static where(string $string, string $token)
  * @method static updateOrCreate(array $array, array $array1)
  */
-class AccessToken extends Model {
+class AccessToken extends Model
+{
     /**
      * The attributes that aren't mass assignable.
      *
@@ -40,7 +41,8 @@ class AccessToken extends Model {
      *
      * @return BelongsTo
      */
-    public function server(): BelongsTo {
+    public function server(): BelongsTo
+    {
         return $this->belongsTo(Server::class);
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.admin-layout')
 
-@section('title', 'Редактирование пользователя')
+@section('title', "Редактирование пользователя: $user->name")
 
 @section('admin.content')
     @include('admin.components.alert')
@@ -10,16 +10,16 @@
                 <div class="me-auto align-self-center">
                     <h5 class="card-title m-0">
                         <i class="fas fa-user-edit"></i>
-                        {{ ('Редактирование пользователя: ') }} {{ $user->name }}
+                        {{ ("Редактирование пользователя: $user->name") }}
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
+                    @include('admin.components.link-back', ['redirect_route' => 'admin.users.index'])
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+            <form action="{{ route('admin.users.update', $user) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="row form-group mb-3">
@@ -72,13 +72,14 @@
                         <select id="role" class="form-select @error('role') is-invalid @enderror"
                                 name="role" size="6">
                             <option disabled>{{ ('Назначьте роль пользователю...') }}</option>
-                            @foreach ($roles as $role)
+                                @foreach ($roles as $role)
                                 <option value="{{ $role->id }}"
                                         @if (isset($user) && $user->hasRole($role)) selected @endif>
                                     {{ $role->name }}
                                 </option>
-                            @endforeach
+                                @endforeach
                         </select>
+                        @include('components.field-filling-error', ['error' => 'role'])
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -87,7 +88,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="created" type="text" class="form-control"
-                               name="created" value="{{ $user->created_at->format('d.m.Y - H:i:s') }}" disabled>
+                               name="created" value="{{ $user->created_at }}" disabled>
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -96,7 +97,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="updated" type="text" class="form-control"
-                               name="updated" value="{{ $user->updated_at->format('d.m.Y - H:i:s') }}" disabled>
+                               name="updated" value="{{ $user->updated_at }}" disabled>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-4">

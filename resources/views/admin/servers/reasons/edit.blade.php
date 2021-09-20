@@ -14,7 +14,7 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    <a class="btn btn-primary" href="{{ route('admin.servers.show', $server->id) }}">
+                    <a class="btn btn-primary" href="{{ route('admin.servers.show', $server) }}">
                         <i class="fas fa-reply"></i>
                         {{ ('Назад') }}
                     </a>
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.servers.reasons.update', [$server->id, $reason->id]) }}" method="POST">
+            <form action="{{ route('admin.servers.reasons.update', [$server, $reason]) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="row form-group mb-3">
@@ -86,7 +86,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="created" type="text" class="form-control"
-                               name="created" value="{{ $reason->created_at->format('d.m.Y - H:i:s') }}" disabled>
+                               name="created" value="{{ $reason->created_at }}" disabled>
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -95,7 +95,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="updated" type="text" class="form-control"
-                               name="updated" value="{{ $reason->updated_at->format('d.m.Y - H:i:s') }}" disabled>
+                               name="updated" value="{{ $reason->updated_at }}" disabled>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-4">

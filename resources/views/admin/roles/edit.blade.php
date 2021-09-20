@@ -14,12 +14,12 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
+                    @include('admin.components.link-back', ['redirect_route' => 'admin.roles.index'])
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.roles.update', $role->id) }}" method="POST">
+            <form action="{{ route('admin.roles.update', $role) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="row form-group mb-3">
@@ -50,10 +50,10 @@
                                 name="permissions[]" size="6" aria-describedby="permissionsHelp" multiple>
                             <option disabled>{{ ('Назначьте разрешения для роли...') }}</option>
                             @foreach ($permissions as $permission)
-                                <option value="{{ $permission->id }}"
-                                        @if(isset($role) && $role->hasPermissionTo($permission)) selected @endif>
-                                    {{ $permission->name }}
-                                </option>
+                            <option value="{{ $permission->id }}"
+                                    @if(isset($role) && $role->hasPermissionTo($permission)) selected @endif>
+                                {{ $permission->name }}
+                            </option>
                             @endforeach
                         </select>
                         <div class="form-text" id="permissionsHelp">
@@ -67,7 +67,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="created" type="text" class="form-control"
-                               name="created" value="{{ $role->created_at->format('d.m.Y - H:i:s') }}" disabled>
+                               name="created" value="{{ $role->created_at }}" disabled>
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -76,7 +76,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="updated" type="text" class="form-control"
-                               name="updated" value="{{ $role->updated_at->format('d.m.Y - H:i:s') }}" disabled>
+                               name="updated" value="{{ $role->updated_at }}" disabled>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-4">

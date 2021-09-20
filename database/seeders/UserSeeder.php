@@ -14,14 +14,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 30; $i++)
-        {
-            $user = User::create([
+        for ($i = 1; $i <= 30; $i++)  {
+            User::create([
                 'name' => 'User' .$i,
                 'email' => 'user' .$i. '@mail.com',
-                'password' => bcrypt('12345678'),
-            ]);
-            $user->assignRole($i === 1 ? 'Administrator' : 'User');
+                'password' => '12345678',
+            ])->assignRole($i === 1 ? 'Administrator' : 'User');
         }
     }
 }

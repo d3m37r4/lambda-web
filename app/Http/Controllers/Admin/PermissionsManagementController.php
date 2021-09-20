@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-class PermissionsManagementController extends Controller {
+class PermissionsManagementController extends Controller
+{
     /**
      * Get the permissions of the specified role
      *
@@ -13,8 +14,9 @@ class PermissionsManagementController extends Controller {
      * @return array|void
      * @noinspection PhpVoidFunctionResultUsedInspection
      */
-    public function getRolePermissions($id): array {
-        if(!is_int($id) && !is_null($id)) {
+    public function getRolePermissions($id): array
+    {
+        if (!is_int($id) && !is_null($id)) {
             return abort(422);
         }
 

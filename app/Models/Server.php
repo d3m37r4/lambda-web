@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Hash;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
+
+Carbon::setToStringFormat('d.m.Y - H:i:s');
 
 /**
  * @method static create(array $array)
@@ -26,7 +30,8 @@ use Illuminate\Http\Request;
  * @property array reasons
  * @property array access_token
  */
-class Server extends Model {
+class Server extends Model
+{
     /**
      * The attributes that are mass assignable.
      *
@@ -93,7 +98,8 @@ class Server extends Model {
      *
      * @return HasOne
      */
-    public function access_token(): HasOne {
+    public function access_token(): HasOne
+    {
         return $this->hasOne(AccessToken::class);
     }
 
@@ -102,7 +108,8 @@ class Server extends Model {
      *
      * @return BelongsTo
      */
-    public function map(): BelongsTo {
+    public function map(): BelongsTo
+    {
         return $this->belongsTo(Map::class);
     }
 
@@ -111,7 +118,8 @@ class Server extends Model {
      *
      * @return HasMany
      */
-    public function reasons(): HasMany {
+    public function reasons(): HasMany
+    {
         return $this->hasMany(Reason::class);
     }
 
@@ -120,7 +128,8 @@ class Server extends Model {
      *
      * @return string
      */
-    public function getMapNameAttribute(): string {
+    public function getMapNameAttribute(): string
+    {
         return $this->map['name'] ?? 'Не определена';
     }
 
@@ -129,7 +138,8 @@ class Server extends Model {
      *
      * @return string
      */
-    public function getFullAddressAttribute(): string {
+    public function getFullAddressAttribute(): string
+    {
         return $this->ip . ':' . $this->port;
     }
 
@@ -138,7 +148,8 @@ class Server extends Model {
      *
      * @return string
      */
-    public function getAccessTokenStringAttribute(): string {
+    public function getAccessTokenStringAttribute(): string
+    {
         return $this->access_token['token'];
     }
 
@@ -147,16 +158,30 @@ class Server extends Model {
      *
      * @return int
      */
-    public function getAccessTokenExpiresInAttribute(): int {
+    public function getAccessTokenExpiresInAttribute(): int
+    {
         return $this->access_token['expires_in']->getTimestamp();
     }
 
+    /**
+     * Sets a hash instead of a valid auth token.
+     *
+     * @param $authToken
+     */
+    public function setAuthTokenAttribute($authToken)
+    {
+        if (!empty($authToken)) {
+            $this->attributes['auth_token'] = Hash::make($authToken);
+        }
+    }
+  
     /**
      * Gets players online as a percentage.
      *
      * @return int
      */
-    public function getPercentPlayersAttribute(): int {
+    public function getPercentPlayersAttribute(): int 
+    {
         return round(100/($this->max_players/$this->num_players));
     }
 }

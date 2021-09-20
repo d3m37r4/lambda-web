@@ -15,7 +15,7 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
+                    @include('admin.components.link-back', ['redirect_route' => 'admin.servers.index'])
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                          xmlns="http://www.w3.org/2000/svg"
                          width="400" height="300" focusable="false">
                         <rect width="100%" height="100%" fill="#868e96"></rect>
-                        <text x="40%" y="50%" fill="#dee2e6" >
+                        <text x="40%" y="50%" fill="#dee2e6">
                             Map name
                         </text>
                     </svg>
@@ -64,10 +64,10 @@
                     </div>
                     <div class="d-sm-flex justify-content-between">
                         <div class="me-auto align-self-center">
-                            {{ ('Добавлен') }}
+                            {{ ('Сервер добавлен') }}
                         </div>
                         <div class="d-grid">
-                            {{ $server->created_at->format('d.m.Y - H:i:s') }}
+                            {{ $server->created_at }}
                         </div>
                     </div>
                     <div class="d-sm-flex justify-content-between">
@@ -75,7 +75,7 @@
                             {{ ('Последнее обновление') }}
                         </div>
                         <div class="d-grid">
-                            {{ $server->updated_at->format('d.m.Y - H:i:s') }}
+                            {{ $server->updated_at }}
                         </div>
                     </div>
                 </div>
@@ -119,14 +119,14 @@
                             <div class="table-responsive">
                                 <table class="table align-middle">
                                     <thead class="table-dark">
-                                    <tr>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                    </tr>
+                                        <tr>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
@@ -169,48 +169,48 @@
                             <div class="table-responsive">
                                 <table class="table align-middle">
                                     <thead class="table-dark">
-                                    <tr>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                    </tr>
+                                        <tr>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -223,7 +223,7 @@
                                     {{ ('Добавить причину наказаний') }}
                                 </a>
                             </div>
-                            @if(!$reasons->isEmpty())
+                            @if(!$server->reasons->isEmpty())
                                 <div class="border table-responsive rounded">
                                     <table class="table align-middle">
                                         <thead>
@@ -236,48 +236,48 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($reasons as $reason)
-                                                <tr>
-                                                    <td>
-                                                        {{ $loop->iteration }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $reason->id }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $reason->title }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $reason->time_for_humans }}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <a class="btn btn-primary btn-floating btn-sm"
-                                                           data-mdb-toggle="tooltip"
-                                                           title="{{ ('Редактировать причину') }}"
-                                                           href="{{ route('admin.servers.reasons.edit', [
-                                                                $server->id,
-                                                                $reason->id,
-                                                           ]) }}">
-                                                            <i class="fas fa-pen"></i>
-                                                        </a>
-                                                        <span class="d-inline-block"
-                                                              tabindex="0"
-                                                              data-mdb-toggle="tooltip"
-                                                              title="{{ ('Удалить причину') }}">
-                                                            <button class="btn btn-danger btn-floating btn-sm"
-                                                                    type="button"
-                                                                    data-mdb-toggle="modal"
-                                                                    data-mdb-target="#confirmDelete"
-                                                                    data-route="{{ route('admin.servers.reasons.destroy', [
-                                                                        $server->id,
-                                                                        $reason->id,
-                                                                    ]) }}"
-                                                                    data-reasonname="{{ $reason->title }}">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </button>
-                                                        </span>
-                                                    </td>
-                                                </tr>
+                                            @foreach($server->reasons as $reason)
+                                            <tr>
+                                                <td>
+                                                    {{ $loop->iteration }}
+                                                </td>
+                                                <td>
+                                                    {{ $reason->id }}
+                                                </td>
+                                                <td>
+                                                    {{ $reason->title }}
+                                                </td>
+                                                <td>
+                                                    {{ $reason->time_for_humans }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-primary btn-floating btn-sm"
+                                                       data-mdb-toggle="tooltip"
+                                                       title="{{ ('Редактировать причину') }}"
+                                                       href="{{ route('admin.servers.reasons.edit', [
+                                                           $server,
+                                                           $reason
+                                                       ]) }}">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
+                                                    <span class="d-inline-block"
+                                                          tabindex="0"
+                                                          data-mdb-toggle="tooltip"
+                                                          title="{{ ('Удалить причину') }}">
+                                                        <button class="btn btn-danger btn-floating btn-sm"
+                                                                type="button"
+                                                                data-mdb-toggle="modal"
+                                                                data-mdb-target="#confirmDelete"
+                                                                data-route="{{ route('admin.servers.reasons.destroy', [
+                                                                    $server,
+                                                                    $reason
+                                                                ]) }}"
+                                                                data-reasonname="{{ $reason->title }}">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </span>
+                                                </td>
+                                            </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -293,48 +293,48 @@
                             <div class="table-responsive">
                                 <table class="table align-middle">
                                     <thead class="table-dark">
-                                    <tr>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                    </tr>
+                                        <tr>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -343,48 +343,48 @@
                             <div class="table-responsive">
                                 <table class="table align-middle">
                                     <thead class="table-dark">
-                                    <tr>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                    </tr>
+                                        <tr>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                            <th>col</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                            <td>text</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

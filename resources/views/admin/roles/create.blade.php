@@ -8,15 +8,12 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h5 class="card-title">
-                        <i class="bi bi-shield-plus"></i>
+                        <i class="fas fa-user-shield"></i>
                         {{ 'Новая роль' }}
                     </h5>
                 </div>
-                <div>
-                    <a class="btn btn-primary btn-sm" href="{{ route('admin.roles.index') }}">
-                        <i class="bi bi-reply"></i>
-                        {{ ('Вернуться назад') }}
-                    </a>
+                <div class="d-grid">
+                    @include('admin.components.link-back', ['redirect_route' => 'admin.roles.index'])
                 </div>
             </div>
         </div>
@@ -42,7 +39,7 @@
                                 name="permissions[]" size="6" aria-describedby="permissionsHelp" multiple>
                             <option disabled>{{ ('Назначьте разрешения для новой роли...') }}</option>
                             @foreach ($permissions as $permission)
-                                <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                            <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                             @endforeach
                         </select>
                         <div class="form-text" id="permissionsHelp">
@@ -50,11 +47,26 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <button type="submit" class="btn btn-success btn-sm">
-                        <i class="bi bi-shield-plus"></i>
-                        <span class="ml-1">{{ ('Создать роль') }}</span>
-                    </button>
+                <div class="row form-group mb-3">
+                    <label for="created" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Роль добавлена') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="created" type="text" class="form-control"
+                               name="created" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="updated" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Последнее обновление') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="updated" type="text" class="form-control"
+                               name="updated" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    @include('admin.components.btn-add', ['title' => 'Добавить роль'])
                 </div>
             </form>
         </div>

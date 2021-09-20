@@ -25,6 +25,7 @@ class CreateServersTable extends Migration
             $table->unsignedTinyInteger('max_players')->default(0);
             $table->boolean('active')->default(false);
             $table->timestamps();
+            $table->unique(['ip', 'port']);
         });
     }
 

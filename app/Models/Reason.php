@@ -3,28 +3,20 @@
 namespace App\Models;
 
 use Exception;
+use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+Carbon::setToStringFormat('d.m.Y - H:i:s');
 
 /**
  * @method static create(array $array)
  * @property string title
  * @property int time
  */
-class Reason extends Model {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'reasons';
-
-    /**
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
+class Reason extends Model
+{
     /**
      * @var array
      */
@@ -50,13 +42,15 @@ class Reason extends Model {
     /**
      * @var array
      */
-    protected $hidden = ['server_id', /*'overall', 'active',*/ 'created_at', 'updated_at'];
+    protected $hidden = ['server_id', /*'overall', 'active',*/
+        'created_at', 'updated_at'];
 
     /**
      * Gets servers associated with this reason.
      * @return BelongsTo
      */
-    public function server(): BelongsTo {
+    public function server(): BelongsTo
+    {
         return $this->belongsTo(Server::class);
     }
 
@@ -66,12 +60,12 @@ class Reason extends Model {
      * @return string
      * @throws Exception
      */
-    public function getTimeForHumansAttribute(): string {
-        $minutes = $this->time;
-        return $minutes ?
-            CarbonInterval::minutes($minutes)
-            ->cascade()
-            ->forHumans(['short' => true, 'minimumUnit' => 'minute']) : 'Бессрочно';
+    public function getTimeForHumansAttribute(): string
+    {
+        return $this->time ?
+            CarbonInterval::minutes($this->time)
+                ->cascade()
+                ->forHumans(['short' => true, 'minimumUnit' => 'minute']) : 'Бессрочно';
     }
 
     /**
@@ -82,7 +76,8 @@ class Reason extends Model {
      * @return string
      * @link https://php.net/manual/en/dateinterval.format.php
      */
-    public function getTimeSpecialFormatted($format): string {
+    public function getTimeSpecialFormatted($format): string
+    {
         return CarbonInterval::minutes($this->time)
             ->cascade()
             ->format($format);

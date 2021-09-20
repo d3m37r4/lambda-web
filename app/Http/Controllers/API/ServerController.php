@@ -13,13 +13,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Exception;
 
-class ServerController extends Controller {
+class ServerController extends Controller
+{
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('api-server-auth')->except('auth');
     }
 
@@ -30,12 +32,13 @@ class ServerController extends Controller {
      * @return JsonResponse
      * @throws Exception
      */
-    public function auth(Request $request): JsonResponse {
+    public function auth(Request $request): JsonResponse
+    {
         $server = Server::where([
             ['ip', $request->ip()],
             ['port', $request->input('port')],
-        ])->firstOr(function() {
-            return Response::json(['error' =>'Server not found'], 404);
+        ])->firstOr(function () {
+            return Response::json(['error' => 'Server not found'], 404);
         });
 
         $authToken = $request->input('auth_token');
@@ -68,7 +71,8 @@ class ServerController extends Controller {
      * @param Request $request
      * @return JsonResponse
      */
-    public function info(Request $request): JsonResponse {
+    public function info(Request $request): JsonResponse
+    {
         $server = Server::find($request->attributes->get('server_id'));
 
         // mb add validator?

@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::defaultView('components.pagination');
 
-        // TODO: Add it to settings or make it dependent on client parameters.
+        // TODO: change on CarbonInterval::setLocale(Config::get('app.locale'));
         CarbonInterval::setLocale('ru');
     }
 }

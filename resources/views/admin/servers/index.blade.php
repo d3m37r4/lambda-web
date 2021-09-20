@@ -37,65 +37,65 @@
                     </thead>
                     <tbody>
                         @foreach($servers as $server)
-                            <tr>
-                                <td>
-                                    {{ $server->id }}
-                                </td>
-                                <td class="py-0">
-                                    <div class="d-inline-flex flex-column">
-                                        <div class="border-bottom">
-                                            <a class="link-primary"
-                                               data-mdb-toggle="tooltip"
-                                               title="{{ ('Показать дополнительную информацию о сервере') }}"
-                                               href="{{ route('admin.servers.show', $server->id) }}">
-                                                {{ $server->name }}
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <span class="text-muted">
-                                                {{ $server->full_address }}
-                                            </span>
-                                        </div>
+                        <tr>
+                            <td>
+                                {{ $server->id }}
+                            </td>
+                            <td class="py-0">
+                                <div class="d-inline-flex flex-column">
+                                    <div class="border-bottom">
+                                        <a class="link-primary"
+                                           data-mdb-toggle="tooltip"
+                                           title="{{ ('Показать дополнительную информацию о сервере') }}"
+                                           href="{{ route('admin.servers.show', $server) }}">
+                                            {{ $server->name }}
+                                        </a>
                                     </div>
-                                </td>
-                                <td>
-                                    {{ $server->map_name }}
-                                </td>
-                                <td class="text-center">
-                                    {{ "$server->num_players/$server->max_players" }}
-                                </td>
-                                <td class="text-center">
-                                    <span class="btn {{ $server->active ? 'btn-success' : 'btn-danger' }}
-                                        btn-floating btn-sm pe-none">
-                                        <i class="fas fa-power-off"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <a class="btn btn-info btn-floating btn-sm"
-                                       data-mdb-toggle="tooltip"
-                                       title="{{ ('Показать дополнительную информацию о сервере') }}"
-                                       href="{{ route('admin.servers.show', $server->id) }}">
-                                        <i class="fas fa-info"></i>
-                                    </a>
-                                    <a class="btn btn-primary btn-floating btn-sm"
-                                       data-mdb-toggle="tooltip"
-                                       title="{{ ('Редактировать сервер') }}"
-                                       href="{{ route('admin.servers.edit', $server->id) }}">
-                                        <i class="fas fa-pen"></i>
-                                    </a>
-                                    <span class="d-inline-block" tabindex="0"
-                                          data-mdb-toggle="tooltip" title="{{ ('Удалить сервер') }}">
-                                        <button class="btn btn-danger btn-floating btn-sm"
-                                                type="button"
-                                                data-mdb-toggle="modal"
-                                                data-mdb-target="#confirmDelete"
-                                                data-route="{{ route('admin.servers.destroy', $server->id) }}"
-                                                data-servername="{{ $server->name }}">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </span>
-                                </td>
-                            </tr>
+                                    <div>
+                                        <span class="text-muted">
+                                            {{ $server->full_address }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {{ $server->map_name }}
+                            </td>
+                            <td class="text-center">
+                                {{ "$server->num_players/$server->max_players" }}
+                            </td>
+                            <td class="text-center">
+                                <span class="btn {{ $server->active ? 'btn-success' : 'btn-danger' }}
+                                    btn-floating btn-sm pe-none">
+                                    <i class="fas fa-power-off"></i>
+                                </span>
+                            </td>
+                            <td>
+                                <a class="btn btn-info btn-floating btn-sm"
+                                   data-mdb-toggle="tooltip"
+                                   title="{{ ('Показать дополнительную информацию о сервере') }}"
+                                   href="{{ route('admin.servers.show', $server) }}">
+                                    <i class="fas fa-info"></i>
+                                </a>
+                                <a class="btn btn-primary btn-floating btn-sm"
+                                   data-mdb-toggle="tooltip"
+                                   title="{{ ('Редактировать сервер') }}"
+                                   href="{{ route('admin.servers.edit', $server) }}">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                                <span class="d-inline-block" tabindex="0"
+                                      data-mdb-toggle="tooltip" title="{{ ('Удалить сервер') }}">
+                                    <button class="btn btn-danger btn-floating btn-sm"
+                                            type="button"
+                                            data-mdb-toggle="modal"
+                                            data-mdb-target="#confirmDelete"
+                                            data-route="{{ route('admin.servers.destroy', $server) }}"
+                                            data-servername="{{ $server->name }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </span>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
