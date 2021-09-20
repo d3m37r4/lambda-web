@@ -36,57 +36,57 @@
                     </thead>
                     <tbody>
                         @foreach($users as $user)
-                            <tr>
-                                <td>
-                                    {{ $user->id }}
-                                </td>
-                                <td>
-                                    <a class="link-primary"
-                                       data-mdb-toggle="tooltip"
-                                       title="{{ ('Показать профиль пользователя') }}"
-                                       href="{{ route('admin.users.show', $user->id) }}">
-                                        {{ $user->name }}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="link-primary"
-                                       data-mdb-toggle="tooltip"
-                                       title="Email {{ $user->email }}"
-                                       href="mailto:{{ $user->email }}">
-                                        {{ $user->email }}
-                                    </a>
-                                </td>
-                                <td>
-                                    <span class="badge bg-primary">
-                                        {{ $user->getRoleNames()->first() }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a class="btn btn-info btn-floating btn-sm"
-                                       data-mdb-toggle="tooltip"
-                                       title="{{ ('Показать профиль пользователя') }}"
-                                       href="{{ route('admin.users.show', $user->id) }}">
-                                        <i class="fas fa-info"></i>
-                                    </a>
-                                    <a class="btn btn-primary btn-floating btn-sm"
-                                       data-mdb-toggle="tooltip"
-                                       title="{{ ('Редактировать пользователя') }}"
-                                       href="{{ route('admin.users.edit', $user->id) }}">
-                                        <i class="fas fa-pen"></i>
-                                    </a>
-                                    <span class="d-inline-block" tabindex="0"
-                                        data-mdb-toggle="tooltip" title="{{ ('Удалить пользователя') }}">
-                                        <button class="btn btn-danger btn-floating btn-sm"
-                                                type="button"
-                                                data-mdb-toggle="modal"
-                                                data-mdb-target="#confirmDelete"
-                                                data-route="{{ route('admin.users.destroy', $user->id) }}"
-                                                data-username="{{ $user->name }}">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </span>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                {{ $user->id }}
+                            </td>
+                            <td>
+                                <a class="link-primary"
+                                   data-mdb-toggle="tooltip"
+                                   title="{{ ('Показать профиль пользователя') }}"
+                                   href="{{ route('admin.users.show', $user) }}">
+                                    {{ $user->name }}
+                                </a>
+                            </td>
+                            <td>
+                                <a class="link-primary"
+                                   data-mdb-toggle="tooltip"
+                                   title="Email {{ $user->email }}"
+                                   href="mailto:{{ $user->email }}">
+                                    {{ $user->email }}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary">
+                                    {{ $user->role_name }}
+                                </span>
+                            </td>
+                            <td>
+                                <a class="btn btn-info btn-floating btn-sm"
+                                   data-mdb-toggle="tooltip"
+                                   title="{{ ('Показать профиль пользователя') }}"
+                                   href="{{ route('admin.users.show', $user) }}">
+                                    <i class="fas fa-info"></i>
+                                </a>
+                                <a class="btn btn-primary btn-floating btn-sm"
+                                   data-mdb-toggle="tooltip"
+                                   title="{{ ('Редактировать пользователя') }}"
+                                   href="{{ route('admin.users.edit', $user) }}">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                                <span class="d-inline-block" tabindex="0"
+                                    data-mdb-toggle="tooltip" title="{{ ('Удалить пользователя') }}">
+                                    <button class="btn btn-danger btn-floating btn-sm"
+                                            type="button"
+                                            data-mdb-toggle="modal"
+                                            data-mdb-target="#confirmDelete"
+                                            data-route="{{ route('admin.users.destroy', $user) }}"
+                                            data-username="{{ $user->name }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </span>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>

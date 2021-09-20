@@ -13,12 +13,12 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
+                    @include('admin.components.link-back', ['redirect_route' => 'admin.users.index'])
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.users.store', ['redirect' => $redirect]) }}" method="POST">
+            <form action="{{ route('admin.users.store') }}" method="POST">
                 @csrf
                 <div class="row form-group mb-3">
                     <label for="name" class="col-md-4 col-form-label text-sm-end">
@@ -38,7 +38,7 @@
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                name="email" value="{{ old('email') }}"
-                               placeholder="{{ 'Введите E-mail' }}" required>
+                               placeholder="{{ 'Введите электронную почту' }}" required>
                         @include('components.field-filling-error', ['error' => 'email'])
                     </div>
                 </div>
@@ -72,12 +72,12 @@
                         <select id="role" class="form-select @error('role') is-invalid @enderror"
                                 name="role" size="6">
                             <option disabled>{{ ('Назначьте роль пользователю...') }}</option>
-                            @foreach ($roles as $role)
+                                @foreach ($roles as $role)
                                 <option value="{{ $role->id }}"
                                         @if (isset($user) && $user->hasRole($role)) selected @endif>
                                     {{ $role->name }}
                                 </option>
-                            @endforeach
+                                @endforeach
                         </select>
                         @include('components.field-filling-error', ['error' => 'role'])
                     </div>
@@ -88,7 +88,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="created" type="text" class="form-control"
-                               name="created" value="{{ $createdTime }}" disabled>
+                               name="created" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -97,7 +97,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="updated" type="text" class="form-control"
-                               name="updated" value="{{ $createdTime }}" disabled>
+                               name="updated" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-4">

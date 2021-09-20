@@ -14,12 +14,12 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
+                    @include('admin.components.link-back', ['redirect_route' => 'admin.servers.index'])
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.servers.update', $server->id) }}" method="POST">
+            <form action="{{ route('admin.servers.update', $server) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="row form-group mb-3">
@@ -106,7 +106,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="created" type="text" class="form-control"
-                               name="created" value="{{ $server->created_at->format('d.m.Y - H:i:s') }}" disabled>
+                               name="created" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -115,7 +115,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="updated" type="text" class="form-control"
-                               name="updated" value="{{ $server->updated_at->format('d.m.Y - H:i:s') }}" disabled>
+                               name="updated" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-4">

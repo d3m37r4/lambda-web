@@ -3,17 +3,17 @@
 @section('title', 'Добавить сервер')
 
 @section('admin.content')
-    <div class="card shadow-2 border">
-        <div class="card-header">
-            <div class="d-sm-flex justify-content-between">
-                <div class="me-auto align-self-center">
-                    <h5 class="card-title m-0">
+    <div class="card mb-3">
+        <div class="card-header bg-white">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h5 class="card-title">
                         <i class="fas fa-server"></i>
                         {{ 'Добавить сервер' }}
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
+                    @include('admin.components.link-back', ['redirect_route' => 'admin.servers.index'])
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="created" type="text" class="form-control"
-                               name="created" value="{{ $createdTime }}" disabled>
+                               name="created" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
                     </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -103,7 +103,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="updated" type="text" class="form-control"
-                               name="updated" value="{{ $createdTime }}" disabled>
+                               name="updated" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-4">

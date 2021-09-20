@@ -9,11 +9,11 @@
                 <div class="me-auto align-self-center">
                     <h5 class="card-title m-0">
                         <i class="fas fa-user"></i>
-                        {{ ('Профиль пользователя: ') }} {{ $user->name }}
+                        {{ ("Профиль пользователя $user->name") }}
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['link' => $redirect, 'title' => 'Назад'])
+                    @include('admin.components.link-back', ['redirect_route' => 'admin.users.index'])
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
                         <i class="fas fa-user fa-10x"></i>
                         <div class="mt-3">
                             <p class="text-secondary mb-1">
-                                <span class="badge bg-primary">{{ $user->getRoleNames()->first() }}</span>
+                                <span class="badge bg-primary">{{ $user->role_name }}</span>
                             </p>
                             <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
                         </div>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
                                 @foreach($permissions as $permission)
-                                    <span class="badge bg-primary">{{ $permission->name }} </span><br />
+                                <span class="badge bg-primary">{{ $permission->name }} </span><br />
                                 @endforeach
                             </div>
                             <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
