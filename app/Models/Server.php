@@ -29,6 +29,7 @@ Carbon::setToStringFormat('d.m.Y - H:i:s');
  * @property array map
  * @property array reasons
  * @property array access_token
+ * @property boolean active
  */
 class Server extends Model
 {
@@ -174,14 +175,14 @@ class Server extends Model
             $this->attributes['auth_token'] = Hash::make($authToken);
         }
     }
-  
+
     /**
      * Gets players online as a percentage.
      *
      * @return int
      */
-    public function getPercentPlayersAttribute(): int 
+    public function getPercentPlayersAttribute(): int
     {
-        return round(100/($this->max_players/$this->num_players));
+        return $this->active ? (100 * $this->num_players / $this->max_players) : 0;
     }
 }
