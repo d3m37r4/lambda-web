@@ -88,8 +88,6 @@ class Server extends Model
         'max_players' => 'int',
         'full_address' => 'string',
         'map_name' => 'string',
-        'access_token_string' => 'string',
-        'access_token_expires_in' => 'datetime',
         'active' => 'boolean',
         'percent_players' => 'int',
     ];
@@ -142,26 +140,6 @@ class Server extends Model
     public function getFullAddressAttribute(): string
     {
         return $this->ip . ':' . $this->port;
-    }
-
-    /**
-     * Gets an access token in string format.
-     *
-     * @return string
-     */
-    public function getAccessTokenStringAttribute(): string
-    {
-        return $this->access_token['token'];
-    }
-
-    /**
-     * Gets expiration time of access token.
-     *
-     * @return int
-     */
-    public function getAccessTokenExpiresInAttribute(): int
-    {
-        return $this->access_token['expires_in']->getTimestamp();
     }
 
     /**
