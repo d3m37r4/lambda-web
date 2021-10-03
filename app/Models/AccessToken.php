@@ -34,7 +34,14 @@ class AccessToken extends Model
     /**
      * @var array
      */
-    protected $hidden = ['token', 'expires_in'];
+    protected $hidden = ['id', 'server_id'];
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'expires_in' => 'timestamp',
+    ];
 
     /**
      * Gets server available for a specific server.
