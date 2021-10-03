@@ -23,7 +23,7 @@ class ServerController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('api-server-auth')->except('auth');
+        $this->middleware('api_server_auth')->except('auth');
     }
 
     /**
