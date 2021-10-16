@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\SettingsManagementController;
 use App\Http\Controllers\Admin\UsersManagementController;
 use App\Http\Controllers\Admin\RolesManagementController;
 use App\Http\Controllers\Admin\ServersManagementController;
@@ -22,23 +23,23 @@ Auth::routes();
 
 Route::group([
     'middleware' => ['auth','can:enter_control_panel'],
-    'prefix' => env('APP_ADMIN_PATH'),
+    'prefix' => config('app.admin_dir'),
     'as' => 'admin.',
 ], function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
-    Route::middleware([
-        'middleware' => 'can:manage_users'
-    ])->group(function () {
-        Route::resource('users', UsersManagementController::class);
+    Route::group([
+        'middleware' => 'can:manage_settings',
+        'prefix' => 'settings',
+        'as' => 'settings.',
+    ], function () {
+        Route::get('/', [SettingsManagementController::class, 'index'])->name('index');
+        Route::put('/', [SettingsManagementController::class, 'update'])->name('update');
     });
-    Route::middleware([
-        'middleware' => 'can:manage_roles'
-    ])->group(function () {
-        Route::resource('roles', RolesManagementController::class);
-    });
-    Route::middleware([
-        'middleware' => 'can:manage_servers'
-    ])->group(function () {
+    Route::resource('users', UsersManagementController::class)
+        ->middleware(['middleware' => 'can:manage_users']);
+    Route::resource('roles', RolesManagementController::class)
+        ->middleware([ 'middleware' => 'can:manage_roles']);
+    Route::middleware(['middleware' => 'can:manage_servers'])->group(function () {
         Route::resource('servers', ServersManagementController::class);
         Route::resource('servers.reasons', ReasonsManagementController::class)
             ->except(['index', 'show']);

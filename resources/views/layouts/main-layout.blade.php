@@ -12,7 +12,7 @@
         @hasSection('title')
             @yield('title') |
         @endif
-        {{ config('app.name', 'Laravel') }}
+        {{ config('app.name') }}
     </title>
 
     <!-- Font Awesome -->

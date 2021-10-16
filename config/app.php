@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Lambda'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,20 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => env('ASSET_URL'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin path
+    |--------------------------------------------------------------------------
+    |
+    | You can change the name of dir the Administration Panel.
+    | By default it is /admin/. Only a dir name should be specified, without full path.
+    |
+    */
+
+//    'admin_dir' => env('APP_ADMIN_DIR', 'admin'),
+    'admin_dir' => 'admin',
 
     /*
     |--------------------------------------------------------------------------

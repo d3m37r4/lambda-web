@@ -82,7 +82,7 @@
             </div>
             <div class="row">
                 <div>
-                    <ul class="nav nav-tabs nav-justified mb-3" id="ex1">
+                    <ul class="nav nav-tabs nav-fill mb-3" id="ex1">
                         <li class="nav-item">
                             <a class="nav-link active" href="#ex1-tabs-1" id="ex1-tab-1" data-mdb-toggle="tab"
                                aria-controls="ex1-tabs-1" aria-selected="true">
