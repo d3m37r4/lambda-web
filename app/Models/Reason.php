@@ -42,8 +42,7 @@ class Reason extends Model
     /**
      * @var array
      */
-    protected $hidden = ['server_id', /*'overall', 'active',*/
-        'created_at', 'updated_at'];
+    protected $hidden = ['server_id', /*'overall', 'active',*/'created_at', 'updated_at'];
 
     /**
      * Gets servers associated with this reason.
