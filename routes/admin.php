@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\RolesManagementController;
 use App\Http\Controllers\Admin\ServersManagementController;
 use App\Http\Controllers\Admin\ReasonsManagementController;
 use App\Http\Controllers\Admin\AccessesManagementController;
+use App\Http\Controllers\Admin\AccessGroupsManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,8 @@ Route::group([
         Route::resource('servers.reasons', ReasonsManagementController::class)
             ->except(['index', 'show']);
         Route::resource('servers.accesses', AccessesManagementController::class)
+            ->except(['index', 'show']);
+        Route::resource('servers.access-groups', AccessGroupsManagementController::class)
             ->except(['index', 'show']);
     });
 });

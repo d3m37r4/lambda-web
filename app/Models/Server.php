@@ -135,6 +135,16 @@ class Server extends Model
     }
 
     /**
+     * Gets access groups available for a specific server.
+     *
+     * @return HasMany
+     */
+    public function access_groups(): HasMany
+    {
+        return $this->hasMany(AccessGroup::class);
+    }
+
+    /**
      * Gets map name.
      *
      * @return string
