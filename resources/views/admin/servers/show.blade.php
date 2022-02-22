@@ -283,6 +283,7 @@
                                                             data-mdb-toggle="modal"
                                                             data-mdb-target="#confirmDelete"
                                                             data-modal-title="{{ ('Удаление причины наказания') }}"
+                                                            data-modal-message="{{ ("Вы действительно хотите удалить причину наказания '$reason->title' ?") }}"
                                                             data-modal-route="{{ route('admin.servers.reasons.destroy', [ $server, $reason ]) }}">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
