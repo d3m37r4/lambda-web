@@ -2,27 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Exception;
-use App\Models\Permission;
+use Request;
+use Session;
 use App\Models\Role;
+use App\Models\Permission;
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Validator;
 
-class RolesManagementController extends Controller {
+class RolesManagementController extends Controller
+{
     /**
      * Display a listing of the roles.
      *
-     * @return Application|Factory|View|Response
+     * @return View
      */
-    public function index() {
+    public function index(): View
+    {
         $roles = Role::paginate(env('PAGINATION_SIZE'));
+
+        Session::put('redirect_url', Request::fullUrl());
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -30,9 +32,10 @@ class RolesManagementController extends Controller {
     /**
      * Show the form for creating a new role.
      *
-     * @return Application|Factory|View|Response
+     * @return View
      */
-    public function create() {
+    public function create(): View
+    {
         $permissions = Permission::all();
 
         return view('admin.roles.create', compact('permissions'));
@@ -41,27 +44,18 @@ class RolesManagementController extends Controller {
     /**
      * Store a newly created role in storage.
      *
-     * @param Request $request
+     * @param StoreRoleRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse {
-        $rules['name'] = ['required', 'string', 'max:255', 'unique:roles'];
-        $validator = Validator::make($request->all(), $rules);
+    public function store(StoreRoleRequest $request): RedirectResponse
+    {
+        $role = Role::create($request->safe()->only('name'))
+            ->givePermissionTo($request->safe()->only('permissions'));
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $roleName = strip_tags($request->input('name'));
-
-        $role = Role::create(['name' => $roleName]);
-        $role->givePermissionTo($request->input('permissions'));
-        $role->save();
-
-        return redirect()
-            ->route('admin.roles.index')
-            ->with('status', 'success')
-            ->with('message', "Новая роль {$roleName} успешно создана!");
+        return redirect()->route('admin.roles.index')->with([
+            'status' => 'success',
+            'message' => "Новая роль {$role->name} успешно создана!"
+        ]);
     }
 
     /**
@@ -78,9 +72,10 @@ class RolesManagementController extends Controller {
      * Show the form for editing the specified role.
      *
      * @param Role $role
-     * @return Application|Factory|View|Response
+     * @return View
      */
-    public function edit(Role $role) {
+    public function edit(Role $role): View
+    {
         $permissions = Permission::all();
 
         return view('admin.roles.edit', compact('role', 'permissions'));
@@ -89,45 +84,34 @@ class RolesManagementController extends Controller {
     /**
      * Update the specified role in storage.
      *
-     * @param Request $request
+     * @param UpdateRoleRequest $request
      * @param Role $role
      * @return RedirectResponse
      */
-    public function update(Request $request, Role $role): RedirectResponse {
-        $nameCheck = !empty($request->input('name')) && ($request->input('name') != $role->name);
+    public function update(UpdateRoleRequest $request, Role $role): RedirectResponse
+    {
+        $role->update($request->safe()->only('name'));
+        $role->syncPermissions($request->safe()->only('permissions'));
 
-        if ($nameCheck) {
-            $rules['name'] = ['required', 'string', 'max:255', 'unique:roles'];
-        }
-
-        if (isset($rules)) {
-            $validator = Validator::make($request->all(), $rules);
-
-            if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput();
-            }
-        }
-
-        $role->update($request->except('permission'));
-        $role->syncPermissions($request->input('permissions'));
-
-        return back()
-            ->with('status', 'success')
-            ->with('message', "Информация о роли {$role->name} была успешно обновлена!");
+        return back()->with([
+            'status' => 'success',
+            'message' => "Информация о роли {$role->name} была успешно обновлена!"
+        ]);
     }
 
     /**
      * Remove the specified role from storage.
      *
      * @param Role $role
-     * @return Application|RedirectResponse|Response|Redirector|void
-     * @throws Exception
+     * @return RedirectResponse
      */
-    public function destroy(Role $role) {
+    public function destroy(Role $role): RedirectResponse
+    {
         $role->delete();
 
-        return back()
-            ->with('status', 'success')
-            ->with('message', "Роль {$role->name} была удалена!");
+        return back()->with([
+            'status' => 'success',
+            'message' => "Роль {$role->name} была удалена!"
+        ]);
     }
 }

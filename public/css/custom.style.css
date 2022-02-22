@@ -1,8 +1,0 @@
-body {
-	padding-top: 70px;
-    overflow-y: scroll;
-}
-
-.fade {
-    transition: opacity 0.25s linear;
-}

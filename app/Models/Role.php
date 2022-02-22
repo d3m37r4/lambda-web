@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role as SpatieRole;
  * @method static paginate(mixed $env)
  * @property string name
  */
-class Role extends SpatieRole {
+class Role extends SpatieRole
+{
     //
 }

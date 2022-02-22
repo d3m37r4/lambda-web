@@ -1,17 +1,14 @@
 @extends('layouts.main-layout')
 
-@section('title')
-    {{ 'Панель управления' }}
-@endsection
+@section('title', 'Панель управления')
 
 @section('content')
 {{--    @include('admin.components.breadcrubms')--}}
-
     <div class="row justify-content-center">
-        <div class="col-md-3 mb-3">
+        <div class="col-md-3 mb-3 pt-3">
             @include('admin.components.sidebar')
         </div>
-        <div class="col-md-9 mb-3">
+        <div class="col-md-9 mb-3 pt-3">
             @yield('admin.content')
         </div>
     </div>

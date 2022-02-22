@@ -3,38 +3,39 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
+use Request;
+use Session;
+use App\Models\Role;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use Exception;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
 
-class UsersManagementController extends Controller {
+class UsersManagementController extends Controller
+{
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
     /**
      * Display a listing of users
      *
-     * @return Application|Factory|View
+     * @return View
      */
-    public function index() {
+    public function index(): View
+    {
         $users = User::paginate(env('PAGINATION_SIZE'));
         $roles = Role::all();
+
+        Session::put('redirect_url', Request::fullUrl());
 
         return view('admin.users.index', compact('users', 'roles'));
     }
@@ -42,9 +43,10 @@ class UsersManagementController extends Controller {
     /**
      * Show the form for creating a new user.
      *
-     * @return Application|Factory|View|Response
+     * @return View
      */
-    public function create() {
+    public function create(): View
+    {
         $roles = Role::all();
 
         return view('admin.users.create', compact('roles'));
@@ -53,59 +55,43 @@ class UsersManagementController extends Controller {
     /**
      * Store a newly created user in storage.
      *
-     * @param Request $request
+     * @param StoreUserRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse {
-        $rules = [
-            'name' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'password_confirmation' => ['required', 'string', 'same:password'],
-            'role' => ['required', 'string'],
-        ];
-        $validator = Validator::make($request->all(), $rules);
+    public function store(StoreUserRequest $request): RedirectResponse
+    {
+        // TODO: add choice of permissions
+        $user = User::create($request->safe()->except('role'));
+        $user->assignRole($request->safe()->only('role'));
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $user = User::create([
-            'name' => strip_tags($request->input('name')),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+        return redirect($request->input('redirect'))->with([
+            'status' => 'success',
+            'message' => "Пользователь {$user->name} успешно создан!"
         ]);
-
-//        TODO: add choice of permissions
-        $user->assignRole($request->input('role'));
-        $user->save();
-
-        return redirect()
-            ->route('admin.users.index')
-            ->with('status', 'success')
-            ->with('message', "Пользователь {$user->name} успешно создан!");
     }
 
     /**
      * Display the specified user.
      *
      * @param User $user
-     * @return Response
+     * @return View
      */
-//    public function show(User $user): Response {
-//        // TODO: Adding a user profile display form to control panel
-//        return abort(404);
-//    }
+    public function show(User $user): View
+    {
+        $permissions = $user->getAllPermissions();
+
+        return view('admin.users.show', compact('user', 'permissions'));
+    }
 
     /**
      * Show the form for editing the specified user.
      *
      * @param User $user
-     * @return Application|Factory|View|Response
+     * @return View
      */
-    public function edit(User $user) {
+    public function edit(User $user): View
+    {
         $roles = Role::all();
-//        $permissions = Permission::all();
 
         return view('admin.users.edit', compact('user', 'roles'));
     }
@@ -113,82 +99,43 @@ class UsersManagementController extends Controller {
     /**
      * Update the specified user in storage.
      *
-     * @param Request $request
+     * @param UpdateUserRequest $request
      * @param User $user
-     * @return RedirectResponse|Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, User $user) {
-        $nameCheck = !empty($request->input('name')) && ($request->input('name') != $user->name);
-        $emailCheck = !empty($request->input('email')) && ($request->input('email') != $user->email);
-        $passwordCheck = !empty($request->input('password'));
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    {
+        $user->update($request->safe()->except('role'));
+        $user->syncRoles($request->safe()->only('role'));
 
-        if ($nameCheck) {
-            $rules['name'] = ['required', 'string', 'max:255', 'unique:users'];
-        }
-
-        if ($emailCheck) {
-            $rules['email'] = ['required', 'string', 'email', 'max:255', 'unique:users'];
-        }
-
-        if ($passwordCheck) {
-            $rules['password'] = ['required', 'string', 'min:6', 'confirmed'];
-            $rules['password_confirmation'] = ['required', 'string', 'same:password'];
-        }
-
-        if (isset($rules)) {
-            $validator = Validator::make($request->all(), $rules);
-
-            if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput();
-            }
-        }
-
-        if ($nameCheck) {
-            $user->name = strip_tags($request->input('name'));
-        }
-
-        if ($emailCheck) {
-            $user->email = $request->input('email');
-        }
-
-        if ($passwordCheck) {
-            $user->password = Hash::make($request->input('password'));
-        }
-
-        $user->syncRoles($request->input('role'));
-        $user->save();
-
-        return back()
-            ->with('status', 'success')
-            ->with('message', "Информация о пользователе {$user->name} была успешно обновлена!");
+        return back()->with([
+            'status' => 'success',
+            'message' => "Информация о пользователе {$user->name} была успешно обновлена!"
+        ]);
     }
 
     /**
      * Remove the specified user from storage.
      *
      * @param User $user
-     * @return Application|RedirectResponse|Response|Redirector|void
-     * @noinspection PhpVoidFunctionResultUsedInspection
-     * @throws Exception
+     * @return RedirectResponse
      */
-    public function destroy(User $user) {
+    public function destroy(User $user): RedirectResponse
+    {
         $currentUser = Auth::user();
-
-        if (is_null($currentUser)) {
-            return abort(500);
-        }
+        abort_if(is_null($currentUser), 500);
 
         if ($currentUser->id !== $user->id) {
-            $user->save();
             $user->delete();
-
-            return back()
-                ->with('status', 'success')
-                ->with('message', "Пользователь {$user->name} был удален!");
+            return back()->with([
+                'status' => 'success',
+                'message' => "Пользователь {$user->name} был удален!"
+            ]);
         }
 
-        return back()
-            ->with('status', 'danger')
-            ->with('message', "Вы не можете удалить свой профиль!");
+        return back()->with([
+            'status' => 'danger',
+            'message' => "Вы не можете удалить свой профиль!"
+        ]);
     }
 }

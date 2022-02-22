@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AccessTokenMiddleware;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -28,7 +29,8 @@ use Spatie\Permission\Middlewares\PermissionMiddleware;
 use Spatie\Permission\Middlewares\RoleMiddleware;
 use Spatie\Permission\Middlewares\RoleOrPermissionMiddleware;
 
-class Kernel extends HttpKernel {
+class Kernel extends HttpKernel
+{
     /**
      * The application's global HTTP middleware stack.
      *
@@ -88,5 +90,6 @@ class Kernel extends HttpKernel {
         'role' => RoleMiddleware::class,
         'permission' => PermissionMiddleware::class,
         'role_or_permission' => RoleOrPermissionMiddleware::class,
+        'api-server-auth' => AccessTokenMiddleware::class,
     ];
 }

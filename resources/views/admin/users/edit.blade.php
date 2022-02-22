@@ -1,28 +1,25 @@
 @extends('layouts.admin-layout')
 
-@section('title', 'Редактирование пользователя')
+@section('title', "Редактирование пользователя: $user->name")
 
 @section('admin.content')
     @include('admin.components.alert')
-    <div class="card mb-3">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h5 class="card-title">
-                        <i class="bi bi-pencil-square"></i>
-                        {{ ('Редактирование пользователя: ') }} {{ $user->name }}
+    <div class="card shadow-2 border">
+        <div class="card-header">
+            <div class="d-sm-flex justify-content-between">
+                <div class="me-auto align-self-center">
+                    <h5 class="card-title m-0">
+                        <i class="fas fa-user-edit"></i>
+                        {{ ("Редактирование пользователя: $user->name") }}
                     </h5>
                 </div>
-                <div>
-                    <a class="btn btn-primary btn-sm" href="{{ route('admin.users.index') }}">
-                        <i class="bi bi-reply"></i>
-                        {{ ('Вернуться назад') }}
-                    </a>
+                <div class="d-grid">
+                    @include('admin.components.link-back', ['redirect_route' => 'admin.users.index'])
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+            <form action="{{ route('admin.users.update', $user) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="row form-group mb-3">
@@ -37,7 +34,7 @@
                 </div>
                 <div class="row form-group mb-3">
                     <label for="email" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('E-Mail') }}
+                        {{ ('Эл. почта') }}
                     </label>
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
@@ -75,20 +72,36 @@
                         <select id="role" class="form-select @error('role') is-invalid @enderror"
                                 name="role" size="6">
                             <option disabled>{{ ('Назначьте роль пользователю...') }}</option>
-                            @foreach ($roles as $role)
+                                @foreach ($roles as $role)
                                 <option value="{{ $role->id }}"
                                         @if (isset($user) && $user->hasRole($role)) selected @endif>
                                     {{ $role->name }}
                                 </option>
-                            @endforeach
+                                @endforeach
                         </select>
+                        @include('components.field-filling-error', ['error' => 'role'])
                     </div>
                 </div>
-                <div>
-                    <button type="submit" class="btn btn-success btn-sm">
-                        <i class="bi bi-person-check"></i>
-                        <span class="ml-1">{{ ('Обновить') }}</span>
-                    </button>
+                <div class="row form-group mb-3">
+                    <label for="created" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Пользователь добавлен') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="created" type="text" class="form-control"
+                               name="created" value="{{ $user->created_at }}" disabled>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="updated" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Последнее обновление') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="updated" type="text" class="form-control"
+                               name="updated" value="{{ $user->updated_at }}" disabled>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    @include('admin.components.btn-upd', ['title' => 'Обновить пользователя'])
                 </div>
             </form>
         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.admin-layout')
 
-@section('title', 'Новый сервер')
+@section('title', 'Добавить сервер')
 
 @section('admin.content')
     <div class="card mb-3">
@@ -8,15 +8,12 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h5 class="card-title">
-                        <i class="bi bi-shield-plus"></i>
-                        {{ 'Новый сервер' }}
+                        <i class="fas fa-server"></i>
+                        {{ 'Добавить сервер' }}
                     </h5>
                 </div>
-                <div>
-                    <a class="btn btn-primary btn-sm" href="{{ route('admin.servers.index') }}">
-                        <i class="bi bi-reply"></i>
-                        {{ ('Вернуться назад') }}
-                    </a>
+                <div class="d-grid">
+                    @include('admin.components.link-back', ['redirect_route' => 'admin.servers.index'])
                 </div>
             </div>
         </div>
@@ -29,7 +26,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                               name="name" placeholder="{{ 'Введите имя сервера' }}" required>
+                               name="name" value="{{ old('name') }}"
+                               placeholder="{{ 'Введите имя сервера' }}" required>
                         @include('components.field-filling-error', ['error' => 'name'])
                     </div>
                 </div>
@@ -39,7 +37,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="ip" type="text" class="form-control @error('ip') is-invalid @enderror"
-                               name="ip" placeholder="{{ 'Введите ип адрес' }}" required>
+                               name="ip" value="{{ old('ip') }}"
+                               placeholder="{{ 'Введите IP сервера' }}" required>
                         @include('components.field-filling-error', ['error' => 'ip'])
                     </div>
                 </div>
@@ -49,7 +48,8 @@
                     </label>
                     <div class="col-md-6">
                         <input id="port" type="text" class="form-control @error('port') is-invalid @enderror"
-                               name="port" placeholder="{{ 'Введите порт' }}" required>
+                               name="port" value="{{ old('port') }}"
+                               placeholder="{{ 'Введите порт' }}" required>
                         @include('components.field-filling-error', ['error' => 'port'])
                     </div>
                 </div>
@@ -59,18 +59,75 @@
                     </label>
                     <div class="col-md-6">
                         <input id="rcon" type="text" class="form-control @error('rcon') is-invalid @enderror"
-                               name="rcon" placeholder="{{ 'Введите RCON пароль' }}">
+                               name="rcon" value="{{ old('rcon') }}"
+                               placeholder="{{ 'Введите RCON пароль' }}">
                         @include('components.field-filling-error', ['error' => 'rcon'])
                     </div>
                 </div>
-
-                <div>
-                    <button type="submit" class="btn btn-success btn-sm">
-                        <i class="bi bi-shield-plus"></i>
-                        <span class="ml-1">{{ ('Добавить новый сервер') }}</span>
-                    </button>
+                <div class="row form-group mb-3">
+                    <label for="token" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Токен авторизации') }}
+                    </label>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <input id="token" type="text" class="form-control"
+                                   name="auth_token" aria-describedby="tokenHelp"
+                                   readonly>
+                            <button type="button" class="btn btn-outline-success" id="copyToken"
+                                    title="{{ ('Скопировать токен в буфер обмена') }}">
+                                <i class="far fa-clone"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" id="refreshToken"
+                                    title="{{ ('Обновить токен') }}">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <div class="form-text" id="tokenHelp">
+                            {{ ('Запишите данный токен в поле "token" файлa "lambda-core.json" на сервере.') }}
+                            {{ ('Токен хранится в базе данных в зашифрованном виде. Если Вы утратили токен, необходимо сгенерировать новый.') }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="created" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Сервер добавлен') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="created" type="text" class="form-control"
+                               name="created" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="updated" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Последнее обновление') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="updated" type="text" class="form-control"
+                               name="updated" value="{{ \Carbon\Carbon::now()->format('d.m.Y - H:i:s') }}" disabled>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    @include('admin.components.btn-add', ['title' => 'Добавить сервер'])
                 </div>
             </form>
         </div>
     </div>
 @endsection
+
+@push('secondary-scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let tokenForm = document.querySelector("#token");
+            generateToken(tokenForm, tokenLength);
+
+            document.getElementById('refreshToken')
+                .addEventListener('click', () => generateToken(tokenForm, tokenLength));
+
+            document.getElementById('copyToken')
+                .addEventListener('click', function () {
+                    tokenForm.select();
+                    document.execCommand("copy");
+                });
+        });
+    </script>
+@endpush

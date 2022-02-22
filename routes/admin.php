@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UsersManagementController;
 use App\Http\Controllers\Admin\RolesManagementController;
 use App\Http\Controllers\Admin\ServersManagementController;
+use App\Http\Controllers\Admin\ReasonsManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,8 @@ Auth::routes();
 
 Route::group([
     'middleware' => ['auth','can:enter_control_panel'],
-    'prefix' => env('APP_ADMIN_PATH'), 'as' => 'admin.'
+    'prefix' => env('APP_ADMIN_PATH'),
+    'as' => 'admin.',
 ], function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::middleware([
@@ -38,5 +40,7 @@ Route::group([
         'middleware' => 'can:manage_servers'
     ])->group(function () {
         Route::resource('servers', ServersManagementController::class);
+        Route::resource('servers.reasons', ReasonsManagementController::class)
+            ->except(['index', 'show']);
     });
 });
