@@ -271,10 +271,7 @@
                                                 <a class="btn btn-primary btn-floating btn-sm"
                                                    data-mdb-toggle="tooltip"
                                                    title="{{ ('Редактировать причину') }}"
-                                                   href="{{ route('admin.servers.reasons.edit', [
-                                                       $server,
-                                                       $reason
-                                                   ]) }}">
+                                                   href="{{ route('admin.servers.reasons.edit', [ $server, $reason ]) }}">
                                                     <i class="fas fa-pen"></i>
                                                 </a>
                                                 <span class="d-inline-block"
@@ -286,7 +283,6 @@
                                                             data-mdb-toggle="modal"
                                                             data-mdb-target="#confirmDelete"
                                                             data-modal-title="{{ ('Удаление причины наказания') }}"
-                                                            data-modal-message="{{ ("Вы действительно хотите удалить причину наказания '$reason->title' ?") }}"
                                                             data-modal-route="{{ route('admin.servers.reasons.destroy', [ $server, $reason ]) }}">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
@@ -343,10 +339,7 @@
                                                 <a class="btn btn-primary btn-floating btn-sm"
                                                    data-mdb-toggle="tooltip"
                                                    title="{{ ('Редактировать доступ') }}"
-                                                   href="{{ route('admin.servers.accesses.edit', [
-                                                       $server,
-                                                       $access
-                                                   ]) }}">
+                                                   href="{{ route('admin.servers.accesses.edit', [ $server, $access ]) }}">
                                                     <i class="fas fa-pen"></i>
                                                 </a>
                                                 <span class="d-inline-block"
