@@ -125,6 +125,16 @@ class Server extends Model
     }
 
     /**
+     * Gets accesses available for a specific server.
+     *
+     * @return HasMany
+     */
+    public function accesses(): HasMany
+    {
+        return $this->hasMany(Access::class);
+    }
+
+    /**
      * Gets map name.
      *
      * @return string

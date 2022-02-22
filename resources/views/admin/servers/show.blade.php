@@ -82,7 +82,7 @@
             </div>
             <div class="row">
                 <div>
-                    <ul class="nav nav-tabs nav-justified mb-3" id="ex1">
+                    <ul class="nav nav-tabs nav-fill border-bottom mb-3" id="ex1">
                         <li class="nav-item">
                             <a class="nav-link active" href="#ex1-tabs-1" id="ex1-tab-1" data-mdb-toggle="tab"
                                aria-controls="ex1-tabs-1" aria-selected="true">
@@ -108,8 +108,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#ex1-tabs-5" id="ex1-tab-5" data-mdb-toggle="tab"
-                               aria-controls="ex1-tabs-5" aria-selected="false">
+                            <a class="nav-link" href="#accesses" id="ex1-tab-5" data-mdb-toggle="tab"
+                               aria-controls="acesses" aria-selected="false">
                                 {{ ('Доступы') }}
                             </a>
                         </li>
@@ -223,7 +223,7 @@
                                     {{ ('Добавить причину наказаний') }}
                                 </a>
                             </div>
-                            @if(!$server->reasons->isEmpty())
+                            @if($server->reasons->isNotEmpty())
                                 <div class="border table-responsive rounded">
                                     <table class="table align-middle">
                                         <thead>
@@ -339,55 +339,79 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="ex1-tabs-5" aria-labelledby="ex1-tab-5">
-                            <div class="table-responsive">
-                                <table class="table align-middle">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th>col</th>
-                                            <th>col</th>
-                                            <th>col</th>
-                                            <th>col</th>
-                                            <th>col</th>
-                                            <th>col</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                            <td>text</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <div class="tab-pane fade" id="accesses" aria-labelledby="accesses">
+                            <div class="mb-3">
+                                <a class="btn btn-success"
+                                   href="{{ route('admin.servers.accesses.create', $server->id) }}">
+                                    <i class="fas fa-plus"></i>
+                                    {{ ('Добавить доступ') }}
+                                </a>
                             </div>
+                            @if($server->accesses->isNotEmpty())
+                                <div class="border table-responsive rounded">
+                                    <table class="table align-middle">
+                                        <thead>
+                                        <tr>
+                                            <th class="col-1">{{ ('#') }}</th>
+                                            <th class="col-1">{{ ('ID') }}</th>
+                                            <th class="col-4">{{ ('Ключ доступа') }}</th>
+                                            <th class="col-4">{{ ('Описание') }}</th>
+                                            <th class="text-center" style="min-width: 30px;">{{ ('Действия') }}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($server->accesses as $access)
+                                            <tr>
+                                                <td>
+                                                    {{ $loop->iteration }}
+                                                </td>
+                                                <td>
+                                                    {{ $access->id }}
+                                                </td>
+                                                <td>
+                                                    {{ $access->key }}
+                                                </td>
+                                                <td>
+                                                    {{ $access->description  }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-primary btn-floating btn-sm"
+                                                       data-mdb-toggle="tooltip"
+                                                       title="{{ ('Редактировать доступ') }}"
+                                                       href="{{ route('admin.servers.accesses.edit', [
+                                                           $server,
+                                                           $access
+                                                       ]) }}">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
+                                                    <span class="d-inline-block"
+                                                          tabindex="0"
+                                                          data-mdb-toggle="tooltip"
+                                                          title="{{ ('Удалить доступ') }}">
+                                                        <button class="btn btn-danger btn-floating btn-sm"
+                                                                type="button"
+                                                                data-mdb-toggle="modal"
+                                                                data-mdb-target="#confirmDelete"
+                                                                data-route="{{ route('admin.servers.accesses.destroy', [
+                                                                    $server,
+                                                                    $access
+                                                                ]) }}"
+                                                                data-reasonname="{{ $access->key }}">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                                <div class="d-flex alert alert-info align-items-center">
+                                    <i class="fas fa-info-circle fa-2x me-1"></i>
+                                    {{ ('Доступы для этого сервера еще не заданы.') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -400,16 +424,16 @@
     <script>
         let modalDeleteServer = document.getElementById('confirmDelete');
         modalDeleteServer.addEventListener('show.bs.modal', function (event) {
-            let confirmMsg = "{{ ('Вы действительно хотите удалить причину @reasonname?') }}";
+            let confirmMsg = "{{ ('Вы действительно хотите удалить причину @accessname?') }}";
             let btn = event.relatedTarget;
             this.querySelector('.route').action = btn.getAttribute('data-route');
 
-            let name = btn.getAttribute('data-reasonname');
-            confirmMsg = confirmMsg.replace('@reasonname', name);
+            let name = btn.getAttribute('data-accessname');
+            confirmMsg = confirmMsg.replace('@accessname', name);
 
-            this.querySelector('.modal-title').textContent = "{{ ('Удаление причины') }}";
+            this.querySelector('.modal-title').textContent = "{{ ('Удаление доступа') }}";
             this.querySelector('.modal-msg').textContent = confirmMsg;
-            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить причину') }}";
+            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить доступ') }}";
         });
     </script>
 @endpush

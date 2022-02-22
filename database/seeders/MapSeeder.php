@@ -14,7 +14,7 @@ class MapSeeder extends Seeder
      */
     public function run()
     {
-        $maps = array(
+        $maps = [
             'cs_assault',
             'cs_italy',
             'cs_militia',
@@ -32,9 +32,9 @@ class MapSeeder extends Seeder
             'de_train',
             'de_tuscan',
             'de_vertigo',
-        );
+        ];
 
-        foreach($maps as $map) {
+        foreach ($maps as $map) {
             Map::create(['name' => $map]);
         }
     }
