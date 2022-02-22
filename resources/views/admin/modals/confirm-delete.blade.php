@@ -7,17 +7,17 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p class="modal-msg"></p>
+                <p class="modal-message"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
                     {{ ('Отмена') }}
                 </button>
-                <form method="POST" class="route">
+                <form method="POST" class="modal-route">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger modal-btn-title">
-                        <i class="bi bi-trash-fill"></i>
+                        {{ ('Удалить') }}
                     </button>
                 </form>
             </div>

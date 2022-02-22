@@ -198,7 +198,7 @@
                                             <td class="text-center">
                                                 <a class="btn btn-primary btn-floating btn-sm"
                                                    data-mdb-toggle="tooltip"
-                                                   title="{{ ('Редактировать группу') }}"
+                                                   title="{{ ('Редактировать группу доступов') }}"
                                                    href="{{ route('admin.servers.access-groups.edit', [
                                                        $server,
                                                        $accessGroup
@@ -208,18 +208,14 @@
                                                 <span class="d-inline-block"
                                                       tabindex="0"
                                                       data-mdb-toggle="tooltip"
-                                                      title="{{ ('Удалить группу') }}">
+                                                      title="{{ ('Удалить группу доступов') }}">
                                                     <button class="btn btn-danger btn-floating btn-sm"
                                                             type="button"
                                                             data-mdb-toggle="modal"
                                                             data-mdb-target="#confirmDelete"
-                                                            data-route="{{
-                                                                route('admin.servers.access-groups.destroy', [
-                                                                    $server,
-                                                                    $accessGroup
-                                                                ])
-                                                            }}"
-                                                            data-reasonname="{{ $accessGroup->title }}">
+                                                            data-modal-title="{{ ('Удаление группы доступов') }}"
+                                                            data-modal-message="{{ ("Вы действительно хотите удалить группу доступов '$accessGroup->title'?") }}"
+                                                            data-modal-route="{{ route('admin.servers.access-groups.destroy', [ $server, $accessGroup ]) }}">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </span>
@@ -284,16 +280,14 @@
                                                 <span class="d-inline-block"
                                                       tabindex="0"
                                                       data-mdb-toggle="tooltip"
-                                                      title="{{ ('Удалить причину') }}">
+                                                      title="{{ ('Удалить причину наказания') }}">
                                                     <button class="btn btn-danger btn-floating btn-sm"
                                                             type="button"
                                                             data-mdb-toggle="modal"
                                                             data-mdb-target="#confirmDelete"
-                                                            data-route="{{ route('admin.servers.reasons.destroy', [
-                                                                $server,
-                                                                $reason
-                                                            ]) }}"
-                                                            data-reasonname="{{ $reason->title }}">
+                                                            data-modal-title="{{ ('Удаление причины наказания') }}"
+                                                            data-modal-message="{{ ("Вы действительно хотите удалить причину наказания '$reason->title' ?") }}"
+                                                            data-modal-route="{{ route('admin.servers.reasons.destroy', [ $server, $reason ]) }}">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </span>
@@ -390,20 +384,3 @@
     </div>
 @endsection
 
-@push('secondary-scripts')
-    <script>
-        let modalDeleteServer = document.getElementById('confirmDelete');
-        modalDeleteServer.addEventListener('show.bs.modal', function (event) {
-            let confirmMsg = "{{ ('Вы действительно хотите удалить причину @accessname?') }}";
-            let btn = event.relatedTarget;
-            this.querySelector('.route').action = btn.getAttribute('data-route');
-
-            let name = btn.getAttribute('data-accessname');
-            confirmMsg = confirmMsg.replace('@accessname', name);
-
-            this.querySelector('.modal-title').textContent = "{{ ('Удаление доступа') }}";
-            this.querySelector('.modal-msg').textContent = confirmMsg;
-            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить доступ') }}";
-        });
-    </script>
-@endpush

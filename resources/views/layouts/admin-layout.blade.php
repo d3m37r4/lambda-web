@@ -13,3 +13,7 @@
         </div>
     </div>
 @endsection
+
+@push('secondary-scripts')
+    <script src="{{ asset('js/lambda.confirm-delete.js') }}"></script>
+@endpush

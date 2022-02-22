@@ -74,14 +74,17 @@
                                    href="{{ route('admin.users.edit', $user) }}">
                                     <i class="fas fa-pen"></i>
                                 </a>
-                                <span class="d-inline-block" tabindex="0"
-                                    data-mdb-toggle="tooltip" title="{{ ('Удалить пользователя') }}">
+                                <span class="d-inline-block"
+                                      tabindex="0"
+                                      data-mdb-toggle="tooltip"
+                                      title="{{ ('Удалить пользователя') }}">
                                     <button class="btn btn-danger btn-floating btn-sm"
                                             type="button"
                                             data-mdb-toggle="modal"
                                             data-mdb-target="#confirmDelete"
-                                            data-route="{{ route('admin.users.destroy', $user) }}"
-                                            data-username="{{ $user->name }}">
+                                            data-modal-title="{{ ('Удаление пользователя') }}"
+                                            data-modal-message="{{ ("Вы действительно хотите удалить пользователя '$user->name' ?") }}"
+                                            data-modal-route="{{ route('admin.users.destroy', $user) }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </span>
@@ -97,21 +100,3 @@
         {{ $users->links() }}
     </div>
 @endsection
-
-@push('secondary-scripts')
-    <script>
-        let modalDeleteUser = document.getElementById('confirmDelete');
-        modalDeleteUser.addEventListener('show.mdb.modal', function (event) {
-            let confirmMsg = "{{ ('Вы действительно хотите удалить пользователя @username?') }}";
-            let btn = event.relatedTarget;
-            this.querySelector('.route').action = btn.getAttribute('data-route');
-
-            let name = btn.getAttribute('data-username');
-            confirmMsg = confirmMsg.replace('@username', name);
-
-            this.querySelector('.modal-title').textContent = "{{ ('Подтверждение действия') }}";
-            this.querySelector('.modal-msg').textContent = confirmMsg;
-            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить') }}";
-        });
-    </script>
-@endpush
