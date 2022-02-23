@@ -84,25 +84,25 @@
                 <div>
                     <ul class="nav nav-tabs nav-fill border-bottom mb-3" id="ex1">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#ex1-tabs-1" data-mdb-toggle="tab"
-                               aria-controls="ex1-tabs-1" aria-selected="true">
+                            <a class="nav-link active rounded-top" href="#players-online" data-mdb-toggle="tab"
+                               aria-controls="players-online" aria-selected="true">
                                 {{ ('Игроки онлайн') }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#access-groups" data-mdb-toggle="tab"
+                            <a class="nav-link rounded-top" href="#access-groups" data-mdb-toggle="tab"
                                aria-controls="access-groups" aria-selected="false">
                                 {{ ('Группы доступов') }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#reasons" data-mdb-toggle="tab"
+                            <a class="nav-link rounded-top" href="#reasons" data-mdb-toggle="tab"
                                aria-controls="reasons" aria-selected="false">
                                 {{ ('Причины наказаний') }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#accesses" data-mdb-toggle="tab"
+                            <a class="nav-link rounded-top" href="#accesses" data-mdb-toggle="tab"
                                aria-controls="acesses" aria-selected="false">
                                 {{ ('Доступы') }}
                             </a>
@@ -110,52 +110,39 @@
                     </ul>
                 </div>
                 <div class="tab-content" id="ex1-content">
-                    <div class="tab-pane fade show active" id="ex1-tabs-1" aria-labelledby="ex1-tab-1">
-                        <div class="table-responsive">
+                    <div class="tab-pane fade show active" id="players-online" aria-labelledby="players-online">
+                        <div class="border table-responsive rounded">
                             <table class="table align-middle">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                        <th>col</th>
-                                    </tr>
+                                <thead>
+                                <tr>
+                                    <th class="col-1">{{ ('#') }}</th>
+                                    <th class="col-3">{{ ('Имя игрока') }}</th>
+                                    <th class="col-2">{{ ('Убийств') }}</th>
+                                    <th class="col-2">{{ ('Смертей') }}</th>
+                                    <th class="col-2">{{ ('Онлайн') }}</th>
+                                    <th class="text-center" style="min-width: 30px;">{{ ('Действия') }}</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
+                                        <td>
+                                            1
+                                        </td>
+                                        <td>
+                                            Player
+                                        </td>
+                                        <td>
+                                            14
+                                        </td>
+                                        <td>
+                                            4
+                                        </td>
+                                        <td>
+                                            3 ч.
+                                        </td>
+                                        <td class="text-center">
+                                            Actions
+                                        </td>
                                 </tbody>
                             </table>
                         </div>
