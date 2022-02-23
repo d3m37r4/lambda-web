@@ -36,7 +36,7 @@ class ServerController extends Controller
     {
         $server = Server::where([
             ['ip', $request->ip()],
-            ['port', $request->input('port')],
+            ['port', $request->input('port')]
         ])->firstOr(function () {
             return Response::json(['error' => 'Server not found'], JsonResponse::HTTP_NOT_FOUND);
         });
@@ -53,7 +53,7 @@ class ServerController extends Controller
 
         $accessToken = AccessToken::updateOrCreate(
             ['server_id' => $server->id],
-            ['token' => HelperAccessToken::generateAccessToken(64), 'expires_in' => now()->addHours(12)],
+            ['token' => HelperAccessToken::generateAccessToken(64), 'expires_in' => now()->addHours(12)]
         );
         $server->update(['active' => true]);
 
@@ -80,7 +80,7 @@ class ServerController extends Controller
         $server->max_players = $request->input('max_players');
         $server->map_id = Map::firstOrCreate(
             ['name' => $request->input('map')],
-            ['name' => $request->input('map')],
+            ['name' => $request->input('map')]
         )->id;
         $response = Arr::add($response, 'map', $server->map_id);
 
