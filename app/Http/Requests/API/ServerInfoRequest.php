@@ -14,7 +14,8 @@ class ServerInfoRequest extends ApiRequest
         return [
             'map' => ['required', 'max:64'],
             'max_players' => ['required', 'integer', 'between:0,32'],
-            'update_reasons' => ['boolean', 'nullable']
+            'update_reasons' => ['boolean', 'nullable'],
+            'update_access_groups' => ['boolean', 'nullable']
         ];
     }
 

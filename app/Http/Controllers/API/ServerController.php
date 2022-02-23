@@ -72,26 +72,37 @@ class ServerController extends Controller
     public function info(ServerInfoRequest $request): JsonResponse
     {
         $server = Server::find($request->attributes->get('server_id'));
-        $time = now();
         $response = [
             'success' => true,
             'server_id' => $server->id
         ];
+
         $server->max_players = $request->input('max_players');
+
         $server->map_id = Map::firstOrCreate(
             ['name' => $request->input('map')],
             ['name' => $request->input('map')]
         )->id;
+
         $response = Arr::add($response, 'map', $server->map_id);
+
+        $nextUpdate = now()->addHours(12)->timestamp;
 
         if ($request->boolean('update_reasons')) {
             $response = Arr::add($response, 'reasons_data', [
                 'reasons' => $server->reasons,
-                'next_update' => $time->addHours(12)->timestamp
+                'next_update' => $nextUpdate
             ]);
         }
 
-        $response = Arr::add($response, 'time', $time->timestamp);
+        if ($request->boolean('update_access_groups')) {
+            $response = Arr::add($response, 'access_groups_data', [
+                'access_groups' => $server->access_groups,
+                'next_update' => $nextUpdate
+            ]);
+        }
+
+        $response = Arr::add($response, 'time', now()->timestamp);
         $server->update();
 
         return Response::json($response);
