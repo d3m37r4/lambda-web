@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\ServerController;
+use App\Http\Controllers\API\PlayerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +19,8 @@ Route::group(['prefix' => 'server'], function () {
     Route::post('auth', [ServerController::class, 'auth']);
     Route::post('info', [ServerController::class, 'info']);
     Route::post('ping', [ServerController::class, 'ping']);
+});
+
+Route::group(['prefix' => 'player'], function () {
+    Route::post('connect', [PlayerController::class, 'connect']);
 });
