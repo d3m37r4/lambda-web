@@ -54,9 +54,11 @@ class PlayerController extends Controller
             $player->save();
         }
 
+        // TODO: Make an update of online server in events
+        $server->update();
+
         return Response::json([
             'success' => true,
-            'server_id' => $server->id,
             'player_id' => $player->id,
             'instance_status' => $status
         ]);
@@ -73,12 +75,15 @@ class PlayerController extends Controller
         $server = Server::find($request->attributes->get('server_id'));
         $player = Player::find($request->input('player_id'));
 
-        if ($player->exists && $player->is_online) {
+        if ($player && $player->exists) {
             // TODO: Add request validator
             $player->update([
                 'name' => $request->input('name'),
                 'is_online' => false
             ]);
+
+            // TODO: Make an update of online server in events
+            $server->update();
 
             return Response::json([
                 'success' => true,
@@ -88,7 +93,7 @@ class PlayerController extends Controller
         }
 
         return Response::json([
-            'success' => false,
+            'success' => false
         ]);
     }
 }

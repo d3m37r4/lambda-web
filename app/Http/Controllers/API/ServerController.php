@@ -117,11 +117,6 @@ class ServerController extends Controller
     public function ping(Request $request): JsonResponse {
         $server = Server::find($request->attributes->get('server_id'));
 
-        // mb add validator?
-        if ($request->has('num_players')) {
-            $server->num_players = $request->input('num_players');
-        }
-
         $server->update();
 
         return Response::json([
