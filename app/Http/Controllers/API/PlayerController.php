@@ -27,6 +27,7 @@ class PlayerController extends Controller
      */
     public function connect(Request $request): JsonResponse
     {
+        // TODO: Add request validator
         $server = Server::find($request->attributes->get('server_id'));
         $player = Player::firstOrNew(
             [
@@ -36,13 +37,13 @@ class PlayerController extends Controller
             ],
             [
                 'server_id' => $server->id,
-                'name' => $request->input('name'),
                 'authid' => $request->input('authid'),
                 'ip' => $request->input('ip'),
                 'auth_type' => $request->input('auth_type')
             ]
         );
 
+        $player->name = $request->input('name');
         $player->is_online = true;
 
         if ($player->exists) {
@@ -58,6 +59,36 @@ class PlayerController extends Controller
             'server_id' => $server->id,
             'player_id' => $player->id,
             'instance_status' => $status
+        ]);
+    }
+
+    /**
+     * Updates information about disconnected player.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function disconnect(Request $request): JsonResponse
+    {
+        $server = Server::find($request->attributes->get('server_id'));
+        $player = Player::find($request->input('player_id'));
+
+        if ($player->exists && $player->is_online) {
+            // TODO: Add request validator
+            $player->update([
+                'name' => $request->input('name'),
+                'is_online' => false
+            ]);
+
+            return Response::json([
+                'success' => true,
+                'server_id' => $server->id,
+                'player_id' => $player->id
+            ]);
+        }
+
+        return Response::json([
+            'success' => false,
         ]);
     }
 }

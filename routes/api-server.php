@@ -23,4 +23,5 @@ Route::group(['prefix' => 'server'], function () {
 
 Route::group(['prefix' => 'player'], function () {
     Route::post('connect', [PlayerController::class, 'connect']);
+    Route::post('disconnect', [PlayerController::class, 'disconnect']);
 });

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static firstOrNew(array $array, array $array1)
+ * @method static find(mixed $input)
  */
 class Player extends Model
 {
