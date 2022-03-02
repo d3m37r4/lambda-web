@@ -45,17 +45,9 @@ class Server extends Model
         'rcon',
         'map_id',
         'auth_token',
-        'num_players',
         'max_players',
-        'active',
+        'active'
     ];
-
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
-     */
-    protected $guarded = [];
 
     /**
      * @var array
@@ -71,11 +63,12 @@ class Server extends Model
      * @var array
      */
     protected $appends = [
+        'num_players',
         'full_address',
         'map_name',
         'access_token_string',
         'access_token_expires_in',
-        'percent_players',
+        'percent_players'
     ];
 
     /**
@@ -89,7 +82,7 @@ class Server extends Model
         'full_address' => 'string',
         'map_name' => 'string',
         'active' => 'boolean',
-        'percent_players' => 'int',
+        'percent_players' => 'int'
     ];
 
     /**
@@ -153,6 +146,16 @@ class Server extends Model
     }
 
     /**
+     * Gets players currently on specified server.
+     *
+     * @return HasMany
+     */
+    public function players_online(): HasMany
+    {
+        return $this->hasMany(Player::class)->where('is_online', true);
+    }
+
+    /**
      * Gets map name.
      *
      * @return string
@@ -192,5 +195,16 @@ class Server extends Model
     public function getPercentPlayersAttribute(): int
     {
         return $this->active ? (100 * $this->num_players / $this->max_players) : 0;
+    }
+
+    /**
+     * Prevents setting invalid values for online players.
+     * For Counter Strike 1.6, this is 0 - 32.
+     *
+     * @return int
+     */
+    public function getNumPlayersAttribute(): int
+    {
+        return max(0, min($this->max_players, $this->players_online()->count()));
     }
 }
