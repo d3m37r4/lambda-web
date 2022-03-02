@@ -143,6 +143,16 @@ class Server extends Model
     }
 
     /**
+     * Gets players available for a specific server.
+     *
+     * @return HasMany
+     */
+    public function players(): HasMany
+    {
+        return $this->hasMany(Player::class);
+    }
+
+    /**
      * Gets map name.
      *
      * @return string
