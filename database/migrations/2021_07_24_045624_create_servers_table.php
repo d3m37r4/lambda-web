@@ -16,7 +16,7 @@ class CreateServersTable extends Migration
         Schema::create('servers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('ip', 32);
+            $table->string('ip', 16);
             $table->integer('port');
             $table->string('rcon', 128)->nullable();
             $table->foreignId('map_id')->nullable()->constrained('maps');
