@@ -21,19 +21,27 @@ class CreatePlayersTable extends Migration
             $table->foreignId('server_id')->nullable()
                 ->constrained('servers')
                 ->cascadeOnDelete();
-            $table->string('steamid', 64);
-            $table->unsignedTinyInteger('emulator')->default('0');
-            $table->string('nick', 32)->default('');
-            $table->ipAddress('ip');
-            $table->string('password', 255)->nullable();
+            $table->string('name', 32)->nullable();
+            $table->string('authid', 64)->nullable();
+            $table->string('ip', 16)->nullable();
+            // See Reunion API:
+            // https://github.com/s1lentq/reapi/blob/e808d72075f5018336c15955f8d2d68e8f2cc084/reapi/include/reunion_api.h
             $table->enum('auth_type', [
-                'steamid',
-                'steamid_pass',
-                'nick_pass',
-                'steamid_hash',
-                'nick_hash',
-            ])->default('steamid');
-            $table->unique(['steamid', 'emulator'], 'steamid_idx');
+                'auth_none',
+                'auth_dproto',
+                'auth_steam',
+                'auth_steamemu',
+                'auth_revemu',
+                'auth_oldrevemu',
+                'auth_hltv',
+                'auth_sc2009',
+                'auth_avsmp',
+                'auth_sxei',
+                'auth_revemu2013',
+                'auth_sse3'
+            ])->default('auth_none');
+            $table->boolean('is_online')->default(false);
+            $table->unique(['server_id', 'authid', 'auth_type']);
             $table->timestamps();
         });
     }
