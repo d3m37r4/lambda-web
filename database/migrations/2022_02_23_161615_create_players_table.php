@@ -40,7 +40,6 @@ class CreatePlayersTable extends Migration
                 'auth_revemu2013',
                 'auth_sse3'
             ])->default('auth_none');
-            $table->boolean('is_online')->default(false);
             $table->unique(['server_id', 'authid', 'auth_type']);
             $table->timestamps();
         });
