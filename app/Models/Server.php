@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Hash;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 Carbon::setToStringFormat('d.m.Y - H:i:s');
 
@@ -146,13 +148,54 @@ class Server extends Model
     }
 
     /**
-     * Gets players currently on specified server.
+     * Gets sessions currently on specified server.
      *
      * @return HasMany
      */
-    public function players_online(): HasMany
+    public function sessions(): HasMany
     {
-        return $this->hasMany(Player::class)->where('is_online', true);
+        return $this->hasMany(PlayerSession::class);
+    }
+
+//    /**
+//     * Gets active sessions currently on specified server.
+//     *
+//     * @return \Illuminate\Database\Eloquent\Collection
+//     */
+//    public function active_sessions(): \Illuminate\Database\Eloquent\Collection
+//    {
+//        return $this->sessions()
+//            ->with('player')
+//            ->where('status', PlayerSession::STATUS_ONLINE)
+//            ->limit($this->max_players)
+//            ->get();
+//    }
+
+    /**
+     * Gets online players currently on specified server.
+     *
+     * @return Collection
+     */
+    public function online_players(): Collection
+    {
+        return DB::table('players')
+            ->select('players.*')
+            ->join('players_sessions', 'players.id', '=', 'players_sessions.player_id')
+            ->where([
+                ['players_sessions.server_id', $this->id],
+                ['players_sessions.status', PlayerSession::STATUS_ONLINE]
+            ])
+            ->limit($this->max_players)
+            ->get();
+    }
+
+    /**
+     * Checks if there are online players for a specific server.
+     *
+     * @return bool
+     */
+    public function hasOnlinePlayers(): bool {
+        return $this->online_players()->isNotEmpty();
     }
 
     /**
@@ -198,13 +241,15 @@ class Server extends Model
     }
 
     /**
-     * Prevents setting invalid values for online players.
-     * For Counter Strike 1.6, this is 0 - 32.
+     * Gets number of online players for specified server.
+     *
+     * @note Prevents setting invalid values for online players.
+     *       For Counter Strike 1.6, this is 0 - 32.
      *
      * @return int
      */
     public function getNumPlayersAttribute(): int
     {
-        return max(0, min($this->max_players, $this->players_online()->count()));
+        return max(0, min($this->max_players, $this->online_players()->count()));
     }
 }
