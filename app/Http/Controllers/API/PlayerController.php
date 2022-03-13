@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\PlayerSession;
 use App\Models\Player;
 use App\Models\Server;
 use App\Http\Controllers\Controller;
@@ -44,7 +45,6 @@ class PlayerController extends Controller
         );
 
         $player->name = $request->input('name');
-        $player->is_online = true;
 
         if ($player->exists) {
             $status = 'loaded';
@@ -54,12 +54,40 @@ class PlayerController extends Controller
             $player->save();
         }
 
+        if ($request->has('session_id')) {
+            $session = PlayerSession::find($request->input('session_id'));
+        } else {
+            $session = $player->active_session();
+        }
+
+        if (!$session) {
+            $session = (new PlayerSession)->fill([
+                'player_id' => $player->id,
+                'server_id' => $server->id,
+                'status' => PlayerSession::STATUS_ONLINE,
+                'disconnected_at' => null
+            ]);
+        } else if ($session->server_id != $server->id) {
+            $session->status = PlayerSession::STATUS_OFFLINE;
+            $session->disconnected_at = now();
+            $session->save();
+
+            $session = (new PlayerSession)->fill([
+                'player_id' => $player->id,
+                'server_id' => $server->id,
+                'status' => PlayerSession::STATUS_ONLINE,
+                'disconnected_at' => null
+            ]);
+        }
+
         // TODO: Make an update of online server in events
+        $session->save();
         $server->update();
 
         return Response::json([
             'success' => true,
             'player_id' => $player->id,
+            'session_id' => $session->id,
             'instance_status' => $status
         ]);
     }
@@ -74,26 +102,24 @@ class PlayerController extends Controller
     {
         $server = Server::find($request->attributes->get('server_id'));
         $player = Player::find($request->input('player_id'));
+        $session = PlayerSession::find($request->input('session_id'));
 
         if ($player && $player->exists) {
             // TODO: Add request validator
-            $player->update([
-                'name' => $request->input('name'),
-                'is_online' => false
-            ]);
+            $player->update(['name' => $request->input('name')]);
+
+            if ($session) {
+                $session->status = PlayerSession::STATUS_OFFLINE;
+                $session->disconnected_at = now();
+                $session->save();
+            }
 
             // TODO: Make an update of online server in events
             $server->update();
 
-            return Response::json([
-                'success' => true,
-                'server_id' => $server->id,
-                'player_id' => $player->id
-            ]);
+            return Response::json(['success' => true]);
         }
 
-        return Response::json([
-            'success' => false
-        ]);
+        return Response::json(['success' => false]);
     }
 }
