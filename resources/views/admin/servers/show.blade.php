@@ -111,7 +111,7 @@
                 </div>
                 <div class="tab-content" id="ex1-content">
                     <div class="tab-pane fade show active" id="players-online" aria-labelledby="players-online">
-                        @if ($server->players_online->isNotEmpty())
+                        @if ($server->hasOnlinePlayers())
                             <div class="border table-responsive rounded">
                                 <table class="table align-middle">
                                     <thead>
@@ -125,7 +125,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($server->players_online as $player)
+                                    @foreach ($server->online_players() as $player)
                                         <tr>
                                             <td>
                                                 {{ $loop->iteration }}
