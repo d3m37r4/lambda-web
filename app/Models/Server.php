@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use DB;
 use Hash;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
@@ -157,20 +156,6 @@ class Server extends Model
         return $this->hasMany(PlayerSession::class);
     }
 
-//    /**
-//     * Gets active sessions currently on specified server.
-//     *
-//     * @return \Illuminate\Database\Eloquent\Collection
-//     */
-//    public function active_sessions(): \Illuminate\Database\Eloquent\Collection
-//    {
-//        return $this->sessions()
-//            ->with('player')
-//            ->where('status', PlayerSession::STATUS_ONLINE)
-//            ->limit($this->max_players)
-//            ->get();
-//    }
-
     /**
      * Gets online players currently on specified server.
      *
@@ -178,8 +163,7 @@ class Server extends Model
      */
     public function online_players(): Collection
     {
-        return DB::table('players')
-            ->select('players.*')
+        return Player::select('players.*')
             ->join('players_sessions', 'players.id', '=', 'players_sessions.player_id')
             ->where([
                 ['players_sessions.server_id', $this->id],
