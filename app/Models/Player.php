@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,6 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @method static firstOrNew(array $array, array $array1)
  * @method static find(mixed $input)
+ * @method static where(array[] $array)
+ * @method static select(string $string)
+ * @property int id
  */
 class Player extends Model
 {
@@ -34,10 +38,20 @@ class Player extends Model
     /**
      * @var array
      */
+    protected $appends = [
+        'session_time',
+        'connection_at'
+    ];
+
+    /**
+     * @var array
+     */
     protected $casts = [
         'authid' => 'string',
         'ip' => 'string',
-        'auth_type' => 'string'
+        'auth_type' => 'string',
+        'session_time' => 'string',
+        'connection_at' => 'datetime'
     ];
 
     /**
@@ -63,10 +77,36 @@ class Player extends Model
     /**
      * Gets active session associated with this player.
      *
-     * @return Model|HasMany|null
+     * @return mixed
      */
     public function active_session()
     {
-        return $this->sessions()->firstWhere('status', PlayerSession::STATUS_ONLINE);
+        return PlayerSession::where([
+            ['player_id', $this->id],
+            ['status', PlayerSession::STATUS_ONLINE]
+        ])->first();
+    }
+
+    /**
+     * Gets the duration time of the active session associated with this player.
+     *
+     * @note Carbon facade instance converted to string.
+     *       See PlayerSession::Class
+     *
+     * @return string
+     */
+    public function getSessionTimeAttribute(): string
+    {
+        return $this->active_session()->time;
+    }
+
+    /**
+     * Gets time when player joins server.
+     *
+     * @return Carbon
+     */
+    public function getConnectedAtAttribute(): Carbon
+    {
+        return $this->active_session()->created_at;
     }
 }
