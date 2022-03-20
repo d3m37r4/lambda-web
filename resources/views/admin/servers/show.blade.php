@@ -118,9 +118,8 @@
                                     <tr>
                                         <th class="col-1">{{ ('#') }}</th>
                                         <th class="col-3">{{ ('Имя игрока') }}</th>
-                                        <th class="col-2">{{ ('Убийств') }}</th>
-                                        <th class="col-2">{{ ('Смертей') }}</th>
-                                        <th class="col-2">{{ ('Онлайн') }}</th>
+                                        <th class="col-3">{{ ('Начало сессии') }}</th>
+                                        <th class="col-3">{{ ('Длительность сессии') }}</th>
                                         <th class="text-center" style="min-width: 30px;">{{ ('Действия') }}</th>
                                     </tr>
                                     </thead>
@@ -134,13 +133,10 @@
                                                 {{ $player->name }}
                                             </td>
                                             <td>
-                                                14
+                                                {{ $player->connected_at }}
                                             </td>
                                             <td>
-                                                4
-                                            </td>
-                                            <td>
-                                                3 ч.
+                                                {{ $player->session_time }}
                                             </td>
                                             <td class="text-center">
                                                 Actions
