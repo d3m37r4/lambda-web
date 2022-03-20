@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static find(mixed $input)
  * @method static create(array $array)
+ * @method static where(array $array)
+ * @property mixed created_at
+ * @property mixed disconnected_at
  */
 class PlayerSession extends Model
 {
@@ -57,5 +61,17 @@ class PlayerSession extends Model
     public function server(): BelongsTo
     {
         return $this->belongsTo(Server::class);
+    }
+
+    /**
+     * Gets duration time of specified player session.
+     *
+     * @return string
+     */
+    public function getTimeAttribute(): string
+    {
+        return $this->disconnected_at !== null
+            ? $this->disconnected_at->diffForHumans($this->created_at, true, true, 3)
+            : Carbon::now()->diffForHumans($this->created_at, true, true, 3);
     }
 }
