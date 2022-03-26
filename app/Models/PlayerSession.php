@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static find(mixed $input)
  * @method static create(array $array)
  * @method static where(array $array)
- * @property mixed created_at
- * @property mixed disconnected_at
+ * @property Carbon created_at
+ * @property Carbon disconnected_at
  */
 class PlayerSession extends Model
 {
