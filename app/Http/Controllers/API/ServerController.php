@@ -23,7 +23,7 @@ class ServerController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('api_server_auth')->except('auth');
+        $this->middleware('access_token')->except('auth');
     }
 
     /**
@@ -116,11 +116,6 @@ class ServerController extends Controller
      */
     public function ping(Request $request): JsonResponse {
         $server = Server::find($request->attributes->get('server_id'));
-
-        // mb add validator?
-        if ($request->has('num_players')) {
-            $server->num_players = $request->input('num_players');
-        }
 
         $server->update();
 

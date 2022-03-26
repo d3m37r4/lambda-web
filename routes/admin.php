@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ServersManagementController;
 use App\Http\Controllers\Admin\ReasonsManagementController;
 use App\Http\Controllers\Admin\AccessesManagementController;
 use App\Http\Controllers\Admin\AccessGroupsManagementController;
+use App\Http\Controllers\PlayersManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,6 @@ use App\Http\Controllers\Admin\AccessGroupsManagementController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Auth::routes();
 
 Route::group([
     'middleware' => ['auth','can:enter_control_panel'],
@@ -48,5 +47,7 @@ Route::group([
             ->except(['index', 'show']);
         Route::resource('servers.access-groups', AccessGroupsManagementController::class)
             ->except(['index', 'show']);
+        Route::resource('servers.players', PlayersManagementController::class)
+            ->only(['edit', 'update', 'destroy']);
     });
 });

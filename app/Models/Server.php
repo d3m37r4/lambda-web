@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 Carbon::setToStringFormat('d.m.Y - H:i:s');
 
@@ -45,17 +46,9 @@ class Server extends Model
         'rcon',
         'map_id',
         'auth_token',
-        'num_players',
         'max_players',
-        'active',
+        'active'
     ];
-
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
-     */
-    protected $guarded = [];
 
     /**
      * @var array
@@ -71,11 +64,12 @@ class Server extends Model
      * @var array
      */
     protected $appends = [
+        'num_players',
         'full_address',
         'map_name',
         'access_token_string',
         'access_token_expires_in',
-        'percent_players',
+        'percent_players'
     ];
 
     /**
@@ -89,7 +83,7 @@ class Server extends Model
         'full_address' => 'string',
         'map_name' => 'string',
         'active' => 'boolean',
-        'percent_players' => 'int',
+        'percent_players' => 'int'
     ];
 
     /**
@@ -143,6 +137,52 @@ class Server extends Model
     }
 
     /**
+     * Gets players available for a specific server.
+     *
+     * @return HasMany
+     */
+    public function players(): HasMany
+    {
+        return $this->hasMany(Player::class);
+    }
+
+    /**
+     * Gets sessions currently on specified server.
+     *
+     * @return HasMany
+     */
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(PlayerSession::class);
+    }
+
+    /**
+     * Gets online players currently on specified server.
+     *
+     * @return Collection
+     */
+    public function online_players(): Collection
+    {
+        return Player::select('players.*')
+            ->join('players_sessions', 'players.id', '=', 'players_sessions.player_id')
+            ->where([
+                ['players_sessions.server_id', $this->id],
+                ['players_sessions.status', PlayerSession::STATUS_ONLINE]
+            ])
+            ->limit($this->max_players)
+            ->get();
+    }
+
+    /**
+     * Checks if there are online players for a specific server.
+     *
+     * @return bool
+     */
+    public function hasOnlinePlayers(): bool {
+        return $this->online_players()->isNotEmpty();
+    }
+
+    /**
      * Gets map name.
      *
      * @return string
@@ -182,5 +222,18 @@ class Server extends Model
     public function getPercentPlayersAttribute(): int
     {
         return $this->active ? (100 * $this->num_players / $this->max_players) : 0;
+    }
+
+    /**
+     * Gets number of online players for specified server.
+     *
+     * @note Prevents setting invalid values for online players.
+     *       For Counter Strike 1.6, this is 0 - 32.
+     *
+     * @return int
+     */
+    public function getNumPlayersAttribute(): int
+    {
+        return max(0, min($this->max_players, $this->online_players()->count()));
     }
 }

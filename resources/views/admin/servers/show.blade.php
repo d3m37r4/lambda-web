@@ -111,41 +111,47 @@
                 </div>
                 <div class="tab-content" id="ex1-content">
                     <div class="tab-pane fade show active" id="players-online" aria-labelledby="players-online">
-                        <div class="border table-responsive rounded">
-                            <table class="table align-middle">
-                                <thead>
-                                <tr>
-                                    <th class="col-1">{{ ('#') }}</th>
-                                    <th class="col-3">{{ ('Имя игрока') }}</th>
-                                    <th class="col-2">{{ ('Убийств') }}</th>
-                                    <th class="col-2">{{ ('Смертей') }}</th>
-                                    <th class="col-2">{{ ('Онлайн') }}</th>
-                                    <th class="text-center" style="min-width: 30px;">{{ ('Действия') }}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                        @if ($server->hasOnlinePlayers())
+                            <div class="border table-responsive rounded">
+                                <table class="table align-middle">
+                                    <thead>
                                     <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            Player
-                                        </td>
-                                        <td>
-                                            14
-                                        </td>
-                                        <td>
-                                            4
-                                        </td>
-                                        <td>
-                                            3 ч.
-                                        </td>
-                                        <td class="text-center">
-                                            Actions
-                                        </td>
-                                </tbody>
-                            </table>
-                        </div>
+                                        <th class="col-1">{{ ('#') }}</th>
+                                        <th class="col-3">{{ ('Имя игрока') }}</th>
+                                        <th class="col-3">{{ ('Начало сессии') }}</th>
+                                        <th class="col-3">{{ ('Длительность сессии') }}</th>
+                                        <th class="text-center" style="min-width: 30px;">{{ ('Действия') }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($server->online_players() as $player)
+                                        <tr>
+                                            <td>
+                                                {{ $loop->iteration }}
+                                            </td>
+                                            <td>
+                                                {{ $player->name }}
+                                            </td>
+                                            <td>
+                                                {{ $player->connected_at }}
+                                            </td>
+                                            <td>
+                                                {{ $player->session_time }}
+                                            </td>
+                                            <td class="text-center">
+                                                Actions
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <div class="d-flex alert alert-info align-items-center">
+                                <i class="fas fa-info-circle fa-2x me-1"></i>
+                                {{ ('В данный момент на сервере нет игроков.') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="tab-pane fade" id="access-groups" aria-labelledby="access-groups">
                         <div class="mb-3">
@@ -155,7 +161,7 @@
                                 {{ ('Добавить группу доступов') }}
                             </a>
                         </div>
-                        @if($server->access_groups->isNotEmpty())
+                        @if ($server->access_groups->isNotEmpty())
                             <div class="border table-responsive rounded">
                                 <table class="table align-middle">
                                     <thead>
@@ -168,7 +174,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($server->access_groups as $accessGroup)
+                                    @foreach ($server->access_groups as $accessGroup)
                                         <tr>
                                             <td>
                                                 {{ $loop->iteration }}
@@ -227,7 +233,7 @@
                                 {{ ('Добавить причину наказаний') }}
                             </a>
                         </div>
-                        @if($server->reasons->isNotEmpty())
+                        @if ($server->reasons->isNotEmpty())
                             <div class="border table-responsive rounded">
                                 <table class="table align-middle">
                                     <thead>
@@ -240,7 +246,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($server->reasons as $reason)
+                                        @foreach ($server->reasons as $reason)
                                         <tr>
                                             <td>
                                                 {{ $loop->iteration }}
@@ -296,7 +302,7 @@
                                 {{ ('Добавить доступ') }}
                             </a>
                         </div>
-                        @if($server->accesses->isNotEmpty())
+                        @if ($server->accesses->isNotEmpty())
                             <div class="border table-responsive rounded">
                                 <table class="table align-middle">
                                     <thead>
@@ -309,7 +315,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($server->accesses as $access)
+                                    @foreach ($server->accesses as $access)
                                         <tr>
                                             <td>
                                                 {{ $loop->iteration }}
