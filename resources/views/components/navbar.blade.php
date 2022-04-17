@@ -48,7 +48,7 @@
                                 </li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li class="text-center">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{ route('users.show', Auth::user()) }}">
                                         <i class="fas fa-id-card"></i>
                                         {{ ('Профиль') }}
                                     </a>
