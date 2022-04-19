@@ -1,8 +1,8 @@
-@extends('layouts.main-layout')
+@extends('layouts.main-content-layout')
 
 @section('title', "Профиль пользователя $user->name")
 
-@section('content')
+@section('main.content')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">
@@ -13,88 +13,97 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['redirect_route' => 'admin.users.index'])
+                @if (Auth::user()->id == $user->id)
+                    <div>
+                        <a class="btn btn-primary"
+                           data-mdb-toggle="tooltip"
+                           href="{{ route('users.edit', $user) }}">
+                            <i class="fas fa-pen"></i>
+                            {{ ('Редактировать профиль') }}
+                        </a>
+                    </div>
+                @endif
                 </div>
             </div>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-3">
-                    <div class="d-flex flex-column align-items-center text-center border-bottom pb-3">
-                        <i class="fas fa-user fa-10x"></i>
-                        <div class="mt-3">
-                            <p class="text-secondary mb-1">
-                                <span class="badge bg-primary">{{ $user->role_name }}</span>
-                            </p>
-                            <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-user fa-10x"></i>
+                        </div>
+                        <div>
+                            <span class="badge bg-primary">{{ $user->role_name }}</span>
+                            <p class="text-muted">Bay Area, San Francisco, CA</p>
                         </div>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <span style="color:#202020;">
-                                <i class="fab fa-steam fa-lg"></i>
-                            </span>
-                            <span class="text-secondary">bootdey</span>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>{{ ('Имя') }}</span>
+                            <span>{{ ('Имя') }}</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <span style="color:#2787F5;">
-                                <i class="fab fa-vk fa-lg"></i>
-                            </span>
-                            <span class="text-secondary">
-                                bootdey
-                            </span>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>{{ ('Фамилия') }}</span>
+                            <span>{{ ('Фамилия') }}</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <span style="color:#0088cc;">
-                                <i class="fab fa-telegram fa-lg"></i>
-                            </span>
-                            <span class="text-secondary">bootdey</span>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>{{ ('Дата рождения') }}</span>
+                            <span>{{ ('01.01.1990') }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>{{ ('Пол') }}</span>
+                            <span>{{ ('Мужской') }}</span>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-9">
-                    <div class="pb-3">
-                        <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link active" href="#ex1-tabs-1" id="ex1-tab-1" data-mdb-toggle="tab"
-                                   role="tab" aria-controls="ex1-tabs-1" aria-selected="true">
-                                    {{ ('Общая информация') }}
-                                </a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" href="#ex1-tabs-2" id="ex1-tab-2" data-mdb-toggle="tab"
-                                    role="tab" aria-controls="ex1-tabs-2" aria-selected="false">
-                                    {{ ('Доступные разрешения') }}
-                                </a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" href="#ex1-tabs-3" id="ex1-tab-3" data-mdb-toggle="tab"
-                                    role="tab" aria-controls="ex1-tabs-3" aria-selected="false">
-                                    {{ ('Игровые аккаунты') }}
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="ex1-content">
-                            <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel"
-                                 aria-labelledby="ex1-tab-1">
-                                Имя: {{ $user->name }} <br />
-                                Фамилия: {{ $user->name }} <br />
-                                UserID: {{ $user->id }} <br />
-                                Эл. почта: <a class="link-primary"
-                                   data-mdb-toggle="tooltip"
-                                   title="Email {{ $user->email }}"
-                                   href="mailto:{{ $user->email }}">
-                                    {{ $user->email }}
-                                </a> <br />
-                                Зарегистрирован: {{ $user->created_at }} <br />
-                                Последнее обновление профиля: {{ $user->updated_at }} <br />
-                            </div>
-                            <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
-                                Доступы
-                            </div>
-                            <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-                                Игровые аккаунты
-                            </div>
+                    <ul class="nav nav-tabs nav-fill border-bottom mb-3" id="ex1">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#info" data-mdb-toggle="tab"
+                               aria-controls="info" aria-selected="true">
+                                {{ ('Общая информация') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services" data-mdb-toggle="tab"
+                               aria-controls="services" aria-selected="false">
+                                {{ ('Сервисы') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#permissions" data-mdb-toggle="tab"
+                                aria-controls="permissions" aria-selected="false">
+                                {{ ('Доступные разрешения') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#accounts" data-mdb-toggle="tab"
+                                aria-controls="accounts" aria-selected="false">
+                                {{ ('Игровые аккаунты') }}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="ex1-content">
+                        <div class="tab-pane fade show active" id="info" aria-labelledby="info">
+                            {{ ('Эл. почта:') }}
+                            <a class="link-primary"
+                               data-mdb-toggle="tooltip"
+                               title="Email {{ $user->email }}"
+                               href="mailto:{{ $user->email }}">
+                                {{ $user->email }}
+                            </a> <br />
+                            {{ ("Дата регистрации: $user->created_at") }}<br />
+                            {{ ("Последнее обновление профиля: $user->updated_at") }}
+                        </div>
+                        <div class="tab-pane fade" id="services" aria-labelledby="services">
+                            {{ ('Вы можете присоединить дополнительные сервисы для авторизации на сайте') }}
+                        </div>
+                        <div class="tab-pane fade" id="permissions" aria-labelledby="permissions">
+                            Доступы
+                        </div>
+                        <div class="tab-pane fade" id="accounts" aria-labelledby="accounts">
+                            Игровые аккаунты
                         </div>
                     </div>
                 </div>
