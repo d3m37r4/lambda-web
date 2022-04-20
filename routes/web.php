@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisterStep2Controller;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +20,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group([
     'middleware' => ['web', 'auth']
 ], function () {
+    Route::get('register-step2', [RegisterStep2Controller::class, 'showStep2Form']);
+    Route::post('register-step2', [RegisterStep2Controller::class, 'postStep2Form'])->name('register.step2');
+
     Route::resource('users', UsersController::class)
         ->except(['create', 'store', 'destroy']);
 });
