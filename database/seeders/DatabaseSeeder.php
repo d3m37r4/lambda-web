@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ReasonSeeder::class);
         $this->call(AccessSeeder::class);
         $this->call(AccessGroupSeeder::class);
+        $this->call(CountrySeeder::class);
     }
 }
