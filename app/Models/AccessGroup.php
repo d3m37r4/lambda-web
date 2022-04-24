@@ -38,6 +38,7 @@ class AccessGroup extends Model
 
     /**
      * Gets servers associated with this access group.
+     *
      * @return BelongsTo
      */
     public function server(): BelongsTo
