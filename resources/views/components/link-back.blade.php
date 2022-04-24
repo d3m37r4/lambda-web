@@ -3,4 +3,3 @@
     <i class="fas fa-reply"></i>
     {{ ('Назад') }}
 </a>
-
