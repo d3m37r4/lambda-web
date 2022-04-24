@@ -91,6 +91,10 @@ class UsersManagementController extends Controller
      */
     public function edit(User $user): View
     {
+//        if (Auth::user()->cannot('update', $user)) {
+//            abort(403);
+//        }
+
         $roles = Role::all();
 
         return view('admin.users.edit', compact('user', 'roles'));
@@ -105,6 +109,10 @@ class UsersManagementController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
+//        if (Auth::user()->cannot('update', $user)) {
+//            abort(403);
+//        }
+
         $user->update($request->safe()->except('role'));
         $user->syncRoles($request->safe()->only('role'));
 
