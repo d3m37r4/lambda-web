@@ -18,11 +18,19 @@ use Illuminate\Notifications\Notifiable;
  * @property int id
  * @property string email
  * @property string name
+ * @property string full_name
  * @property string password
  */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles, HasPermissions;
+
+    const GENDERS = [
+        'male',
+        'female',
+        'gender x',
+        'not specified'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -33,8 +41,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'ip',
         'country_id',
-        'biography',
+        'full_name',
+        'gender',
+        'date_of_birth',
+        'biography'
     ];
 
     /**
@@ -51,6 +63,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
+        'full_name',
         'role_name',
     ];
 
@@ -60,6 +73,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'full_name' => 'string',
         'email_verified_at' => 'datetime',
         'role_name' => 'string',
     ];
@@ -84,5 +98,15 @@ class User extends Authenticatable
     public function getRoleNameAttribute(): string
     {
         return $this->getRoleNames()->first();
+    }
+
+    /**
+     * Gets full name of a specific user.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->full_name ?? 'Не указано';
     }
 }
