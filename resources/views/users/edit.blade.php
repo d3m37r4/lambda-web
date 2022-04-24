@@ -144,7 +144,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-4">
-                    @include('admin.components.btn-upd', ['title' => 'Обновить пользователя'])
+                    @include('admin.components.btn-upd', ['title' => 'Обновить информацию'])
                 </div>
             </form>
         </div>

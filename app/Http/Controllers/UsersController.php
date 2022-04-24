@@ -64,13 +64,13 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-        if ($request->user()->cannot('update', $user)) {
+        if (Auth::user()->cannot('update', $user)) {
             abort(403);
         }
 
         $user->update($request->safe());
 
-        return redirect()->route('users.show')->with([
+        return back()->with([
             'status' => 'success',
             'message' => 'Ваши изменения сохранены.'
         ]);
