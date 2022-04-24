@@ -81,7 +81,7 @@ class User extends Authenticatable
         'full_name' => 'string',
         'email_verified_at' => 'datetime',
         'role_name' => 'string',
-        'date_of_birth' => 'string',
+        'date_of_birth' => 'datetime',
     ];
 
     /**

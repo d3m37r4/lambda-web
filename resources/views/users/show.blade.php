@@ -35,7 +35,9 @@
                         </div>
                         <div>
                             <span class="badge bg-primary">{{ $user->role_name }}</span>
-                            <p class="text-muted">Bay Area, San Francisco, CA</p>
+                            @if($user->isCountrySpecified())
+                            <p class="text-muted">{{ __($user->country()) }}</p>
+                            @endif
                         </div>
                     </div>
                     <ul class="list-group list-group-flush">
@@ -49,11 +51,11 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>{{ ('Дата рождения') }}</span>
-                            <span>{{ ('01.01.1990') }}</span>
+                            <span>{{ $user->date_of_birth->format('d.m.Y') }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>{{ ('Пол') }}</span>
-                            <span>{{ ('Мужской') }}</span>
+                            <span>{{ $user->gender }}</span>
                         </li>
                     </ul>
                 </div>
