@@ -13,7 +13,7 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['redirect_route' => 'admin.servers.index'])
+                    @include('components.link-back', ['redirect_route' => 'admin.servers.index'])
                 </div>
             </div>
         </div>

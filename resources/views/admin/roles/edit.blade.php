@@ -14,7 +14,7 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['redirect_route' => 'admin.roles.index'])
+                    @include('components.link-back', ['redirect_route' => 'admin.roles.index'])
                 </div>
             </div>
         </div>

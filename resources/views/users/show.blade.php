@@ -5,7 +5,7 @@
 @section('main.content')
     <div class="card shadow-2 border">
         <div class="card-header">
-            <div class="d-sm-flex justify-content-between">
+            <div  class="d-sm-flex justify-content-between">
                 <div class="me-auto align-self-center">
                     <h5 class="card-title m-0">
                         <i class="fas fa-user"></i>
@@ -13,7 +13,7 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                @if (Auth::user()->id == $user->id)
+                @can('update', $user)
                     <div>
                         <a class="btn btn-primary"
                            data-mdb-toggle="tooltip"
@@ -22,7 +22,7 @@
                             {{ ('Редактировать профиль') }}
                         </a>
                     </div>
-                @endif
+                @endcan
                 </div>
             </div>
         </div>
