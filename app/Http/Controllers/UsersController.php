@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Requests\UpdateUserRequest;
+use App\Models\Country;
 use Auth;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
+use Request;
+use Session;
 
 class UsersController extends Controller
 {
+
 //    /**
 //     * Display a listing of the resource.
 //     *
@@ -28,6 +32,8 @@ class UsersController extends Controller
      */
     public function show(User $user): View
     {
+        Session::put('redirect_url', Request::fullUrl());
+
         return view('users.show', compact('user'));
     }
 
@@ -39,22 +45,34 @@ class UsersController extends Controller
      */
     public function edit(User $user): View
     {
-        if(Auth::user()->id != $user->id) {
-            abort(404);
+        if (Auth::user()->cannot('update', $user)) {
+            abort(403);
         }
 
-        return view('users.edit', compact('user'));
+        $genders = User::GENDERS;
+        $countries = Country::all();
+
+        return view('users.edit', compact('user', 'genders','countries'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified user in storage.
      *
-     * @param Request $request
-     * @param  User  $user
-     * @return Response
+     * @param UpdateUserRequest $request
+     * @param User $user
+     * @return RedirectResponse
      */
-    public function update(Request $request, User $user): Response
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-        //
+        if ($request->user()->cannot('update', $user)) {
+            abort(403);
+        }
+
+        $user->update($request->safe());
+
+        return redirect()->route('users.show')->with([
+            'status' => 'success',
+            'message' => 'Ваши изменения сохранены.'
+        ]);
     }
 }
