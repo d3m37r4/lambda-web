@@ -1,53 +1,91 @@
-@extends('layouts.main-layout')
+@extends('layouts.main-content-layout')
 
-@section('content')
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                    <div class="card-header">{{ __('Register Step 2 (optional)') }}</div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('register.step2') }}">
-                            @csrf
-                            <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
-                                <div class="col-md-6">
-                                    <select name="country_id" class="form-control @error('country_id') is-invalid @enderror">
-                                        <option value="">-- {{ __('choose your country') }} --</option>
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}">{{ $country->default_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('country_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Biography') }}</label>
-                                <div class="col-md-6">
-                                    <textarea class="form-control @error('biography') is-invalid @enderror" name="biography">{{ old('biography') }}</textarea>
-                                    @error('biography')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Finish Registration') }}
-                                    </button>
-                                    <br /><br />
-                                    <a href="{{ route('home') }}">Skip for now</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+@section('title', 'Продолжение регистрации')
+
+@section('main.content')
+    <div class="card shadow-2 border">
+        <div class="card-header">
+            <div class="d-sm-flex justify-content-between">
+                <div class="me-auto align-self-center">
+                    <h5 class="card-title m-0">
+                        <i class="fas fa-user-plus"></i>
+                        {{ ('Продолжение регистрации (опционально)') }}
+                    </h5>
                 </div>
             </div>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('register.step2') }}" method="POST">
+                @csrf
+                <div class="row form-group mb-3 align-items-center">
+                    <label for="full_name" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Полное имя') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror"
+                               name="full_name" value="@isset($user->full_name){{ $user->full_name }}@endisset">
+                        @include('components.field-filling-error', ['error' => 'full_name'])
+                    </div>
+                </div>
+                <div class="row form-group mb-3 align-items-center">
+                    <label for="gender" class="col-md-4 col-form-label text-sm-end">
+                        {{ __('genders.gender') }}
+                    </label>
+                    <fieldset class="col-md-6">
+                        @foreach ($genders as $gender)
+                            <div class="form-check form-check-inline">
+                                <input id="gender" type="radio" class="form-check-input"
+                                       name="gender" value="{{ $gender }}"
+                                       @if (isset($user) && $user->gender === $gender) checked @endif>
+                                <label class="form-check-label" for="gender">{{ __("genders.list.$gender") }}</label>
+                            </div>
+                        @endforeach
+                    </fieldset>
+                </div>
+                <div class="row form-group mb-3 align-items-center">
+                    <label for="date_of_birth" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Дата рождения') }}
+                    </label>
+                    <div class="col-md-6">
+                        <input id="date_of_birth" type="date"
+                               class="form-control @error('date_of_birth') is-invalid @enderror"
+                               name="date_of_birth" value="{{ $user->date_of_birth_str }}">
+                        @include('components.field-filling-error', ['error' => 'date_of_birth'])
+                    </div>
+                </div>
+                <div class="row form-group mb-3 align-items-center">
+                    <label for="country" class="col-md-4 col-form-label text-sm-end">
+                        {{ __('countries.country') }}
+                    </label>
+                    <div class="col-md-6">
+                        <select id="country" class="form-select @error('country') is-invalid @enderror"
+                                name="country" size="10">
+                            <option value="">{{ __('countries.select') }}</option>
+                            @foreach ($countries as $country)
+                                <option value="{{ $country->id }}"
+                                        @if (isset($user) && $user->country_id === $country->id) selected @endif>
+                                    {{ __("countries.list.$country->short_code") }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group mb-3 align-items-center">
+                    <label for="biography" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('О себе') }}
+                    </label>
+                    <div class="col-md-6">
+                        <div class="form-outline">
+                            <textarea id="biography" type="text" class="form-control" rows="4" name="biography">{{ $user->biography }}</textarea>
+                            <label class="form-label" for="biography">{{ ('Расскажите что-нибудь о себе :)') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4">
+                    <button type="submit" class="btn btn-primary">{{ ('Завершить регистрацию') }}</button>
+                    <a class="btn btn-link" href="{{ url('/') }}">{{ ('Пропустить шаг') }}</a>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

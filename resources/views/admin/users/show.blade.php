@@ -1,6 +1,6 @@
 @extends('layouts.admin-layout')
 
-@section('title', "Профиль пользователя $user->name")
+@section('title', "Профиль пользователя $user->login")
 
 @section('admin.content')
     <div class="card shadow-2 border">
@@ -9,7 +9,7 @@
                 <div class="me-auto align-self-center">
                     <h5 class="card-title m-0">
                         <i class="fas fa-user"></i>
-                        {{ ("Профиль пользователя $user->name") }}
+                        {{ ("Профиль пользователя $user->login") }}
                     </h5>
                 </div>
                 <div class="d-grid">
@@ -77,8 +77,8 @@
                         <div class="tab-content" id="ex1-content">
                             <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel"
                                  aria-labelledby="ex1-tab-1">
-                                Имя: {{ $user->name }} <br />
-                                Фамилия: {{ $user->name }} <br />
+                                Имя: {{ $user->login }} <br />
+                                Фамилия: {{ $user->login }} <br />
                                 UserID: {{ $user->id }} <br />
                                 Эл. почта: <a class="link-primary"
                                    data-mdb-toggle="tooltip"

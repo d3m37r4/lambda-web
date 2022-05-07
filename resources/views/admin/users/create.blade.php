@@ -21,14 +21,13 @@
             <form action="{{ route('admin.users.store') }}" method="POST">
                 @csrf
                 <div class="row form-group mb-3">
-                    <label for="name" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('Имя пользователя') }}
+                    <label for="login" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Логин') }}
                     </label>
                     <div class="col-md-6">
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                               name="name" value="{{ old('name') }}"
-                               placeholder="{{ 'Введите имя пользователя' }}" required>
-                        @include('components.field-filling-error', ['error' => 'name'])
+                        <input id="login" type="text" class="form-control @error('login') is-invalid @enderror"
+                               name="login" value="{{ old('login') }}" required>
+                        @include('components.field-filling-error', ['error' => 'login'])
                     </div>
                 </div>
                 <div class="row form-group mb-3">

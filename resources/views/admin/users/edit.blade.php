@@ -1,16 +1,16 @@
 @extends('layouts.admin-layout')
 
-@section('title', "Редактирование пользователя: $user->name")
+@section('title', "Редактирование пользователя: $user->login")
 
 @section('admin.content')
-    @include('admin.components.alert')
+    @include('components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">
                 <div class="me-auto align-self-center">
                     <h5 class="card-title m-0">
                         <i class="fas fa-user-edit"></i>
-                        {{ ("Редактирование пользователя: $user->name") }}
+                        {{ ("Редактирование пользователя: $user->login") }}
                     </h5>
                 </div>
                 <div class="d-grid">
@@ -23,13 +23,13 @@
                 @csrf
                 @method('PUT')
                 <div class="row form-group mb-3">
-                    <label for="name" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('Имя пользователя') }}
+                    <label for="login" class="col-md-4 col-form-label text-sm-end">
+                        {{ ('Логин') }}
                     </label>
                     <div class="col-md-6">
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                               name="name" value="{{ old('name', $user->name) }}" required>
-                        @include('components.field-filling-error', ['error' => 'name'])
+                        <input id="login" type="text" class="form-control @error('login') is-invalid @enderror"
+                               name="login" value="{{ old('login', $user->login) }}" required>
+                        @include('components.field-filling-error', ['error' => 'login'])
                     </div>
                 </div>
                 <div class="row form-group mb-3">

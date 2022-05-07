@@ -4,7 +4,7 @@
 
 @section('admin.content')
     @include('admin.modals.confirm-delete')
-    @include('admin.components.alert')
+    @include('components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">

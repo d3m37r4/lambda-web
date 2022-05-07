@@ -35,6 +35,7 @@
     <!-- Main content -->
     <main class="flex-shrink-0">
         <div class="container-xxl">
+            @include('components.alert')
             @yield('content')
         </div>
     </main>

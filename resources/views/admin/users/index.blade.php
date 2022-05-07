@@ -4,7 +4,7 @@
 
 @section('admin.content')
     @include('admin.modals.confirm-delete')
-    @include('admin.components.alert')
+    @include('components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">
@@ -45,7 +45,7 @@
                                    data-mdb-toggle="tooltip"
                                    title="{{ ('Показать профиль пользователя') }}"
                                    href="{{ route('admin.users.show', $user) }}">
-                                    {{ $user->name }}
+                                    {{ $user->login }}
                                 </a>
                             </td>
                             <td>
@@ -83,7 +83,7 @@
                                             data-mdb-toggle="modal"
                                             data-mdb-target="#confirmDelete"
                                             data-modal-title="{{ ('Удаление пользователя') }}"
-                                            data-modal-message="{{ ("Вы действительно хотите удалить пользователя '$user->name' ?") }}"
+                                            data-modal-message="{{ ("Вы действительно хотите удалить пользователя '$user->login' ?") }}"
                                             data-modal-route="{{ route('admin.users.destroy', $user) }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>

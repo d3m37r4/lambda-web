@@ -3,7 +3,7 @@
 @section('title', "Редактирование роли: $role->name")
 
 @section('admin.content')
-    @include('admin.components.alert')
+    @include('components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">

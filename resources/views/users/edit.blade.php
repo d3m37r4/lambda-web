@@ -1,16 +1,15 @@
 @extends('layouts.main-content-layout')
 
-@section('title', "Редактирование профиля: $user->name")
+@section('title', "Редактирование профиля: $user->login")
 
 @section('main.content')
-    @include('admin.components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">
                 <div class="me-auto align-self-center">
                     <h5 class="card-title m-0">
                         <i class="fas fa-user-edit"></i>
-                        {{ ("Редактирование профиля: $user->name") }}
+                        {{ ("Редактирование профиля: $user->login") }}
                     </h5>
                 </div>
                 <div class="d-grid">
@@ -23,12 +22,12 @@
                 @csrf
                 @method('PUT')
                 <div class="row form-group mb-3 align-items-center">
-                    <label for="name" class="col-md-4 col-form-label text-sm-end">
+                    <label for="login" class="col-md-4 col-form-label text-sm-end">
                         {{ ('Логин') }}
                     </label>
                     <div class="col-md-6">
-                        <input id="name" type="text" class="form-control"
-                               name="name" value="{{ $user->name }}" disabled>
+                        <input id="login" type="text" class="form-control"
+                               name="login" value="{{ $user->login }}" disabled>
                     </div>
                 </div>
                 <div class="row form-group mb-3 align-items-center">
@@ -47,8 +46,7 @@
                     </label>
                     <div class="col-md-6">
                         <input id="password" type="password"
-                               class="form-control @error('password') is-invalid @enderror"
-                               name="password">
+                               class="form-control @error('password') is-invalid @enderror" name="password">
                         @include('components.field-filling-error', ['error' => 'password'])
                     </div>
                 </div>
@@ -64,9 +62,7 @@
                     </div>
                 </div>
                 <div class="row form-group mb-3 align-items-center">
-                    <label class="col-md-4 col-form-label text-sm-end">
-                        {{ ('Роль') }}
-                    </label>
+                    <label class="col-md-4 col-form-label text-sm-end">{{ ('Роль') }}</label>
                     <div class="col-md-6">
                         <span class="badge bg-primary">{{ $user->role_name }}</span>
                     </div>
@@ -77,50 +73,51 @@
                     </label>
                     <div class="col-md-6">
                         <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror"
-                               name="full_name" value="{{ $user->full_name }}">
+                               name="full_name" value="@isset($user->full_name) {{ $user->full_name }} @endisset">
                         @include('components.field-filling-error', ['error' => 'full_name'])
                     </div>
                 </div>
                 <div class="row form-group mb-3 align-items-center">
                     <label for="gender" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('Пол') }}
+                        {{ __('genders.gender') }}
                     </label>
-                    <div class="col-md-6">
+                    <fieldset class="col-md-6">
                         @foreach ($genders as $gender)
                         <div class="form-check form-check-inline">
                             <input id="gender" type="radio" class="form-check-input"
-                                   name="gender" @if (isset($user) && $user->gender === $gender) checked @endif>
-                            <label class="form-check-label" for="gender">{{ $gender }}</label>
+                                   name="gender" value="{{ $gender }}"
+                                   @if (isset($user) && $user->gender === $gender) checked @endif>
+                            <label class="form-check-label" for="gender">{{ __("genders.list.$gender") }}</label>
                         </div>
                         @endforeach
-                    </div>
+                    </fieldset>
                 </div>
                 <div class="row form-group mb-3 align-items-center">
                     <label for="date_of_birth" class="col-md-4 col-form-label text-sm-end">
                         {{ ('Дата рождения') }}
                     </label>
                     <div class="col-md-6">
-                        <input id="date_of_birth" type="date" class="form-control @error('date_of_birth') is-invalid @enderror"
-                               name="date_of_birth" value="{{ $user->date_of_birth }}">
+                        <input id="date_of_birth" type="date"
+                               class="form-control @error('date_of_birth') is-invalid @enderror"
+                               name="date_of_birth" value="{{ $user->date_of_birth_str }}">
                         @include('components.field-filling-error', ['error' => 'date_of_birth'])
                     </div>
                 </div>
                 <div class="row form-group mb-3 align-items-center">
                     <label for="country" class="col-md-4 col-form-label text-sm-end">
-                        {{ ('Страна') }}
+                        {{ __('countries.country') }}
                     </label>
                     <div class="col-md-6">
                         <select id="country" class="form-select @error('country') is-invalid @enderror"
-                                name="country" size="4">
-                            <option disabled>{{ ('Выберите страну...') }}</option>--}}
+                                name="country" size="10">
+                            <option value="">{{ __('countries.select') }}</option>
                             @foreach ($countries as $country)
                             <option value="{{ $country->id }}"
                                     @if (isset($user) && $user->country_id === $country->id) selected @endif>
-                                {{ __('countries.'.$country->short_code) }}
+                                {{ __("countries.list.$country->short_code") }}
                             </option>
                             @endforeach
                         </select>
-                        @include('components.field-filling-error', ['error' => 'country'])
                     </div>
                 </div>
                 <div class="row form-group mb-3 align-items-center">
@@ -129,8 +126,8 @@
                     </label>
                     <div class="col-md-6">
                         <div class="form-outline">
-                            <textarea class="form-control" id="biography" rows="4">{{ $user->biography }}</textarea>
-                            <label class="form-label" for="biography">Введите текст</label>
+                            <textarea id="biography" type="text" class="form-control" rows="4" name="biography">{{ $user->biography }}</textarea>
+                            <label class="form-label" for="biography">{{ ('Расскажите что-нибудь о себе :)') }}</label>
                         </div>
                     </div>
                 </div>
