@@ -11,6 +11,8 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Notifications\Notifiable;
 
+Carbon::setToStringFormat('d.m.Y - H:i:s');
+
 /**
  * @method static paginate(mixed $env)
  * @method static find(int $id)
@@ -20,7 +22,7 @@ use Illuminate\Notifications\Notifiable;
  * @property int id
  * @property int country_id
  * @property string email
- * @property string name
+ * @property string login
  * @property string full_name
  * @property string password
  * @property Carbon date_of_birth
@@ -29,12 +31,51 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles, HasPermissions;
 
+    /**
+     * The name of the field that will be used to log in to the system.
+     *
+     * @var string
+     */
+    const AUTH_FIELD = 'login';
+
+    /**
+     * Minimum password length.
+     *
+     * @var int
+     */
+    const PASSWORD_MIN_LENGHT = 6;
+
+    /**
+     * Check password has not been compromised in a public password data breach leak.
+     * This constant determines how many times the password password must appear in the same data leak to be considered compromised.
+     *
+     * @note If the value is set to less than or equal to 0, the check is not performed.
+     *
+     * @var int
+     */
+    const PASSWORD_UNCOMPROMISED_COUNT = 0;
+
+    const GENDER_NONE = 'gender_none';
+    const GENDER_MALE = 'gender_male';
+    const GENDER_FEMALE = 'gender_female';
+    const GENDER_X = 'gender_x';
+
+    /**
+     * @var array
+     */
     const GENDERS = [
-        'male',
-        'female',
-        'gender x',
-        'not specified'
+        User::GENDER_NONE,
+        User::GENDER_MALE,
+        User::GENDER_FEMALE,
+        User::GENDER_X
     ];
+
+    /**
+     * The default role that is assigned to the user during registration.
+     *
+     * @var string
+     */
+    const DEFAULT_USER_ROLE = Role::ROLE_USER;
 
     /**
      * The attributes that are mass assignable.
@@ -42,16 +83,20 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'login',
         'email',
         'password',
-        'ip',
         'country_id',
         'full_name',
         'gender',
         'date_of_birth',
         'biography'
     ];
+
+    /**
+     * @var array
+     */
+    protected $dates = ['created_at', 'updated_at', 'date_of_birth'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -67,9 +112,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
-        'full_name',
         'role_name',
-        'date_of_birth',
     ];
 
     /**
@@ -81,7 +124,6 @@ class User extends Authenticatable
         'full_name' => 'string',
         'email_verified_at' => 'datetime',
         'role_name' => 'string',
-        'date_of_birth' => 'datetime',
     ];
 
     /**
@@ -98,7 +140,7 @@ class User extends Authenticatable
         $country = Country::find($this->country_id);
 
         return $useLocale ?
-            ($country ? "countries.$country->short_code" : 'Не указано') :
+            ($country ? "countries.list.$country->short_code" : 'Не указано') :
             ($country ? $country->default_name : 'Не указано');
     }
 
@@ -134,12 +176,32 @@ class User extends Authenticatable
     }
 
     /**
-     * Gets full name of a specific user.
+     * Gets the formatted date of birth of a specific user.
      *
      * @return string
      */
-    public function getFullNameAttribute(): string
+    public function getDateOfBirthFmtAttribute(): string
     {
-        return $this->full_name ?? 'Не указано';
+        return !empty($this->date_of_birth) ? $this->date_of_birth->format('d.m.Y') : 'Не указано';
     }
+
+    /**
+     * Gets the date of birth of a specific user converted to string.
+     *
+     * @return string|null
+     */
+    public function getDateOfBirthStrAttribute(): ?string
+    {
+        return empty($this->date_of_birth) ? null : $this->date_of_birth->toDateString();
+    }
+
+//    /**
+//     * Gets full name of a specific user.
+//     *
+//     * @return string
+//     */
+//    public function getFullNameAttribute(): string
+//    {
+//        return $this->full_name ?? 'Не указано';
+//    }
 }
