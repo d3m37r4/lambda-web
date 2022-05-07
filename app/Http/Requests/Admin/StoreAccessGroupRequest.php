@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Carbon\CarbonInterval;
 use Request;
 
-class StoreReasonRequest extends FormRequest
+class StoreAccessGroupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,13 +32,10 @@ class StoreReasonRequest extends FormRequest
                  * due to coincidence of Model and component name: Symfony\Component\HttpFoundation\ServerBag
                  * Situation is similar with "port" field, the rules for which are given below.
                  */
-                Rule::unique('reasons')->where('server_id', Request::route('server')->id)
+                Rule::unique('access_groups')->where('server_id', Request::route('server')->id)
             ],
-            'months' => ['required', 'numeric', 'min:0'],
-            'days' => ['required', 'numeric', 'min:0'],
-            'hours' => ['required', 'numeric', 'min:0'],
-            'minutes' => ['required', 'numeric', 'min:0'],
-            'time' => ['required', 'numeric', 'min:0'],
+            'flags' => ['required', 'string', 'max:255'],
+            'prefix' => ['required', 'string', 'max:255'],
             'server_id' => ['required', 'integer'],
         ];
     }
@@ -52,12 +48,7 @@ class StoreReasonRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'server_id' => Request::route('server')->id,
-            'time' => CarbonInterval::months(Request::input('months'))
-                ->days(Request::input('days'))
-                ->hours(Request::input('hours'))
-                ->minutes(Request::input('minutes'))
-                ->totalMinutes,
+            'server_id' => Request::route('server')->id
         ]);
     }
 }

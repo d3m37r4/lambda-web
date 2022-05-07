@@ -7,12 +7,11 @@ use App\Models\User;
 use App\Models\Country;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 /**
  * @property User user
  */
-class UpdateUserRequest extends FormRequest
+class UpdateUserRegister2StepRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,8 +31,6 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->user)],
-            'password' => ['exclude_if:password_confirmation,null', Password::defaults(), 'confirmed', 'same:password_confirmation'],
             'full_name' => ['nullable', 'string', 'max:255'],
             'gender' => [Rule::in(User::GENDERS)],
             'date_of_birth' => ['nullable', 'date'],
