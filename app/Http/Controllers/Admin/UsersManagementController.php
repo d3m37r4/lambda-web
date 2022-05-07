@@ -8,8 +8,8 @@ use Session;
 use App\Models\Role;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\Admin\AdminStoreUserRequest;
+use App\Http\Requests\Admin\AdminUpdateUserRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -55,10 +55,10 @@ class UsersManagementController extends Controller
     /**
      * Store a newly created user in storage.
      *
-     * @param StoreUserRequest $request
+     * @param AdminStoreUserRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreUserRequest $request): RedirectResponse
+    public function store(AdminStoreUserRequest $request): RedirectResponse
     {
         // TODO: add choice of permissions
         $user = User::create($request->safe()->except('role'));
@@ -66,7 +66,7 @@ class UsersManagementController extends Controller
 
         return redirect($request->input('redirect'))->with([
             'status' => 'success',
-            'message' => "Пользователь {$user->name} успешно создан!"
+            'message' => "Пользователь {$user->login} успешно создан!"
         ]);
     }
 
@@ -103,11 +103,11 @@ class UsersManagementController extends Controller
     /**
      * Update the specified user in storage.
      *
-     * @param UpdateUserRequest $request
+     * @param AdminUpdateUserRequest $request
      * @param User $user
      * @return RedirectResponse
      */
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    public function update(AdminUpdateUserRequest $request, User $user): RedirectResponse
     {
 //        if (Auth::user()->cannot('update', $user)) {
 //            abort(403);
@@ -118,7 +118,7 @@ class UsersManagementController extends Controller
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о пользователе {$user->name} была успешно обновлена!"
+            'message' => "Информация о пользователе {$user->login} была успешно обновлена!"
         ]);
     }
 
@@ -137,7 +137,7 @@ class UsersManagementController extends Controller
             $user->delete();
             return back()->with([
                 'status' => 'success',
-                'message' => "Пользователь {$user->name} был удален!"
+                'message' => "Пользователь {$user->login} был удален!"
             ]);
         }
 

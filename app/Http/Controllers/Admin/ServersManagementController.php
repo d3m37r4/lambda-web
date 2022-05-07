@@ -6,8 +6,8 @@ use Request;
 use Session;
 use App\Models\Server;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreServerRequest;
-use App\Http\Requests\UpdateServerRequest;
+use App\Http\Requests\Admin\StoreServerRequest;
+use App\Http\Requests\Admin\UpdateServerRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
