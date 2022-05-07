@@ -2,33 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateUserRequest;
-use App\Models\Country;
-use Auth;
-use App\Models\User;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Request;
 use Session;
+use App\Models\User;
+use App\Models\Country;
+use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class UsersController extends Controller
 {
-
-//    /**
-//     * Display a listing of the resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function index()
-//    {
-//        //
-//    }
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
 
     /**
      * Display the specified user profile.
      *
-     * @param  User  $user
-     * @return View
+     * @param   User $user
+     * @return  View
      */
     public function show(User $user): View
     {
@@ -40,35 +38,27 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified user profile.
      *
-     * @param  User  $user
-     * @return View
+     * @param   User $user
+     * @return  View
      */
     public function edit(User $user): View
     {
-        if (Auth::user()->cannot('update', $user)) {
-            abort(403);
-        }
-
         $genders = User::GENDERS;
         $countries = Country::all();
 
-        return view('users.edit', compact('user', 'genders','countries'));
+        return view('users.edit', compact('user', 'genders', 'countries'));
     }
 
     /**
      * Update the specified user in storage.
      *
-     * @param UpdateUserRequest $request
-     * @param User $user
-     * @return RedirectResponse
+     * @param   UpdateUserRequest $request
+     * @param   User $user
+     * @return  RedirectResponse
      */
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-        if (Auth::user()->cannot('update', $user)) {
-            abort(403);
-        }
-
-        $user->update($request->safe());
+        $user->update($request->validated());
 
         return back()->with([
             'status' => 'success',
