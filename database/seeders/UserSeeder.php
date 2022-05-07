@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         for ($i = 1; $i <= 30; $i++)  {
             User::create([
-                'name' => 'User' .$i,
+                'login' => 'User' .$i,
                 'email' => 'user' .$i. '@mail.com',
                 'password' => '12345678',
             ])->assignRole($i === 1 ? 'Administrator' : 'User');
