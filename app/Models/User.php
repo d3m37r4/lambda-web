@@ -5,6 +5,7 @@ namespace App\Models;
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Hash;
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -26,6 +27,7 @@ Carbon::setToStringFormat('d.m.Y - H:i:s');
  * @property string full_name
  * @property string password
  * @property Carbon birth_date
+ * @property CarbonInterval age
  */
 class User extends Authenticatable
 {
@@ -113,6 +115,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'role_name',
+        'age'
     ];
 
     /**
@@ -182,7 +185,7 @@ class User extends Authenticatable
      */
     public function getBirthDateFmtAttribute(): string
     {
-        return !empty($this->birth_date) ? $this->birth_date->format('d.m.Y') : 'Не указано';
+        return isset($this->birth_date) ? $this->birth_date->format('d.m.Y') : 'Не указано';
     }
 
     /**
@@ -194,6 +197,17 @@ class User extends Authenticatable
     {
         return empty($this->birth_date) ? null : $this->birth_date->toDateString();
     }
+
+    /**
+     * Gets the user's age.
+     *
+     * @return string
+     */
+    public function getAgeAttribute(): string
+    {
+        return isset($this->birth_date) ? CarbonInterval::years($this->birth_date->age) : 'Не указано';
+    }
+
 
 //    /**
 //     * Gets full name of a specific user.

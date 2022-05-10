@@ -50,6 +50,10 @@
                         <span>{{ ('Фамилия') }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
+                        <span>{{ ('Возраст') }}</span>
+                        <span>{{ $user->age }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
                         <span>{{ ('Дата рождения') }}</span>
                         <span>{{ $user->birth_date_fmt }}</span>
                     </li>
