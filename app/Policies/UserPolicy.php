@@ -2,120 +2,71 @@
 
 namespace App\Policies;
 
+use Request;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Route;
 
 class UserPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Perform pre-authorization checks.
-     *
-     * @param  \App\Models\User  $user
-     * @param  string  $ability
-     * @return void|bool
-     */
-    public function before(User $user, $ability)
-    {
-
-
-//        if (Request::routeIs('admin.users.edit')) {
-//
-//        }
-
-//        dd(Route::currentRouteName());
-//        if ($user->isAdministrator()) {
-//            return true;
-//        }
-    }
-
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(User $user)
-    {
-        //
-    }
-
-    /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param User $model
+     * @return bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, User $model): bool
     {
+        /**
+         * Method 'show' can only be viewed by an authorized user.
+         * To view a specific user's profile from control panel, user must have permissions.
+         * Access is determined by middlewares 'auth' and 'can:manage_users'.
+         * See:
+         * routes/admin.php
+         * routes/web.php
+         */
         return true;
-    }
-
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function create(User $user)
-    {
-        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param User $model
+     * @return bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user, User $model): bool
     {
-//        if ($user->id === $model->id) {
-//            abort(403);
-//        }
+        /**
+         * To perform actions from control panel.
+         */
+        if (Request::routeIs('admin.users.*')) {
+            if ($user->hasRole(Role::ROLE_OWNER) || $user->hasPermissionTo('manage_users')) {
+                return true;
+            }
+        }
 
-        //TODO: Add a policy separation for the control panel or move it to another policy designed only for the control panel.
-
-        return $user->id === $model->id /*|| $user->hasPermissionTo('edit_users')*/;
+        return $user->id === $model->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param User $model
+     * @return bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, User $model): bool
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, User $model)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, User $model)
-    {
-        //
+        /**
+         * User cannot delete himself.
+         *
+         * @note Only for method that is called from control panel.
+         *
+         */
+        return $user->id != $model->id;
     }
 }
