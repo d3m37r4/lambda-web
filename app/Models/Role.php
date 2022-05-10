@@ -5,6 +5,7 @@ namespace App\Models;
 use Spatie\Permission\Models\Role as SpatieRole;
 
 /**
+ * @method static givePermissionTo(mixed $attributes = [])
  * @method static paginate(mixed $env)
  * @property string name
  */
