@@ -45,7 +45,7 @@
                                 </li>
                                 <li class="text-center">
                                     <span class="badge bg-primary">
-                                        {{ Auth::user()->getRoleNames()->first() }}
+                                         {{ __('roles.list.' .Auth::user()->role_name) }}
                                     </span>
                                 </li>
                                 <li><hr class="dropdown-divider" /></li>

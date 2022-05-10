@@ -64,7 +64,7 @@
                 <div class="row form-group mb-3 align-items-center">
                     <label class="col-md-4 col-form-label text-sm-end">{{ ('Роль') }}</label>
                     <div class="col-md-6">
-                        <span class="badge bg-primary">{{ $user->role_name }}</span>
+                        <span class="badge bg-primary">{{ __("roles.list.$user->role_name") }}</span>
                     </div>
                 </div>
                 <div class="row form-group mb-3 align-items-center">

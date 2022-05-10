@@ -5,7 +5,7 @@
 @section('main.content')
 <div class="card shadow-2 border">
     <div class="card-header">
-        <div  class="d-sm-flex justify-content-between">
+        <div class="d-sm-flex justify-content-between">
             <div class="me-auto align-self-center">
                 <h5 class="card-title m-0">
                     <i class="fas fa-user"></i>
@@ -34,7 +34,7 @@
                         <i class="fas fa-user fa-10x"></i>
                     </div>
                     <div>
-                        <span class="badge bg-primary">{{ $user->role_name }}</span>
+                        <span class="badge bg-primary">{{ __("roles.list.$user->role_name") }}</span>
                         @if($user->isCountrySpecified())
                         <p class="text-muted">{{ __($user->country()) }}</p>
                         @endif
@@ -63,7 +63,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-9">
+            <div class="col">
                 <ul class="nav nav-tabs nav-fill border-bottom mb-3" id="ex1">
                     <li class="nav-item">
                         <a class="nav-link active" href="#info" data-mdb-toggle="tab"

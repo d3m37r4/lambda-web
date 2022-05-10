@@ -58,7 +58,7 @@
                             </td>
                             <td>
                                 <span class="badge bg-primary">
-                                    {{ $user->role_name }}
+                                    {{ __("roles.list.$user->role_name") }}
                                 </span>
                             </td>
                             <td>
