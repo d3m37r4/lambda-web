@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
 use Request;
 use Session;
-use App\Models\Role;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\Country;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminStoreUserRequest;
 use App\Http\Requests\Admin\AdminUpdateUserRequest;
@@ -23,6 +23,22 @@ class UsersManagementController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->authorizeResource(User::class, 'user');
+    }
+
+    /**
+     * Get the map of resource methods to ability names.
+     *
+     * @return array
+     */
+    protected function resourceAbilityMap(): array
+    {
+        return [
+            'show' => 'view',
+            'edit' => 'update',
+            'update' => 'update',
+            'destroy' => 'delete'
+        ];
     }
 
     /**
@@ -64,7 +80,7 @@ class UsersManagementController extends Controller
         $user = User::create($request->safe()->except('role'));
         $user->assignRole($request->safe()->only('role'));
 
-        return redirect($request->input('redirect'))->with([
+        return redirect(session('redirect_url'))->with([
             'status' => 'success',
             'message' => "Пользователь {$user->login} успешно создан!"
         ]);
@@ -91,13 +107,11 @@ class UsersManagementController extends Controller
      */
     public function edit(User $user): View
     {
-//        if (Auth::user()->cannot('update', $user)) {
-//            abort(403);
-//        }
-
+        $genders = User::GENDERS;
+        $countries = Country::all();
         $roles = Role::all();
 
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.users.edit', compact('user', 'genders', 'countries',   'roles'));
     }
 
     /**
@@ -109,10 +123,6 @@ class UsersManagementController extends Controller
      */
     public function update(AdminUpdateUserRequest $request, User $user): RedirectResponse
     {
-//        if (Auth::user()->cannot('update', $user)) {
-//            abort(403);
-//        }
-
         $user->update($request->safe()->except('role'));
         $user->syncRoles($request->safe()->only('role'));
 
@@ -130,20 +140,11 @@ class UsersManagementController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
-        $currentUser = Auth::user();
-        abort_if(is_null($currentUser), 500);
-
-        if ($currentUser->id !== $user->id) {
-            $user->delete();
-            return back()->with([
-                'status' => 'success',
-                'message' => "Пользователь {$user->login} был удален!"
-            ]);
-        }
+        $user->delete();
 
         return back()->with([
-            'status' => 'danger',
-            'message' => "Вы не можете удалить свой профиль!"
+            'status' => 'success',
+            'message' => "Пользователь {$user->login} был удален!"
         ]);
     }
 }
