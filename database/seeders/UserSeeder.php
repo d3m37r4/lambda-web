@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -18,8 +19,8 @@ class UserSeeder extends Seeder
             User::create([
                 'login' => 'User' .$i,
                 'email' => 'user' .$i. '@mail.com',
-                'password' => '12345678',
-            ])->assignRole($i === 1 ? 'Administrator' : 'User');
+                'password' => '123123',
+            ])->assignRole($i === 1 ? Role::ROLE_OWNER : Role::ROLE_USER);
         }
     }
 }
