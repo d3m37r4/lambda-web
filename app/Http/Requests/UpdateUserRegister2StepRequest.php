@@ -33,7 +33,7 @@ class UpdateUserRegister2StepRequest extends FormRequest
         return [
             'full_name' => ['nullable', 'string', 'max:255'],
             'gender' => [Rule::in(User::GENDERS)],
-            'date_of_birth' => ['nullable', 'date'],
+            'birth_date' => ['nullable', 'date'],
             'country_id' => ['nullable', Rule::in(Country::all()->pluck('id'))],
             'biography' => ['nullable', 'string']
         ];

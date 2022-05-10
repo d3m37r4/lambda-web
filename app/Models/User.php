@@ -25,7 +25,7 @@ Carbon::setToStringFormat('d.m.Y - H:i:s');
  * @property string login
  * @property string full_name
  * @property string password
- * @property Carbon date_of_birth
+ * @property Carbon birth_date
  */
 class User extends Authenticatable
 {
@@ -89,14 +89,14 @@ class User extends Authenticatable
         'country_id',
         'full_name',
         'gender',
-        'date_of_birth',
+        'birth_date',
         'biography'
     ];
 
     /**
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at', 'date_of_birth'];
+    protected $dates = ['created_at', 'updated_at', 'birth_date'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -180,9 +180,9 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getDateOfBirthFmtAttribute(): string
+    public function getBirthDateFmtAttribute(): string
     {
-        return !empty($this->date_of_birth) ? $this->date_of_birth->format('d.m.Y') : 'Не указано';
+        return !empty($this->birth_date) ? $this->birth_date->format('d.m.Y') : 'Не указано';
     }
 
     /**
@@ -190,9 +190,9 @@ class User extends Authenticatable
      *
      * @return string|null
      */
-    public function getDateOfBirthStrAttribute(): ?string
+    public function getBirthDateStrAttribute(): ?string
     {
-        return empty($this->date_of_birth) ? null : $this->date_of_birth->toDateString();
+        return empty($this->birth_date) ? null : $this->birth_date->toDateString();
     }
 
 //    /**

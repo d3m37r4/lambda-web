@@ -93,14 +93,14 @@
                     </fieldset>
                 </div>
                 <div class="row form-group mb-3 align-items-center">
-                    <label for="date_of_birth" class="col-md-4 col-form-label text-sm-end">
+                    <label for="birth_date" class="col-md-4 col-form-label text-sm-end">
                         {{ ('Дата рождения') }}
                     </label>
                     <div class="col-md-6">
-                        <input id="date_of_birth" type="date"
-                               class="form-control @error('date_of_birth') is-invalid @enderror"
-                               name="date_of_birth" value="{{ $user->date_of_birth_str }}">
-                        @include('components.field-filling-error', ['error' => 'date_of_birth'])
+                        <input id="birth_date" type="date"
+                               class="form-control @error('birth_date') is-invalid @enderror"
+                               name="birth_date" value="{{ $user->birth_date_str }}">
+                        @include('components.field-filling-error', ['error' => 'birth_date'])
                     </div>
                 </div>
                 <div class="row form-group mb-3 align-items-center">

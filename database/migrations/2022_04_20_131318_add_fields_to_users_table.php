@@ -21,7 +21,7 @@ class AddFieldsToUsersTable extends Migration
                 $table->foreignId('country_id')->nullable()->constrained('countries');
                 $table->text('full_name')->nullable();
                 $table->enum('gender', User::GENDERS)->default(User::GENDER_NONE);
-                $table->date('date_of_birth')->nullable();
+                $table->date('birth_date')->nullable();
                 $table->text('biography')->nullable();
             });
         });
@@ -40,7 +40,7 @@ class AddFieldsToUsersTable extends Migration
             $table->dropForeign('country_id');
             $table->dropColumn('full_name');
             $table->dropColumn('gender');
-            $table->dropColumn('date_of_birth');
+            $table->dropColumn('birth_date');
             $table->dropColumn('biography');
         });
     }

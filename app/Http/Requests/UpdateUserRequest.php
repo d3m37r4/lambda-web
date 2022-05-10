@@ -36,7 +36,7 @@ class UpdateUserRequest extends FormRequest
             'password' => ['exclude_if:password_confirmation,null', Password::defaults(), 'confirmed', 'same:password_confirmation'],
             'full_name' => ['nullable', 'string', 'max:255'],
             'gender' => [Rule::in(User::GENDERS)],
-            'date_of_birth' => ['nullable', 'date'],
+            'birth_date' => ['nullable', 'date'],
             'country_id' => ['nullable', Rule::in(Country::all()->pluck('id'))],
             'biography' => ['nullable', 'string']
         ];

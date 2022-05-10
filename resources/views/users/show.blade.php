@@ -51,7 +51,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>{{ ('Дата рождения') }}</span>
-                        <span>{{ $user->date_of_birth_fmt }}</span>
+                        <span>{{ $user->birth_date_fmt }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>{{ __('genders.gender') }}</span>
