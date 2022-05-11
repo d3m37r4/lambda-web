@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Request;
 
-/**
- */
-class UpdateServerRequest extends FormRequest
+class StoreServerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,20 +27,12 @@ class UpdateServerRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'ip' => ['required', 'ip',
-                /* Here it is intentionally used to get index of Server model through router.
-                 * It is not possible to use the following construction: $this->server
-                 * due to coincidence of Model and component name: Symfony\Component\HttpFoundation\ServerBag
-                 * Situation is similar with "port" field, the rules for which are given below.
-                 */
-                Rule::unique('servers')->ignore(Request::route('server')->id)->where(function ($query) {
+                Rule::unique('servers')->where(function ($query) {
                     return $query->where('port', $this->input('port'));
                 })
             ],
             'port' => ['required', 'integer', 'between:1,65535',
-                /*
-                 * See comment above.
-                 */
-                Rule::unique('servers')->ignore(Request::route('server')->id)->where(function ($query) {
+                Rule::unique('servers')->where(function ($query) {
                     return $query->where('ip', $this->input('ip'));
                 })
             ],

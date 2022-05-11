@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Carbon\CarbonInterval;
 use Request;
 
-class StoreAccessGroupRequest extends FormRequest
+class StoreReasonRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,10 +33,13 @@ class StoreAccessGroupRequest extends FormRequest
                  * due to coincidence of Model and component name: Symfony\Component\HttpFoundation\ServerBag
                  * Situation is similar with "port" field, the rules for which are given below.
                  */
-                Rule::unique('access_groups')->where('server_id', Request::route('server')->id)
+                Rule::unique('reasons')->where('server_id', Request::route('server')->id)
             ],
-            'flags' => ['required', 'string', 'max:255'],
-            'prefix' => ['required', 'string', 'max:255'],
+            'months' => ['required', 'numeric', 'min:0'],
+            'days' => ['required', 'numeric', 'min:0'],
+            'hours' => ['required', 'numeric', 'min:0'],
+            'minutes' => ['required', 'numeric', 'min:0'],
+            'time' => ['required', 'numeric', 'min:0'],
             'server_id' => ['required', 'integer'],
         ];
     }
@@ -48,7 +52,12 @@ class StoreAccessGroupRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'server_id' => Request::route('server')->id
+            'server_id' => Request::route('server')->id,
+            'time' => CarbonInterval::months(Request::input('months'))
+                ->days(Request::input('days'))
+                ->hours(Request::input('hours'))
+                ->minutes(Request::input('minutes'))
+                ->totalMinutes,
         ]);
     }
 }

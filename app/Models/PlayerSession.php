@@ -3,20 +3,24 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static find(mixed $input)
  * @method static create(array $array)
  * @method static where(array $array)
- * @property mixed created_at
- * @property mixed disconnected_at
+ * @property Carbon created_at
+ * @property Carbon disconnected_at
  */
 class PlayerSession extends Model
 {
     const STATUS_ONLINE = 'online';
     const STATUS_OFFLINE = 'offline';
+
+    use Prunable;
 
     /**
      * The table associated with the model.
@@ -42,6 +46,19 @@ class PlayerSession extends Model
         'player_id' => 'int',
         'server_id' => 'int'
     ];
+
+    /**
+     * Deleting inactive sessions for last month.
+     *
+     * @return Builder
+     */
+    public function prunable(): Builder
+    {
+        return static::where([
+            ['status', PlayerSession::STATUS_OFFLINE],
+            ['created_at', '<', Carbon::now()->subMonth()]
+        ]);
+    }
 
     /**
      * Gets player associated with this session.

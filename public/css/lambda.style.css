@@ -12,6 +12,10 @@ body {
     padding: .75rem 1.0rem;
 }
 
+.card-header > div {
+    min-height: 36px;
+}
+
 .page-item.clickable .page-link {
     background-color: #fbfbfb;
     -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05) !important;

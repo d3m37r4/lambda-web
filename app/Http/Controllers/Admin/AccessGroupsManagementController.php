@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\AccessGroup;
 use App\Models\Server;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAccessGroupRequest;
+use App\Http\Requests\Admin\StoreAccessGroupRequest;
 //use App\Http\Requests\UpdateAccessGroupRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;

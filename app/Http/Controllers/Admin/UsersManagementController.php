@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
 use Request;
 use Session;
-use App\Models\Role;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\Country;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\Admin\AdminStoreUserRequest;
+use App\Http\Requests\Admin\AdminUpdateUserRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -22,7 +22,22 @@ class UsersManagementController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->authorizeResource(User::class, 'user');
+    }
+
+    /**
+     * Get the map of resource methods to ability names.
+     *
+     * @return array
+     */
+    protected function resourceAbilityMap(): array
+    {
+        return [
+            'show' => 'view',
+            'edit' => 'update',
+            'update' => 'update',
+            'destroy' => 'delete'
+        ];
     }
 
     /**
@@ -55,18 +70,18 @@ class UsersManagementController extends Controller
     /**
      * Store a newly created user in storage.
      *
-     * @param StoreUserRequest $request
+     * @param AdminStoreUserRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreUserRequest $request): RedirectResponse
+    public function store(AdminStoreUserRequest $request): RedirectResponse
     {
         // TODO: add choice of permissions
         $user = User::create($request->safe()->except('role'));
         $user->assignRole($request->safe()->only('role'));
 
-        return redirect($request->input('redirect'))->with([
+        return redirect(session('redirect_url'))->with([
             'status' => 'success',
-            'message' => "Пользователь {$user->name} успешно создан!"
+            'message' => "Пользователь {$user->login} успешно создан!"
         ]);
     }
 
@@ -91,26 +106,28 @@ class UsersManagementController extends Controller
      */
     public function edit(User $user): View
     {
+        $genders = User::GENDERS;
+        $countries = Country::all();
         $roles = Role::all();
 
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.users.edit', compact('user', 'genders', 'countries',   'roles'));
     }
 
     /**
      * Update the specified user in storage.
      *
-     * @param UpdateUserRequest $request
+     * @param AdminUpdateUserRequest $request
      * @param User $user
      * @return RedirectResponse
      */
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    public function update(AdminUpdateUserRequest $request, User $user): RedirectResponse
     {
         $user->update($request->safe()->except('role'));
         $user->syncRoles($request->safe()->only('role'));
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о пользователе {$user->name} была успешно обновлена!"
+            'message' => "Информация о пользователе {$user->login} была успешно обновлена!"
         ]);
     }
 
@@ -122,20 +139,11 @@ class UsersManagementController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
-        $currentUser = Auth::user();
-        abort_if(is_null($currentUser), 500);
-
-        if ($currentUser->id !== $user->id) {
-            $user->delete();
-            return back()->with([
-                'status' => 'success',
-                'message' => "Пользователь {$user->name} был удален!"
-            ]);
-        }
+        $user->delete();
 
         return back()->with([
-            'status' => 'danger',
-            'message' => "Вы не можете удалить свой профиль!"
+            'status' => 'success',
+            'message' => "Пользователь {$user->login} был удален!"
         ]);
     }
 }

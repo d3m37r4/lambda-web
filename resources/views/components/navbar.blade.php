@@ -20,11 +20,13 @@
                 @guest
                     @if (Route::has('login'))
                         <a class="btn btn-sm btn-light" href="{{ route('login') }}">
+                            <i class="fas fa-sign-in-alt"></i>
                             {{ ('Вход') }}
                         </a>
                     @endif
                     @if (Route::has('register'))
                         <a class="btn btn-sm btn-primary" href="{{ route('register') }}">
+                            <i class="fas fa-user-plus"></i>
                             {{ ('Регистрация') }}
                         </a>
                     @endif
@@ -38,17 +40,15 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li class="text-center">
                                     <h6 class="dropdown-header">
-                                        {{ Auth::user()->name }}
+                                        {{ Auth::user()->login }}
                                     </h6>
                                 </li>
                                 <li class="text-center">
-                                    <span class="badge bg-primary">
-                                        {{ Auth::user()->getRoleNames()->first() }}
-                                    </span>
+                                    @include('components.role-badge', ['role' => Auth::user()->role_name])
                                 </li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li class="text-center">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{ route('users.show', Auth::user()) }}">
                                         <i class="fas fa-id-card"></i>
                                         {{ ('Профиль') }}
                                     </a>

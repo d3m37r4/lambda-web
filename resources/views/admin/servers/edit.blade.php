@@ -3,7 +3,7 @@
 @section('title', "Редактирование сервера: $server->name")
 
 @section('admin.content')
-    @include('admin.components.alert')
+    @include('components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">
@@ -14,7 +14,7 @@
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['redirect_route' => 'admin.servers.index'])
+                    @include('components.link-back', ['redirect_route' => 'admin.servers.index'])
                 </div>
             </div>
         </div>

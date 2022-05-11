@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Reason;
 use App\Models\Server;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreReasonRequest;
-use App\Http\Requests\UpdateReasonRequest;
+use App\Http\Requests\Admin\StoreReasonRequest;
+use App\Http\Requests\Admin\UpdateReasonRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 

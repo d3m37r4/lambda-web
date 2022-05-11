@@ -25,10 +25,9 @@ class AccessTokenMiddleware
             throw new InvalidAccessTokenException('Access token required.', JsonResponse::HTTP_BAD_REQUEST);
         }
 
-        $accessToken = AccessToken::where('token', $accessTokenString)
-            ->firstOr(function () {
-                throw new InvalidAccessTokenException('Invalid token.', JsonResponse::HTTP_NOT_FOUND);
-            });
+        $accessToken = AccessToken::where('token', $accessTokenString)->firstOr(function () {
+            throw new InvalidAccessTokenException('Invalid token.', JsonResponse::HTTP_NOT_FOUND);
+        });
 
         $server = $accessToken->server;
 
