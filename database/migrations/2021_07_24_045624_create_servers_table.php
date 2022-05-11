@@ -16,12 +16,12 @@ class CreateServersTable extends Migration
         Schema::create('servers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('ip', 32);
+            $table->string('ip', 16);
             $table->integer('port');
             $table->string('rcon', 128)->nullable();
             $table->foreignId('map_id')->nullable()->constrained('maps');
             $table->string('auth_token', 255)->nullable();
-            $table->unsignedTinyInteger('num_players')->default(0);
+//            $table->unsignedTinyInteger('num_players')->default(0);
             $table->unsignedTinyInteger('max_players')->default(0);
             $table->boolean('active')->default(false);
             $table->timestamps();

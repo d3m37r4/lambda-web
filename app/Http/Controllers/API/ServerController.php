@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
+use Arr;
 use App\Models\Map;
 use App\Models\Server;
 use App\Models\AccessToken;
-use App\Http\Controllers\Controller;
 use App\Helpers\HelperAccessToken;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\API\ServerInfoRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
-use Exception;
 
 class ServerController extends Controller
 {
@@ -22,7 +23,7 @@ class ServerController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('api-server-auth')->except('auth');
+        $this->middleware('access_token')->except('auth');
     }
 
     /**
@@ -30,73 +31,81 @@ class ServerController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
-     * @throws Exception
      */
     public function auth(Request $request): JsonResponse
     {
         $server = Server::where([
             ['ip', $request->ip()],
-            ['port', $request->input('port')],
+            ['port', $request->input('port')]
         ])->firstOr(function () {
-            return Response::json(['error' => 'Server not found'], 404);
+            return Response::json(['error' => 'Server not found'], JsonResponse::HTTP_NOT_FOUND);
         });
 
         $authToken = $request->input('auth_token');
         if (empty($authToken)) {
-            return Response::json(['error' => 'Token required'], 400);
+            return Response::json(['error' => 'Token required'], JsonResponse::HTTP_BAD_REQUEST);
         }
 
         if (!Hash::check($authToken, $server->auth_token)) {
             $server->update(['active' => false]);
-            return Response::json(['error' => 'Unauthorized'], 401);
+            return Response::json(['error' => 'Unauthorized'], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        AccessToken::updateOrCreate(
+        $accessToken = AccessToken::updateOrCreate(
             ['server_id' => $server->id],
-            ['token' => HelperAccessToken::generateAccessToken(64), 'expires_in' => now()->addHours(12)],
+            ['token' => HelperAccessToken::generateAccessToken(64), 'expires_in' => now()->addHours(12)]
         );
-
         $server->update(['active' => true]);
 
         return Response::json([
             'success' => true,
-            'access_token' => $server->access_token_string,
-            'expires_in' => $server->access_token_expires_in,
+            'access_token' => $accessToken
         ]);
     }
 
     /**
      * Gets information about server when a new map is launched or when server is started.
      *
-     * @param Request $request
+     * @param ServerInfoRequest $request
      * @return JsonResponse
      */
-    public function info(Request $request): JsonResponse
+    public function info(ServerInfoRequest $request): JsonResponse
     {
         $server = Server::find($request->attributes->get('server_id'));
+        $response = [
+            'success' => true,
+            'server_id' => $server->id
+        ];
 
-        // mb add validator?
-        if ($request->has('map')) {
-            $map = Map::firstOrCreate(
-                ['name' => $request->input('map')],
-                ['name' => $request->input('map')],
-            );
-            $server->map_id = $map->id;
+        $server->max_players = $request->input('max_players');
+
+        $server->map_id = Map::firstOrCreate(
+            ['name' => $request->input('map')],
+            ['name' => $request->input('map')]
+        )->id;
+
+        $response = Arr::add($response, 'map', $server->map_id);
+
+        $nextUpdate = now()->addHours(12)->timestamp;
+
+        if ($request->boolean('update_reasons')) {
+            $response = Arr::add($response, 'reasons_data', [
+                'reasons' => $server->reasons,
+                'next_update' => $nextUpdate
+            ]);
         }
 
-        if ($request->has('max_players')) {
-            $server->max_players = $request->input('max_players');
+        if ($request->boolean('update_access_groups')) {
+            $response = Arr::add($response, 'access_groups_data', [
+                'access_groups' => $server->access_groups,
+                'next_update' => $nextUpdate
+            ]);
         }
 
-        // mb use mass assignment of valid data?
+        $response = Arr::add($response, 'time', now()->timestamp);
         $server->update();
 
-        return Response::json([
-            'success' => true,
-            'server_id' => $server->id,
-            'map' => $server->map_name,
-            'time' => time(),
-        ]);
+        return Response::json($response);
     }
 
     /**
@@ -107,11 +116,6 @@ class ServerController extends Controller
      */
     public function ping(Request $request): JsonResponse {
         $server = Server::find($request->attributes->get('server_id'));
-
-        // mb add validator?
-        if ($request->has('num_players')) {
-            $server->num_players = $request->input('num_players');
-        }
 
         $server->update();
 

@@ -6,23 +6,13 @@ use App\Http\Controllers\Admin\UsersManagementController;
 use App\Http\Controllers\Admin\RolesManagementController;
 use App\Http\Controllers\Admin\ServersManagementController;
 use App\Http\Controllers\Admin\ReasonsManagementController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Auth::routes();
+use App\Http\Controllers\Admin\AccessesManagementController;
+use App\Http\Controllers\Admin\AccessGroupsManagementController;
+use App\Http\Controllers\Admin\PlayersManagementController;
 
 Route::group([
     'middleware' => ['auth','can:enter_control_panel'],
-    'prefix' => env('APP_ADMIN_PATH'),
+    'prefix' => env('APP_ADMIN_DIR'),
     'as' => 'admin.',
 ], function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
@@ -42,5 +32,11 @@ Route::group([
         Route::resource('servers', ServersManagementController::class);
         Route::resource('servers.reasons', ReasonsManagementController::class)
             ->except(['index', 'show']);
+        Route::resource('servers.accesses', AccessesManagementController::class)
+            ->except(['index', 'show']);
+        Route::resource('servers.access-groups', AccessGroupsManagementController::class)
+            ->except(['index', 'show']);
+        Route::resource('servers.players', PlayersManagementController::class)
+            ->only(['edit', 'update', 'destroy']);
     });
 });

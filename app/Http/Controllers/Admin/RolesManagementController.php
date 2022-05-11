@@ -7,14 +7,24 @@ use Session;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreRoleRequest;
-use App\Http\Requests\UpdateRoleRequest;
+use App\Http\Requests\Admin\StoreRoleRequest;
+use App\Http\Requests\Admin\UpdateRoleRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
 class RolesManagementController extends Controller
 {
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Role::class, 'role');
+    }
+
     /**
      * Display a listing of the roles.
      *

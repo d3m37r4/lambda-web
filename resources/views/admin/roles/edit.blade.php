@@ -1,20 +1,19 @@
 @extends('layouts.admin-layout')
 
-@section('title', "Редактирование роли: $role->name")
+@section('title', __('roles.edit', ['role' => __("roles.list.$role->name")]))
 
 @section('admin.content')
-    @include('admin.components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">
                 <div class="me-auto align-self-center">
                     <h5 class="card-title m-0">
                         <i class="fas fa-shield-alt"></i>
-                        {{ ("Редактирование роли: $role->name") }}
+                        {{ __('roles.edit', ['role' => __("roles.list.$role->name")]) }}
                     </h5>
                 </div>
                 <div class="d-grid">
-                    @include('admin.components.link-back', ['redirect_route' => 'admin.roles.index'])
+                    @include('components.link-back', ['redirect_route' => 'admin.roles.index'])
                 </div>
             </div>
         </div>
@@ -22,7 +21,7 @@
             <form action="{{ route('admin.roles.update', $role) }}" method="POST">
                 @csrf
                 @method('PUT')
-                <div class="row form-group mb-3">
+                <div class="row form-group mb-3 align-items-center">
                     <label for="index" class="col-md-4 col-form-label text-sm-end">
                         {{ ('ID') }}
                     </label>
@@ -37,11 +36,16 @@
                     </label>
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                               name="name" value="{{ old('name', $role->name) }}" required>
+                               name="name" value="{{ old('name', $role->name) }}" aria-describedby="nameHelp" required>
                         @include('components.field-filling-error', ['error' => 'name'])
+                        <div class="form-text" id="nameHelp">
+                            {{ ('Для мультиязычного отображения названия роли добавьте переводы в раздел "list" языкового файла roles.php.') }}
+                            <br>
+                            {{ ('Формат: "название роли" => "перевод"') }}
+                        </div>
                     </div>
                 </div>
-                <div class="row form-group mb-3">
+                <div class="row form-group mb-3 align-items-center">
                     <label for="permissions" class="col-md-4 col-form-label text-sm-end">
                         {{ ('Разрешения') }}
                     </label>
@@ -51,7 +55,7 @@
                             <option disabled>{{ ('Назначьте разрешения для роли...') }}</option>
                             @foreach ($permissions as $permission)
                             <option value="{{ $permission->id }}"
-                                    @if(isset($role) && $role->hasPermissionTo($permission)) selected @endif>
+                                    @if($role->hasPermissionTo($permission)) selected @endif>
                                 {{ $permission->name }}
                             </option>
                             @endforeach
@@ -61,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row form-group mb-3">
+                <div class="row form-group mb-3 align-items-center">
                     <label for="created" class="col-md-4 col-form-label text-sm-end">
                         {{ ('Роль добавлена') }}
                     </label>
@@ -70,7 +74,7 @@
                                name="created" value="{{ $role->created_at }}" disabled>
                     </div>
                 </div>
-                <div class="row form-group mb-3">
+                <div class="row form-group mb-3 align-items-center">
                     <label for="updated" class="col-md-4 col-form-label text-sm-end">
                         {{ ('Последнее обновление') }}
                     </label>

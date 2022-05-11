@@ -12,7 +12,7 @@
     <a class="list-group-item list-group-item-action {{ Request::routeIs('admin.roles.*') ? 'active' : '' }} ripple"
        href="{{ route('admin.roles.index') }}" data-mdb-ripple-color="light">
         <i class="fas fa-user-shield"></i>
-        {{ ('Управление ролями') }}
+        {{ __('roles.management') }}
     </a>
     <a class="list-group-item list-group-item-action {{ Request::routeIs('admin.servers.*') ? 'active' : '' }} ripple"
        href="{{ route('admin.servers.index') }}" data-mdb-ripple-color="light">

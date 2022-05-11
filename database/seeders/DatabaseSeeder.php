@@ -20,5 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MapSeeder::class);
         $this->call(ServerSeeder::class);
         $this->call(ReasonSeeder::class);
+        $this->call(AccessSeeder::class);
+        $this->call(AccessGroupSeeder::class);
+        $this->call(CountrySeeder::class);
     }
 }

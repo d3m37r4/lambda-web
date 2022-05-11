@@ -1,6 +1,6 @@
 @extends('layouts.admin-layout')
 
-@section('title', "Добавление причины наказания")
+@section('title', 'Добавление причины наказания')
 
 @section('admin.content')
     <div class="card shadow-2 border">
@@ -9,7 +9,7 @@
                 <div class="me-auto align-self-center">
                     <h5 class="card-title m-0">
                         <i class="fas fa-file-medical"></i>
-                        {{ ("Добавление причины наказания") }}
+                        {{ ('Добавление причины наказания') }}
                     </h5>
                 </div>
                 <div class="d-grid">

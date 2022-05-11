@@ -1,17 +1,16 @@
 @extends('layouts.admin-layout')
 
-@section('title', 'Управление ролями')
+@section('title', __('roles.management'))
 
 @section('admin.content')
     @include('admin.modals.confirm-delete')
-    @include('admin.components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">
                 <div class="me-auto align-self-center">
                     <h5 class="card-title m-0">
                         <i class="fas fa-user-shield"></i>
-                        {{ ('Управление ролями') }}
+                        {{ __('roles.management') }}
                     </h5>
                 </div>
                 <div class="d-grid">
@@ -28,7 +27,7 @@
                     <thead class="table-dark">
                         <tr>
                             <th class="col-2">{{ ('ID') }}</th>
-                            <th class="col-3">{{ ('Роль') }}</th>
+                            <th class="col-3">{{ __('roles.role') }}</th>
                             <th class="col-3">{{ ('Время создания') }}</th>
                             <th class="col-3">{{ ('Последнее обновление') }}</th>
                             <th style="min-width: 140px;">{{ ('Действия') }}</th>
@@ -41,9 +40,7 @@
                                 {{ $role->id }}
                             </td>
                             <td>
-                                <span class="badge bg-primary">
-                                    {{ $role->name }}
-                                </span>
+                                <span class="badge bg-primary">{{ __("roles.list.$role->name") }}</span>
                             </td>
                             <td>
                                 {{ $role->created_at }}
@@ -64,14 +61,17 @@
                                    href="{{ route('admin.roles.edit', $role) }}">
                                     <i class="fas fa-pen"></i>
                                 </a>
-                                <span class="d-inline-block" tabindex="0"
-                                      data-mdb-toggle="tooltip" title="{{ ('Удалить роль') }}">
+                                <span class="d-inline-block"
+                                      tabindex="0"
+                                      data-mdb-toggle="tooltip"
+                                      title="{{ __('roles.delete') }}">
                                     <button class="btn btn-danger btn-floating btn-sm"
                                             type="button"
                                             data-mdb-toggle="modal"
                                             data-mdb-target="#confirmDelete"
-                                            data-route="{{ route('admin.roles.destroy', $role) }}"
-                                            data-rolename="{{ $role->name }}">
+                                            data-modal-title="{{ __('roles.delete') }}"
+                                            data-modal-message="{{ __('roles.confirm_delete', ['role' => __("roles.list.$role->name")]) }}"
+                                            data-modal-route="{{ route('admin.roles.destroy', $role) }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </span>
@@ -85,21 +85,3 @@
     </div>
     {{ $roles->links() }}
 @endsection
-
-@push('secondary-scripts')
-    <script>
-        let modalDeleteRole = document.getElementById('confirmDelete');
-        modalDeleteRole.addEventListener('show.bs.modal', function (event) {
-            let confirmMsg = "{{ ('Вы действительно хотите удалить роль @rolename?') }}";
-            let btn = event.relatedTarget;
-            this.querySelector('.route').action = btn.getAttribute('data-route');
-
-            let name = btn.getAttribute('data-rolename');
-            confirmMsg = confirmMsg.replace('@rolename', name);
-
-            this.querySelector('.modal-title').textContent = "{{ ('Удаление роли') }}";
-            this.querySelector('.modal-msg').textContent = confirmMsg;
-            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить роль') }}";
-        });
-    </script>
-@endpush

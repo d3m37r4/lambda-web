@@ -12,18 +12,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Map extends Model
 {
     /**
-     * The table associated with model.
-     *
-     * @var string
-     */
-    protected $table = 'maps';
-
-    /**
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
      * @var array
      */
     protected $fillable = ['name'];

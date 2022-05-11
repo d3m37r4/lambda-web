@@ -27,26 +27,25 @@ class Reason extends Model
      */
     protected $dates = ['created_at', 'updated_at'];
 
-    /**
-     * @var array
-     */
-    protected $casts = [
-        'server_id' => 'int',
-        'title' => 'string',
+//    /**
+//     * @var array
+//     */
+//    protected $casts = [
+//        'server_id' => 'int',
+//        'title' => 'string',
 //        'overall' => 'bool',
 //        'menu' => 'bool',
 //        'active' => 'bool',
-        'time_for_humans' => 'string',
-    ];
+//        'time_for_humans' => 'string',
+//    ];
 
     /**
      * @var array
      */
-    protected $hidden = ['server_id', /*'overall', 'active',*/
-        'created_at', 'updated_at'];
+    protected $hidden = ['server_id', /*'overall', 'active',*/'created_at', 'updated_at'];
 
     /**
-     * Gets servers associated with this reason.
+     * Gets server associated with this reason.
      * @return BelongsTo
      */
     public function server(): BelongsTo

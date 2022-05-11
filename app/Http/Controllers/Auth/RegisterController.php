@@ -2,25 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
@@ -28,7 +19,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/register-step2';
 
     /**
      * Create a new controller instance.
@@ -41,18 +32,26 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Handle a registration request for the application.
      *
-     * @param array $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @note This is an override of original 'RegistersUsers::Class' traits method.
+     *
+     * @param  StoreUserRequest $request
+     * @return RedirectResponse|JsonResponse
      */
-    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
+    public function register(StoreUserRequest $request)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-        ]);
+        event(new Registered($user = $this->create($request->validated())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], JsonResponse::HTTP_CREATED)
+            : redirect($this->redirectPath());
     }
 
     /**
@@ -63,6 +62,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data): User
     {
-        return User::create($data)->assignRole('User');
+        return User::create($data)->assignRole(User::DEFAULT_USER_ROLE);
     }
 }

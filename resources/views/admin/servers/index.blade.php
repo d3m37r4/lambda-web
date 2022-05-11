@@ -4,7 +4,7 @@
 
 @section('admin.content')
     @include('admin.modals.confirm-delete')
-    @include('admin.components.alert')
+    @include('components.alert')
     <div class="card shadow-2 border">
         <div class="card-header">
             <div class="d-sm-flex justify-content-between">
@@ -83,14 +83,17 @@
                                    href="{{ route('admin.servers.edit', $server) }}">
                                     <i class="fas fa-pen"></i>
                                 </a>
-                                <span class="d-inline-block" tabindex="0"
-                                      data-mdb-toggle="tooltip" title="{{ ('Удалить сервер') }}">
+                                <span class="d-inline-block"
+                                      tabindex="0"
+                                      data-mdb-toggle="tooltip"
+                                      title="{{ ('Удалить сервер') }}">
                                     <button class="btn btn-danger btn-floating btn-sm"
                                             type="button"
                                             data-mdb-toggle="modal"
                                             data-mdb-target="#confirmDelete"
-                                            data-route="{{ route('admin.servers.destroy', $server) }}"
-                                            data-servername="{{ $server->name }}">
+                                            data-modal-title="{{ ('Удаление сервера') }}"
+                                            data-modal-message="{{ ("Вы действительно хотите удалить сервер '$server->name' ?") }}"
+                                            data-modal-route="{{ route('admin.servers.destroy', $server) }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </span>
@@ -106,22 +109,3 @@
         {{ $servers->links() }}
     </div>
 @endsection
-
-@push('secondary-scripts')
-    <script>
-        let modalDeleteServer = document.getElementById('confirmDelete');
-        modalDeleteServer.addEventListener('show.bs.modal', function (event) {
-            let confirmMsg = "{{ ('Вы действительно хотите удалить сервер @servername?') }}";
-            let btn = event.relatedTarget;
-            this.querySelector('.route').action = btn.getAttribute('data-route');
-
-            let name = btn.getAttribute('data-servername');
-            confirmMsg = confirmMsg.replace('@servername', name);
-
-            this.querySelector('.modal-title').textContent = "{{ ('Удаление сервера') }}";
-            this.querySelector('.modal-msg').textContent = confirmMsg;
-            this.querySelector('.modal-btn-title').textContent = "{{ ('Удалить сервер') }}";
-        });
-    </script>
-@endpush
-

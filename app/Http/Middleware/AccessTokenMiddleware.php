@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use App\Models\AccessToken;
 use App\Exceptions\InvalidAccessTokenException;
 
@@ -22,20 +22,19 @@ class AccessTokenMiddleware
     {
         $accessTokenString = $request->header('X-Access-Token');
         if (empty($accessTokenString)) {
-            throw new InvalidAccessTokenException('Access token required', 400);
+            throw new InvalidAccessTokenException('Access token required.', JsonResponse::HTTP_BAD_REQUEST);
         }
 
-        $accessToken = AccessToken::where('token', $accessTokenString)
-            ->firstOr(function () {
-                throw new InvalidAccessTokenException('Invalid token', 404);
-            });
+        $accessToken = AccessToken::where('token', $accessTokenString)->firstOr(function () {
+            throw new InvalidAccessTokenException('Invalid token.', JsonResponse::HTTP_NOT_FOUND);
+        });
 
         $server = $accessToken->server;
 
         // Should request ip be checked against server ip?
-        if ($accessToken->expires_in <= Carbon::now()) {
+        if ($accessToken->expires_in <= now()->timestamp) {
             $server->update(['active' => false]);
-            throw new InvalidAccessTokenException('Bad access token', 403);
+            throw new InvalidAccessTokenException('Bad access token.', JsonResponse::HTTP_FORBIDDEN);
         }
 
         $request->attributes->set('server_id', $server->id);
