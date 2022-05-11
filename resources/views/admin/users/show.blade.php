@@ -25,7 +25,7 @@
                         <i class="fas fa-user fa-10x"></i>
                     </div>
                     <div>
-                        <span class="badge bg-primary">{{ __("roles.list.$user->role_name") }}</span>
+                        @include('components.role-badge', ['role' => $user->role_name])
                         @if($user->isCountrySpecified())
                         <p class="text-muted">{{ __($user->country()) }}</p>
                         @endif

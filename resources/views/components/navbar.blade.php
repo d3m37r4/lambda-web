@@ -44,9 +44,7 @@
                                     </h6>
                                 </li>
                                 <li class="text-center">
-                                    <span class="badge bg-primary">
-                                         {{ __('roles.list.' .Auth::user()->role_name) }}
-                                    </span>
+                                    @include('components.role-badge', ['role' => Auth::user()->role_name])
                                 </li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li class="text-center">

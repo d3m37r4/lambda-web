@@ -57,9 +57,7 @@
                                 </a>
                             </td>
                             <td>
-                                <span class="badge bg-primary">
-                                    {{ __("roles.list.$user->role_name") }}
-                                </span>
+                                @include('components.role-badge', ['role' => $user->role_name])
                             </td>
                             <td>
                                 <a class="btn btn-info btn-floating btn-sm"
