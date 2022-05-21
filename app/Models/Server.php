@@ -31,9 +31,18 @@ Carbon::setToStringFormat('d.m.Y - H:i:s');
  * @property array reasons
  * @property array access_token
  * @property boolean active
+ * @property Map map_id
+ * @property mixed access_groups
  */
 class Server extends Model
 {
+    /**
+     * The maximum buffer size required to store a auth token.
+     *
+     * @var int
+     */
+    const MAX_AUTH_TOKEN_LENGTH = 64;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -67,8 +76,6 @@ class Server extends Model
         'num_players',
         'full_address',
         'map_name',
-        'access_token_string',
-        'access_token_expires_in',
         'percent_players'
     ];
 
@@ -77,7 +84,7 @@ class Server extends Model
      */
     protected $casts = [
         'port' => 'int',
-        'map_id' => 'int',
+        'map_id' => Map::class,
         'num_players' => 'int',
         'max_players' => 'int',
         'full_address' => 'string',
