@@ -16,7 +16,7 @@ Route::group(['prefix' => 'servers'], function () {
         'middleware' => ['game-server-api', 'access_token']
     ], function () {
         Route::post('{id}/info', [GameServerActionsController::class, 'info']);
-//        Route::post('{id}/ping', [GameServerActionsController::class, 'ping']);
+        Route::post('{id}/ping', [GameServerActionsController::class, 'ping']);
 //
 //        Route::group(['prefix' => 'players'], function () {
 //            Route::post('connect', [PlayerController::class, 'connect']);

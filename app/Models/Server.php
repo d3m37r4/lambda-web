@@ -31,7 +31,7 @@ Carbon::setToStringFormat('d.m.Y - H:i:s');
  * @property array reasons
  * @property array access_token
  * @property boolean active
- * @property Map map_id
+ * @property int map_id
  * @property mixed access_groups
  */
 class Server extends Model
@@ -84,7 +84,7 @@ class Server extends Model
      */
     protected $casts = [
         'port' => 'int',
-        'map_id' => Map::class,
+        'map_id' => 'int',
         'num_players' => 'int',
         'max_players' => 'int',
         'full_address' => 'string',
