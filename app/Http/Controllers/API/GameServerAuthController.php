@@ -79,10 +79,7 @@ class GameServerAuthController extends Controller
         );
         $server->update(['active' => true]);
 
-        return Response::json([
-            'success' => true,
-            'access_token' => $server->access_token
-        ], JsonResponse::HTTP_OK);
+        return Response::json(['access_token' => $server->access_token], JsonResponse::HTTP_OK);
     }
 
     /**
