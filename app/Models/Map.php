@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @method static create(array $array)
- * @method static firstOrCreate(array $array, array $array1)
+ * @method static create(array $var)
+ * @method static firstOrCreate(mixed $var)
  */
 class Map extends Model
 {
@@ -41,7 +41,7 @@ class Map extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
     /**
-     * Gets servers with a specific map
+     * Gets servers with a specific map.
      *
      * @return HasMany
      */

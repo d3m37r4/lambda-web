@@ -13,14 +13,6 @@ use Illuminate\Support\Facades\Response;
 class PlayerController extends Controller
 {
     /**
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('access_token');
-    }
-
-    /**
      * Get information about connected player.
      *
      * @param Request $request
@@ -47,10 +39,10 @@ class PlayerController extends Controller
         $player->name = $request->input('name');
 
         if ($player->exists) {
-            $status = 'loaded';
+            $action = 'loaded';
             $player->update();
         } else {
-            $status = 'created';
+            $action = 'created';
             $player->save();
         }
 
@@ -88,7 +80,7 @@ class PlayerController extends Controller
             'success' => true,
             'player_id' => $player->id,
             'session_id' => $session->id,
-            'instance_status' => $status
+            'action' => $action
         ]);
     }
 

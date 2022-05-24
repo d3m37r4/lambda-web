@@ -24,13 +24,8 @@ class GameServerActionsController extends Controller
     {
         $response = array();
         $server->max_players = $request->input('max_players');
-        $server->map_id = Map::firstOrCreate(
-            ['name' => $request->input('map')],
-            ['name' => $request->input('map')]
-        )->id;
-
+        $server->map_id = Map::firstOrCreate(['name' => $request->input('map')])->id;
         $response = Arr::add($response, 'map', $server->map_id);
-
         $nextUpdate = now()->addHours(12)->timestamp;
 
         if ($request->boolean('update_reasons')) {

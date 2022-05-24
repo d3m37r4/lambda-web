@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @method static firstOrNew(array $array, array $array1)
  * @method static find(mixed $input)
- * @method static where(array[] $array)
+ * @method static where(array $array)
  * @method static select(string $string)
  * @property int id
  */
