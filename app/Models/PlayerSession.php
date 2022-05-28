@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static where(array $array)
  * @property Carbon created_at
  * @property Carbon disconnected_at
+ * @property Carbon time
  */
 class PlayerSession extends Model
 {

@@ -146,9 +146,9 @@ class Server extends Model
     /**
      * Gets players available for a specific server.
      *
-     * @return HasMany
+     * @return mixed
      */
-    public function players(): HasMany
+    public function players()
     {
         return $this->hasMany(Player::class);
     }

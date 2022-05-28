@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @method static firstOrNew(array $array, array $array1)
+ * @method static firstOrNew(array $array, array $array)
  * @method static find(mixed $input)
  * @method static where(array $array)
  * @method static select(string $string)
  * @property int id
+ * @property string name
+ * @property mixed active_session
  */
 class Player extends Model
 {
@@ -39,6 +41,7 @@ class Player extends Model
      * @var array
      */
     protected $appends = [
+        'active_session',
         'session_time',
         'connection_at'
     ];
@@ -79,7 +82,7 @@ class Player extends Model
      *
      * @return mixed
      */
-    public function active_session()
+    public function getActiveSessionAttribute()
     {
         return PlayerSession::where([
             ['player_id', $this->id],
@@ -97,7 +100,7 @@ class Player extends Model
      */
     public function getSessionTimeAttribute(): string
     {
-        return $this->active_session()->time;
+        return $this->active_session->time;
     }
 
     /**
@@ -107,6 +110,6 @@ class Player extends Model
      */
     public function getConnectedAtAttribute(): Carbon
     {
-        return $this->active_session()->created_at;
+        return $this->active_session->created_at;
     }
 }
