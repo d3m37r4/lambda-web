@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static where(array $array)
  * @method static select(string $string)
  * @property int id
+ * @property int server_id
  * @property string name
  * @property mixed active_session
  */

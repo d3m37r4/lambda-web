@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\API\GameServerAuthController;
 use App\Http\Controllers\API\GameServerActionsController;
-use App\Http\Controllers\API\PlayerController;
+use App\Http\Controllers\API\GameServerPlayersActionsController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'servers'], function () {
@@ -14,8 +14,8 @@ Route::group(['prefix' => 'servers'], function () {
         Route::post('info', [GameServerActionsController::class, 'info']);
         Route::post('ping', [GameServerActionsController::class, 'ping']);
         Route::group(['prefix' => 'players'], function () {
-            Route::post('connect', [PlayerController::class, 'connect']);
-            Route::post('{player}/disconnect', [PlayerController::class, 'disconnect']);
+            Route::post('connect', [GameServerPlayersActionsController::class, 'connect']);
+            Route::post('{player}/disconnect', [GameServerPlayersActionsController::class, 'disconnect']);
         });
     });
 });
