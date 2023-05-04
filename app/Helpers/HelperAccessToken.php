@@ -2,22 +2,33 @@
 
 namespace App\Helpers;
 
-use App\Models\AccessToken;
 use Str;
+use App\Models\AccessToken;
+use Illuminate\Support\Carbon;
 
 class HelperAccessToken
 {
     /**
      * Generate a unique access token for server.
      *
-     * @param $lenght
      * @return string
      */
-    public static function generateAccessToken($lenght): string
+    public static function generateToken(): string
     {
         do {
-            $token = Str::random($lenght);
+            $token = Str::random(AccessToken::MAX_ACCESS_TOKEN_LENGTH);
         } while (AccessToken::where('token', $token)->exists());
+
         return $token;
+    }
+
+    /**
+     * Creates the expiration date of the access token.
+     *
+     * @return Carbon
+     */
+    public static function createExpiresDate(): Carbon
+    {
+        return now()->addHours(AccessToken::ACCESS_TOKEN_LITE_TIME);
     }
 }

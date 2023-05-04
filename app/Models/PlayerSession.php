@@ -12,8 +12,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static find(mixed $input)
  * @method static create(array $array)
  * @method static where(array $array)
+ * @property int id
+ * @property int server_id
+ * @property string status
  * @property Carbon created_at
  * @property Carbon disconnected_at
+ * @property Carbon time
  */
 class PlayerSession extends Model
 {
@@ -78,6 +82,18 @@ class PlayerSession extends Model
     public function server(): BelongsTo
     {
         return $this->belongsTo(Server::class);
+    }
+
+    /**
+     * Closes the specified session.
+     *
+     * @return void
+     */
+    public function close()
+    {
+        $this->status = PlayerSession::STATUS_OFFLINE;
+        $this->disconnected_at = now();
+        $this->save();
     }
 
     /**

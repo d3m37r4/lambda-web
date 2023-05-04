@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Map;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ class CreateMapsTable extends Migration
     {
         Schema::create('maps', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name', Map::MAX_MAPNAME_LENGTH)->unique();
             $table->timestamps();
         });
     }

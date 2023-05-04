@@ -7,12 +7,12 @@ alertList.forEach(function (alert) {
 const alertHidingDelay = 2000;  // Delay before hiding alert
 document.addEventListener("DOMContentLoaded", function() {
     // Hide alert after a specified time
-    let alert = mdb.Alert.getInstance(document.querySelector('#alert'));
-    if (alert) {
-        setTimeout(() => {
-            alert.close();
-        }, alertHidingDelay);
-    }
+    // let alert = mdb.Alert.getInstance(document.querySelector('#alert'));
+    // if (alert) {
+    //     setTimeout(() => {
+    //         alert.close();
+    //     }, alertHidingDelay);
+    // }
 });
 
 // Generate token

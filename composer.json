@@ -10,10 +10,14 @@
     ],
     "keywords": [
         "web",
-        "amxx",
+        "php",
+        "cms",
         "goldsrc",
+        "cs",
+        "panel",
         "laravel",
-        "cms"
+        "webapp",
+        "management"
     ],
     "license": "MIT",
     "require": {

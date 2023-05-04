@@ -3,42 +3,49 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\AccessToken;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Models\AccessToken;
-use App\Exceptions\InvalidAccessTokenException;
+use App\Exceptions\GameServerApiException;
 
 class AccessTokenMiddleware
 {
     /**
-     * Handle an incoming request.
+     * Handle an incoming request from the game server.
      *
      * @param Request $request
      * @param Closure $next
      * @return mixed
-     * @throws InvalidAccessTokenException
+     * @throws GameServerApiException
      */
     public function handle(Request $request, Closure $next)
     {
-        $accessTokenString = $request->header('X-Access-Token');
-        if (empty($accessTokenString)) {
-            throw new InvalidAccessTokenException('Access token required.', JsonResponse::HTTP_BAD_REQUEST);
-        }
+        $token = $this->getAccessToken($request);
+        $server = $token->server();
 
-        $accessToken = AccessToken::where('token', $accessTokenString)->firstOr(function () {
-            throw new InvalidAccessTokenException('Invalid token.', JsonResponse::HTTP_NOT_FOUND);
-        });
-
-        $server = $accessToken->server;
-
-        // Should request ip be checked against server ip?
-        if ($accessToken->expires_in <= now()->timestamp) {
+        if ($token->expires_in <= now()->timestamp) {
             $server->update(['active' => false]);
-            throw new InvalidAccessTokenException('Bad access token.', JsonResponse::HTTP_FORBIDDEN);
+            throw new GameServerApiException('Bad access token.', JsonResponse::HTTP_FORBIDDEN);
         }
-
-        $request->attributes->set('server_id', $server->id);
 
         return $next($request);
+    }
+
+    /**
+     * Gets an instance of access token model based on request.
+     *
+     * @param Request $request
+     * @return AccessToken
+     * @throws GameServerApiException
+     */
+    protected function getAccessToken(Request $request): AccessToken
+    {
+        if (empty($request->header('X-Access-Token'))) {
+            return throw new GameServerApiException('Access token required.', JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return AccessToken::where('token', $request->header('X-Access-Token'))->firstOr(function () {
+            return throw new GameServerApiException('Invalid access token.', JsonResponse::HTTP_NOT_FOUND);
+        });
     }
 }
