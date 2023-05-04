@@ -15,6 +15,7 @@ Route::group(['prefix' => 'servers'], function () {
         Route::post('ping', [GameServerActionsController::class, 'ping']);
         Route::group(['prefix' => 'players'], function () {
             Route::post('connect', [GameServerPlayersActionsController::class, 'connect']);
+            Route::post('{player}/assign', [GameServerPlayersActionsController::class, 'assign']);
             Route::post('{player}/disconnect', [GameServerPlayersActionsController::class, 'disconnect']);
         });
     });

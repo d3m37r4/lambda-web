@@ -38,6 +38,19 @@ class GameServerPlayersActionsController extends Controller
     }
 
     /**
+     * Assigns a user profile to the game account.
+     *
+     * @param Request $request
+     * @param Server $server
+     * @param Player $player
+     * @return JsonResponse
+     */
+    public function assign(Request $request, Server $server, Player $player): JsonResponse
+    {
+
+    }
+
+    /**
      * Updates information about disconnected player.
      *
      * @param Request $request
