@@ -2,22 +2,30 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @method static create(array $array)
  * @method static where(string $string, string $token)
- * @method static updateOrCreate(array $array, array $array1)
+ * @method static updateOrCreate(array $array)
+ * @property Carbon expires_in
  */
 class AccessToken extends Model
 {
     /**
-     * The attributes that aren't mass assignable.
+     * The maximum buffer size required to store a access token.
      *
-     * @var array
+     * @var int
      */
-    protected $guarded = [];
+    const MAX_ACCESS_TOKEN_LENGTH = 64;
+
+    /**
+     * Lifetime of the access token, expressed in hours.
+     *
+     * @var int
+     */
+    const ACCESS_TOKEN_LITE_TIME = 64;
 
     /**
      * Indicates if the model should be timestamped.
@@ -27,20 +35,33 @@ class AccessToken extends Model
     public $timestamps = false;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['token', 'server_id', 'expires_in'];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
      * @var array
      */
     protected $dates = ['expires_in'];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
      * @var array
      */
-    protected $hidden = ['id', 'server_id'];
+    protected $hidden = ['id'];
 
     /**
+     * The attributes that should be cast.
+     *
      * @var array
      */
     protected $casts = [
-        'expires_in' => 'timestamp',
+        'expires_in' => 'timestamp'
     ];
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-class ServerInfoRequest extends ApiRequest
+class GameServerInfoRequest extends GameServerApiRequest
 {
     /**
      * Get the validation rules that apply to the request.

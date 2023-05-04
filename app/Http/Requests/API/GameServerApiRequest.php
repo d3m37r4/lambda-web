@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Response;
 
-abstract class ApiRequest extends FormRequest
+abstract class GameServerApiRequest extends FormRequest
 {
     /**
      * Determine if the game server is authorized to make this request.
@@ -30,10 +30,7 @@ abstract class ApiRequest extends FormRequest
     protected function failedValidation(Validator $validator): array
     {
         throw new HttpResponseException(
-            Response::json([
-                'message' => 'The given data was invalid.',
-                'errors' => $validator->errors()
-            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            Response::json(['errors' => $validator->errors()], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
         );
     }
 }

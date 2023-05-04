@@ -68,6 +68,11 @@ class Kernel extends HttpKernel
             'throttle:api',
             SubstituteBindings::class,
         ],
+
+        'game-server-api' => [
+            // TODO: Add a limiter for game server api.
+            SubstituteBindings::class,
+        ],
     ];
 
     /**
