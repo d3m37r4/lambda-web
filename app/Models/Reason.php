@@ -25,23 +25,6 @@ class Reason extends Model
     /**
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
-
-//    /**
-//     * @var array
-//     */
-//    protected $casts = [
-//        'server_id' => 'int',
-//        'title' => 'string',
-//        'overall' => 'bool',
-//        'menu' => 'bool',
-//        'active' => 'bool',
-//        'time_for_humans' => 'string',
-//    ];
-
-    /**
-     * @var array
-     */
     protected $hidden = ['server_id', /*'overall', 'active',*/'created_at', 'updated_at'];
 
     /**

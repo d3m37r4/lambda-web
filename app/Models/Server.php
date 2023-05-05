@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
@@ -58,11 +58,6 @@ class Server extends Model
         'max_players',
         'active'
     ];
-
-    /**
-     * @var array
-     */
-    protected $dates = ['created_at', 'updated_at'];
 
     /**
      * @var array

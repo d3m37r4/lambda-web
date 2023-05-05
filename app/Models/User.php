@@ -3,7 +3,7 @@
 namespace App\Models;
 
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -94,11 +94,6 @@ class User extends Authenticatable
         'birth_date',
         'biography'
     ];
-
-    /**
-     * @var array
-     */
-    protected $dates = ['created_at', 'updated_at', 'birth_date'];
 
     /**
      * The attributes that should be hidden for arrays.

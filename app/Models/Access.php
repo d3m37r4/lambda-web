@@ -19,11 +19,6 @@ class Access extends Model
     /**
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
-
-    /**
-     * @var array
-     */
     protected $casts = [
         'server_id' => 'int',
         'key' => 'string',

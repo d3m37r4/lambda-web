@@ -36,11 +36,6 @@ class Player extends Model
     /**
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
-
-    /**
-     * @var array
-     */
     protected $appends = [
         'active_session',
         'session_time',

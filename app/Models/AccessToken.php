@@ -42,13 +42,6 @@ class AccessToken extends Model
     protected $fillable = ['token', 'server_id', 'expires_in'];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['expires_in'];
-
-    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array

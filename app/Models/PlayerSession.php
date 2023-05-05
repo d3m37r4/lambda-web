@@ -41,11 +41,6 @@ class PlayerSession extends Model
     /**
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at', 'disconnected_at'];
-
-    /**
-     * @var array
-     */
     protected $casts = [
         'player_id' => 'int',
         'server_id' => 'int'
