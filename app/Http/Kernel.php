@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -60,6 +61,7 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+            HandleInertiaRequests::class,
         ],
 
         'api' => [
