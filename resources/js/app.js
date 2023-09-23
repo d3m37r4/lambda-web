@@ -1,7 +1,10 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
+
 import AppLayout from './Layouts/Main.vue'
 import {ZiggyVue} from '../../vendor/tightenco/ziggy/dist/vue.m'
+
+import '../css/app.css';
 
 createInertiaApp({
     resolve: name => {
