@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 
-Route::inertia('/', 'Main');
+Route::inertia('/', 'Home');
 //Route::get('/', function () {
 //    return view('welcome');
 //});
