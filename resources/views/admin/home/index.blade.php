@@ -18,7 +18,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered">
 
-                        @foreach($envs as $env)
+                        @foreach($envSettings as $env)
                             <tr>
                                 <td width="120px">{{ $env['name'] }}</td>
                                 <td>{{ $env['value'] }}</td>
