@@ -1,12 +1,15 @@
-import { createApp, h } from 'vue'
-import { createInertiaApp } from '@inertiajs/vue3'
-
-import AppLayout from './Layouts/Main.vue'
-import {ZiggyVue} from '../../vendor/tightenco/ziggy/dist/vue.m'
-
 import '../css/app.css';
 
+import { createApp, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
+
+import AppLayout from './Layouts/Main.vue'
+
+const appName = import.meta.env.VITE_APP_NAME || 'Lambda';
+
 createInertiaApp({
+    title: title => title ? `${title} - ${appName}` : `${appName}`,
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
         let page = pages[`./Pages/${name}.vue`]
