@@ -6,7 +6,11 @@ module.exports = {
         "./resources/**/*.vue",
     ],
     theme: {
-        extend: {},
+        extend: {
+            gridTemplateRows: {
+              'layout': 'auto 1fr auto',
+            },
+        },
     },
     plugins: [
         require("daisyui"),
