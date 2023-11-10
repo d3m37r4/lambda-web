@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function index() {
         $usersCount = User::all()->count();
 
-        $envs = [
+        $envSettings = [
             ['name' => 'PHP version',       'value' => 'PHP/'.PHP_VERSION],
             ['name' => 'Laravel version',   'value' => app()->version()],
             ['name' => 'CGI',               'value' => php_sapi_name()],
@@ -29,6 +29,9 @@ class HomeController extends Controller
             ['name' => 'URL',               'value' => config('app.url')],
         ];
 
-        return view('admin.home.index', compact('usersCount', 'envs'));
+        return inertia('Dashboard/Home', [
+            'users_count' => $usersCount,
+            'env_settings' => $envSettings,
+        ]);
     }
 }
