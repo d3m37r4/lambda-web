@@ -18,6 +18,7 @@
 <script>
 import DashboardLayout from '@/Layouts/Dashboard.vue'
 import { Head } from '@inertiajs/vue3'
+
 export default {
     components: {
         Head,
