@@ -12,8 +12,8 @@ use App\Http\Controllers\Admin\PlayersManagementController;
 
 Route::group([
     'middleware' => ['auth','can:enter_control_panel'],
-    'prefix' => env('APP_ADMIN_DIR'),
-    'as' => 'admin.',
+    'prefix' => 'dashboard',
+    'as' => 'dashboard.',
 ], function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::middleware([
