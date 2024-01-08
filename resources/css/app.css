@@ -10,7 +10,7 @@
 
 @layer components {
     .navbar {
-        @apply bg-base-300 justify-between rounded-box h-14 mt-2 sticky top-0
+        @apply bg-base-300 justify-between rounded-box h-14 mt-2 sticky top-0 z-50
     }
     .footer {
         @apply justify-between border-t border-neutral px-2 p-4 mt-10
@@ -25,12 +25,8 @@
         @apply bg-base-300 text-orange-500;
     }
     .menu a {
-        @apply hover:bg-base-300 hover:text-orange-500
+        @apply hover:bg-base-200 hover:text-orange-500
     }
-}
-
-.navbar-content {
-    @apply inline-flex items-center
 }
 
 .footer-content {
