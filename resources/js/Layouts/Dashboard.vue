@@ -1,11 +1,13 @@
 <template>
     <div class="max-w-screen-xl mx-auto h-screen grid grid-rows-layout">
-        <Navbar/>
+        <Navbar />
         <div>
-            <Breadcrumbs/>
+            <Breadcrumbs />
             <main class="lg:flex">
-                <Sidebar/>
-                <div class="w-auto">
+                <div class="w-1/5">
+                    <Sidebar :url="url()" />
+                </div>
+                <div class="w-4/5">
                     <slot />
                 </div>
             </main>
@@ -15,11 +17,17 @@
 </template>
 
 <script>
-import Navbar from '@/Components/Navbar.vue'
-import Breadcrumbs from "@/Components/Breadcrumbs.vue"
-import Sidebar from '@/Components/Dashboard/Sidebar.vue'
-import Footer from '@/Components/Footer.vue'
+import Navbar from '@/Components/Navbar.vue';
+import Breadcrumbs from "@/Components/Breadcrumbs.vue";
+import Sidebar from '@/Components/Dashboard/Sidebar.vue';
+import Footer from '@/Components/Footer.vue';
+
 export default {
-    components: { Navbar, Breadcrumbs, Sidebar, Footer }
+    components: { Navbar, Breadcrumbs, Sidebar, Footer },
+    methods: {
+        url() {
+            return location.pathname;
+        },
+    },
 }
 </script>

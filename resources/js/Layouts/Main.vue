@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import Navbar from '@/Components/Navbar.vue'
-import Breadcrumbs from "@/Components/Breadcrumbs.vue";
-import Footer from '@/Components/Footer.vue'
+import Navbar from '@/Components/Navbar.vue';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import Footer from '@/Components/Footer.vue';
 export default {
     components: { Navbar, Breadcrumbs, Footer }
 }

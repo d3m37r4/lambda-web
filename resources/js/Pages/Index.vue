@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import GameServers from "@/Components/GameServers.vue";
-import News from "@/Components/News.vue";
+import GameServers from '@/Components/GameServers.vue';
+import News from '@/Components/News.vue';
 export default {
     components: { GameServers, News },
 }

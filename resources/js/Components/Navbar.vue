@@ -1,28 +1,21 @@
-<script setup>
-    import { Link } from '@inertiajs/vue3';
-</script>
-
 <template>
     <div class="navbar">
-        <div class="navbar-content">
-            <Link href="/" class="btn normal-case text-xl text-orange-500">
-                Lambda
-            </Link>
+        <div>
+            <Link href="/" class="btn normal-case text-xl text-orange-500">Lambda</Link>
             <ul class="inline-flex items-center ps-2">
-                <li><a class="inline-block py-3 px-2 border-b-2 border-transparent hover:text-orange-500 hover:border-orange-500 text-gray-500" href="#">Банлист</a></li>
-                <li><a class="inline-block py-3 px-2 border-b-2 border-transparent hover:text-orange-500 hover:border-orange-500 text-gray-500" href="#">Статистика</a></li>
+                <li><a href="#" class="px-2 hover:text-orange-500">Банлист</a></li>
+                <li><a href="#" class="px-2 hover:text-orange-500">Статистика</a></li>
             </ul>
         </div>
-        <div class="navbar-content">
+        <div>
+            <DarkModeToggleSwitch />
             <template v-if="$page.props.auth.user">
                 <div class="dropdown">
-                    <label tabindex="0" class="btn focus:btn-outline focus:text-orange-500 normal-case text-orange-500 ml-2">
-                        <span>Профиль</span>
-                        <svg class="h-2 w-2 fill-current inline-block" viewBox="0 0 2048 2048">
-                            <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
-                        </svg>
+                    <label tabindex="0" class="btn normal-case ml-2">
+                        Профиль
+                        <svg class="h-2 w-2 fill-current inline-block" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
                     </label>
-                    <div tabindex="0" class="dropdown-content z-[1] menu bg-base-300 p-4 shadow drop-shadow-xl divide-y divide-neutral rounded-box w-52">
+                    <div tabindex="0" class="dropdown-content z-[1] text-sm bg-base-300 p-4 shadow drop-shadow-xl divide-y divide-neutral rounded-box w-52">
                         <div class="flex items-center">
                             <div class="flex items-center mr-auto space-x-2 pb-2">
                                 <div class="avatar placeholder">
@@ -32,19 +25,19 @@
                                 </div>
                                 <div class="flex flex-col space-y-2">
                                     <p class="truncate">{{ $page.props.auth.user.login }}</p>
-                                    <div class="badge badge-secondary rounded">{{ $page.props.auth.user.role_name }}</div>
+                                    <div class="badge badge-secondary rounded">{{ $page.props.auth.user.role }}</div>
                                 </div>
                             </div>
                         </div>
                         <div class="py-2">
                             <nav class="grid gap-3">
-                                <Link :href="route('dashboard.index')" class="flex items-center space-x-3 text-gray-500 focus:outline-none">
+                                <Link :href="route('dashboard.index')" class="flex items-center space-x-2 hover:text-orange-500">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M3 5C3 3.89543 3.89543 3 5 3H9C10.1046 3 11 3.89543 11 5V9C11 10.1046 10.1046 11 9 11H5C3.89543 11 3 10.1046 3 9V5ZM9 5H5V9H9V5Z"/><path d="M3 15C3 13.8954 3.89543 13 5 13H9C10.1046 13 11 13.8954 11 15V19C11 20.1046 10.1046 21 9 21H5C3.89543 21 3 20.1046 3 19V15ZM9 15H5V19H9V15Z"/><path d="M13 5C13 3.89543 13.8954 3 15 3H19C20.1046 3 21 3.89543 21 5V9C21 10.1046 20.1046 11 19 11H15C13.8954 11 13 10.1046 13 9V5ZM19 5H15V9H19V5Z"/><path d="M13 15C13 13.8954 13.8954 13 15 13H19C20.1046 13 21 13.8954 21 15V19C21 20.1046 20.1046 21 19 21H15C13.8954 21 13 20.1046 13 19V15ZM19 15H15V19H19V15Z"/>
                                     </svg>
                                     <span>Панель управления</span>
                                 </Link>
-                                <Link :href="route('profile.edit')" class="flex items-center space-x-3 text-gray-500 focus:outline-none">
+                                <Link :href="route('profile.edit')" class="flex items-center space-x-2 hover:text-orange-500">
                                     <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                         <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
@@ -52,7 +45,7 @@
                                     </svg>
                                     <span>Профиль</span>
                                 </Link>
-                                <a href="/" class="flex items-center space-x-3 text-gray-500 focus:outline-none">
+                                <a href="/" class="flex items-center space-x-2 hover:text-orange-500">
                                     <svg class="w-5 h-5" viewBox="0 0 35 35" fill="currentColor">
                                         <path d="M13.2,18.456H8.475a1.25,1.25,0,1,1,0-2.5H13.2a1.25,1.25,0,0,1,0,2.5Z"/>
                                         <path d="M10.839,20.82a1.25,1.25,0,0,1-1.25-1.25V14.841a1.25,1.25,0,0,1,2.5,0V19.57A1.25,1.25,0,0,1,10.839,20.82Z"/>
@@ -68,7 +61,7 @@
                             </nav>
                         </div>
                         <div class="pt-2">
-                            <Link :href="route('logout')" method="post" class="flex items-center space-x-3 text-gray-500 ">
+                            <Link :href="route('logout')" method="post" class="flex items-center space-x-2 hover:text-orange-500">
                                 <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
@@ -88,3 +81,12 @@
         </div>
     </div>
 </template>
+
+<script>
+import DarkModeToggleSwitch from '@/Components/DarkModeToggleSwitch.vue';
+import { Link } from '@inertiajs/vue3';
+
+export default {
+    components: { DarkModeToggleSwitch, Link }
+}
+</script>
