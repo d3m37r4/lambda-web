@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Request;
-use Session;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Country;
@@ -12,6 +10,8 @@ use App\Http\Requests\Admin\AdminStoreUserRequest;
 use App\Http\Requests\Admin\AdminUpdateUserRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 class UsersManagementController extends Controller
 {
@@ -43,16 +43,20 @@ class UsersManagementController extends Controller
     /**
      * Display a listing of users
      *
-     * @return View
+     * @return Response|ResponseFactory
      */
-    public function index(): View
+    public function index()
     {
-        $users = User::paginate(env('PAGINATION_SIZE'));
-        $roles = Role::all();
-
-        Session::put('redirect_url', Request::fullUrl());
-
-        return view('admin.users.index', compact('users', 'roles'));
+        return inertia('Dashboard/Users/Index', [
+            'title' => 'Управление пользователями',
+            'users' => User::paginate(env('PAGINATION_SIZE'))->through(fn($user) => [
+                'id' => $user->id,
+                'login' => $user->login,
+                'email' => $user->email,
+                'role' => $user->role,
+                'created_at' => $user->created_at->format('d.m.Y - H:i:s')
+            ])
+        ]);
     }
 
     /**
