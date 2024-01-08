@@ -24,6 +24,7 @@ Carbon::setToStringFormat('d.m.Y - H:i:s');
  * @property int country_id
  * @property string email
  * @property string login
+ * @property string role
  * @property string full_name
  * @property string password
  * @property Carbon birth_date
@@ -109,7 +110,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
-        'role_name',
+        'role',
         'age'
     ];
 
@@ -121,7 +122,7 @@ class User extends Authenticatable
     protected $casts = [
         'full_name' => 'string',
         'email_verified_at' => 'datetime',
-        'role_name' => 'string',
+        'role' => 'string',
     ];
 
     /**
@@ -168,7 +169,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getRoleNameAttribute(): string
+    public function getRoleAttribute(): string
     {
         return $this->getRoleNames()->first();
     }
