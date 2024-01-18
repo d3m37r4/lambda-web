@@ -5,15 +5,9 @@
         <!--            <a href="#" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>-->
         <!--        </div>-->
         <div>
-            <!--                <p class="text-sm">-->
-            <!--                    Showing-->
-            <!--                    <span class="font-medium">1</span>-->
-            <!--                    to-->
-            <!--                    <span class="font-medium">10</span>-->
-            <!--                    of-->
-            <!--                    <span class="font-medium">97</span>-->
-            <!--                    results-->
-            <!--                </p>-->
+            <p class="text-sm">
+                {{ "Показано с" }} {{ items.from }} {{ 'по' }} {{ items.to }} {{ 'из' }} {{ items.total }} {{ 'записей.' }}
+            </p>
         </div>
         <div class="join">
             <template v-for="(link, key) in links">
@@ -29,5 +23,6 @@
 
     defineProps({
         links: Array,
-    })
+        items: Object,
+    });
 </script>
