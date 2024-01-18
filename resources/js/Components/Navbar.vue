@@ -11,9 +11,9 @@
             <DarkModeToggleSwitch />
             <template v-if="$page.props.auth.user">
                 <div class="dropdown">
-                    <label tabindex="0" class="btn normal-case ml-2">
+                    <label tabindex="0" class="btn btn-ghost normal-case ml-2">
                         Профиль
-                        <svg class="h-2 w-2 fill-current inline-block" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>
                     </label>
                     <div tabindex="0" class="dropdown-content z-[1] text-sm bg-base-300 p-4 shadow drop-shadow-xl divide-y divide-neutral rounded-box w-52">
                         <div class="flex items-center">
