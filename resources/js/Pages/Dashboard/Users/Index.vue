@@ -31,7 +31,7 @@ const selectAll = (users) => {
     <Head :title="title" />
     <div class="ml-4">
         <h1 class="mb-4 text-xl">{{ title }}</h1>
-        <div class=" flex flex-1 items-center justify-between mb-4">
+        <div class="flex flex-1 items-center justify-between mb-4">
             <div>
                 <div class="join">
                     <div>
