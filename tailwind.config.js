@@ -9,6 +9,9 @@ module.exports = {
         './resources/js/**/*.vue',
     ],
     theme: {
+        container: {
+            center: true,
+        },
         extend: {
             gridTemplateRows: {
                 'layout': 'auto 1fr auto',
