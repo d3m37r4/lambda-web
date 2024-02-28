@@ -3,16 +3,14 @@
 namespace App\Models;
 
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Notifications\Notifiable;
-
-Carbon::setToStringFormat('d.m.Y - H:i:s');
 
 /**
  * @method static paginate(mixed $env)
@@ -50,7 +48,7 @@ class User extends Authenticatable
 
     /**
      * Check password has not been compromised in a public password data breach leak.
-     * This constant determines how many times the password password must appear in the same data leak to be considered compromised.
+     * This constant determines how many times the password must appear in the same data leak to be considered compromised.
      *
      * @note If the value is set to less than or equal to 0, the check is not performed.
      *
@@ -88,6 +86,7 @@ class User extends Authenticatable
     protected $fillable = [
         'login',
         'email',
+        'role',
         'password',
         'country_id',
         'full_name',
@@ -120,9 +119,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'created_at' => 'datetime:d.m.Y - H:i:s',
+        'password' => 'hashed',
         'full_name' => 'string',
         'email_verified_at' => 'datetime',
-        'role' => 'string',
+        'role' => 'string'
     ];
 
     /**
@@ -148,30 +149,33 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isCountrySpecified(): bool {
-        return (Country::find($this->country_id) ? true : false);
+    public function isCountrySpecified(): bool
+    {
+        return (bool)Country::find($this->country_id);
     }
 
     /**
      * Sets a hash instead of a valid password.
      *
-     * @param $password
+     * @return Attribute
      */
-    public function setPasswordAttribute($password)
+    protected function password(): Attribute
     {
-        if (!empty($password)) {
-            $this->attributes['password'] = Hash::make($password);
-        }
+        return Attribute::make(
+            set: fn (string $value) => bcrypt($value)
+        );
     }
 
     /**
      * Gets role name of a specific user.
      *
-     * @return string
+     * @return Attribute
      */
-    public function getRoleAttribute(): string
+    protected function role(): Attribute
     {
-        return $this->getRoleNames()->first();
+        return Attribute::make(
+            get: fn () => $this->getRoleNames()->first()
+        );
     }
 
     /**
@@ -204,12 +208,11 @@ class User extends Authenticatable
         return isset($this->birth_date) ? CarbonInterval::years($this->birth_date->age) : 'Не указано';
     }
 
-
-//    /**
-//     * Gets full name of a specific user.
-//     *
-//     * @return string
-//     */
+    /**
+     * Gets full name of a specific user.
+     *
+     * @return string
+     */
 //    public function getFullNameAttribute(): string
 //    {
 //        return $this->full_name ?? 'Не указано';
