@@ -75,8 +75,8 @@
                 </div>
             </template>
             <template v-else>
-                <Link :href="route('login')" class="btn focus:btn-outline focus:text-orange-500 normal-case text-orange-500 ml-2">Авторизоваться</Link>
-                <Link :href="route('register')" class="btn bg-orange-500 normal-case text-white ml-2">Зарегистрироваться</Link>
+                <Link :href="route('login')" class="btn focus:btn-outline focus:text-orange-500 normal-case text-orange-500 ml-2">{{ ('Войти') }}</Link>
+                <Link :href="route('register')" class="btn bg-orange-500 normal-case text-white ml-2">{{ ('Регистрация') }}</Link>
             </template>
         </div>
     </div>

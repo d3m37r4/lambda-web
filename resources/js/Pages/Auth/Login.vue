@@ -26,7 +26,6 @@ const submit = () => {
             {{ status }}
         </div>
         <div class="p-4 bg-base-200 rounded-box">
-            <h1 class="text-3xl font-semibold text-center text-orange-500">LAMBDA</h1>
             <form @submit.prevent="submit" class="space-y-4">
                 <div>
                     <label class="label">
