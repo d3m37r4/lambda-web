@@ -10,8 +10,6 @@ use App\Http\Requests\Admin\AdminStoreUserRequest;
 use App\Http\Requests\Admin\AdminUpdateUserRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Inertia\Response;
-use Inertia\ResponseFactory;
 
 class UsersManagementController extends Controller
 {
@@ -43,32 +41,30 @@ class UsersManagementController extends Controller
     /**
      * Display a listing of users
      *
-     * @return Response|ResponseFactory
      */
     public function index()
     {
         return inertia('Dashboard/Users/Index', [
             'title' => 'Управление пользователями',
-            'users' => User::paginate(env('PAGINATION_SIZE'))->through(fn($user) => [
+            'users' => User::paginate(env('PAGINATION_SIZE'))->through(fn ($user) => [
                 'id' => $user->id,
                 'login' => $user->login,
                 'email' => $user->email,
                 'role' => $user->role,
-                'created_at' => $user->created_at->format('d.m.Y - H:i:s')
+                'created_at' => $user->created_at->format('d.m.Y - H:i:s'),
             ])
         ]);
     }
 
     /**
      * Show the form for creating a new user.
-     *
-     * @return View
      */
-    public function create(): View
+    public function create()
     {
-        $roles = Role::all();
-
-        return view('admin.users.create', compact('roles'));
+        return inertia('Dashboard/Users/Create', [
+            'title' => 'Новый пользователь',
+            'roles' => Role::all()
+        ]);
     }
 
     /**
@@ -85,7 +81,7 @@ class UsersManagementController extends Controller
 
         return redirect(session('redirect_url'))->with([
             'status' => 'success',
-            'message' => "Пользователь {$user->login} успешно создан!"
+            'message' => "Пользователь $user->login успешно создан!"
         ]);
     }
 
@@ -131,7 +127,7 @@ class UsersManagementController extends Controller
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о пользователе {$user->login} была успешно обновлена!"
+            'message' => "Информация о пользователе $user->login была успешно обновлена!"
         ]);
     }
 
@@ -141,13 +137,13 @@ class UsersManagementController extends Controller
      * @param User $user
      * @return RedirectResponse
      */
-    public function destroy(User $user): RedirectResponse
+    public function destroy(User $user)
     {
         $user->delete();
 
         return back()->with([
             'status' => 'success',
-            'message' => "Пользователь {$user->login} был удален!"
+            'message' => "Пользователь $user->login был удален!"
         ]);
     }
 }
