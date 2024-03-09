@@ -10,6 +10,8 @@ use App\Http\Requests\Admin\AdminStoreUserRequest;
 use App\Http\Requests\Admin\AdminUpdateUserRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 class UsersManagementController extends Controller
 {
@@ -40,7 +42,6 @@ class UsersManagementController extends Controller
 
     /**
      * Display a listing of users
-     *
      */
     public function index()
     {
@@ -102,15 +103,17 @@ class UsersManagementController extends Controller
      * Show the form for editing the specified user.
      *
      * @param User $user
-     * @return View
+     * @return Response|ResponseFactory
      */
-    public function edit(User $user): View
+    public function edit(User $user): Response|ResponseFactory
     {
-        $genders = User::GENDERS;
-        $countries = Country::all();
-        $roles = Role::all();
-
-        return view('admin.users.edit', compact('user', 'genders', 'countries',   'roles'));
+        return inertia('Dashboard/Users/Edit', [
+            'title' => 'Редактирование пользователя',
+            'user' => $user,
+            'genders' => User::GENDERS,
+            'countries' => Country::all(),
+            'roles' => Role::all()
+        ]);
     }
 
     /**
