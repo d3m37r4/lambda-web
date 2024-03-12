@@ -31,7 +31,7 @@ const submit = () => {
         <div class="flex flex-1 items-center justify-between mb-4">
             <div><h1 class="text-xl">{{ title }}</h1></div>
             <div>
-                <BackButton :route="route('dashboard.users.index')" />
+                <BackButton :routeBack="route('dashboard.users.index')" />
             </div>
         </div>
         <div class="bg-base-200 rounded-box p-4">

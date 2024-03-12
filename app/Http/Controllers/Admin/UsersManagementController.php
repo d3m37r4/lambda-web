@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Permission;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Country;
@@ -64,7 +65,10 @@ class UsersManagementController extends Controller
     {
         return inertia('Dashboard/Users/Create', [
             'title' => 'Новый пользователь',
-            'roles' => Role::all()
+            'roles' => Role::all(),
+            'permissions' => Permission::all(),
+            'genders' => User::GENDERS,
+            'countries' => Country::all()
         ]);
     }
 
