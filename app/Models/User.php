@@ -59,7 +59,6 @@ class User extends Authenticatable
     const GENDER_NONE = 'gender_none';
     const GENDER_MALE = 'gender_male';
     const GENDER_FEMALE = 'gender_female';
-    const GENDER_X = 'gender_x';
 
     /**
      * @var array
@@ -67,8 +66,7 @@ class User extends Authenticatable
     const GENDERS = [
         User::GENDER_NONE,
         User::GENDER_MALE,
-        User::GENDER_FEMALE,
-        User::GENDER_X
+        User::GENDER_FEMALE
     ];
 
     /**

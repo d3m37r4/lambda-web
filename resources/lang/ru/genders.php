@@ -8,6 +8,5 @@ return [
         User::GENDER_NONE => 'Не указано',
         User::GENDER_MALE => 'Мужской',
         User::GENDER_FEMALE => 'Женский',
-        User::GENDER_X => 'Гендер Х'
     ]
 ];
