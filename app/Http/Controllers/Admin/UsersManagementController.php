@@ -66,7 +66,7 @@ class UsersManagementController extends Controller
         return inertia('Dashboard/Users/Create', [
             'title' => 'Новый пользователь',
             'roles' => Role::all(),
-            'permissions' => Permission::all(),
+//            'permissions' => Permission::all(),
             'genders' => User::GENDERS,
             'countries' => Country::all()
         ]);
@@ -84,7 +84,7 @@ class UsersManagementController extends Controller
         $user = User::create($request->safe()->except('role'));
         $user->assignRole($request->safe()->only('role'));
 
-        return redirect(session('redirect_url'))->with([
+        return back()->with([
             'status' => 'success',
             'message' => "Пользователь $user->login успешно создан!"
         ]);
