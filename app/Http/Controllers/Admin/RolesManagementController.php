@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Request;
-use Session;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Http\Controllers\Controller;
@@ -27,29 +25,31 @@ class RolesManagementController extends Controller
 
     /**
      * Display a listing of the roles.
-     *
-     * @return View
      */
-    public function index(): View
+    public function index()
     {
-        $roles = Role::paginate(env('PAGINATION_SIZE'));
-
-        Session::put('redirect_url', Request::fullUrl());
-
-        return view('admin.roles.index', compact('roles'));
+        return inertia('Dashboard/Roles/Index', [
+            'title' => 'Управление ролями',
+            'roles' => Role::paginate(env('PAGINATION_SIZE'))->through(fn ($role) => [
+                'id' => $role->id,
+                'name' => $role->name,
+                'created_at' => $role->created_at->format('d.m.Y - H:i:s'),
+                'updated_at' => $role->updated_at->format('d.m.Y - H:i:s'),
+            ])
+        ]);
     }
 
     /**
      * Show the form for creating a new role.
-     *
-     * @return View
      */
-    public function create(): View
+    public function create()
     {
-        $permissions = Permission::all();
-
-        return view('admin.roles.create', compact('permissions'));
+        return inertia('Dashboard/Roles/Create', [
+            'title' => 'Новая роль',
+            'permissions' => Permission::all(),
+        ]);
     }
+
 
     /**
      * Store a newly created role in storage.
@@ -62,9 +62,9 @@ class RolesManagementController extends Controller
         $role = Role::create($request->safe()->only('name'))
             ->givePermissionTo($request->safe()->only('permissions'));
 
-        return redirect()->route('admin.roles.index')->with([
+        return back()->with([
             'status' => 'success',
-            'message' => "Новая роль {$role->name} успешно создана!"
+            'message' => "Новая роль $role->name успешно создана!"
         ]);
     }
 
@@ -105,7 +105,7 @@ class RolesManagementController extends Controller
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о роли {$role->name} была успешно обновлена!"
+            'message' => "Информация о роли $role->name была успешно обновлена!"
         ]);
     }
 
@@ -115,13 +115,13 @@ class RolesManagementController extends Controller
      * @param Role $role
      * @return RedirectResponse
      */
-    public function destroy(Role $role): RedirectResponse
+    public function destroy(Role $role)
     {
         $role->delete();
 
         return back()->with([
             'status' => 'success',
-            'message' => "Роль {$role->name} была удалена!"
+            'message' => "Роль $role->name была удалена!"
         ]);
     }
 }
