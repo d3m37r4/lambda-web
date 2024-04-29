@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UsersManagementController;
 use App\Http\Controllers\Admin\RolesManagementController;
-use App\Http\Controllers\Admin\ServersManagementController;
+use App\Http\Controllers\Admin\GameServersManagementController;
 use App\Http\Controllers\Admin\ReasonsManagementController;
 use App\Http\Controllers\Admin\AccessesManagementController;
 use App\Http\Controllers\Admin\AccessGroupsManagementController;
@@ -29,7 +29,7 @@ Route::group([
     Route::middleware([
         'middleware' => 'can:manage_servers'
     ])->group(function () {
-        Route::resource('servers', ServersManagementController::class);
+        Route::resource('servers', GameServersManagementController::class);
         Route::resource('servers.reasons', ReasonsManagementController::class)
             ->except(['index', 'show']);
         Route::resource('servers.accesses', AccessesManagementController::class)

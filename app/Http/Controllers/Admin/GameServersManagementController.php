@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Request;
-use Session;
 use App\Models\Server;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreServerRequest;
@@ -11,20 +9,20 @@ use App\Http\Requests\Admin\UpdateServerRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class ServersManagementController extends Controller
+class GameServersManagementController extends Controller
 {
     /**
      * Display a listing of the servers.
-     *
-     * @return View
      */
-    public function index(): View
+    public function index()
     {
-        $servers = Server::paginate(env('PAGINATION_SIZE'));
-
-        Session::put('redirect_url', Request::fullUrl());
-
-        return view('admin.servers.index', compact('servers'));
+        return inertia('Dashboard/GameServers/Index', [
+            'title' => 'Управление серверами',
+            'users' => Server::paginate(env('PAGINATION_SIZE'))->through(fn ($server) => [
+                'id' => $server->id,
+                'created_at' => $server->created_at->format('d.m.Y - H:i:s'),
+            ])
+        ]);
     }
 
     /**
