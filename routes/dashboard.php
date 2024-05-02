@@ -1,14 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\HomeController;
-use App\Http\Controllers\Admin\UsersManagementController;
-use App\Http\Controllers\Admin\RolesManagementController;
-use App\Http\Controllers\Admin\GameServersManagementController;
-use App\Http\Controllers\Admin\ReasonsManagementController;
-use App\Http\Controllers\Admin\AccessesManagementController;
-use App\Http\Controllers\Admin\AccessGroupsManagementController;
-use App\Http\Controllers\Admin\PlayersManagementController;
+use App\Http\Controllers\Dashboard\HomeController;
+use App\Http\Controllers\Dashboard\UsersManagementController;
+use App\Http\Controllers\Dashboard\RolesManagementController;
+use App\Http\Controllers\Dashboard\GameServersManagementController;
+use App\Http\Controllers\Dashboard\ReasonsManagementController;
+use App\Http\Controllers\Dashboard\AccessesManagementController;
+use App\Http\Controllers\Dashboard\AccessGroupsManagementController;
+use App\Http\Controllers\Dashboard\PlayersManagementController;
 
 Route::group([
     'middleware' => ['auth','can:enter_control_panel'],
