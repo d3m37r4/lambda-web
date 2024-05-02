@@ -2,6 +2,7 @@
 import DashboardLayout from '@/Layouts/Dashboard.vue';
 import Pagination from '@/Components/Pagination.vue';
 import ConfirmDeleteUser from '@/Components/Dashboard/ConfirmDeleteUser.vue';
+import CreateButton from "@/Components/CreateButton.vue";
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -40,36 +41,31 @@ const showModal = (id) => {
     <Head :title="title" />
     <ConfirmDeleteUser v-model="isOpenModal" :id="deletedUser"/>
     <div class="ml-4">
-        <h1 class="mb-4 text-xl">{{ title }}</h1>
-        <div class="flex flex-1 items-center justify-between mb-4">
-            <div>
+        <div class="mx-4">
+            <h1 class="text-xl">{{ title }}</h1>
+            <div class="flex items-center justify-between mt-4">
                 <div class="join">
                     <div>
                         <div>
-                            <input class="input input-sm join-item input-bordered" placeholder="Введите текст..."/>
+                            <input class="input join-item input-bordered" placeholder="Введите текст..."/>
                         </div>
                     </div>
-                    <select class="select select-sm join-item select-bordered">
+                    <select class="select join-item select-bordered">
                         <option disabled selected>Фильтр</option>
                         <option>Логин</option>
                         <option>E-mail</option>
                         <option>Роль</option>
                     </select>
                     <div>
-                        <button class="btn btn-sm join-item btn-neutral">
+                        <button class="btn join-item btn-neutral">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" /></svg>
                         </button>
                     </div>
                 </div>
-            </div>
-            <div>
-                <Link :href="route('dashboard.users.create')" class="btn btn-sm btn-success normal-case">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 640 512"><path d="M624 208h-64v-64c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v64h-64c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h64v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h64c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm-400 48c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg>
-                    {{ 'Новый пользователь' }}
-                </Link>
+                <CreateButton :routeCreate="route('dashboard.users.create')" />
             </div>
         </div>
-        <div class="bg-base-200 rounded-box p-4">
+        <div class="bg-base-200 rounded-box my-4 p-4">
             <div class="overflow-x-auto">
                 <table class="table">
                     <thead>

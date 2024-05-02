@@ -11,8 +11,6 @@ use App\Http\Requests\Admin\AdminStoreUserRequest;
 use App\Http\Requests\Admin\AdminUpdateUserRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Inertia\Response;
-use Inertia\ResponseFactory;
 
 class UsersManagementController extends Controller
 {
@@ -105,18 +103,16 @@ class UsersManagementController extends Controller
 
     /**
      * Show the form for editing the specified user.
-     *
-     * @param User $user
-     * @return Response|ResponseFactory
      */
-    public function edit(User $user): Response|ResponseFactory
+    public function edit(User $user)
     {
         return inertia('Dashboard/Users/Edit', [
-            'title' => 'Редактирование пользователя',
+            'title' => "Редактирование пользователя $user->login",
             'user' => $user,
+            'roles' => Role::all(),
+            'permissions' => Permission::all(),
             'genders' => User::GENDERS,
             'countries' => Country::all(),
-            'roles' => Role::all()
         ]);
     }
 
