@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use Request;
 use App\Models\User;
-use App\Models\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -44,7 +43,7 @@ class UserPolicy
          * To perform actions from control panel.
          */
         if (Request::routeIs('dashboard.users.*')) {
-            if ($user->hasRole(Role::ROLE_OWNER) || $user->hasPermissionTo('manage_users')) {
+            if ($user->hasRole(User::ROLE_OWNER) || $user->hasPermissionTo('manage_users')) {
                 return true;
             }
         }
