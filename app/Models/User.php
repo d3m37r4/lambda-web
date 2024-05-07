@@ -22,7 +22,6 @@ use Illuminate\Notifications\Notifiable;
  * @property int country_id
  * @property string email
  * @property string login
- * @property string role
  * @property string full_name
  * @property string password
  * @property Carbon birth_date
@@ -31,13 +30,6 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles, HasPermissions;
-
-    /**
-     * The name of the field that will be used to log in to the system.
-     *
-     * @var string
-     */
-    const AUTH_FIELD = 'login';
 
     /**
      * Minimum password length.
@@ -70,11 +62,21 @@ class User extends Authenticatable
     ];
 
     /**
+     * Constants defining the names of standard roles in the system.
+     *
+     * @note These constants are used in the system. There may be problems when changing and deleting.
+     */
+    const ROLE_OWNER = 'owner';
+    const ROLE_ADMIN = 'admin';
+    const ROLE_MODER = 'moder';
+    const ROLE_USER = 'user';
+
+    /**
      * The default role that is assigned to the user during registration.
      *
      * @var string
      */
-    const DEFAULT_USER_ROLE = Role::ROLE_USER;
+    const DEFAULT_USER_ROLE = User::ROLE_USER;
 
     /**
      * The attributes that are mass assignable.
@@ -121,8 +123,7 @@ class User extends Authenticatable
         'updated_at' => 'datetime:d.m.Y - H:i:s',
         'password' => 'hashed',
         'full_name' => 'string',
-        'email_verified_at' => 'datetime',
-        'role' => 'string'
+        'email_verified_at' => 'datetime'
     ];
 
     /**
@@ -173,7 +174,7 @@ class User extends Authenticatable
     protected function role(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getRoleNames()->first()
+            get: fn () => $this->roles()->first()
         );
     }
 
