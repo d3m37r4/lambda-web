@@ -36,8 +36,6 @@ class AddFieldsToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->renameColumn('login', 'name');
-//            $table->dropColumn('ip');
-            $table->dropForeign('country_id');
             $table->dropColumn('full_name');
             $table->dropColumn('gender');
             $table->dropColumn('birth_date');
