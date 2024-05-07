@@ -4,6 +4,8 @@ import Pagination from '@/Components/Pagination.vue';
 import ConfirmDeleteRole from '@/Components/Dashboard/ConfirmDeleteRole.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import SearchForm from "@/Components/Dashboard/SearchForm.vue";
+import CreateButton from "@/Components/CreateButton.vue";
 
 defineOptions({
     layout: DashboardLayout
@@ -40,36 +42,14 @@ const showModal = (id) => {
     <Head :title="title" />
     <ConfirmDeleteRole v-model="isOpenModal" :id="deletedRole"/>
     <div class="ml-4">
-        <h1 class="mb-4 text-xl">{{ title }}</h1>
-        <div class="flex flex-1 items-center justify-between mb-4">
-            <div>
-                <div class="join">
-                    <div>
-                        <div>
-                            <input class="input input-sm join-item input-bordered" placeholder="Введите текст..."/>
-                        </div>
-                    </div>
-                    <select class="select select-sm join-item select-bordered">
-                        <option disabled selected>Фильтр</option>
-                        <option>Логин</option>
-                        <option>E-mail</option>
-                        <option>Роль</option>
-                    </select>
-                    <div>
-                        <button class="btn btn-sm join-item btn-neutral">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" /></svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <Link :href="route('dashboard.roles.create')" class="btn btn-sm btn-success normal-case">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 48 48"><path d="M0 0h48v48H0z" fill="none"/><path d="M26 14h-4v8h-8v4h8v8h4v-8h8v-4h-8v-8zM24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16z"/></svg>
-                    {{ 'Добавить' }}
-                </Link>
+        <div class="mx-4">
+            <h1 class="text-xl">{{ title }}</h1>
+            <div class="flex items-center justify-between mt-4">
+                <SearchForm />
+                <CreateButton :routeCreate="route('dashboard.roles.create')" />
             </div>
         </div>
-        <div class="bg-base-200 rounded-box p-4">
+        <div class="bg-base-200 rounded-box my-4 p-4">
             <div class="overflow-x-auto">
                 <table class="table">
                     <thead>

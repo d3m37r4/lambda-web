@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="flex flex-col space-y-2">
                                     <p class="truncate">{{ $page.props.auth.user.login }}</p>
-                                    <div class="badge badge-secondary rounded">{{ $page.props.auth.user.role }}</div>
+                                    <div class="badge badge-secondary rounded">{{ $page.props.auth.user.role.name }}</div>
                                 </div>
                             </div>
                         </div>

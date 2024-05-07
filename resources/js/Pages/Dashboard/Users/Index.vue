@@ -1,5 +1,6 @@
 <script setup>
 import DashboardLayout from '@/Layouts/Dashboard.vue';
+import SearchForm from "@/Components/Dashboard/SearchForm.vue";
 import Pagination from '@/Components/Pagination.vue';
 import ConfirmDeleteUser from '@/Components/Dashboard/ConfirmDeleteUser.vue';
 import CreateButton from "@/Components/CreateButton.vue";
@@ -44,24 +45,7 @@ const showModal = (id) => {
         <div class="mx-4">
             <h1 class="text-xl">{{ title }}</h1>
             <div class="flex items-center justify-between mt-4">
-                <div class="join">
-                    <div>
-                        <div>
-                            <input class="input join-item input-bordered" placeholder="Введите текст..."/>
-                        </div>
-                    </div>
-                    <select class="select join-item select-bordered">
-                        <option disabled selected>Фильтр</option>
-                        <option>Логин</option>
-                        <option>E-mail</option>
-                        <option>Роль</option>
-                    </select>
-                    <div>
-                        <button class="btn join-item btn-neutral">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" /></svg>
-                        </button>
-                    </div>
-                </div>
+                <SearchForm />
                 <CreateButton :routeCreate="route('dashboard.users.create')" />
             </div>
         </div>
@@ -114,7 +98,7 @@ const showModal = (id) => {
                                 </div>
                             </td>
                             <td>
-                                <div class="badge badge-secondary rounded">{{ user.role }}</div>
+                                <div class="badge badge-secondary rounded">{{ user.role.name }}</div>
                             </td>
                             <td>{{ user.created_at }}</td>
                             <th>

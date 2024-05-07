@@ -7,7 +7,6 @@ use App\Models\Permission;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreRoleRequest;
 use App\Http\Requests\Admin\UpdateRoleRequest;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
@@ -33,6 +32,7 @@ class RolesManagementController extends Controller
             'roles' => Role::paginate(env('PAGINATION_SIZE'))->through(fn ($role) => [
                 'id' => $role->id,
                 'name' => $role->name,
+                'permissions' => $role->permissions,
                 'created_at' => $role->created_at->format('d.m.Y - H:i:s'),
                 'updated_at' => $role->updated_at->format('d.m.Y - H:i:s'),
             ])
@@ -50,7 +50,6 @@ class RolesManagementController extends Controller
         ]);
     }
 
-
     /**
      * Store a newly created role in storage.
      *
@@ -60,7 +59,7 @@ class RolesManagementController extends Controller
     public function store(StoreRoleRequest $request): RedirectResponse
     {
         $role = Role::create($request->safe()->only('name'))
-            ->givePermissionTo($request->safe()->only('permissions'));
+            ->syncPermissions($request->safe()->only('permissions'));
 
         return back()->with([
             'status' => 'success',
@@ -80,15 +79,18 @@ class RolesManagementController extends Controller
 
     /**
      * Show the form for editing the specified role.
-     *
-     * @param Role $role
-     * @return View
      */
-    public function edit(Role $role): View
+    public function edit(Role $role)
     {
-        $permissions = Permission::all();
-
-        return view('admin.roles.edit', compact('role', 'permissions'));
+        return inertia('Dashboard/Roles/Edit', [
+            'title' => "Редактирование роли $role->name",
+            'role' => [
+                'id' => $role->id,
+                'name' => $role->name,
+                'permissions' => $role->permissions->pluck(['id'])
+            ],
+            'permissions' => Permission::all()
+        ]);
     }
 
     /**

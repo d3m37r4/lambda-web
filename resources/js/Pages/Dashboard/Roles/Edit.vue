@@ -1,25 +1,26 @@
 <script setup>
 import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import BackButton from "@/Components/BackButton.vue";
-import CreateButton from "@/Components/CreateButton.vue";
 import { ref } from "vue";
+import BackButton from "@/Components/BackButton.vue";
+import UpdateButton from "@/Components/UpdateButton.vue";
 
 defineOptions({
     layout: DashboardLayout
 });
-defineProps({
+
+const props = defineProps({
     title: String,
+    role: Object,
     permissions: Array,
 });
-
 const form = useForm({
-    name: '',
-    permissions: [],
+    name: props.role.name,
+    permissions: props.role.permissions,
 });
+const toggle = ref();
 
-const toggle = ref(false);
-const selectAll = (permissions) => {
+function selectAll(permissions) {
     if(toggle.value) {
         let buffer = [];
         permissions.forEach(function (permissions) {
@@ -31,9 +32,9 @@ const selectAll = (permissions) => {
     }
 }
 
-const store = () => {
-    form.post(route('dashboard.roles.store'));
-};
+function update() {
+    form.put(route('dashboard.roles.update', props.role.id));
+}
 </script>
 
 <template>
@@ -43,7 +44,7 @@ const store = () => {
             <h1 class="text-xl">{{ title }}</h1>
             <BackButton :routeBack="route('dashboard.roles.index')" />
         </div>
-        <form @submit.prevent="store">
+        <form @submit.prevent="update">
             <div class="bg-base-200 rounded-box my-4 p-4">
                 <div class="grid grid-cols-6 gap-x-6">
                     <div class="col-span-3">
@@ -96,7 +97,7 @@ const store = () => {
                 </div>
             </div>
             <div class="flex justify-end m-4">
-                <CreateButton />
+                <UpdateButton />
             </div>
         </form>
     </div>
