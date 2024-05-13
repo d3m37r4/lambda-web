@@ -1,9 +1,9 @@
 <script setup>
 import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { ref } from "vue";
 import BackButton from "@/Components/BackButton.vue";
 import CreateButton from "@/Components/CreateButton.vue";
-import { ref } from "vue";
 
 defineOptions({
     layout: DashboardLayout
@@ -17,9 +17,9 @@ const form = useForm({
     name: '',
     permissions: [],
 });
-
 const toggle = ref(false);
-const selectAll = (permissions) => {
+
+function selectAll(permissions) {
     if(toggle.value) {
         let buffer = [];
         permissions.forEach(function (permissions) {
@@ -31,9 +31,9 @@ const selectAll = (permissions) => {
     }
 }
 
-const store = () => {
+function store() {
     form.post(route('dashboard.roles.store'));
-};
+}
 </script>
 
 <template>
