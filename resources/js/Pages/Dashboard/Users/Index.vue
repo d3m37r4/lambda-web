@@ -86,7 +86,7 @@ const showModal = (id) => {
                                 <div class="flex items-center gap-3">
                                     <div class="avatar">
                                         <div class="mask mask-squircle w-12 h-12">
-                                            <img src="https://daisyui.com/tailwind-css-component-profile-2@56w.png" :alt="user.login" />
+                                            <img src="https://img.daisyui.com/tailwind-css-component-profile-2@56w.png" :alt="user.login" />
                                         </div>
                                     </div>
                                     <div>
@@ -152,14 +152,3 @@ const showModal = (id) => {
         <Pagination :links="users.links" :items="users" />
     </div>
 </template>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-</style>
