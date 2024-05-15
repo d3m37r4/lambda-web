@@ -39,9 +39,13 @@ function store() {
 <template>
     <Head :title="title" />
     <div class="ml-4">
-        <div class="flex items-center justify-between mx-4">
-            <h1 class="text-xl">{{ title }}</h1>
-            <BackButton :routeBack="route('dashboard.roles.index')" />
+        <div class="flex items-center space-x-4 mx-4">
+            <div class="grow">
+                <h1 class="text-xl">{{ title }}</h1>
+            </div>
+            <div class="flex-none">
+                <BackButton :routeBack="route('dashboard.roles.index')" />
+            </div>
         </div>
         <form @submit.prevent="store">
             <div class="bg-base-200 rounded-box my-4 p-4">
