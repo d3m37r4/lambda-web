@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreRoleRequest;
-use App\Http\Requests\Admin\UpdateRoleRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Dashboard\Role\StoreRequest;
+use App\Http\Requests\Dashboard\Role\UpdateRequest;
+use App\Http\Requests\Dashboard\Role\DeleteSelectedRequest;
 use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 
 class RolesManagementController extends Controller
 {
@@ -53,10 +54,10 @@ class RolesManagementController extends Controller
     /**
      * Store a newly created role in storage.
      *
-     * @param StoreRoleRequest $request
+     * @param StoreRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreRoleRequest $request): RedirectResponse
+    public function store(StoreRequest $request): RedirectResponse
     {
         $role = Role::create($request->safe()->only('name'))
             ->syncPermissions($request->safe()->only('permissions'));
@@ -96,11 +97,11 @@ class RolesManagementController extends Controller
     /**
      * Update the specified role in storage.
      *
-     * @param UpdateRoleRequest $request
+     * @param UpdateRequest $request
      * @param Role $role
      * @return RedirectResponse
      */
-    public function update(UpdateRoleRequest $request, Role $role): RedirectResponse
+    public function update(UpdateRequest $request, Role $role): RedirectResponse
     {
         $role->update($request->safe()->only('name'));
         $role->syncPermissions($request->safe()->only('permissions'));
@@ -113,17 +114,30 @@ class RolesManagementController extends Controller
 
     /**
      * Remove the specified role from storage.
-     *
-     * @param Role $role
-     * @return RedirectResponse
      */
     public function destroy(Role $role)
     {
         $role->delete();
 
-        return back()->with([
+        return redirect()->back()
+            ->with([
             'status' => 'success',
             'message' => "Роль $role->name была удалена!"
+        ]);
+    }
+
+    /**
+     * Delete selected roles from storage.
+     */
+    public function deleteSelected(DeleteSelectedRequest $request)
+    {
+        $validatedData = $request->validated();
+        Role::whereIn('id', $validatedData['ids'])->delete();
+
+        return redirect()->back()
+            ->with([
+            'status' => 'success',
+            'message' => 'Выбранные роли были удалены.'
         ]);
     }
 }

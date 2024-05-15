@@ -24,6 +24,8 @@ Route::group([
     Route::middleware([
         'middleware' => 'can:manage_roles'
     ])->group(function () {
+        Route::delete('roles/delete-selected', [RolesManagementController::class, 'deleteSelected'])
+            ->name('roles.delete-selected');
         Route::resource('roles', RolesManagementController::class);
     });
     Route::middleware([
