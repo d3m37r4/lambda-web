@@ -1,27 +1,3 @@
-<script setup>
-import BaseModal from '@/Components/BaseModal.vue';
-import { ref, watch } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
-
-const props = defineProps({
-    role: Number,
-    modelValue: Boolean,
-});
-const emits = defineEmits(['update:modelValue']);
-const local = ref(props.modelValue);
-
-watch(local, (newValue) => {
-    emits('update:modelValue', newValue);
-});
-watch(() => props.modelValue, (newValue) => {
-    local.value = newValue;
-});
-
-function deleteRole(role) {
-    Inertia.delete(route('dashboard.roles.destroy', role));
-}
-</script>
-
 <template>
     <BaseModal v-model="local">
         <template #modal-title>
@@ -40,3 +16,43 @@ function deleteRole(role) {
         </template>
     </BaseModal>
 </template>
+
+<script>
+import BaseModal from '@/Components/BaseModal.vue';
+import { ref, watch } from 'vue';
+
+export default {
+    components: {
+        BaseModal,
+    },
+    props: {
+        role: Number,
+        modelValue: Boolean,
+    },
+    emits: ['update:modelValue'],
+    setup(props, ctx) {
+        const local = ref(props.modelValue);
+
+        watch(local, (newValue) => {
+            ctx.emit('update:modelValue', newValue);
+        });
+
+        watch(() => props.modelValue, (newValue) => {
+            local.value = newValue;
+        });
+
+        return { local };
+    },
+    methods: {
+        deleteRole(role) {
+            this.$inertia.delete(route('dashboard.roles.destroy', role), {
+                onSuccess: () => {
+                    this.local = false;
+                },
+                preserveState: true,
+                preserveScroll: true,
+            });
+        }
+    }
+};
+</script>
