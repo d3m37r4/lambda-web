@@ -1,10 +1,10 @@
 <script setup>
 import BaseModal from '@/Components/BaseModal.vue';
 import { ref, watch } from 'vue';
-import { Inertia } from '@inertiajs/inertia'
+import { Inertia } from '@inertiajs/inertia';
 
 const props = defineProps({
-    id: Number,
+    role: Number,
     modelValue: Boolean,
 });
 const emits = defineEmits(['update:modelValue']);
@@ -16,24 +16,25 @@ watch(local, (newValue) => {
 watch(() => props.modelValue, (newValue) => {
     local.value = newValue;
 });
-const deleteRole = (index) => {
-    Inertia.delete(route('dashboard.roles.destroy', index), {preserveScroll: true});
+
+function deleteRole(role) {
+    Inertia.delete(route('dashboard.roles.destroy', role));
 }
 </script>
 
 <template>
     <BaseModal v-model="local">
         <template #modal-title>
-            {{ 'Удаление роли' }}
+            {{ 'Подтверждение действия' }}
         </template>
         <template #modal-text>
             {{ ('Вы действительно хотите удалить эту роль?') }}
         </template>
         <template #modal-actions>
-            <button @click="deleteRole(id)" class="btn btn-error">
+            <button @click="deleteRole(role)" class="btn btn-error">
                 {{ ('Удалить') }}
             </button>
-            <button @click="modelValue=false" class="btn">
+            <button @click="local=false" class="btn">
                 {{ ('Отмена') }}
             </button>
         </template>
