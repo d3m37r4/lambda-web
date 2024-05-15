@@ -49,12 +49,16 @@ function showPermissions(role) {
     targetRoleName.value = role.name;
     targetPermissions.value = role.permissions;
 }
+
+function deleteSelectedItems() {
+    selected.value = [];
+}
 </script>
 
 <template>
     <Head :title="title" />
-    <ConfirmDeleteRole v-model="showModalConfirmDelete" :role="targetRole"/>
-    <ShowRolePermissions v-model="showModalPermissions" :roleName="targetRoleName" :permissions="targetPermissions"/>
+    <ConfirmDeleteRole v-model="showModalConfirmDelete" :role="targetRole" @deleteSelectedItems="deleteSelectedItems" />
+    <ShowRolePermissions v-model="showModalPermissions" :roleName="targetRoleName" :permissions="targetPermissions" />
     <div class="ml-4 space-y-4">
         <div class="flex items-center space-x-4 mx-4">
             <div class="grow">
@@ -68,7 +72,7 @@ function showPermissions(role) {
             </div>
         </div>
         <div class="space-x-4 mx-4">
-            <FormDeleteSelectedItems :selected="selected" />
+            <FormDeleteSelectedItems :selected="selected" :routeAction="route('dashboard.roles.delete-selected')" @deleteSelectedItems="deleteSelectedItems" />
         </div>
         <div class="bg-base-200 rounded-box p-4">
             <div class="overflow-x-auto">

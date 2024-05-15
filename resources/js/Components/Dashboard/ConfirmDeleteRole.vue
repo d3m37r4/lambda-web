@@ -48,6 +48,7 @@ export default {
             this.$inertia.delete(route('dashboard.roles.destroy', role), {
                 onSuccess: () => {
                     this.local = false;
+                    this.$emit('deleteSelectedItems');
                 },
                 preserveState: true,
                 preserveScroll: true,
