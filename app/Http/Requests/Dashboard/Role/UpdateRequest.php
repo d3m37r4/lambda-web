@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Dashboard\Role;
 
 use Illuminate\Validation\Rule;
 
 /**
  * @property mixed role
  */
-class UpdateRoleRequest extends StoreRoleRequest
+class UpdateRequest extends StoreRequest
 {
     /**
      * Get the validation rules that apply to the request.
