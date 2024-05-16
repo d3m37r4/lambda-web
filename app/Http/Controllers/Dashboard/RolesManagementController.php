@@ -9,7 +9,6 @@ use App\Http\Requests\Dashboard\Role\StoreRequest;
 use App\Http\Requests\Dashboard\Role\UpdateRequest;
 use App\Http\Requests\Dashboard\Role\DestroyRequest;
 use App\Http\Requests\Dashboard\Role\DeleteSelectedRequest;
-use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 
 class RolesManagementController extends Controller
