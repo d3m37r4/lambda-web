@@ -38,7 +38,7 @@ function store() {
 
 <template>
     <Head :title="title" />
-    <div class="ml-4">
+    <div class="ml-4 space-y-4">
         <div class="flex items-center space-x-4 mx-4">
             <div class="grow">
                 <h1 class="text-xl">{{ title }}</h1>
@@ -48,7 +48,7 @@ function store() {
             </div>
         </div>
         <form @submit.prevent="store">
-            <div class="bg-base-200 rounded-box my-4 p-4">
+            <div class="bg-base-200 rounded-box p-4">
                 <div class="grid grid-cols-6 gap-x-6">
                     <div class="col-span-3">
                         <label for="name" class="label">
