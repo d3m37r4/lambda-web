@@ -29,7 +29,7 @@ export default {
         role: Number,
         modelValue: Boolean,
     },
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'deleteSelectedItems'],
     setup(props, ctx) {
         const local = ref(props.modelValue);
 
