@@ -26,7 +26,8 @@ Route::group([
     ])->group(function () {
         Route::delete('roles/delete-selected', [RolesManagementController::class, 'deleteSelected'])
             ->name('roles.delete-selected');
-        Route::resource('roles', RolesManagementController::class);
+        Route::resource('roles', RolesManagementController::class)
+            ->except(['show']);
     });
     Route::middleware([
         'middleware' => 'can:manage_servers'

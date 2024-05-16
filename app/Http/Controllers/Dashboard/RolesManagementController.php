@@ -32,7 +32,7 @@ class RolesManagementController extends Controller
     }
 
     /**
-     * Display a listing of the roles.
+     * Display a listing of roles.
      */
     public function index()
     {
@@ -75,16 +75,6 @@ class RolesManagementController extends Controller
             'message' => "Новая роль $role->name успешно создана!"
         ]);
     }
-
-    /**
-     * Display the specified role.
-     *
-     * @param Role $role
-     * @return Response
-     */
-//    public function show(Role $role): Response {
-//        //
-//    }
 
     /**
      * Show the form for editing the specified role.
