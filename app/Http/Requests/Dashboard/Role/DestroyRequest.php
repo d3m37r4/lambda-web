@@ -4,7 +4,7 @@ namespace App\Http\Requests\Dashboard\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteSelectedRequest extends FormRequest
+class DestroyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,6 @@ class DeleteSelectedRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ids' => ['required', 'array'],
-            'ids.*' => ['required', 'integer'],
             'current_page' => ['required', 'integer'],
         ];
     }

@@ -21,12 +21,14 @@ export default {
     props: {
         selected: Array,
         routeAction: String,
+        currentPage: Number,
     },
     methods: {
         deleteSelected() {
             this.$inertia.delete(this.routeAction, {
                 data: {
-                    ids: this.selected
+                    ids: this.selected,
+                    current_page: this.currentPage,
                 },
                 onSuccess: () => {
                     this.$emit('deleteSelectedItems');

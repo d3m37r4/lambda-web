@@ -7,12 +7,20 @@ use App\Models\Permission;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Role\StoreRequest;
 use App\Http\Requests\Dashboard\Role\UpdateRequest;
+use App\Http\Requests\Dashboard\Role\DestroyRequest;
 use App\Http\Requests\Dashboard\Role\DeleteSelectedRequest;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 
 class RolesManagementController extends Controller
 {
+    /**
+     * The number of roles to return for pagination.
+     *
+     * @var int
+     */
+    protected int $perPage = 8;
+
     /**
      * Create the controller instance.
      *
@@ -30,7 +38,7 @@ class RolesManagementController extends Controller
     {
         return inertia('Dashboard/Roles/Index', [
             'title' => 'Управление ролями',
-            'roles' => Role::paginate(env('PAGINATION_SIZE'))->through(fn ($role) => [
+            'roles' => Role::paginate($this->perPage)->through(fn ($role) => [
                 'id' => $role->id,
                 'name' => $role->name,
                 'permissions' => $role->permissions,
@@ -115,11 +123,14 @@ class RolesManagementController extends Controller
     /**
      * Remove the specified role from storage.
      */
-    public function destroy(Role $role)
+    public function destroy(DestroyRequest $request, Role $role)
     {
+        $validated = $request->validated();
         $role->delete();
 
-        return redirect()->back()
+        $redirectToPage = min($validated['current_page'], Role::paginate($this->perPage)->lastPage());
+
+        return redirect()->route('dashboard.roles.index', ['page' => $redirectToPage])
             ->with([
             'status' => 'success',
             'message' => "Роль $role->name была удалена!"
@@ -131,10 +142,12 @@ class RolesManagementController extends Controller
      */
     public function deleteSelected(DeleteSelectedRequest $request)
     {
-        $validatedData = $request->validated();
-        Role::whereIn('id', $validatedData['ids'])->delete();
+        $validated = $request->validated();
+        Role::whereIn('id', $validated['ids'])->delete();
 
-        return redirect()->back()
+        $redirectToPage = min($validated['current_page'], Role::paginate($this->perPage)->lastPage());
+
+        return redirect()->route('dashboard.roles.index', ['page' => $redirectToPage])
             ->with([
             'status' => 'success',
             'message' => 'Выбранные роли были удалены.'

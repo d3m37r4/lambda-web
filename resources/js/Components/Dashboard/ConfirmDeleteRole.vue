@@ -28,6 +28,7 @@ export default {
     props: {
         role: Number,
         modelValue: Boolean,
+        currentPage: Number,
     },
     emits: ['update:modelValue', 'deleteSelectedItems'],
     setup(props, ctx) {
@@ -46,6 +47,9 @@ export default {
     methods: {
         deleteRole(role) {
             this.$inertia.delete(route('dashboard.roles.destroy', role), {
+                data: {
+                    current_page: this.currentPage,
+                },
                 onSuccess: () => {
                     this.local = false;
                     this.$emit('deleteSelectedItems');

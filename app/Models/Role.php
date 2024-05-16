@@ -10,6 +10,13 @@ class Role extends SpatieRole
     use HasPermissions;
 
     /**
+     * The number of models to return for pagination.
+     *
+     * @var int
+     */
+    protected $perPage = 10;
+
+    /**
      * Checks whether the specified role is an owner role.
      *
      * @return bool
