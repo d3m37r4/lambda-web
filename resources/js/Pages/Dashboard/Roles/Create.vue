@@ -2,6 +2,7 @@
 import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from "vue";
+import InputError from "@/Components/InputError.vue";
 import BackButton from "@/Components/BackButton.vue";
 import CreateButton from "@/Components/CreateButton.vue";
 
@@ -63,9 +64,7 @@ function store() {
                             required
                             autofocus
                         />
-                        <div v-show="form.errors.name">
-                            <p class="text-sm text-red-600">{{ form.errors.name }}</p>
-                        </div>
+                        <InputError :message="form.errors.name"/>
                     </div>
                 </div>
                 <div class="mt-2">
