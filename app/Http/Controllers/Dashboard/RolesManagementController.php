@@ -71,7 +71,7 @@ class RolesManagementController extends Controller
 
         return back()->with([
             'status' => 'success',
-            'message' => "Новая роль $role->name успешно создана!"
+            'message' => "Роль \"$role->name\" создана."
         ]);
     }
 
@@ -105,7 +105,7 @@ class RolesManagementController extends Controller
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о роли $role->name была успешно обновлена!"
+            'message' => "Роль \"$role->name\" обновлена."
         ]);
     }
 
@@ -121,8 +121,8 @@ class RolesManagementController extends Controller
 
         return redirect()->route('dashboard.roles.index', ['page' => $redirectToPage])
             ->with([
-            'status' => 'success',
-            'message' => "Роль $role->name была удалена!"
+            'status' => 'deleted',
+            'message' => "Роль \"$role->name\" удалена."
         ]);
     }
 
@@ -138,8 +138,8 @@ class RolesManagementController extends Controller
 
         return redirect()->route('dashboard.roles.index', ['page' => $redirectToPage])
             ->with([
-            'status' => 'success',
-            'message' => 'Выбранные роли были удалены.'
+            'status' => 'deleted',
+            'message' => 'Выбранные роли удалены.'
         ]);
     }
 }
