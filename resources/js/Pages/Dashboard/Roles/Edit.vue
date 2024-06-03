@@ -1,6 +1,6 @@
 <script setup>
 import DashboardLayout from '@/Layouts/Dashboard.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import {  useForm } from '@inertiajs/vue3';
 import { ref } from "vue";
 import InputError from "@/Components/InputError.vue";
 import BackButton from "@/Components/BackButton.vue";
@@ -38,7 +38,6 @@ function update() {
 </script>
 
 <template>
-    <Head :title="title" />
     <div class="ml-4 space-y-4">
         <div class="flex items-center space-x-4 mx-4">
             <div class="grow">

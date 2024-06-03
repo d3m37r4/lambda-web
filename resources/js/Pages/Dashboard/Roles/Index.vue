@@ -1,6 +1,6 @@
 <script setup>
 import DashboardLayout from '@/Layouts/Dashboard.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Pagination from '@/Components/Pagination.vue';
 import ConfirmDeleteRole from '@/Components/Dashboard/ConfirmDeleteRole.vue';
@@ -56,7 +56,6 @@ function deleteSelectedItems() {
 </script>
 
 <template>
-    <Head :title="title" />
     <ConfirmDeleteRole
         v-model="showModalConfirmDelete"
         :role="targetRole"

@@ -1,6 +1,6 @@
 <script setup>
 import DashboardLayout from '@/Layouts/Dashboard.vue';
-import {Head, Link, useForm} from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import BackButton from "@/Components/BackButton.vue";
 import CreateButton from "@/Components/CreateButton.vue";
 // import {ref} from "vue";
@@ -9,6 +9,7 @@ import CreateButton from "@/Components/CreateButton.vue";
 defineOptions({
     layout: DashboardLayout
 });
+
 defineProps({
     title: String,
     roles: Array,
@@ -16,6 +17,7 @@ defineProps({
     genders: Array,
     countries: Array
 });
+
 const form = useForm({
     login: '',
     email: '',
@@ -36,7 +38,6 @@ const store = () => {
 </script>
 
 <template>
-    <Head :title="title" />
     <div class="ml-4">
         <div class="flex items-center justify-between mx-4">
             <h1 class="text-xl">{{ title }}</h1>

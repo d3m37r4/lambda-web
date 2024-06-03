@@ -1,12 +1,13 @@
 <script setup>
 import DashboardLayout from '@/Layouts/Dashboard.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import BackButton from "@/Components/BackButton.vue";
 import UpdateButton from "@/Components/UpdateButton.vue";
 
 defineOptions({
     layout: DashboardLayout
 });
+
 const props = defineProps({
     title: String,
     user: Object,
@@ -19,13 +20,13 @@ const form = useForm({
     password: '',
     role: props.user.role,
 });
+
 const submit = () => {
     form.post(route('dashboard.users.store'));
 };
 </script>
 
 <template>
-    <Head :title="title" />
     <div class="ml-4">
         <div class="flex items-center justify-between mx-4">
             <h1 class="text-xl">{{ title }}</h1>

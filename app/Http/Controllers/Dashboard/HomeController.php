@@ -30,6 +30,7 @@ class HomeController extends Controller
         ];
 
         return inertia('Dashboard/Home', [
+            'title' => 'Панель управления',
             'users_count' => $usersCount,
             'env_settings' => $envSettings,
         ]);

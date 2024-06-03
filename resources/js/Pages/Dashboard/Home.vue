@@ -1,5 +1,12 @@
+<script setup>
+import DashboardLayout from '@/Layouts/Dashboard.vue';
+
+defineOptions({
+    layout: DashboardLayout
+});
+
+</script>
 <template>
-    <Head title="Home"/>
     <div class="ml-4">
         <h1>Test</h1>
         <div class="bg-base-200 rounded-box p-4">
@@ -14,13 +21,3 @@
         </div>
     </div>
 </template>
-
-<script>
-import DashboardLayout from '@/Layouts/Dashboard.vue';
-import { Head } from '@inertiajs/vue3';
-
-export default {
-    components: { Head },
-    layout: DashboardLayout,
-}
-</script>

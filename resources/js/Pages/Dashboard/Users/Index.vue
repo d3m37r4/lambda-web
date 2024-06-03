@@ -4,7 +4,7 @@ import SearchForm from "@/Components/Dashboard/SearchForm.vue";
 import Pagination from '@/Components/Pagination.vue';
 import ConfirmDeleteUser from '@/Components/Dashboard/ConfirmDeleteUser.vue';
 import CreateButton from "@/Components/CreateButton.vue";
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 defineOptions({
@@ -39,7 +39,6 @@ const showModal = (id) => {
 </script>
 
 <template>
-    <Head :title="title" />
     <ConfirmDeleteUser v-model="isOpenModal" :id="deletedUser"/>
     <div class="ml-4">
         <div class="mx-4">
