@@ -1,7 +1,8 @@
 <script setup>
 import DashboardLayout from '@/Layouts/Dashboard.vue';
-import {  useForm } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import { ref } from "vue";
+import { selectAll } from '@/Utils/selection';
 import InputError from "@/Components/InputError.vue";
 import BackButton from "@/Components/BackButton.vue";
 import UpdateButton from "@/Components/UpdateButton.vue";
@@ -13,25 +14,22 @@ defineOptions({
 const props = defineProps({
     title: String,
     role: Object,
-    permissions: Array,
+    permissions: Array
 });
+
 const form = useForm({
     name: props.role.name,
-    permissions: props.role.permissions,
+    permissions: props.role.permissions
 });
-const toggle = ref();
 
-function selectAll(permissions) {
-    if(toggle.value) {
-        let buffer = [];
-        permissions.forEach(function (permissions) {
-            buffer.push(permissions.id);
-        });
-        form.permissions = buffer;
-    } else {
-        form.permissions = [];
-    }
+const selectedPermissions = ref([]);
+const isSelectAllChecked = ref();
+
+function selectAllItems(permissions) {
+    selectAll(permissions, selectedPermissions, isSelectAllChecked.value);
+    form.permissions = selectedPermissions.value;
 }
+
 function update() {
     form.put(route('dashboard.roles.update', props.role));
 }
@@ -90,15 +88,15 @@ function update() {
                             type="checkbox"
                             class="checkbox checkbox-primary mr-2"
                             :checked="form.permissions.length === permissions.length"
-                            v-model="toggle"
-                            @change="selectAll(permissions)"
+                            v-model="isSelectAllChecked"
+                            @change="selectAllItems(permissions)"
                         />
                         <span class="label-text text-primary">{{ ('Выбрать все доступные разрешения') }}</span>
                     </label>
                 </div>
             </div>
             <div class="flex justify-end m-4">
-                <UpdateButton />
+                <UpdateButton :disabled="!form.isDirty" />
             </div>
         </form>
     </div>
