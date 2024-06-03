@@ -1,10 +1,14 @@
 <template>
-    <transition name="fade">
+    <Transition
+        tag="div"
+        enter-from-class="opacity-0"
+        enter-active-class="duration-500"
+        leave-active-class="duration-500"
+        leave-to-class="opacity-0"
+    >
         <div v-if="selected.length > 0" class="flex items-center justify-between">
             <div>
-                <span>
-                    {{ 'Выбрано записей:' }} {{ selected.length }}
-                </span>
+                {{ 'Выбрано записей:' }} {{ selected.length }}
             </div>
             <div>
                 <button @click="deleteSelected()" class="btn btn-sm btn-error normal-case">
@@ -13,7 +17,7 @@
                 </button>
             </div>
         </div>
-    </transition>
+    </Transition>
 </template>
 
 <script>
