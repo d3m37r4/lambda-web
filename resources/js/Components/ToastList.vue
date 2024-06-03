@@ -24,13 +24,13 @@ function remove(index) {
 </script>
 
 <template>
-    <TransitionGroup
-        tag="div"
-        enter-from-class="translate-x-full opacity-0"
-        enter-active-class="duration-500"
-        leave-active-class="duration-500"
-        leave-to-class="translate-x-full opacity-0"
-        class="max-w-[310px] w-full top-0 right-0 space-y-4 py-4 ps-4 pe-8 fixed z-20">
+        <TransitionGroup
+            tag="div"
+            enter-from-class="translate-x-full opacity-0"
+            enter-active-class="duration-500"
+            leave-active-class="duration-500"
+            leave-to-class="translate-x-full opacity-0"
+            class="toast z-20">
         <ToastListItem
             v-for="(item, index) in toast.items"
             :key="item.key"
