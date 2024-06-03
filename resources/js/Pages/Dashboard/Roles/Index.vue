@@ -7,8 +7,8 @@ import Pagination from '@/Components/Pagination.vue';
 import ConfirmDeleteRole from '@/Components/Dashboard/ConfirmDeleteRole.vue';
 import ShowRolePermissions from "@/Components/Dashboard/ShowRolePermissions.vue";
 import SearchForm from "@/Components/Dashboard/SearchForm.vue";
+import DeleteSelectedItemsForm from "@/Components/Dashboard/DeleteSelectedItemsForm.vue";
 import CreateButton from "@/Components/CreateButton.vue";
-import FormDeleteSelectedItems from "@/Components/Dashboard/FormDeleteSelectedItems.vue";
 
 defineOptions({
     layout: DashboardLayout
@@ -72,7 +72,7 @@ function showPermissions(role) {
             </div>
         </div>
         <div class="space-x-4 mx-4">
-            <FormDeleteSelectedItems
+            <DeleteSelectedItemsForm
                 :selected="selectedRoles"
                 :routeAction="route('dashboard.roles.delete-selected')"
                 :currentPage="roles.current_page"
