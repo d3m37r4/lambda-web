@@ -2,6 +2,7 @@
 import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from "vue";
+import { selectAll } from '@/Utils/selection';
 import InputError from "@/Components/InputError.vue";
 import BackButton from "@/Components/BackButton.vue";
 import CreateButton from "@/Components/CreateButton.vue";
@@ -9,27 +10,23 @@ import CreateButton from "@/Components/CreateButton.vue";
 defineOptions({
     layout: DashboardLayout
 });
+
 defineProps({
     title: String,
-    permissions: Array,
+    permissions: Array
 });
 
 const form = useForm({
     name: '',
-    permissions: [],
+    permissions: []
 });
-const toggle = ref(false);
 
-function selectAll(permissions) {
-    if(toggle.value) {
-        let buffer = [];
-        permissions.forEach(function (permissions) {
-            buffer.push(permissions.id);
-        });
-        form.permissions = buffer;
-    } else {
-        form.permissions = [];
-    }
+const selectedPermissions = ref([]);
+const isSelectAllChecked = ref();
+
+function selectAllItems(permissions) {
+    selectAll(permissions, form.permissions, isSelectAllChecked.value);
+    form.permissions = selectedPermissions.value;
 }
 
 function store() {
@@ -90,15 +87,15 @@ function store() {
                             type="checkbox"
                             class="checkbox checkbox-primary mr-2"
                             :checked="form.permissions.length === permissions.length"
-                            v-model="toggle"
-                            @change="selectAll(permissions)"
+                            v-model="isSelectAllChecked"
+                            @change="selectAllItems(permissions)"
                         />
                         <span class="label-text text-primary">{{ ('Выбрать все доступные разрешения') }}</span>
                     </label>
                 </div>
             </div>
             <div class="flex justify-end m-4">
-                <CreateButton />
+                <CreateButton :disabled="!form.isDirty" />
             </div>
         </form>
     </div>
