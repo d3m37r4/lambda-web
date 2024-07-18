@@ -25,12 +25,12 @@ const form = useForm({
 const selectedPermissions = ref([]);
 const isSelectAllChecked = ref();
 
-function selectAllItems(permissions) {
+const selectAllItems = (permissions) => {
     selectAll(permissions, selectedPermissions, isSelectAllChecked.value);
     form.permissions = selectedPermissions.value;
 }
 
-function update() {
+const update = () => {
     form.put(route('dashboard.roles.update', props.role));
 }
 </script>

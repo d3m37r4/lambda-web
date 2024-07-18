@@ -18,25 +18,24 @@ let removeFinishEventListener = Inertia.on('finish', () => {
 
 onUnmounted(() => removeFinishEventListener());
 
-function remove(index) {
+const remove = (index) => {
     toast.remove(index);
 }
 </script>
 
 <template>
-        <TransitionGroup
-            tag="div"
-            enter-from-class="translate-x-full opacity-0"
-            enter-active-class="duration-500"
-            leave-active-class="duration-500"
-            leave-to-class="translate-x-full opacity-0"
-            class="toast z-20">
+    <TransitionGroup
+        tag="div"
+        enter-from-class="translate-x-full opacity-0"
+        enter-active-class="duration-500"
+        leave-active-class="duration-500"
+        leave-to-class="translate-x-full opacity-0"
+        class="toast z-20">
         <ToastListItem
             v-for="(item, index) in toast.items"
             :key="item.key"
             :status="item.status"
             :message="item.message"
-            @remove="remove(index)"
-        />
+            @remove="remove(index)" />
     </TransitionGroup>
 </template>

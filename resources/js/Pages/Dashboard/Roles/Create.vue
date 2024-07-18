@@ -24,12 +24,12 @@ const form = useForm({
 const selectedPermissions = ref([]);
 const isSelectAllChecked = ref();
 
-function selectAllItems(permissions) {
+const selectAllItems = (permissions) => {
     selectAll(permissions, form.permissions, isSelectAllChecked.value);
     form.permissions = selectedPermissions.value;
 }
 
-function store() {
+const store = () => {
     form.post(route('dashboard.roles.store'));
 }
 </script>

@@ -22,18 +22,18 @@ defineProps({
 const selectedRoles = ref([]);
 const isSelectAllChecked = ref(false);
 
-function selectAllItems(roles) {
+const selectAllItems = (roles) => {
     selectAll(roles, selectedRoles, isSelectAllChecked.value);
 }
 
-function deleteSelectedItems() {
+const deleteSelectedItems = () => {
     selectedRoles.value = [];
 }
 
 const targetRole = ref();
 const showModalConfirmDelete = ref(false);
 
-function confirmDeleteRole(id) {
+const confirmDeleteRole = (id) => {
     showModalConfirmDelete.value = true;
     targetRole.value = id;
 }
@@ -42,7 +42,7 @@ const targetRoleName = ref();
 const targetPermissions = ref();
 const showModalPermissions = ref(false);
 
-function showPermissions(role) {
+const showPermissions = (role) => {
     showModalPermissions.value = true;
     targetRoleName.value = role.name;
     targetPermissions.value = role.permissions;
