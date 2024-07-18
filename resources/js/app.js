@@ -3,7 +3,6 @@ import '../css/app.css';
 import { createSSRApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
-
 import AppLayout from './Layouts/Main.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Lambda';
