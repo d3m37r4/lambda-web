@@ -138,8 +138,8 @@ class RolesManagementController extends Controller
 
         return redirect()->route('dashboard.roles.index', ['page' => $redirectToPage])
             ->with([
-            'status' => 'deleted',
-            'message' => 'Выбранные роли удалены.'
-        ]);
+                'status' => 'deleted',
+                'message' => 'Выбранные роли удалены.'
+            ]);
     }
 }
