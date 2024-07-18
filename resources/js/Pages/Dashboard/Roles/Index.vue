@@ -82,23 +82,23 @@ function showPermissions(role) {
             <div class="overflow-x-auto">
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    class="checkbox"
-                                    :checked="selectedRoles.length === roles.data.length"
-                                    v-model="isSelectAllChecked"
-                                    @change="selectAllItems(roles.data)" />
-                            </label>
-                        </th>
-                        <th>#</th>
-                        <th>{{ ('Роль') }}</th>
-                        <th>{{ ('Время создания') }}</th>
-                        <th>{{ ('Последнее обновление') }}</th>
-                        <th>{{ ('Действия') }}</th>
-                    </tr>
+                        <tr>
+                            <th>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        class="checkbox"
+                                        :checked="selectedRoles.length === roles.data.length"
+                                        v-model="isSelectAllChecked"
+                                        @change="selectAllItems(roles.data)" />
+                                </label>
+                            </th>
+                            <th>#</th>
+                            <th>{{ ('Роль') }}</th>
+                            <th>{{ ('Время создания') }}</th>
+                            <th>{{ ('Последнее обновление') }}</th>
+                            <th>{{ ('Действия') }}</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr v-for="role in roles.data" class="hover:bg-base-300" :class="{ 'bg-base-300': selectedRoles.includes(role.id) }">

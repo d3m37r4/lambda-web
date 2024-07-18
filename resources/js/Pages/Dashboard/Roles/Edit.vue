@@ -59,8 +59,7 @@ function update() {
                             class="input input-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                             v-model="form.name"
                             required
-                            autofocus
-                        />
+                            autofocus />
                         <InputError :message="form.errors.name"/>
                     </div>
                 </div>
@@ -75,8 +74,7 @@ function update() {
                                     type="checkbox"
                                     class="checkbox mr-2"
                                     v-model="form.permissions"
-                                    :value="permission.id"
-                                />
+                                    :value="permission.id" />
                                 <span class="label-text">{{ permission.name }}</span>
                             </label>
                         </div>
@@ -89,8 +87,7 @@ function update() {
                             class="checkbox checkbox-primary mr-2"
                             :checked="form.permissions.length === permissions.length"
                             v-model="isSelectAllChecked"
-                            @change="selectAllItems(permissions)"
-                        />
+                            @change="selectAllItems(permissions)" />
                         <span class="label-text text-primary">{{ ('Выбрать все доступные разрешения') }}</span>
                     </label>
                 </div>
