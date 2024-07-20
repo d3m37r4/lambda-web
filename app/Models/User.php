@@ -3,8 +3,8 @@
 namespace App\Models;
 
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Carbon\Carbon;
-use Carbon\CarbonInterval;
+//use Carbon\Carbon;
+//use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -22,10 +22,10 @@ use Illuminate\Notifications\Notifiable;
  * @property int country_id
  * @property string email
  * @property string login
- * @property string full_name
  * @property string password
- * @property Carbon birth_date
- * @property CarbonInterval age
+// * @property string full_name
+// * @property Carbon birth_date
+// * @property CarbonInterval age
  */
 class User extends Authenticatable
 {
@@ -48,17 +48,17 @@ class User extends Authenticatable
      */
     const PASSWORD_UNCOMPROMISED_COUNT = 0;
 
-    const GENDER_NONE = 'gender_none';
-    const GENDER_MALE = 'gender_male';
-    const GENDER_FEMALE = 'gender_female';
+    public const GENDER_NONE = 1;
+    public const GENDER_MALE = 2;
+    public const GENDER_FEMALE = 3;
 
     /**
      * @var array
      */
-    const GENDERS = [
-        User::GENDER_NONE,
-        User::GENDER_MALE,
-        User::GENDER_FEMALE
+    public const GENDERS = [
+        ['id' => self::GENDER_NONE, 'name' => 'Not specified'],
+        ['id' => self::GENDER_MALE, 'name' => 'Male'],
+        ['id' => self::GENDER_FEMALE, 'name' => 'Female'],
     ];
 
     /**
@@ -66,10 +66,10 @@ class User extends Authenticatable
      *
      * @note These constants are used in the system. There may be problems when changing and deleting.
      */
-    const ROLE_OWNER = 'owner';
-    const ROLE_ADMIN = 'admin';
-    const ROLE_MODER = 'moder';
-    const ROLE_USER = 'user';
+    const ROLE_OWNER = 'Owner';
+    const ROLE_ADMIN = 'Admin';
+    const ROLE_MODER = 'Moder';
+    const ROLE_USER = 'User';
 
     /**
      * The default role that is assigned to the user during registration.
@@ -86,13 +86,13 @@ class User extends Authenticatable
     protected $fillable = [
         'login',
         'email',
-        'role',
         'password',
-        'country_id',
-        'full_name',
+        'role',
+//        'full_name',
         'gender',
-        'birth_date',
-        'biography'
+        'country_id',
+//        'birth_date',
+//        'biography'
     ];
 
     /**
@@ -110,7 +110,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'role',
-        'age'
+//        'age'
     ];
 
     /**
@@ -122,37 +122,9 @@ class User extends Authenticatable
         'created_at' => 'datetime:d.m.Y - H:i:s',
         'updated_at' => 'datetime:d.m.Y - H:i:s',
         'password' => 'hashed',
-        'full_name' => 'string',
+//        'full_name' => 'string',
         'email_verified_at' => 'datetime'
     ];
-
-    /**
-     * Gets country of a specific user.
-     *
-     * @note Set 'useLocale' to 'true' if you want to get a localized translation string,
-     *       or 'false' in order to get the standard name of the country in English.
-     *
-     * @param bool $useLocale
-     * @return string
-     */
-    public function country(bool $useLocale = true): string
-    {
-        $country = Country::find($this->country_id);
-
-        return $useLocale ?
-            ($country ? "countries.list.$country->short_code" : 'Не указано') :
-            ($country ? $country->default_name : 'Не указано');
-    }
-
-    /**
-     * Checks whether user's country is specified.
-     *
-     * @return bool
-     */
-    public function isCountrySpecified(): bool
-    {
-        return (bool)Country::find($this->country_id);
-    }
 
     /**
      * Sets a hash instead of a valid password.
@@ -162,7 +134,7 @@ class User extends Authenticatable
     protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => bcrypt($value)
+            set: fn ($value) => bcrypt($value)
         );
     }
 
@@ -179,34 +151,62 @@ class User extends Authenticatable
     }
 
     /**
+     * Gets country of a specific user.
+     *
+     * @note Set 'useLocale' to 'true' if you want to get a localized translation string,
+     *       or 'false' in order to get the standard name of the country in English.
+     *
+     * @param bool $useLocale
+     * @return string
+     */
+//    public function country(bool $useLocale = true): string
+//    {
+//        $country = Country::find($this->country_id);
+//
+//        return $useLocale ?
+//            ($country ? "countries.list.$country->short_code" : 'Не указано') :
+//            ($country ? $country->default_name : 'Не указано');
+//    }
+
+    /**
+     * Checks whether user's country is specified.
+     *
+     * @return bool
+     */
+//    public function isCountrySpecified(): bool
+//    {
+//        return (bool)Country::find($this->country_id);
+//    }
+
+    /**
      * Gets the formatted date of birth of a specific user.
      *
      * @return string
      */
-    public function getBirthDateFmtAttribute(): string
-    {
-        return isset($this->birth_date) ? $this->birth_date->format('d.m.Y') : 'Не указано';
-    }
+//    public function getBirthDateFmtAttribute(): string
+//    {
+//        return isset($this->birth_date) ? $this->birth_date->format('d.m.Y') : 'Не указано';
+//    }
 
     /**
      * Gets the date of birth of a specific user converted to string.
      *
      * @return string|null
      */
-    public function getBirthDateStrAttribute(): ?string
-    {
-        return empty($this->birth_date) ? null : $this->birth_date->toDateString();
-    }
+//    public function getBirthDateStrAttribute(): ?string
+//    {
+//        return empty($this->birth_date) ? null : $this->birth_date->toDateString();
+//    }
 
     /**
      * Gets the user's age.
      *
      * @return string
      */
-    public function getAgeAttribute(): string
-    {
-        return isset($this->birth_date) ? CarbonInterval::years($this->birth_date->age) : 'Не указано';
-    }
+//    public function getAgeAttribute(): string
+//    {
+//        return isset($this->birth_date) ? CarbonInterval::years($this->birth_date->age) : 'Не указано';
+//    }
 
     /**
      * Gets full name of a specific user.

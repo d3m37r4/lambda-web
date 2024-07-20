@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Permission;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Permission;
 use App\Models\Country;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\AdminStoreUserRequest;
-use App\Http\Requests\Admin\AdminUpdateUserRequest;
-use Illuminate\Contracts\View\View;
+use App\Http\Requests\Dashboard\User\StoreRequest;
+use App\Http\Requests\Dashboard\User\UpdateRequest;
+use App\Http\Requests\Dashboard\User\DestroyRequest;
+use App\Http\Requests\Dashboard\User\DeleteSelectedRequest;
 use Illuminate\Http\RedirectResponse;
 
 class UsersManagementController extends Controller
 {
+    /**
+     * The number of users to return for pagination.
+     *
+     * @var int
+     */
+    protected int $perPage = 8;
+
     /**
      * Create a new controller instance.
      *
@@ -46,7 +54,7 @@ class UsersManagementController extends Controller
     {
         return inertia('Dashboard/Users/Index', [
             'title' => 'Управление пользователями',
-            'users' => User::paginate(env('PAGINATION_SIZE'))->through(fn ($user) => [
+            'users' => User::paginate($this->perPage)->through(fn ($user) => [
                 'id' => $user->id,
                 'login' => $user->login,
                 'email' => $user->email,
@@ -63,9 +71,11 @@ class UsersManagementController extends Controller
     {
         return inertia('Dashboard/Users/Create', [
             'title' => 'Новый пользователь',
-            'roles' => Role::all(),
-//            'permissions' => Permission::all(),
-            'genders' => User::GENDERS,
+            'roles' => Role::with(['permissions' => function ($query) {
+                $query->select('permissions.id', 'permissions.name');
+            }])->get(['id', 'name']),
+            'permissions' => Permission::orderBy('id')->get(['id', 'name']),
+            'genders' => array_slice(User::GENDERS, 1),
             'countries' => Country::all()
         ]);
     }
@@ -73,33 +83,37 @@ class UsersManagementController extends Controller
     /**
      * Store a newly created user in storage.
      *
-     * @param AdminStoreUserRequest $request
+     * @param StoreRequest $request
      * @return RedirectResponse
      */
-    public function store(AdminStoreUserRequest $request): RedirectResponse
+    public function store(StoreRequest $request): RedirectResponse
     {
-        // TODO: add choice of permissions
-        $user = User::create($request->safe()->except('role'));
+        $user = User::create($request->safe()->except('role', 'permissions'));
         $user->assignRole($request->safe()->only('role'));
 
-        return back()->with([
+        if (!empty($request->input('permissions'))) {
+            $user->syncPermissions($request->safe()->only('permissions'));
+        }
+
+        return redirect()->route('dashboard.users.index', ['page' => User::paginate($this->perPage)->lastPage()])
+            ->with([
             'status' => 'success',
             'message' => "Пользователь $user->login успешно создан!"
         ]);
     }
 
-    /**
-     * Display the specified user.
-     *
-     * @param User $user
-     * @return View
-     */
-    public function show(User $user): View
-    {
-        $permissions = $user->getAllPermissions();
-
-        return view('admin.users.show', compact('user', 'permissions'));
-    }
+//    /**
+//     * Display the specified user.
+//     *
+//     * @param User $user
+//     * @return View
+//     */
+//    public function show(User $user): View
+//    {
+//        $permissions = $user->getAllPermissions();
+//
+//        return view('admin.users.show', compact('user', 'permissions'));
+//    }
 
     /**
      * Show the form for editing the specified user.
@@ -108,8 +122,15 @@ class UsersManagementController extends Controller
     {
         return inertia('Dashboard/Users/Edit', [
             'title' => "Редактирование пользователя $user->login",
-            'user' => $user,
-            'roles' => Role::all(),
+            'user' => $user->only([
+                'id',
+                'login',
+                'email',
+                'role',
+                'override_permissions',
+                'permissions'
+            ]),
+            'roles' => Role::with('permissions')->get(['id', 'name']),
             'permissions' => Permission::all(),
             'genders' => User::GENDERS,
             'countries' => Country::all(),
@@ -119,34 +140,58 @@ class UsersManagementController extends Controller
     /**
      * Update the specified user in storage.
      *
-     * @param AdminUpdateUserRequest $request
+     * @param UpdateRequest $request
      * @param User $user
      * @return RedirectResponse
      */
-    public function update(AdminUpdateUserRequest $request, User $user): RedirectResponse
+    public function update(UpdateRequest $request, User $user): RedirectResponse
     {
-        $user->update($request->safe()->except('role'));
+        $user->update($request->safe()->except('role', 'permissions'));
         $user->syncRoles($request->safe()->only('role'));
+
+        if (!empty($request->input('permissions'))) {
+            $user->syncPermissions($request->safe()->only('permissions'));
+        } else {
+            $user->revokePermissionTo($user->permissions);
+        }
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о пользователе $user->login была успешно обновлена!"
+            'message' => "Данные о \"$user->login\" обновлены."
         ]);
     }
 
     /**
      * Remove the specified user from storage.
-     *
-     * @param User $user
-     * @return RedirectResponse
      */
-    public function destroy(User $user)
+    public function destroy(DestroyRequest $request, User $user)
     {
+        $validated = $request->validated();
         $user->delete();
 
-        return back()->with([
-            'status' => 'success',
-            'message' => "Пользователь $user->login был удален!"
+        $redirectToPage = min($validated['current_page'], User::paginate($this->perPage)->lastPage());
+
+        return redirect()->route('dashboard.users.index', ['page' => $redirectToPage])
+            ->with([
+            'status' => 'deleted',
+            'message' => "Пользователь \"$user->login\" удален."
         ]);
+    }
+
+    /**
+     * Delete selected users from storage.
+     */
+    public function deleteSelected(DeleteSelectedRequest $request)
+    {
+        $validated = $request->validated();
+        User::whereIn('id', $validated['ids'])->delete();
+
+        $redirectToPage = min($validated['current_page'], User::paginate($this->perPage)->lastPage());
+
+        return redirect()->route('dashboard.users.index', ['page' => $redirectToPage])
+            ->with([
+                'status' => 'deleted',
+                'message' => 'Выбранные пользователи удалены.'
+            ]);
     }
 }

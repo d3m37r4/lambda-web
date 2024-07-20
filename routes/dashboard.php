@@ -19,6 +19,8 @@ Route::group([
     Route::middleware([
         'middleware' => 'can:manage_users'
     ])->group(function () {
+        Route::delete('users/delete-selected', [UsersManagementController::class, 'deleteSelected'])
+            ->name('users.delete-selected');
         Route::resource('users', UsersManagementController::class);
     });
     Route::middleware([

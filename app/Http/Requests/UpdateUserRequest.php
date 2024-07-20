@@ -47,7 +47,7 @@ class UpdateUserRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'country_id' => Request::get('country')
