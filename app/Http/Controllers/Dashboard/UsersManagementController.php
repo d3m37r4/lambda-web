@@ -102,19 +102,6 @@ class UsersManagementController extends Controller
         ]);
     }
 
-//    /**
-//     * Display the specified user.
-//     *
-//     * @param User $user
-//     * @return View
-//     */
-//    public function show(User $user): View
-//    {
-//        $permissions = $user->getAllPermissions();
-//
-//        return view('admin.users.show', compact('user', 'permissions'));
-//    }
-
     /**
      * Show the form for editing the specified user.
      */
