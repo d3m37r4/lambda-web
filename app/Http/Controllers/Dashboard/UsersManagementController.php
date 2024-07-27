@@ -75,7 +75,7 @@ class UsersManagementController extends Controller
                 $query->select('permissions.id', 'permissions.name');
             }])->get(['id', 'name']),
             'permissions' => Permission::orderBy('id')->get(['id', 'name']),
-            'genders' => array_slice(User::GENDERS, 1),
+            'genders' => User::GENDERS,
             'countries' => Country::all()
         ]);
     }
@@ -127,11 +127,14 @@ class UsersManagementController extends Controller
                 'login',
                 'email',
                 'role',
-                'override_permissions',
-                'permissions'
+                'permissions',
+                'gender',
+                'name'
             ]),
-            'roles' => Role::with('permissions')->get(['id', 'name']),
-            'permissions' => Permission::all(),
+            'roles' => Role::with(['permissions' => function ($query) {
+                $query->select('permissions.id', 'permissions.name');
+            }])->get(['id', 'name']),
+            'permissions' => Permission::orderBy('id')->get(['id', 'name']),
             'genders' => User::GENDERS,
             'countries' => Country::all(),
         ]);

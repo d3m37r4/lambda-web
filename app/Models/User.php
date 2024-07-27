@@ -88,8 +88,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-//        'full_name',
         'gender',
+        'name',
         'country_id',
 //        'birth_date',
 //        'biography'
@@ -122,7 +122,7 @@ class User extends Authenticatable
         'created_at' => 'datetime:d.m.Y - H:i:s',
         'updated_at' => 'datetime:d.m.Y - H:i:s',
         'password' => 'hashed',
-//        'full_name' => 'string',
+        'name' => 'string',
         'email_verified_at' => 'datetime'
     ];
 
