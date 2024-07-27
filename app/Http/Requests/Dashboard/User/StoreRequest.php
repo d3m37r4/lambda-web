@@ -22,16 +22,4 @@ class StoreRequest extends StoreUserRequest
             'name' => ['nullable', 'string', 'min:2', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
         ]);
     }
-
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'gender' => $this->genders ?? User::GENDER_NONE,
-        ]);
-    }
 }
