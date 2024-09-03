@@ -35,14 +35,14 @@ Route::group([
     Route::middleware([
         'middleware' => 'can:manage_servers'
     ])->group(function () {
-        Route::resource('servers', GameServerManagementController::class);
-        Route::resource('servers.reasons', ReasonManagementController::class)
+        Route::resource('game-servers', GameServerManagementController::class);
+        Route::resource('game-servers.reasons', ReasonManagementController::class)
             ->except(['index', 'show']);
-        Route::resource('servers.accesses', AccessManagementController::class)
+        Route::resource('game-servers.accesses', AccessManagementController::class)
             ->except(['index', 'show']);
-        Route::resource('servers.access-groups', AccessGroupManagementController::class)
+        Route::resource('game-servers.access-groups', AccessGroupManagementController::class)
             ->except(['index', 'show']);
-        Route::resource('servers.players', PlayerManagementController::class)
+        Route::resource('game-servers.players', PlayerManagementController::class)
             ->only(['edit', 'update', 'destroy']);
     });
 });
