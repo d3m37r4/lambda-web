@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\GameServerApiException;
+use App\Models\GameServer\AccessToken;
 use Closure;
-use App\Models\AccessToken;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Exceptions\GameServerApiException;
 
 class AccessTokenMiddleware
 {

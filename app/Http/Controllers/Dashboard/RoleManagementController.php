@@ -11,7 +11,7 @@ use App\Http\Requests\Dashboard\Role\DestroyRequest;
 use App\Http\Requests\Dashboard\Role\DeleteSelectedRequest;
 use Illuminate\Http\RedirectResponse;
 
-class RolesManagementController extends Controller
+class RoleManagementController extends Controller
 {
     /**
      * The number of roles to return for pagination.

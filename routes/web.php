@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::group([
     'middleware' => ['web', 'auth']
 ], function () {
-    Route::resource('users', UsersController::class)->only(['show', 'edit', 'update']);
+    Route::resource('users', UserController::class)->only(['show', 'edit', 'update']);
 });
 
 Route::middleware('auth')

@@ -30,7 +30,7 @@ class UpdateServerRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'ip' => ['required', 'ip',
-                /* Here it is intentionally used to get index of Server model through router.
+                /* Here it is intentionally used to get index of GameServer model through router.
                  * It is not possible to use the following construction: $this->server
                  * due to coincidence of Model and component name: Symfony\Component\HttpFoundation\ServerBag
                  * Situation is similar with "port" field, the rules for which are given below.

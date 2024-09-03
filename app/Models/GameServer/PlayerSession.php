@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\GameServer;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -76,7 +76,7 @@ class PlayerSession extends Model
      */
     public function server(): BelongsTo
     {
-        return $this->belongsTo(Server::class);
+        return $this->belongsTo(GameServer::class);
     }
 
     /**
@@ -84,7 +84,7 @@ class PlayerSession extends Model
      *
      * @return void
      */
-    public function close()
+    public function close(): void
     {
         $this->status = PlayerSession::STATUS_OFFLINE;
         $this->disconnected_at = now();

@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\GameServer;
 
-use App\Models\Server;
-use App\Models\Player;
+use App\Http\Controllers\Controller;
+use App\Models\GameServer\GameServer;
+use App\Models\GameServer\Player;
 use App\Services\PlayerAction;
 use App\Services\PlayerSessionAction;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
-class GameServerPlayersActionsController extends Controller
+class PlayerActionController extends Controller
 {
     /**
      * Get information about connected player.
      *
      * @param Request $request
-     * @param Server $server
+     * @param GameServer $server
      * @return JsonResponse
      */
-    public function connect(Request $request, Server $server): JsonResponse
+    public function connect(Request $request, GameServer $server): JsonResponse
     {
         // TODO: Add request validator
         $player = PlayerAction::findOrCreate($server, $request);
@@ -41,11 +41,11 @@ class GameServerPlayersActionsController extends Controller
      * Assigns a user profile to the game account.
      *
      * @param Request $request
-     * @param Server $server
+     * @param GameServer $server
      * @param Player $player
-     * @return JsonResponse
+     * @return void
      */
-    public function assign(Request $request, Server $server, Player $player): JsonResponse
+    public function assign(Request $request, GameServer $server, Player $player): void
     {
 
     }
@@ -54,11 +54,11 @@ class GameServerPlayersActionsController extends Controller
      * Updates information about disconnected player.
      *
      * @param Request $request
-     * @param Server $server
+     * @param GameServer $server
      * @param Player $player
      * @return JsonResponse
      */
-    public function disconnect(Request $request, Server $server, Player $player): JsonResponse
+    public function disconnect(Request $request, GameServer $server, Player $player): JsonResponse
     {
         // TODO: Add request validator
         PlayerAction::setCurrentName($player, $request);

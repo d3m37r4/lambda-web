@@ -13,7 +13,7 @@ use App\Http\Requests\Dashboard\User\DestroyRequest;
 use App\Http\Requests\Dashboard\User\DeleteSelectedRequest;
 use Illuminate\Http\RedirectResponse;
 
-class UsersManagementController extends Controller
+class UserManagementController extends Controller
 {
     /**
      * The number of users to return for pagination.

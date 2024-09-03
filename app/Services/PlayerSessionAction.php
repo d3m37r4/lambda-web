@@ -2,20 +2,20 @@
 
 namespace App\Services;
 
-use App\Models\Server;
-use App\Models\Player;
-use App\Models\PlayerSession;
+use App\Models\GameServer\GameServer;
+use App\Models\GameServer\Player;
+use App\Models\GameServer\PlayerSession;
 
 class PlayerSessionAction
 {
     /**
      * Gets an active session by server and player.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @param Player $player
      * @return PlayerSession
      */
-    public static function getActiveSession(Server $server, Player $player): PlayerSession
+    public static function getActiveSession(GameServer $server, Player $player): PlayerSession
     {
         $session = $player->active_session;
 
@@ -32,11 +32,11 @@ class PlayerSessionAction
     /**
      * Creates an active session for the server and the player.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @param Player $player
      * @return PlayerSession
      */
-    public static function createSession(Server $server, Player $player): PlayerSession
+    public static function createSession(GameServer $server, Player $player): PlayerSession
     {
         return PlayerSession::create([
             'player_id' => $player->id,

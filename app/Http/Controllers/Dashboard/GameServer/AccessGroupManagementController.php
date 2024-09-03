@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\GameServer;
 
-use App\Models\AccessGroup;
-use App\Models\Server;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAccessGroupRequest;
-//use App\Http\Requests\UpdateAccessGroupRequest;
+use App\Models\GameServer\AccessGroup;
+use App\Models\GameServer\GameServer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class AccessGroupsManagementController extends Controller
+//use App\Http\Requests\UpdateAccessGroupRequest;
+
+class AccessGroupManagementController extends Controller
 {
     /**
      * Show the form for creating a new access group.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @return View
      */
-    public function create(Server $server): View
+    public function create(GameServer $server): View
     {
         return view('admin.servers.access-groups.create', compact('server'));
     }
@@ -28,27 +29,27 @@ class AccessGroupsManagementController extends Controller
      * Store a newly created access group in storage.
      *
      * @param StoreAccessGroupRequest $request
-     * @param Server $server
+     * @param GameServer $server
      * @return RedirectResponse
      */
-    public function store(StoreAccessGroupRequest $request, Server $server): RedirectResponse
+    public function store(StoreAccessGroupRequest $request, GameServer $server): RedirectResponse
     {
         $accessGroup = AccessGroup::create($request->all());
 
         return redirect()->route('admin.servers.show', $server->id)->with([
             'status' => 'success',
-            'message' => "Группа доступов {$accessGroup->title} успешно добавлена!"
+            'message' => "Группа доступов \"$accessGroup->title\" успешно добавлена!"
         ]);
     }
 
     /**
      * Show the form for editing the specified access group.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @param AccessGroup $accessGroup
      * @return View
      */
-    public function edit(Server $server, AccessGroup $accessGroup): View
+    public function edit(GameServer $server, AccessGroup $accessGroup): View
     {
         return view('admin.servers.access-groups.edit', compact('server', 'accessGroup'));
     }
@@ -57,28 +58,28 @@ class AccessGroupsManagementController extends Controller
      * Update the specified access group in storage.
      *
      * @param Request $request
-     * @param Server $server
+     * @param GameServer $server
      * @param AccessGroup $accessGroup
      * @return RedirectResponse
      */
-    public function update(Request $request, Server $server, AccessGroup $accessGroup): RedirectResponse
+    public function update(Request $request, GameServer $server, AccessGroup $accessGroup): RedirectResponse
     {
         $accessGroup->update($request->all());
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о группе доступа {$accessGroup->title} успешно обновлена!"
+            'message' => "Информация о группе доступа \"$accessGroup->title\" успешно обновлена!"
         ]);
     }
 
     /**
      * Remove the specified access from storage.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @param AccessGroup $accessGroup
      * @return RedirectResponse
      */
-    public function destroy(Server $server, AccessGroup $accessGroup): RedirectResponse
+    public function destroy(GameServer $server, AccessGroup $accessGroup): RedirectResponse
     {
         if (!$server) {
             return back()->with([
@@ -91,7 +92,7 @@ class AccessGroupsManagementController extends Controller
 
         return back()->with([
             'status' => 'success',
-            'message' => "Группа доступа {$accessGroup->title} удалена!"
+            'message' => "Группа доступа \"$accessGroup->title\" удалена!"
         ]);
     }
 }

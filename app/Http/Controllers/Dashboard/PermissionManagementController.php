@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-class PermissionsManagementController extends Controller
+class PermissionManagementController extends Controller
 {
     /**
      * Get the permissions of the specified role

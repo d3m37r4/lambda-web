@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()
                 ->constrained('users')
                 ->cascadeOnDelete();
-            $table->foreignId('server_id')->nullable()
-                ->constrained('servers')
+            $table->foreignId('game_server_id')->nullable()
+                ->constrained('game_servers')
                 ->cascadeOnDelete();
             $table->string('name', 32)->nullable();
             $table->string('authid', 64)->nullable();
@@ -40,7 +40,7 @@ return new class extends Migration
                 'auth_revemu2013',
                 'auth_sse3'
             ])->default('auth_none');
-            $table->unique(['server_id', 'authid', 'auth_type']);
+            $table->unique(['game_server_id', 'authid', 'auth_type']);
             $table->timestamps();
         });
     }

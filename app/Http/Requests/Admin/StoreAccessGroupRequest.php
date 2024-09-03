@@ -27,7 +27,7 @@ class StoreAccessGroupRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255',
-                /* Here it is intentionally used to get index of Server model through router.
+                /* Here it is intentionally used to get index of GameServer model through router.
                  * It is not possible to use the following construction: $this->server
                  * due to coincidence of Model and component name: Symfony\Component\HttpFoundation\ServerBag
                  * Situation is similar with "port" field, the rules for which are given below.
@@ -45,7 +45,7 @@ class StoreAccessGroupRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'server_id' => Request::route('server')->id

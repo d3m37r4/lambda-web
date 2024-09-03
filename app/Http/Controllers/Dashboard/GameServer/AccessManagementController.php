@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\GameServer;
 
-use App\Models\Access;
-use App\Models\Server;
 use App\Http\Controllers\Controller;
-//use App\Http\Requests\StoreAccessRequest;
-//use App\Http\Requests\UpdateAccessRequest;
+use App\Models\GameServer\Access;
+use App\Models\GameServer\GameServer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class AccessesManagementController extends Controller
+//use App\Http\Requests\StoreAccessRequest;
+//use App\Http\Requests\UpdateAccessRequest;
+
+class AccessManagementController extends Controller
 {
     /**
      * Show the form for creating a new access.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @return View
      */
-    public function create(Server $server): View
+    public function create(GameServer $server): View
     {
         return view('admin.servers.accesses.create', compact('server'));
     }
@@ -28,27 +29,27 @@ class AccessesManagementController extends Controller
      * Store a newly created access in storage.
      *
      * @param Request $request
-     * @param Server $server
+     * @param GameServer $server
      * @return RedirectResponse
      */
-    public function store(Request $request, Server $server): RedirectResponse
+    public function store(Request $request, GameServer $server): RedirectResponse
     {
         $access = Access::create($request->all());
 
         return redirect()->route('admin.servers.show', $server->id)->with([
             'status' => 'success',
-            'message' => "Доступ {$access->key} успешно добавлен!"
+            'message' => "Доступ \"$access->key\" успешно добавлен!"
         ]);
     }
 
     /**
      * Show the form for editing the specified access.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @param Access $access
      * @return View
      */
-    public function edit(Server $server, Access $access): View
+    public function edit(GameServer $server, Access $access): View
     {
         return view('admin.servers.accesses.edit', compact('server', 'access'));
     }
@@ -57,28 +58,28 @@ class AccessesManagementController extends Controller
      * Update the specified access in storage.
      *
      * @param Request $request
-     * @param Server $server
+     * @param GameServer $server
      * @param Access $access
      * @return RedirectResponse
      */
-    public function update(Request $request, Server $server, Access $access): RedirectResponse
+    public function update(Request $request, GameServer $server, Access $access): RedirectResponse
     {
         $access->update($request->all());
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о доступе {$access->key} успешно обновлена!"
+            'message' => "Информация о доступе \"$access->key\" успешно обновлена!"
         ]);
     }
 
     /**
      * Remove the specified access from storage.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @param Access $access
      * @return RedirectResponse
      */
-    public function destroy(Server $server, Access $access): RedirectResponse
+    public function destroy(GameServer $server, Access $access): RedirectResponse
     {
         if (!$server) {
             return back()->with([
@@ -91,7 +92,7 @@ class AccessesManagementController extends Controller
 
         return back()->with([
             'status' => 'success',
-            'message' => "Доступ {$access->key} удален!"
+            'message' => "Доступ \"$access->key\" удален!"
         ]);
     }
 }

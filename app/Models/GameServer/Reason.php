@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\GameServer;
 
-use Exception;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -33,7 +33,7 @@ class Reason extends Model
      */
     public function server(): BelongsTo
     {
-        return $this->belongsTo(Server::class);
+        return $this->belongsTo(GameServer::class);
     }
 
     /**

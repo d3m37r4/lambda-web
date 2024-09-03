@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('player_id')->nullable()
                 ->constrained('players')
                 ->cascadeOnDelete();
-            $table->foreignId('server_id')->nullable()
-                ->constrained('servers')
+            $table->foreignId('game_server_id')->nullable()
+                ->constrained('game_servers')
                 ->cascadeOnDelete();
             $table->enum('status', [
                 'online',

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\GameServer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -40,6 +40,6 @@ class Map extends Model
      */
     public function servers(): HasMany
     {
-        return $this->hasMany(Server::class);
+        return $this->hasMany(GameServer::class);
     }
 }

@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('access_groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('server_id')->nullable()
-                ->constrained('servers')
+            $table->foreignId('game_server_id')->nullable()
+                ->constrained('game_servers')
                 ->cascadeOnDelete();
             $table->string('title');
             $table->string('flags');
             $table->string('prefix');
             $table->timestamps();
-            $table->unique(['server_id', 'title']);
+            $table->unique(['game_server_id', 'title']);
         });
     }
 

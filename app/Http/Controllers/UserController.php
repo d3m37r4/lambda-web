@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     /**
      * Create the controller instance.

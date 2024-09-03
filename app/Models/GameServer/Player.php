@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\GameServer;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -60,7 +60,7 @@ class Player extends Model
      */
     public function server(): BelongsTo
     {
-        return $this->belongsTo(Server::class);
+        return $this->belongsTo(GameServer::class);
     }
 
     /**
@@ -78,7 +78,7 @@ class Player extends Model
      *
      * @return mixed
      */
-    public function getActiveSessionAttribute()
+    public function getActiveSessionAttribute(): mixed
     {
         return PlayerSession::where([
             ['player_id', $this->id],

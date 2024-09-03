@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\GameServer;
 
-use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 
 Carbon::setToStringFormat('d.m.Y - H:i:s');
 
@@ -34,10 +34,10 @@ Carbon::setToStringFormat('d.m.Y - H:i:s');
  * @property int map_id
  * @property mixed access_groups
  */
-class Server extends Model
+class GameServer extends Model
 {
     /**
-     * The maximum buffer size required to store a auth token.
+     * The maximum buffer size required to store an auth token.
      *
      * @var int
      */
@@ -141,9 +141,9 @@ class Server extends Model
     /**
      * Gets players available for a specific server.
      *
-     * @return mixed
+     * @return HasMany
      */
-    public function players()
+    public function players(): HasMany
     {
         return $this->hasMany(Player::class);
     }

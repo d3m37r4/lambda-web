@@ -11,14 +11,14 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         // \App\Models\User::factory(10)->create();
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(MapSeeder::class);
-        $this->call(ServerSeeder::class);
+        $this->call(GameServerSeeder::class);
         $this->call(ReasonSeeder::class);
         $this->call(AccessSeeder::class);
         $this->call(AccessGroupSeeder::class);

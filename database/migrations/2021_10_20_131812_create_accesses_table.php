@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('accesses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('server_id')->nullable()
-                ->constrained('servers')
+            $table->foreignId('game_server_id')->nullable()
+                ->constrained('game_servers')
                 ->cascadeOnDelete();
             $table->string('key', 64);
             $table->string('description');
             $table->timestamps();
-            $table->unique(['server_id', 'key']);
+            $table->unique(['game_server_id', 'key']);
         });
     }
 

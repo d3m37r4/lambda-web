@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\GameServer;
 
-use Arr;
-use App\Models\Map;
-use App\Models\Server;
-use App\Http\Requests\API\GameServerInfoRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\API\GameServerInfoRequest;
+use App\Models\GameServer\GameServer;
+use App\Models\GameServer\Map;
+use Arr;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
-class GameServerActionsController extends Controller
+class ActionController extends Controller
 {
     /**
-     * Gets information about server when a new map is launched or when server is started.
+     * Gets information about server when a new map is launched or when the server is started.
      *
      * @param GameServerInfoRequest $request
-     * @param Server $server
+     * @param GameServer $server
      * @return JsonResponse
      */
-    public function info(GameServerInfoRequest $request, Server $server): JsonResponse
+    public function info(GameServerInfoRequest $request, GameServer $server): JsonResponse
     {
         $response = array();
         $server->max_players = $request->input('max_players');
@@ -52,10 +52,10 @@ class GameServerActionsController extends Controller
      * Gets additional information about server.
      *
      * @param Request $request
-     * @param Server $server
+     * @param GameServer $server
      * @return JsonResponse
      */
-    public function ping(Request $request, Server $server): JsonResponse {
+    public function ping(Request $request, GameServer $server): JsonResponse {
         $server->update();
 
         return Response::json([

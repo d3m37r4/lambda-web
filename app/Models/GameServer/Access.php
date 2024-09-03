@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\GameServer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -36,6 +36,6 @@ class Access extends Model
      */
     public function server(): BelongsTo
     {
-        return $this->belongsTo(Server::class);
+        return $this->belongsTo(GameServer::class);
     }
 }

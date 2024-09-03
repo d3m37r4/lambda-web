@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\GameServer;
 
-use App\Models\Server;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreServerRequest;
 use App\Http\Requests\Admin\UpdateServerRequest;
+use App\Models\GameServer\GameServer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class GameServersManagementController extends Controller
+class GameServerManagementController extends Controller
 {
     /**
      * Display a listing of the servers.
@@ -18,7 +18,7 @@ class GameServersManagementController extends Controller
     {
         return inertia('Dashboard/GameServers/Index', [
             'title' => 'Управление серверами',
-            'users' => Server::paginate(env('PAGINATION_SIZE'))->through(fn ($server) => [
+            'users' => GameServer::paginate(env('PAGINATION_SIZE'))->through(fn ($server) => [
                 'id' => $server->id,
                 'created_at' => $server->created_at->format('d.m.Y - H:i:s'),
             ])
@@ -43,21 +43,21 @@ class GameServersManagementController extends Controller
      */
     public function store(StoreServerRequest $request): RedirectResponse
     {
-        $server = Server::create($request->validated());
+        $server = GameServer::create($request->validated());
 
         return redirect(session('redirect_url'))->with([
             'status' => 'success',
-            'message' => "Сервер {$server->name} успешно добавлен!"
+            'message' => "Сервер \"$server->name\" успешно добавлен!"
         ]);
     }
 
     /**
      * Display the specified server.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @return View
      */
-    public function show(Server $server): View
+    public function show(GameServer $server): View
     {
         return view('admin.servers.show', compact('server'));
     }
@@ -65,10 +65,10 @@ class GameServersManagementController extends Controller
     /**
      * Show the form for editing the specified server.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @return View
      */
-    public function edit(Server $server): View
+    public function edit(GameServer $server): View
     {
         return view('admin.servers.edit', compact('server'));
     }
@@ -77,32 +77,32 @@ class GameServersManagementController extends Controller
      * Update the specified server in storage.
      *
      * @param UpdateServerRequest $request
-     * @param Server $server
+     * @param GameServer $server
      * @return RedirectResponse
      */
-    public function update(UpdateServerRequest $request, Server $server): RedirectResponse
+    public function update(UpdateServerRequest $request, GameServer $server): RedirectResponse
     {
         $server->update($request->validated());
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о сервере {$server->name} успешно обновлена!"
+            'message' => "Информация о сервере \"$server->name\" успешно обновлена!"
         ]);
     }
 
     /**
      * Remove the specified server from storage.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @return RedirectResponse
      */
-    public function destroy(Server $server): RedirectResponse
+    public function destroy(GameServer $server): RedirectResponse
     {
         $server->delete();
 
         return back()->with([
             'status' => 'success',
-            'message' => "Сервер {$server->name} удален!"
+            'message' => "Сервер \"$server->name\" удален!"
         ]);
     }
 }

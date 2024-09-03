@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('reasons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('server_id')->nullable()
-                ->constrained('servers')
+            $table->foreignId('game_server_id')->nullable()
+                ->constrained('game_servers')
                 ->cascadeOnDelete();
             $table->string('title');
             $table->unsignedInteger('time')->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
 //            $table->unsignedTinyInteger('menu');
 //            $table->unsignedTinyInteger('active');
             $table->timestamps();
-            $table->unique(['server_id', 'title']);
+            $table->unique(['game_server_id', 'title']);
         });
     }
 

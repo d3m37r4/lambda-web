@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('servers', function (Blueprint $table) {
+        Schema::create('game_servers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('ip', 16);
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('servers');
+        Schema::dropIfExists('game_servers');
     }
 };

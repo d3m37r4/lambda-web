@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\GameServer;
 
-use App\Models\Player;
-use App\Models\Server;
 use App\Http\Controllers\Controller;
+use App\Models\GameServer\Player;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class PlayersManagementController extends Controller
+class PlayerManagementController extends Controller
 {
     /**
      * Show the form for editing the specified player.

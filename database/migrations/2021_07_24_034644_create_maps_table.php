@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Map;
+use App\Models\GameServer\Map;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
