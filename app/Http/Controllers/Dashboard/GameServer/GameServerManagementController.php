@@ -2,31 +2,43 @@
 
 namespace App\Http\Controllers\Dashboard\GameServer;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreServerRequest;
-use App\Http\Requests\Admin\UpdateServerRequest;
 use App\Models\GameServer\GameServer;
-use Illuminate\Contracts\View\View;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\GameServer\StoreRequest;
+use App\Http\Requests\Dashboard\GameServer\UpdateRequest;
+use App\Http\Requests\Dashboard\GameServer\DestroyRequest;
+use App\Http\Requests\Dashboard\GameServer\DeleteSelectedRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
 
 class GameServerManagementController extends Controller
 {
     /**
-     * Display a listing of the servers.
+     * The number of game servers to return for pagination.
+     *
+     * @var int
+     */
+    protected int $perPage = 8;
+
+    /**
+     * Display a listing of the game servers.
      */
     public function index()
     {
         return inertia('Dashboard/GameServers/Index', [
             'title' => 'Управление серверами',
-            'users' => GameServer::paginate(env('PAGINATION_SIZE'))->through(fn ($server) => [
+            'game_servers' => GameServer::paginate($this->perPage)->through(fn ($server) => [
                 'id' => $server->id,
+                'name' => $server->name,
+                'full_address' => $server->full_address,
                 'created_at' => $server->created_at->format('d.m.Y - H:i:s'),
+                'updated_at' => $server->updated_at->format('d.m.Y - H:i:s'),
             ])
         ]);
     }
 
     /**
-     * Show the form for creating a new server.
+     * Show the form for creating a new game server.
      *
      * @return View
      */
@@ -36,12 +48,12 @@ class GameServerManagementController extends Controller
     }
 
     /**
-     * Store a newly created server in storage.
+     * Store a newly created game server in storage.
      *
-     * @param StoreServerRequest $request
+     * @param StoreRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreServerRequest $request): RedirectResponse
+    public function store(StoreRequest $request): RedirectResponse
     {
         $server = GameServer::create($request->validated());
 
@@ -52,7 +64,7 @@ class GameServerManagementController extends Controller
     }
 
     /**
-     * Display the specified server.
+     * Display the specified game server.
      *
      * @param GameServer $server
      * @return View
@@ -63,7 +75,7 @@ class GameServerManagementController extends Controller
     }
 
     /**
-     * Show the form for editing the specified server.
+     * Show the form for editing the specified game server.
      *
      * @param GameServer $server
      * @return View
@@ -74,13 +86,13 @@ class GameServerManagementController extends Controller
     }
 
     /**
-     * Update the specified server in storage.
+     * Update the specified game server in storage.
      *
-     * @param UpdateServerRequest $request
+     * @param UpdateRequest $request
      * @param GameServer $server
      * @return RedirectResponse
      */
-    public function update(UpdateServerRequest $request, GameServer $server): RedirectResponse
+    public function update(UpdateRequest $request, GameServer $server): RedirectResponse
     {
         $server->update($request->validated());
 
@@ -91,18 +103,36 @@ class GameServerManagementController extends Controller
     }
 
     /**
-     * Remove the specified server from storage.
-     *
-     * @param GameServer $server
-     * @return RedirectResponse
+     * Remove the specified game server from storage.
      */
-    public function destroy(GameServer $server): RedirectResponse
+    public function destroy(DestroyRequest $request, GameServer $server): RedirectResponse
     {
+        $validated = $request->validated();
         $server->delete();
 
-        return back()->with([
-            'status' => 'success',
-            'message' => "Сервер \"$server->name\" удален!"
-        ]);
+        $redirectToPage = min($validated['current_page'], GameServer::paginate($this->perPage)->lastPage());
+
+        return redirect()->route('dashboard.game-servers.index', ['page' => $redirectToPage])
+            ->with([
+                'status' => 'deleted',
+                'message' => "Сервер \"$server->name\" удален!"
+            ]);
+    }
+
+    /**
+     * Delete selected game servers from storage.
+     */
+    public function deleteSelected(DeleteSelectedRequest $request)
+    {
+        $validated = $request->validated();
+        GameServer::whereIn('id', $validated['ids'])->delete();
+
+        $redirectToPage = min($validated['current_page'], GameServer::paginate($this->perPage)->lastPage());
+
+        return redirect()->route('dashboard.game-servers.index', ['page' => $redirectToPage])
+            ->with([
+                'status' => 'deleted',
+                'message' => 'Выбранные игровые серверы удалены.'
+            ]);
     }
 }
