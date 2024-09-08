@@ -98,7 +98,8 @@ const confirmDeleteUser = (id) => {
                             </td>
                             <td>
                                 <div class="flex items-center gap-3">
-                                    <div class="avatar">
+                                    <div class="avatar indicator">
+                                        <span class="indicator-item badge badge-sm badge-success"></span>
                                         <div class="mask mask-squircle w-12 h-12">
                                             <img src="https://img.daisyui.com/tailwind-css-component-profile-2@56w.png" :alt="user.login" />
                                         </div>
