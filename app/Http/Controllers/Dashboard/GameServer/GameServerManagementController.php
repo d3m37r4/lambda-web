@@ -27,7 +27,7 @@ class GameServerManagementController extends Controller
     {
         return inertia('Dashboard/GameServers/Index', [
             'title' => 'Управление серверами',
-            'game_servers' => GameServer::paginate($this->perPage)->through(fn ($server) => [
+            'gameServers' => GameServer::paginate($this->perPage)->through(fn ($server) => [
                 'id' => $server->id,
                 'name' => $server->name,
                 'full_address' => $server->full_address,
