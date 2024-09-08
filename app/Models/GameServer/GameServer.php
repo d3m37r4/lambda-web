@@ -2,9 +2,9 @@
 
 namespace App\Models\GameServer;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -12,19 +12,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 
-Carbon::setToStringFormat('d.m.Y - H:i:s');
-
 /**
  * @method static create(array $array)
  * @method static paginate(mixed $env)
  * @method static find(array|Application|Request|string|null $request)
  * @method static where(array[] $array)
+ * @method static whereIn(string $string, mixed $ids)
  * @property int id
  * @property int port
  * @property int num_players
  * @property int max_players
  * @property string name
  * @property string ip
+ * @property string full_address
  * @property string rcon
  * @property string auth_token
  * @property array map
@@ -56,25 +56,32 @@ class GameServer extends Model
         'map_id',
         'auth_token',
         'max_players',
-        'active'
+        'active',
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
      * @var array
      */
-    protected $hidden = ['rcon', 'auth_token', 'created_at', 'updated_at'];
+    protected $hidden = [
+        'rcon',
+        'auth_token'
+    ];
 
     /**
      * @var array
      */
     protected $appends = [
-        'num_players',
         'full_address',
+        'num_players',
         'map_name',
         'percent_players'
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
      * @var array
      */
     protected $casts = [
@@ -82,11 +89,22 @@ class GameServer extends Model
         'map_id' => 'int',
         'num_players' => 'int',
         'max_players' => 'int',
-        'full_address' => 'string',
         'map_name' => 'string',
         'active' => 'boolean',
         'percent_players' => 'int'
     ];
+
+    /**
+     * Gets the full address of the game server in the format “ip:port”.
+     *
+     * @return Attribute
+     */
+    protected function fullAddress(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->ip . ':' . $this->port
+        );
+    }
 
     /**
      * Gets access token available for a specific server.
@@ -99,7 +117,7 @@ class GameServer extends Model
     }
 
     /**
-     * Gets map available for a specific server.
+     * Gets a map available for a specific server.
      *
      * @return BelongsTo
      */
@@ -195,21 +213,11 @@ class GameServer extends Model
     }
 
     /**
-     * Gets full server address.
-     *
-     * @return string
-     */
-    public function getFullAddressAttribute(): string
-    {
-        return $this->ip . ':' . $this->port;
-    }
-
-    /**
      * Sets a hash instead of a valid auth token.
      *
      * @param $authToken
      */
-    public function setAuthTokenAttribute($authToken)
+    public function setAuthTokenAttribute($authToken): void
     {
         if (!empty($authToken)) {
             $this->attributes['auth_token'] = Hash::make($authToken);
@@ -230,7 +238,7 @@ class GameServer extends Model
      * Gets number of online players for specified server.
      *
      * @note Prevents setting invalid values for online players.
-     *       For Counter Strike 1.6, this is 0 - 32.
+     *       For Counter Strike 1.6, this is 0-32.
      *
      * @return int
      */
