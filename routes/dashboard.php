@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\Dashboard\GameServer\AccessManagementController;
-use App\Http\Controllers\Dashboard\GameServer\AccessGroupManagementController;
+use App\Http\Controllers\Dashboard\HomeController;
+use App\Http\Controllers\Dashboard\UserManagementController;
+use App\Http\Controllers\Dashboard\RoleManagementController;
 use App\Http\Controllers\Dashboard\GameServer\GameServerManagementController;
 use App\Http\Controllers\Dashboard\GameServer\PlayerManagementController;
+use App\Http\Controllers\Dashboard\GameServer\AccessManagementController;
+use App\Http\Controllers\Dashboard\GameServer\AccessGroupManagementController;
 use App\Http\Controllers\Dashboard\GameServer\ReasonManagementController;
-use App\Http\Controllers\Dashboard\HomeController;
-use App\Http\Controllers\Dashboard\RoleManagementController;
-use App\Http\Controllers\Dashboard\UserManagementController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -35,14 +35,16 @@ Route::group([
     Route::middleware([
         'middleware' => 'can:manage_servers'
     ])->group(function () {
+        Route::delete('game-servers/delete-selected', [GameServerManagementController::class, 'deleteSelected'])
+            ->name('game-servers.delete-selected');
         Route::resource('game-servers', GameServerManagementController::class);
-        Route::resource('game-servers.reasons', ReasonManagementController::class)
-            ->except(['index', 'show']);
+        Route::resource('game-servers.players', PlayerManagementController::class)
+            ->only(['edit', 'update', 'destroy']);
         Route::resource('game-servers.accesses', AccessManagementController::class)
             ->except(['index', 'show']);
         Route::resource('game-servers.access-groups', AccessGroupManagementController::class)
             ->except(['index', 'show']);
-        Route::resource('game-servers.players', PlayerManagementController::class)
-            ->only(['edit', 'update', 'destroy']);
+        Route::resource('game-servers.reasons', ReasonManagementController::class)
+            ->except(['index', 'show']);
     });
 });
