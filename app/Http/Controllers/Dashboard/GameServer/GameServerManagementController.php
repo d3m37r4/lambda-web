@@ -59,7 +59,7 @@ class GameServerManagementController extends Controller
 
         return redirect(session('redirect_url'))->with([
             'status' => 'success',
-            'message' => "Сервер \"$server->name\" успешно добавлен!"
+            'message' => "Сервер \"$server->name\" добавлен."
         ]);
     }
 
@@ -98,7 +98,7 @@ class GameServerManagementController extends Controller
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о сервере \"$server->name\" успешно обновлена!"
+            'message' => "Информация о сервере \"$server->name\" обновлена."
         ]);
     }
 
@@ -115,7 +115,7 @@ class GameServerManagementController extends Controller
         return redirect()->route('dashboard.game-servers.index', ['page' => $redirectToPage])
             ->with([
                 'status' => 'deleted',
-                'message' => "Сервер \"$server->name\" удален!"
+                'message' => "Сервер \"$server->name\" удален."
             ]);
     }
 
@@ -132,7 +132,7 @@ class GameServerManagementController extends Controller
         return redirect()->route('dashboard.game-servers.index', ['page' => $redirectToPage])
             ->with([
                 'status' => 'deleted',
-                'message' => 'Выбранные игровые серверы удалены.'
+                'message' => 'Выбранные серверы удалены.'
             ]);
     }
 }

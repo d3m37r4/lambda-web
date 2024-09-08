@@ -4,7 +4,7 @@
             {{ 'Подтверждение действия' }}
         </template>
         <template #modal-text>
-            {{ ('Вы действительно хотите удалить этот игровой сервер?') }}
+            {{ ('Вы действительно хотите удалить этот сервер?') }}
         </template>
         <template #modal-actions>
             <button @click="deleteGameServer(game_server)" class="btn btn-error">
