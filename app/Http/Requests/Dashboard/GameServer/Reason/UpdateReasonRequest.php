@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Dashboard\GameServer\Reason;
 
 use Illuminate\Validation\Rule;
 use Request;
 
 /**
- * @property mixed access_group
+ * @property mixed reason
  */
-class UpdateAccessGroupRequest extends StoreAccessGroupRequest
+class UpdateReasonRequest extends StoreReasonRequest
 {
     public function rules(): array
     {
@@ -19,7 +19,7 @@ class UpdateAccessGroupRequest extends StoreAccessGroupRequest
                  * due to coincidence of Model and component name: Symfony\Component\HttpFoundation\ServerBag
                  * Situation is similar with "port" field, the rules for which are given below.
                  */
-                Rule::unique('access_groups')->ignore($this->access_group)
+                Rule::unique('reasons')->ignore($this->reason)
                     ->where('server_id', Request::route('server')->id)
             ],
         ]);

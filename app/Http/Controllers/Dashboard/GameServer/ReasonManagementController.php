@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Dashboard\GameServer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreReasonRequest;
-use App\Http\Requests\Admin\UpdateReasonRequest;
+use App\Http\Requests\Dashboard\GameServer\Reason\StoreReasonRequest;
+use App\Http\Requests\Dashboard\GameServer\Reason\UpdateReasonRequest;
 use App\Models\GameServer\GameServer;
 use App\Models\GameServer\Reason;
 use Illuminate\Contracts\View\View;

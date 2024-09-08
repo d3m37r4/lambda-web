@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Dashboard\GameServer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreAccessGroupRequest;
+use App\Http\Requests\Dashboard\GameServer\AccessGroup\StoreRequest;
 use App\Models\GameServer\AccessGroup;
 use App\Models\GameServer\GameServer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-//use App\Http\Requests\UpdateAccessGroupRequest;
+//use App\Http\Requests\UpdateRequest;
 
 class AccessGroupManagementController extends Controller
 {
@@ -28,11 +28,11 @@ class AccessGroupManagementController extends Controller
     /**
      * Store a newly created access group in storage.
      *
-     * @param StoreAccessGroupRequest $request
+     * @param StoreRequest $request
      * @param GameServer $server
      * @return RedirectResponse
      */
-    public function store(StoreAccessGroupRequest $request, GameServer $server): RedirectResponse
+    public function store(StoreRequest $request, GameServer $server): RedirectResponse
     {
         $accessGroup = AccessGroup::create($request->all());
 
