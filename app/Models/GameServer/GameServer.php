@@ -2,37 +2,20 @@
 
 namespace App\Models\GameServer;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 
 /**
  * @method static create(array $array)
  * @method static paginate(mixed $env)
- * @method static find(array|Application|Request|string|null $request)
- * @method static where(array[] $array)
- * @method static whereIn(string $string, mixed $ids)
- * @property int id
- * @property int port
- * @property int num_players
- * @property int max_players
- * @property string name
- * @property string ip
- * @property string full_address
- * @property string rcon
- * @property string auth_token
- * @property array map
- * @property array reasons
- * @property array access_token
- * @property boolean active
- * @property int map_id
- * @property mixed access_groups
+ * @method static whereIn(mixed $var1, mixed $var2)
+ * @property int $id
+ * @property string $name
  */
 class GameServer extends Model
 {

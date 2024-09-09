@@ -7,7 +7,7 @@
             {{ ('Вы действительно хотите удалить этот сервер?') }}
         </template>
         <template #modal-actions>
-            <button @click="deleteGameServer(game_server)" class="btn btn-error">
+            <button @click="deleteGameServer(gameServer)" class="btn btn-error">
                 {{ ('Удалить') }}
             </button>
             <button @click="local=false" class="btn">
@@ -26,7 +26,7 @@ export default {
         BaseModal,
     },
     props: {
-        game_server: Number,
+        gameServer: Number,
         modelValue: Boolean,
         currentPage: Number,
     },
@@ -45,8 +45,8 @@ export default {
         return { local };
     },
     methods: {
-        deleteGameServer(game_server) {
-            this.$inertia.delete(route('dashboard.game-servers.destroy', game_server), {
+        deleteGameServer(gameServer) {
+            this.$inertia.delete(route('dashboard.game-servers.destroy', gameServer), {
                 data: {
                     current_page: this.currentPage,
                 },

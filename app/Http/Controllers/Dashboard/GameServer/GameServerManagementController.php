@@ -27,12 +27,12 @@ class GameServerManagementController extends Controller
     {
         return inertia('Dashboard/GameServers/Index', [
             'title' => 'Управление серверами',
-            'gameServers' => GameServer::paginate($this->perPage)->through(fn ($server) => [
-                'id' => $server->id,
-                'name' => $server->name,
-                'full_address' => $server->full_address,
-                'created_at' => $server->created_at->format('d.m.Y - H:i:s'),
-                'updated_at' => $server->updated_at->format('d.m.Y - H:i:s'),
+            'gameServers' => GameServer::paginate($this->perPage)->through(fn ($gameServer) => [
+                'id' => $gameServer->id,
+                'name' => $gameServer->name,
+                'full_address' => $gameServer->full_address,
+                'created_at' => $gameServer->created_at->format('d.m.Y - H:i:s'),
+                'updated_at' => $gameServer->updated_at->format('d.m.Y - H:i:s'),
             ])
         ]);
     }
@@ -49,73 +49,66 @@ class GameServerManagementController extends Controller
 
     /**
      * Store a newly created game server in storage.
-     *
-     * @param StoreRequest $request
-     * @return RedirectResponse
      */
     public function store(StoreRequest $request): RedirectResponse
     {
-        $server = GameServer::create($request->validated());
+        $gameServer = GameServer::create($request->validated());
 
         return redirect(session('redirect_url'))->with([
             'status' => 'success',
-            'message' => "Сервер \"$server->name\" добавлен."
+            'message' => "Сервер \"$gameServer->name\" добавлен."
         ]);
     }
 
     /**
      * Display the specified game server.
-     *
-     * @param GameServer $server
-     * @return View
      */
-    public function show(GameServer $server): View
+    public function show(GameServer $gameServer): View
     {
-        return view('admin.servers.show', compact('server'));
+        return view('admin.servers.show', compact('gameServer'));
     }
 
     /**
      * Show the form for editing the specified game server.
-     *
-     * @param GameServer $server
-     * @return View
      */
-    public function edit(GameServer $server): View
+    public function edit(GameServer $gameServer)
     {
-        return view('admin.servers.edit', compact('server'));
+        return inertia('Dashboard/GameServers/Edit', [
+            'title' => "Редактирование сервера $gameServer->name",
+            'gameServer' => [
+                'id' => $gameServer->id,
+                'name' => $gameServer->name
+            ]
+        ]);
     }
 
     /**
      * Update the specified game server in storage.
-     *
-     * @param UpdateRequest $request
-     * @param GameServer $server
-     * @return RedirectResponse
      */
-    public function update(UpdateRequest $request, GameServer $server): RedirectResponse
+    public function update(UpdateRequest $request, GameServer $gameServer): RedirectResponse
     {
-        $server->update($request->validated());
+        $gameServer->update($request->validated());
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о сервере \"$server->name\" обновлена."
+            'message' => "Информация о сервере \"$gameServer->name\" обновлена."
         ]);
     }
 
     /**
      * Remove the specified game server from storage.
      */
-    public function destroy(DestroyRequest $request, GameServer $server): RedirectResponse
+    public function destroy(DestroyRequest $request, GameServer $gameServer)
     {
         $validated = $request->validated();
-        $server->delete();
+        $gameServer->delete();
 
         $redirectToPage = min($validated['current_page'], GameServer::paginate($this->perPage)->lastPage());
 
         return redirect()->route('dashboard.game-servers.index', ['page' => $redirectToPage])
             ->with([
                 'status' => 'deleted',
-                'message' => "Сервер \"$server->name\" удален."
+                'message' => "Сервер \"$gameServer->name\" удален."
             ]);
     }
 

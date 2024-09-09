@@ -42,7 +42,7 @@ const confirmDeleteGameServer = (id) => {
 <template>
     <ConfirmDeleteGameServer
         v-model="showModalConfirmDelete"
-        :game_server="targetItemIndex"
+        :gameServer="targetItemIndex"
         :currentPage="gameServers.current_page"
         @deleteSelectedItems="deleteSelectedItems" />
     <div class="ml-4 space-y-4">
