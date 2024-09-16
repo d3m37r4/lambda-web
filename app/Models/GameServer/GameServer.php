@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Hash;
  * @method static paginate(mixed $env)
  * @method static whereIn(mixed $var1, mixed $var2)
  * @property int $id
+ * @property int $port
  * @property string $name
+ * @property string $ip
+ * @property string $auth_token
+ * @property string $rcon
  */
 class GameServer extends Model
 {
