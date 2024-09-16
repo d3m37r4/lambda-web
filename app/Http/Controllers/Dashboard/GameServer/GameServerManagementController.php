@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Dashboard\GameServer;
 
+use Inertia\Inertia;
+use App\Helpers\Token;
 use App\Models\GameServer\GameServer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\GameServer\StoreRequest;
@@ -77,8 +79,13 @@ class GameServerManagementController extends Controller
             'title' => "Редактирование сервера $gameServer->name",
             'gameServer' => [
                 'id' => $gameServer->id,
-                'name' => $gameServer->name
-            ]
+                'name' => $gameServer->name,
+                'ip' => $gameServer->ip,
+                'port' => $gameServer->port,
+                'auth_token' => $gameServer->auth_token,
+                'rcon' => $gameServer->rcon,
+            ],
+            'newAuthToken' => Inertia::lazy(fn () => Token::generate(GameServer::MAX_AUTH_TOKEN_LENGTH, 'game_servers', 'auth_token')),
         ]);
     }
 
