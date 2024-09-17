@@ -6,6 +6,7 @@ import InputError from "@/Components/InputError.vue";
 import BackButton from "@/Components/BackButton.vue";
 import UpdateButton from "@/Components/UpdateButton.vue";
 import CopyToClipboard from "@/Components/CopyToClipboard.vue";
+import toast from "@/Store/toast";
 
 defineOptions({
     layout: DashboardLayout
@@ -26,7 +27,13 @@ const form = useForm({
 });
 
 watch(() => props.newAuthToken, (newValue) => {
-    form.auth_token = newValue ?? form.auth_token;
+    if (newValue) {
+        form.auth_token = newValue;
+        toast.add({
+            status: 'success',
+            message: 'Новый токен успешно сгенерирован.',
+        });
+    }
 });
 
 const update = () => {
