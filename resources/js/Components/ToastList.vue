@@ -1,13 +1,12 @@
 <script setup>
 import ToastListItem from "@/Components/ToastListItem.vue";
-import { onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, onBeforeUnmount, computed } from 'vue';
 import { Inertia } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/vue3";
 import toast from "@/Store/toast";
 
 const page = usePage();
-
-let removeFinishEventListener = Inertia.on('finish', () => {
+const removeFinishEventListener = Inertia.on('finish', () => {
     if (page.props.toast.status && page.props.toast.message) {
         toast.add({
             status: page.props.toast.status,
@@ -15,8 +14,22 @@ let removeFinishEventListener = Inertia.on('finish', () => {
         });
     }
 });
+const hasScrollBar = ref(false);
+const indentRight  = computed(() => {
+    return hasScrollBar.value ? 'pe-2' : 'pe-4.5';
+});
+const checkScrollbar = () => {
+    hasScrollBar.value = document.body.scrollHeight > window.innerHeight;
+};
 
+onMounted(() => {
+    checkScrollbar();
+    window.addEventListener('resize', checkScrollbar);
+});
 onUnmounted(() => removeFinishEventListener());
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', checkScrollbar);
+});
 
 const remove = (index) => {
     toast.remove(index);
@@ -30,7 +43,8 @@ const remove = (index) => {
         enter-active-class="duration-500"
         leave-active-class="duration-500"
         leave-to-class="translate-x-full opacity-0"
-        class="toast z-20">
+        class="toast"
+        :class="indentRight">
         <ToastListItem
             v-for="(item, index) in toast.items"
             :key="item.key"
