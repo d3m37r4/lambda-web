@@ -9,7 +9,6 @@ use App\Http\Requests\Dashboard\Role\StoreRequest;
 use App\Http\Requests\Dashboard\Role\UpdateRequest;
 use App\Http\Requests\Dashboard\Role\DestroyRequest;
 use App\Http\Requests\Dashboard\Role\DeleteSelectedRequest;
-use Illuminate\Http\RedirectResponse;
 
 class RoleManagementController extends Controller
 {
@@ -60,11 +59,8 @@ class RoleManagementController extends Controller
 
     /**
      * Store a newly created role in storage.
-     *
-     * @param StoreRequest $request
-     * @return RedirectResponse
      */
-    public function store(StoreRequest $request): RedirectResponse
+    public function store(StoreRequest $request)
     {
         $role = Role::create($request->safe()->only('name'))
             ->syncPermissions($request->safe()->only('permissions'));
@@ -93,12 +89,8 @@ class RoleManagementController extends Controller
 
     /**
      * Update the specified role in storage.
-     *
-     * @param UpdateRequest $request
-     * @param Role $role
-     * @return RedirectResponse
      */
-    public function update(UpdateRequest $request, Role $role): RedirectResponse
+    public function update(UpdateRequest $request, Role $role)
     {
         $role->update($request->safe()->only('name'));
         $role->syncPermissions($request->safe()->only('permissions'));
@@ -119,8 +111,9 @@ class RoleManagementController extends Controller
 
         $redirectToPage = min($validated['current_page'], Role::paginate($this->perPage)->lastPage());
 
-        return redirect()->route('dashboard.roles.index', ['page' => $redirectToPage])
-            ->with([
+        return redirect()->route('dashboard.roles.index', [
+            'page' => $redirectToPage
+        ])->with([
             'status' => 'deleted',
             'message' => "Роль \"$role->name\" удалена."
         ]);
@@ -136,10 +129,11 @@ class RoleManagementController extends Controller
 
         $redirectToPage = min($validated['current_page'], Role::paginate($this->perPage)->lastPage());
 
-        return redirect()->route('dashboard.roles.index', ['page' => $redirectToPage])
-            ->with([
-                'status' => 'deleted',
-                'message' => 'Выбранные роли удалены.'
-            ]);
+        return redirect()->route('dashboard.roles.index', [
+            'page' => $redirectToPage
+        ])->with([
+            'status' => 'deleted',
+            'message' => 'Выбранные роли удалены.'
+        ]);
     }
 }

@@ -11,7 +11,6 @@ use App\Http\Requests\Dashboard\User\StoreRequest;
 use App\Http\Requests\Dashboard\User\UpdateRequest;
 use App\Http\Requests\Dashboard\User\DestroyRequest;
 use App\Http\Requests\Dashboard\User\DeleteSelectedRequest;
-use Illuminate\Http\RedirectResponse;
 
 class UserManagementController extends Controller
 {
@@ -82,11 +81,8 @@ class UserManagementController extends Controller
 
     /**
      * Store a newly created user in storage.
-     *
-     * @param StoreRequest $request
-     * @return RedirectResponse
      */
-    public function store(StoreRequest $request): RedirectResponse
+    public function store(StoreRequest $request)
     {
         $user = User::create($request->safe()->except('role', 'permissions'));
         $user->assignRole($request->safe()->only('role'));
@@ -95,8 +91,9 @@ class UserManagementController extends Controller
             $user->syncPermissions($request->safe()->only('permissions'));
         }
 
-        return redirect()->route('dashboard.users.index', ['page' => User::paginate($this->perPage)->lastPage()])
-            ->with([
+        return redirect()->route('dashboard.users.index', [
+            'page' => User::paginate($this->perPage)->lastPage()
+        ])->with([
             'status' => 'success',
             'message' => "Пользователь $user->login успешно создан!"
         ]);
@@ -129,12 +126,8 @@ class UserManagementController extends Controller
 
     /**
      * Update the specified user in storage.
-     *
-     * @param UpdateRequest $request
-     * @param User $user
-     * @return RedirectResponse
      */
-    public function update(UpdateRequest $request, User $user): RedirectResponse
+    public function update(UpdateRequest $request, User $user)
     {
         $user->update($request->safe()->except('role', 'permissions'));
         $user->syncRoles($request->safe()->only('role'));
@@ -161,8 +154,9 @@ class UserManagementController extends Controller
 
         $redirectToPage = min($validated['current_page'], User::paginate($this->perPage)->lastPage());
 
-        return redirect()->route('dashboard.users.index', ['page' => $redirectToPage])
-            ->with([
+        return redirect()->route('dashboard.users.index', [
+            'page' => $redirectToPage
+        ])->with([
             'status' => 'deleted',
             'message' => "Пользователь \"$user->login\" удален."
         ]);
@@ -178,10 +172,11 @@ class UserManagementController extends Controller
 
         $redirectToPage = min($validated['current_page'], User::paginate($this->perPage)->lastPage());
 
-        return redirect()->route('dashboard.users.index', ['page' => $redirectToPage])
-            ->with([
-                'status' => 'deleted',
-                'message' => 'Выбранные пользователи удалены.'
-            ]);
+        return redirect()->route('dashboard.users.index', [
+            'page' => $redirectToPage
+        ])->with([
+            'status' => 'deleted',
+            'message' => 'Выбранные пользователи удалены.'
+        ]);
     }
 }
