@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @method static create(array $array)
@@ -90,6 +89,19 @@ class GameServer extends Model
     {
         return Attribute::make(
             get: fn () => $this->ip . ':' . $this->port
+        );
+    }
+
+
+    /**
+     * Sets a hash instead of a valid auth token.
+     *
+     * @return Attribute
+     */
+    protected function authToken(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => bcrypt($value)
         );
     }
 
@@ -197,18 +209,6 @@ class GameServer extends Model
     public function getMapNameAttribute(): string
     {
         return $this->map['name'] ?? 'Не определена';
-    }
-
-    /**
-     * Sets a hash instead of a valid auth token.
-     *
-     * @param $authToken
-     */
-    public function setAuthTokenAttribute($authToken): void
-    {
-        if (!empty($authToken)) {
-            $this->attributes['auth_token'] = Hash::make($authToken);
-        }
     }
 
     /**

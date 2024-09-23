@@ -12,6 +12,8 @@ const removeFinishEventListener = Inertia.on('finish', () => {
             status: page.props.toast.status,
             message: page.props.toast.message,
         });
+        page.props.toast.status = null;
+        page.props.toast.message = null;
     }
 });
 const hasScrollBar = ref(false);

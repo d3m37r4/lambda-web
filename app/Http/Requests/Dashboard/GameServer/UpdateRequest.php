@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\Dashboard\GameServer;
 
+use App\Models\GameServer\GameServer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Request;
 
 /**
+ * @property GameServer $game_server
  */
 class UpdateRequest extends FormRequest
 {
@@ -30,25 +31,29 @@ class UpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'ip' => ['required', 'ip',
-                /* Here it is intentionally used to get index of GameServer model through router.
-                 * It is not possible to use the following construction: $this->server
-                 * due to coincidence of Model and component name: Symfony\Component\HttpFoundation\ServerBag
-                 * Situation is similar with "port" field, the rules for which are given below.
-                 */
-                Rule::unique('servers')->ignore(Request::route('server')->id)->where(function ($query) {
+                Rule::unique('game_servers')->ignore($this->game_server->id)->where(function ($query) {
                     return $query->where('port', $this->input('port'));
                 })
             ],
             'port' => ['required', 'integer', 'between:1,65535',
-                /*
-                 * See comment above.
-                 */
-                Rule::unique('servers')->ignore(Request::route('server')->id)->where(function ($query) {
+                Rule::unique('game_servers')->ignore($this->game_server->id)->where(function ($query) {
                     return $query->where('ip', $this->input('ip'));
                 })
             ],
             'rcon' => ['nullable', 'string', 'max:128'],
-            'auth_token' => ['nullable', 'string', 'max:64'],
+            'auth_token' => ['nullable', 'string', 'max:' . GameServer::MAX_AUTH_TOKEN_LENGTH],
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation(): void
+    {
+        if(empty($this->auth_token)) {
+            $this->request->remove('auth_token');
+        }
     }
 }
