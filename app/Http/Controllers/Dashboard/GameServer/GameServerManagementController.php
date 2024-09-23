@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard\GameServer;
 
+use Inertia\Inertia;
 use App\Helpers\Token;
 use App\Models\GameServer\GameServer;
 use App\Http\Controllers\Controller;
@@ -9,9 +10,6 @@ use App\Http\Requests\Dashboard\GameServer\StoreRequest;
 use App\Http\Requests\Dashboard\GameServer\UpdateRequest;
 use App\Http\Requests\Dashboard\GameServer\DestroyRequest;
 use App\Http\Requests\Dashboard\GameServer\DeleteSelectedRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Contracts\View\View;
-use Inertia\Inertia;
 
 class GameServerManagementController extends Controller
 {
@@ -41,22 +39,25 @@ class GameServerManagementController extends Controller
 
     /**
      * Show the form for creating a new game server.
-     *
-     * @return View
      */
-    public function create(): View
+    public function create()
     {
-        return view('admin.servers.create');
+        return inertia('Dashboard/GameServers/Create', [
+            'title' => 'Новый сервер',
+            'auth_token' => fn () => Token::generate(GameServer::MAX_AUTH_TOKEN_LENGTH, 'game_servers', 'auth_token')
+        ]);
     }
 
     /**
      * Store a newly created game server in storage.
      */
-    public function store(StoreRequest $request): RedirectResponse
+    public function store(StoreRequest $request)
     {
         $gameServer = GameServer::create($request->validated());
 
-        return redirect(session('redirect_url'))->with([
+        return redirect()->route('dashboard.game-servers.index', [
+            'page' => GameServer::paginate($this->perPage)->lastPage()
+        ])->with([
             'status' => 'success',
             'message' => "Сервер \"$gameServer->name\" добавлен."
         ]);
@@ -65,7 +66,7 @@ class GameServerManagementController extends Controller
     /**
      * Display the specified game server.
      */
-    public function show(GameServer $gameServer): View
+    public function show(GameServer $gameServer)
     {
         return view('admin.servers.show', compact('gameServer'));
     }
@@ -90,7 +91,7 @@ class GameServerManagementController extends Controller
     /**
      * Update the specified game server in storage.
      */
-    public function update(UpdateRequest $request, GameServer $gameServer): RedirectResponse
+    public function update(UpdateRequest $request, GameServer $gameServer)
     {
         $gameServer->update($request->validated());
 
@@ -110,11 +111,12 @@ class GameServerManagementController extends Controller
 
         $redirectToPage = min($validated['current_page'], GameServer::paginate($this->perPage)->lastPage());
 
-        return redirect()->route('dashboard.game-servers.index', ['page' => $redirectToPage])
-            ->with([
-                'status' => 'deleted',
-                'message' => "Сервер \"$gameServer->name\" удален."
-            ]);
+        return redirect()->route('dashboard.game-servers.index', [
+            'page' => $redirectToPage
+        ])->with([
+            'status' => 'deleted',
+            'message' => "Сервер \"$gameServer->name\" удален."
+        ]);
     }
 
     /**
@@ -127,10 +129,11 @@ class GameServerManagementController extends Controller
 
         $redirectToPage = min($validated['current_page'], GameServer::paginate($this->perPage)->lastPage());
 
-        return redirect()->route('dashboard.game-servers.index', ['page' => $redirectToPage])
-            ->with([
-                'status' => 'deleted',
-                'message' => 'Выбранные серверы удалены.'
-            ]);
+        return redirect()->route('dashboard.game-servers.index', [
+            'page' => $redirectToPage
+        ])->with([
+            'status' => 'deleted',
+            'message' => 'Выбранные серверы удалены.'
+        ]);
     }
 }
