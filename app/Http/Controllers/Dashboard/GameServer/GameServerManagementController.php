@@ -68,7 +68,15 @@ class GameServerManagementController extends Controller
      */
     public function show(GameServer $gameServer)
     {
-        return view('admin.servers.show', compact('gameServer'));
+        return inertia('Dashboard/GameServers/Show', [
+            'title' => "Сервер $gameServer->name",
+            'gameServer' => [
+                'id' => $gameServer->id,
+                'name' => $gameServer->name,
+                'ip' => $gameServer->ip,
+                'port' => $gameServer->port,
+            ],
+        ]);
     }
 
     /**
