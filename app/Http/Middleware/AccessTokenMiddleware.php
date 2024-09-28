@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Exceptions\GameServerApiException;
-use App\Models\GameServer\AccessToken;
 use Closure;
-use Illuminate\Http\JsonResponse;
+use App\Models\GameServer\AccessToken;
+use App\Exceptions\GameServerApiException;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AccessTokenMiddleware
 {
@@ -18,14 +18,14 @@ class AccessTokenMiddleware
      * @return mixed
      * @throws GameServerApiException
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         $token = $this->getAccessToken($request);
         $server = $token->server();
 
         if ($token->expires_in <= now()->timestamp) {
             $server->update(['active' => false]);
-            throw new GameServerApiException('Bad access token.', JsonResponse::HTTP_FORBIDDEN);
+            throw new GameServerApiException('Bad access token.', Response::HTTP_FORBIDDEN);
         }
 
         return $next($request);
@@ -40,12 +40,12 @@ class AccessTokenMiddleware
      */
     protected function getAccessToken(Request $request): AccessToken
     {
-        if (empty($request->header('X-Access-Token'))) {
-            return throw new GameServerApiException('Access token required.', JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        if (empty($request->header(AccessToken::ACCESS_TOKEN_HEADER))) {
+            return throw new GameServerApiException('Access token required.', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        return AccessToken::where('token', $request->header('X-Access-Token'))->firstOr(function () {
-            return throw new GameServerApiException('Invalid access token.', JsonResponse::HTTP_NOT_FOUND);
+        return AccessToken::where('token', $request->header(AccessToken::ACCESS_TOKEN_HEADER))->firstOr(function () {
+            return throw new GameServerApiException('Invalid access token.', Response::HTTP_NOT_FOUND);
         });
     }
 }

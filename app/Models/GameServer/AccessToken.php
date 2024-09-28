@@ -14,6 +14,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class AccessToken extends Model
 {
     /**
+     * HTTP request header name.
+     *
+     * @var string
+     */
+    const ACCESS_TOKEN_HEADER = 'Lambda-X-Access-Token';
+
+    /**
      * The maximum buffer size required to store an access token.
      *
      * @var int

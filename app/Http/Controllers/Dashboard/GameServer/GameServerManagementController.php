@@ -68,14 +68,28 @@ class GameServerManagementController extends Controller
      */
     public function show(GameServer $gameServer)
     {
+        $serverInfo = [
+            'name' => 'My Awesome Game Server',
+            'version' => '1.2.3',
+            'players_online' => 42,
+            'max_players' => 100,
+            'status' => 'Online',
+            'description' => 'This is a fantastic game server with lots of fun activities!',
+            'map_image' => 'https://via.placeholder.com/320x240', // Пример URL изображения карты
+            'map_name' => 'Desert Storm',
+            'server_ip' => '192.168.1.1',
+            'server_port' => '27015',
+        ];
+
         return inertia('Dashboard/GameServers/Show', [
-            'title' => "Сервер $gameServer->name",
+            'title' => "О сервере $gameServer->name",
             'gameServer' => [
                 'id' => $gameServer->id,
                 'name' => $gameServer->name,
                 'ip' => $gameServer->ip,
                 'port' => $gameServer->port,
             ],
+            'serverInfo' => $serverInfo,
         ]);
     }
 
