@@ -1,44 +1,106 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<h1 align="center">Lambda</h1>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div align="center">
 
-## About Laravel
+### ![GitHub last commit](https://img.shields.io/github/last-commit/d3m37r4/lambda-web?style=flat-square) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/d3m37r4/lambda-web?style=flat-square) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/d3m37r4/lambda-web?style=flat-square) ![Static Badge](https://img.shields.io/badge/any_text-MIT-green?style=flat-square&label=license)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+</div>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## About Lambda
+A system of interaction with game servers based on the GoldSource engine, realizing the following tasks:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Granting roles and permissions and privileges on the game server.
+- Management blocking and punishment of players.
+- Keeping game statistics.
 
-## Learning Laravel
+The application is based on the following stack:\
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-EB5424?style=flat-square&logo=laravel&logoColor=white)
+![Inertia.js](https://img.shields.io/badge/Inertia.js-4FC08D?style=flat-square&logo=inertia&logoColor=white)
+![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=flat-square&logo=vuedotjs&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Requirements
+To install Lambda you need:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* PHP 8.1 or higher.
+* Composer - For dependency management.
+* MySQL-enabled server - For the database (MariaDB 10.10+, MySQL 5.7+, PostgreSQL 11.0+).
+* Node.js and npm - To work with frontend dependencies (Vue and Tailwind CSS).
 
-## Contributing
+## Deployment
+<details>
+<summary>Detailed instruction on how to deploy the application (click)</summary>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **Clone the Repository**\
+    Clone the project from GitHub:
+      ```bash
+      git clone https://github.com/d3m37r4/lambda-web.git
+      cd lambda-web
+      ```
+2. **Install Dependencies**\
+   Install dependencies using Composer and npm:
+      ```bash
+    composer install
+    npm install
+      ```
 
-## Code of Conduct
+3. **Configure Environment**\
+   Copy the `.env.example` file to `.env`:
+      ```bash
+    cp .env.example .env
+      ```
+   Open the `.env` file and configure database connection settings:
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password 
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. **Generate Application Key**\
+   Generate the application key:
+    ```bash
+    php artisan key:generate
+    ```
 
-## Security Vulnerabilities
+5. **Create Database**\
+   Create the database in MySQL or another supported DBMS.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+6. **Run Migrations**\
+   Run migrations to create tables in the database:
+    ```bash
+    php artisan migrate
+    ```
+
+7. **Start the Server**\
+   Start the built-in server:
+    ```bash
+    php artisan serve
+    ```
+   Your application should now be accessible at http://localhost:8000.
+
+
+8. **Additional Settings**\
+   Set permissions for the `storage` and `bootstrap/cache` folders:
+      ```bash
+      chmod -R 775 storage
+      chmod -R 775 bootstrap/cache
+      ```
+</details>
+
+To send requests from your game server, you must use a package based on AMX Mod X, which can be found here: [Lambda-AMXX](https://github.com/d3m37r4/lambda-amxx/).\
+This package is designed to organize the communication between your game server and the Lambda application.\
+Be sure to follow the documentation provided in the repository for proper implementation and use.
+
+## Contribution and support
+If you have any thoughts or suggestions to improve the product, contact me at one of the following places:\
+[Github Issues](https://github.com/d3m37r4/lambda-web/issues/)\
+[Github Discussions](https://github.com/d3m37r4/lambda-web/discussions/)\
+[Telegram](https://t.me/dmitry_isakow)
 
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The product is open source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
