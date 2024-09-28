@@ -21,1007 +21,1007 @@ class CountrySeeder extends Seeder
         $countries = [
             [
                 'short_code' => 'AB',
-                'default_name' => 'Abkhazia'
+                'name' => 'Abkhazia'
             ],
             [
                 'short_code' => 'AU',
-                'default_name' => 'Australia'
+                'name' => 'Australia'
             ],
             [
                 'short_code' => 'AT',
-                'default_name' => 'Austria'
+                'name' => 'Austria'
             ],
             [
                 'short_code' => 'AZ',
-                'default_name' => 'Azerbaijan'
+                'name' => 'Azerbaijan'
             ],
             [
                 'short_code' => 'AL',
-                'default_name' => 'Albania'
+                'name' => 'Albania'
             ],
             [
                 'short_code' => 'DZ',
-                'default_name' => 'Algeria'
+                'name' => 'Algeria'
             ],
             [
                 'short_code' => 'AS',
-                'default_name' => 'American Samoa'
+                'name' => 'American Samoa'
             ],
             [
                 'short_code' => 'AI',
-                'default_name' => 'Anguilla'
+                'name' => 'Anguilla'
             ],
             [
                 'short_code' => 'AO',
-                'default_name' => 'Angola'
+                'name' => 'Angola'
             ],
             [
                 'short_code' => 'AD',
-                'default_name' => 'Andorra'
+                'name' => 'Andorra'
             ],
             [
                 'short_code' => 'AQ',
-                'default_name' => 'Antarctica'
+                'name' => 'Antarctica'
             ],
             [
                 'short_code' => 'AG',
-                'default_name' => 'Antigua and Barbuda'
+                'name' => 'Antigua and Barbuda'
             ],
             [
                 'short_code' => 'AR',
-                'default_name' => 'Argentina'
+                'name' => 'Argentina'
             ],
             [
                 'short_code' => 'AM',
-                'default_name' => 'Armenia'
+                'name' => 'Armenia'
             ],
             [
                 'short_code' => 'AW',
-                'default_name' => 'Aruba'
+                'name' => 'Aruba'
             ],
             [
                 'short_code' => 'AF',
-                'default_name' => 'Afghanistan'
+                'name' => 'Afghanistan'
             ],
             [
                 'short_code' => 'BS',
-                'default_name' => 'Bahamas'
+                'name' => 'Bahamas'
             ],
             [
                 'short_code' => 'BD',
-                'default_name' => 'Bangladesh'
+                'name' => 'Bangladesh'
             ],
             [
                 'short_code' => 'BB',
-                'default_name' => 'Barbados'
+                'name' => 'Barbados'
             ],
             [
                 'short_code' => 'BH',
-                'default_name' => 'Bahrain'
+                'name' => 'Bahrain'
             ],
             [
                 'short_code' => 'BY',
-                'default_name' => 'Belarus'
+                'name' => 'Belarus'
             ],
             [
                 'short_code' => 'BZ',
-                'default_name' => 'Belize'
+                'name' => 'Belize'
             ],
             [
                 'short_code' => 'BE',
-                'default_name' => 'Belgium'
+                'name' => 'Belgium'
             ],
             [
                 'short_code' => 'BJ',
-                'default_name' => 'Benin'
+                'name' => 'Benin'
             ],
             [
                 'short_code' => 'BM',
-                'default_name' => 'Bermuda'
+                'name' => 'Bermuda'
             ],
             [
                 'short_code' => 'BG',
-                'default_name' => 'Bulgaria'
+                'name' => 'Bulgaria'
             ],
             [
                 'short_code' => 'BO',
-                'default_name' => 'Bolivia, plurinational state of'
+                'name' => 'Bolivia, plurinational state of'
             ],
             [
                 'short_code' => 'BQ',
-                'default_name' => 'Bonaire, Sint Eustatius and Saba'
+                'name' => 'Bonaire, Sint Eustatius and Saba'
             ],
             [
                 'short_code' => 'BA',
-                'default_name' => 'Bosnia and Herzegovina'
+                'name' => 'Bosnia and Herzegovina'
             ],
             [
                 'short_code' => 'BW',
-                'default_name' => 'Botswana'
+                'name' => 'Botswana'
             ],
             [
                 'short_code' => 'BR',
-                'default_name' => 'Brazil'
+                'name' => 'Brazil'
             ],
             [
                 'short_code' => 'IO',
-                'default_name' => 'British Indian Ocean Territory'
+                'name' => 'British Indian Ocean Territory'
             ],
             [
                 'short_code' => 'BN',
-                'default_name' => 'Brunei Darussalam'
+                'name' => 'Brunei Darussalam'
             ],
             [
                 'short_code' => 'BF',
-                'default_name' => 'Burkina Faso'
+                'name' => 'Burkina Faso'
             ],
             [
                 'short_code' => 'BI',
-                'default_name' => 'Burundi'
+                'name' => 'Burundi'
             ],
             [
                 'short_code' => 'BT',
-                'default_name' => 'Bhutan'
+                'name' => 'Bhutan'
             ],
             [
                 'short_code' => 'VU',
-                'default_name' => 'Vanuatu'
+                'name' => 'Vanuatu'
             ],
             [
                 'short_code' => 'HU',
-                'default_name' => 'Hungary'
+                'name' => 'Hungary'
             ],
             [
                 'short_code' => 'VE',
-                'default_name' => 'Venezuela'
+                'name' => 'Venezuela'
             ],
             [
                 'short_code' => 'VG',
-                'default_name' => 'Virgin Islands, British'
+                'name' => 'Virgin Islands, British'
             ],
             [
                 'short_code' => 'VI',
-                'default_name' => 'Virgin Islands, U.S.'
+                'name' => 'Virgin Islands, U.S.'
             ],
             [
                 'short_code' => 'VN',
-                'default_name' => 'Vietnam'
+                'name' => 'Vietnam'
             ],
             [
                 'short_code' => 'GA',
-                'default_name' => 'Gabon'
+                'name' => 'Gabon'
             ],
             [
                 'short_code' => 'HT',
-                'default_name' => 'Haiti'
+                'name' => 'Haiti'
             ],
             [
                 'short_code' => 'GY',
-                'default_name' => 'Guyana'
+                'name' => 'Guyana'
             ],
             [
                 'short_code' => 'GM',
-                'default_name' => 'Gambia'
+                'name' => 'Gambia'
             ],
             [
                 'short_code' => 'GH',
-                'default_name' => 'Ghana'
+                'name' => 'Ghana'
             ],
             [
                 'short_code' => 'GP',
-                'default_name' => 'Guadeloupe'
+                'name' => 'Guadeloupe'
             ],
             [
                 'short_code' => 'GT',
-                'default_name' => 'Guatemala'
+                'name' => 'Guatemala'
             ],
             [
                 'short_code' => 'GN',
-                'default_name' => 'Guinea'
+                'name' => 'Guinea'
             ],
             [
                 'short_code' => 'GW',
-                'default_name' => 'Guinea-Bissau'
+                'name' => 'Guinea-Bissau'
             ],
             [
                 'short_code' => 'DE',
-                'default_name' => 'Germany'
+                'name' => 'Germany'
             ],
             [
                 'short_code' => 'GG',
-                'default_name' => 'Guernsey'
+                'name' => 'Guernsey'
             ],
             [
                 'short_code' => 'GI',
-                'default_name' => 'Gibraltar'
+                'name' => 'Gibraltar'
             ],
             [
                 'short_code' => 'HN',
-                'default_name' => 'Honduras'
+                'name' => 'Honduras'
             ],
             [
                 'short_code' => 'HK',
-                'default_name' => 'Hong Kong'
+                'name' => 'Hong Kong'
             ],
             [
                 'short_code' => 'GD',
-                'default_name' => 'Grenada'
+                'name' => 'Grenada'
             ],
             [
                 'short_code' => 'GL',
-                'default_name' => 'Greenland'
+                'name' => 'Greenland'
             ],
             [
                 'short_code' => 'GR',
-                'default_name' => 'Greece'
+                'name' => 'Greece'
             ],
             [
                 'short_code' => 'GE',
-                'default_name' => 'Georgia'
+                'name' => 'Georgia'
             ],
             [
                 'short_code' => 'GU',
-                'default_name' => 'Guam'
+                'name' => 'Guam'
             ],
             [
                 'short_code' => 'DK',
-                'default_name' => 'Denmark'
+                'name' => 'Denmark'
             ],
             [
                 'short_code' => 'JE',
-                'default_name' => 'Jersey'
+                'name' => 'Jersey'
             ],
             [
                 'short_code' => 'DJ',
-                'default_name' => 'Djibouti'
+                'name' => 'Djibouti'
             ],
             [
                 'short_code' => 'DM',
-                'default_name' => 'Dominica'
+                'name' => 'Dominica'
             ],
             [
                 'short_code' => 'DO',
-                'default_name' => 'Dominican Republic'
+                'name' => 'Dominican Republic'
             ],
             [
                 'short_code' => 'EG',
-                'default_name' => 'Egypt'
+                'name' => 'Egypt'
             ],
             [
                 'short_code' => 'ZM',
-                'default_name' => 'Zambia'
+                'name' => 'Zambia'
             ],
             [
                 'short_code' => 'EH',
-                'default_name' => 'Western Sahara'
+                'name' => 'Western Sahara'
             ],
             [
                 'short_code' => 'ZW',
-                'default_name' => 'Zimbabwe'
+                'name' => 'Zimbabwe'
             ],
             [
                 'short_code' => 'IL',
-                'default_name' => 'Israel'
+                'name' => 'Israel'
             ],
             [
                 'short_code' => 'IN',
-                'default_name' => 'India'
+                'name' => 'India'
             ],
             [
                 'short_code' => 'ID',
-                'default_name' => 'Indonesia'
+                'name' => 'Indonesia'
             ],
             [
                 'short_code' => 'JO',
-                'default_name' => 'Jordan'
+                'name' => 'Jordan'
             ],
             [
                 'short_code' => 'IQ',
-                'default_name' => 'Iraq'
+                'name' => 'Iraq'
             ],
             [
                 'short_code' => 'IR',
-                'default_name' => 'Iran, Islamic Republic of'
+                'name' => 'Iran, Islamic Republic of'
             ],
             [
                 'short_code' => 'IE',
-                'default_name' => 'Ireland'
+                'name' => 'Ireland'
             ],
             [
                 'short_code' => 'IS',
-                'default_name' => 'Iceland'
+                'name' => 'Iceland'
             ],
             [
                 'short_code' => 'ES',
-                'default_name' => 'Spain'
+                'name' => 'Spain'
             ],
             [
                 'short_code' => 'IT',
-                'default_name' => 'Italy'
+                'name' => 'Italy'
             ],
             [
                 'short_code' => 'YE',
-                'default_name' => 'Yemen'
+                'name' => 'Yemen'
             ],
             [
                 'short_code' => 'CV',
-                'default_name' => 'Cape Verde'
+                'name' => 'Cape Verde'
             ],
             [
                 'short_code' => 'KZ',
-                'default_name' => 'Kazakhstan'
+                'name' => 'Kazakhstan'
             ],
             [
                 'short_code' => 'KH',
-                'default_name' => 'Cambodia'
+                'name' => 'Cambodia'
             ],
             [
                 'short_code' => 'CM',
-                'default_name' => 'Cameroon'
+                'name' => 'Cameroon'
             ],
             [
                 'short_code' => 'CA',
-                'default_name' => 'Canada'
+                'name' => 'Canada'
             ],
             [
                 'short_code' => 'QA',
-                'default_name' => 'Qatar'
+                'name' => 'Qatar'
             ],
             [
                 'short_code' => 'KE',
-                'default_name' => 'Kenya'
+                'name' => 'Kenya'
             ],
             [
                 'short_code' => 'CY',
-                'default_name' => 'Cyprus'
+                'name' => 'Cyprus'
             ],
             [
                 'short_code' => 'KG',
-                'default_name' => 'Kyrgyzstan'
+                'name' => 'Kyrgyzstan'
             ],
             [
                 'short_code' => 'KI',
-                'default_name' => 'Kiribati'
+                'name' => 'Kiribati'
             ],
             [
                 'short_code' => 'CN',
-                'default_name' => 'China'
+                'name' => 'China'
             ],
             [
                 'short_code' => 'CC',
-                'default_name' => 'Cocos (Keeling) Islands'
+                'name' => 'Cocos (Keeling) Islands'
             ],
             [
                 'short_code' => 'CO',
-                'default_name' => 'Colombia'
+                'name' => 'Colombia'
             ],
             [
                 'short_code' => 'KM',
-                'default_name' => 'Comoros'
+                'name' => 'Comoros'
             ],
             [
                 'short_code' => 'CG',
-                'default_name' => 'Congo'
+                'name' => 'Congo'
             ],
             [
                 'short_code' => 'CD',
-                'default_name' => 'Congo, Democratic Republic of the'
+                'name' => 'Congo, Democratic Republic of the'
             ],
             [
                 'short_code' => 'KP',
-                'default_name' => "Korea, Democratic People's republic of"
+                'name' => "Korea, Democratic People's republic of"
             ],
             [
                 'short_code' => 'KR',
-                'default_name' => 'Korea, Republic of'
+                'name' => 'Korea, Republic of'
             ],
             [
                 'short_code' => 'CR',
-                'default_name' => 'Costa Rica'
+                'name' => 'Costa Rica'
             ],
             [
                 'short_code' => 'CI',
-                'default_name' => "Cote d'Ivoire"
+                'name' => "Cote d'Ivoire"
             ],
             [
                 'short_code' => 'CU',
-                'default_name' => 'Cuba'
+                'name' => 'Cuba'
             ],
             [
                 'short_code' => 'KW',
-                'default_name' => 'Kuwait'
+                'name' => 'Kuwait'
             ],
             [
                 'short_code' => 'CW',
-                'default_name' => 'Curaçao'
+                'name' => 'Curaçao'
             ],
             [
                 'short_code' => 'LA',
-                'default_name' => "Lao People's Democratic Republic"
+                'name' => "Lao People's Democratic Republic"
             ],
             [
                 'short_code' => 'LV',
-                'default_name' => 'Latvia'
+                'name' => 'Latvia'
             ],
             [
                 'short_code' => 'LS',
-                'default_name' => 'Lesotho'
+                'name' => 'Lesotho'
             ],
             [
                 'short_code' => 'LB',
-                'default_name' => 'Lebanon'
+                'name' => 'Lebanon'
             ],
             [
                 'short_code' => 'LY',
-                'default_name' => 'Libyan Arab Jamahiriya'
+                'name' => 'Libyan Arab Jamahiriya'
             ],
             [
                 'short_code' => 'LR',
-                'default_name' => 'Liberia'
+                'name' => 'Liberia'
             ],
             [
                 'short_code' => 'LI',
-                'default_name' => 'Liechtenstein'
+                'name' => 'Liechtenstein'
             ],
             [
                 'short_code' => 'LT',
-                'default_name' => 'Lithuania'
+                'name' => 'Lithuania'
             ],
             [
                 'short_code' => 'LU',
-                'default_name' => 'Luxembourg'
+                'name' => 'Luxembourg'
             ],
             [
                 'short_code' => 'MU',
-                'default_name' => 'Mauritius'
+                'name' => 'Mauritius'
             ],
             [
                 'short_code' => 'MR',
-                'default_name' => 'Mauritania'
+                'name' => 'Mauritania'
             ],
             [
                 'short_code' => 'MG',
-                'default_name' => 'Madagascar'
+                'name' => 'Madagascar'
             ],
             [
                 'short_code' => 'YT',
-                'default_name' => 'Mayotte'
+                'name' => 'Mayotte'
             ],
             [
                 'short_code' => 'MO',
-                'default_name' => 'Macao'
+                'name' => 'Macao'
             ],
             [
                 'short_code' => 'MW',
-                'default_name' => 'Malawi'
+                'name' => 'Malawi'
             ],
             [
                 'short_code' => 'MY',
-                'default_name' => 'Malaysia'
+                'name' => 'Malaysia'
             ],
             [
                 'short_code' => 'ML',
-                'default_name' => 'Mali'
+                'name' => 'Mali'
             ],
             [
                 'short_code' => 'UM',
-                'default_name' => 'United States Minor Outlying Islands'
+                'name' => 'United States Minor Outlying Islands'
             ],
             [
                 'short_code' => 'MV',
-                'default_name' => 'Maldives'
+                'name' => 'Maldives'
             ],
             [
                 'short_code' => 'MT',
-                'default_name' => 'Malta'
+                'name' => 'Malta'
             ],
             [
                 'short_code' => 'MA',
-                'default_name' => 'Morocco'
+                'name' => 'Morocco'
             ],
             [
                 'short_code' => 'MQ',
-                'default_name' => 'Martinique'
+                'name' => 'Martinique'
             ],
             [
                 'short_code' => 'MH',
-                'default_name' => 'Marshall Islands'
+                'name' => 'Marshall Islands'
             ],
             [
                 'short_code' => 'MX',
-                'default_name' => 'Mexico'
+                'name' => 'Mexico'
             ],
             [
                 'short_code' => 'FM',
-                'default_name' => 'Micronesia, Federated States of'
+                'name' => 'Micronesia, Federated States of'
             ],
             [
                 'short_code' => 'MZ',
-                'default_name' => 'Mozambique'
+                'name' => 'Mozambique'
             ],
             [
                 'short_code' => 'MD',
-                'default_name' => 'Moldova'
+                'name' => 'Moldova'
             ],
             [
                 'short_code' => 'MC',
-                'default_name' => 'Monaco'
+                'name' => 'Monaco'
             ],
             [
                 'short_code' => 'MN',
-                'default_name' => 'Mongolia'
+                'name' => 'Mongolia'
             ],
             [
                 'short_code' => 'MS',
-                'default_name' => 'Montserrat'
+                'name' => 'Montserrat'
             ],
             [
                 'short_code' => 'MM',
-                'default_name' => 'Myanmar'
+                'name' => 'Myanmar'
             ],
             [
                 'short_code' => 'NA',
-                'default_name' => 'Namibia'
+                'name' => 'Namibia'
             ],
             [
                 'short_code' => 'NR',
-                'default_name' => 'Nauru'
+                'name' => 'Nauru'
             ],
             [
                 'short_code' => 'NP',
-                'default_name' => 'Nepal'
+                'name' => 'Nepal'
             ],
             [
                 'short_code' => 'NE',
-                'default_name' => 'Niger'
+                'name' => 'Niger'
             ],
             [
                 'short_code' => 'NG',
-                'default_name' => 'Nigeria'
+                'name' => 'Nigeria'
             ],
             [
                 'short_code' => 'NL',
-                'default_name' => 'Netherlands'
+                'name' => 'Netherlands'
             ],
             [
                 'short_code' => 'NI',
-                'default_name' => 'Nicaragua'
+                'name' => 'Nicaragua'
             ],
             [
                 'short_code' => 'NU',
-                'default_name' => 'Niue'
+                'name' => 'Niue'
             ],
             [
                 'short_code' => 'NZ',
-                'default_name' => 'New Zealand'
+                'name' => 'New Zealand'
             ],
             [
                 'short_code' => 'NC',
-                'default_name' => 'New Caledonia'
+                'name' => 'New Caledonia'
             ],
             [
                 'short_code' => 'NO',
-                'default_name' => 'Norway'
+                'name' => 'Norway'
             ],
             [
                 'short_code' => 'AE',
-                'default_name' => 'United Arab Emirates'
+                'name' => 'United Arab Emirates'
             ],
             [
                 'short_code' => 'OM',
-                'default_name' => 'Oman'
+                'name' => 'Oman'
             ],
             [
                 'short_code' => 'BV',
-                'default_name' => 'Bouvet Island'
+                'name' => 'Bouvet Island'
             ],
             [
                 'short_code' => 'IM',
-                'default_name' => 'Isle of Man'
+                'name' => 'Isle of Man'
             ],
             [
                 'short_code' => 'NF',
-                'default_name' => 'Norfolk Island'
+                'name' => 'Norfolk Island'
             ],
             [
                 'short_code' => 'CX',
-                'default_name' => 'Christmas Island'
+                'name' => 'Christmas Island'
             ],
             [
                 'short_code' => 'HM',
-                'default_name' => 'Heard Island and McDonald Islands'
+                'name' => 'Heard Island and McDonald Islands'
             ],
             [
                 'short_code' => 'KY',
-                'default_name' => 'Cayman Islands'
+                'name' => 'Cayman Islands'
             ],
             [
                 'short_code' => 'CK',
-                'default_name' => 'Cook Islands'
+                'name' => 'Cook Islands'
             ],
             [
                 'short_code' => 'TC',
-                'default_name' => 'Turks and Caicos Islands'
+                'name' => 'Turks and Caicos Islands'
             ],
             [
                 'short_code' => 'PK',
-                'default_name' => 'Pakistan'
+                'name' => 'Pakistan'
             ],
             [
                 'short_code' => 'PW',
-                'default_name' => 'Palau'
+                'name' => 'Palau'
             ],
             [
                 'short_code' => 'PS',
-                'default_name' => 'Palestinian Territory, Occupied'
+                'name' => 'Palestinian Territory, Occupied'
             ],
             [
                 'short_code' => 'PA',
-                'default_name' => 'Panama'
+                'name' => 'Panama'
             ],
             [
                 'short_code' => 'VA',
-                'default_name' => 'Holy See (Vatican City State)'
+                'name' => 'Holy See (Vatican City State)'
             ],
             [
                 'short_code' => 'PG',
-                'default_name' => 'Papua New Guinea'
+                'name' => 'Papua New Guinea'
             ],
             [
                 'short_code' => 'PY',
-                'default_name' => 'Paraguay'
+                'name' => 'Paraguay'
             ],
             [
                 'short_code' => 'PE',
-                'default_name' => 'Peru'
+                'name' => 'Peru'
             ],
             [
                 'short_code' => 'PN',
-                'default_name' => 'Pitcairn'
+                'name' => 'Pitcairn'
             ],
             [
                 'short_code' => 'PL',
-                'default_name' => 'Poland'
+                'name' => 'Poland'
             ],
             [
                 'short_code' => 'PT',
-                'default_name' => 'Portugal'
+                'name' => 'Portugal'
             ],
             [
                 'short_code' => 'PR',
-                'default_name' => 'Puerto Rico'
+                'name' => 'Puerto Rico'
             ],
             [
                 'short_code' => 'MK',
-                'default_name' => 'Macedonia, The Former Yugoslav Republic Of'
+                'name' => 'Macedonia, The Former Yugoslav Republic Of'
             ],
             [
                 'short_code' => 'RE',
-                'default_name' => 'Reunion'
+                'name' => 'Reunion'
             ],
             [
                 'short_code' => 'RU',
-                'default_name' => 'Russian Federation'
+                'name' => 'Russian Federation'
             ],
             [
                 'short_code' => 'RW',
-                'default_name' => 'Rwanda'
+                'name' => 'Rwanda'
             ],
             [
                 'short_code' => 'RO',
-                'default_name' => 'Romania'
+                'name' => 'Romania'
             ],
             [
                 'short_code' => 'WS',
-                'default_name' => 'Samoa'
+                'name' => 'Samoa'
             ],
             [
                 'short_code' => 'SM',
-                'default_name' => 'San Marino'
+                'name' => 'San Marino'
             ],
             [
                 'short_code' => 'ST',
-                'default_name' => 'Sao Tome and Principe'
+                'name' => 'Sao Tome and Principe'
             ],
             [
                 'short_code' => 'SA',
-                'default_name' => 'Saudi Arabia'
+                'name' => 'Saudi Arabia'
             ],
             [
                 'short_code' => 'SH',
-                'default_name' => 'Saint Helena, Ascension And Tristan Da Cunha'
+                'name' => 'Saint Helena, Ascension And Tristan Da Cunha'
             ],
             [
                 'short_code' => 'MP',
-                'default_name' => 'Northern Mariana Islands'
+                'name' => 'Northern Mariana Islands'
             ],
             [
                 'short_code' => 'BL',
-                'default_name' => 'Saint Barthélemy'
+                'name' => 'Saint Barthélemy'
             ],
             [
                 'short_code' => 'MF',
-                'default_name' => 'Saint Martin (French Part)'
+                'name' => 'Saint Martin (French Part)'
             ],
             [
                 'short_code' => 'SN',
-                'default_name' => 'Senegal'
+                'name' => 'Senegal'
             ],
             [
                 'short_code' => 'VC',
-                'default_name' => 'Saint Vincent and the Grenadines'
+                'name' => 'Saint Vincent and the Grenadines'
             ],
             [
                 'short_code' => 'LC',
-                'default_name' => 'Saint Lucia'
+                'name' => 'Saint Lucia'
             ],
             [
                 'short_code' => 'KN',
-                'default_name' => 'Saint Kitts and Nevis'
+                'name' => 'Saint Kitts and Nevis'
             ],
             [
                 'short_code' => 'PM',
-                'default_name' => 'Saint Pierre and Miquelon'
+                'name' => 'Saint Pierre and Miquelon'
             ],
             [
                 'short_code' => 'RS',
-                'default_name' => 'Serbia'
+                'name' => 'Serbia'
             ],
             [
                 'short_code' => 'SC',
-                'default_name' => 'Seychelles'
+                'name' => 'Seychelles'
             ],
             [
                 'short_code' => 'SG',
-                'default_name' => 'Singapore'
+                'name' => 'Singapore'
             ],
             [
                 'short_code' => 'SX',
-                'default_name' => 'Sint Maarten'
+                'name' => 'Sint Maarten'
             ],
             [
                 'short_code' => 'SY',
-                'default_name' => 'Syrian Arab Republic'
+                'name' => 'Syrian Arab Republic'
             ],
             [
                 'short_code' => 'SK',
-                'default_name' => 'Slovakia'
+                'name' => 'Slovakia'
             ],
             [
                 'short_code' => 'SI',
-                'default_name' => 'Slovenia'
+                'name' => 'Slovenia'
             ],
             [
                 'short_code' => 'GB',
-                'default_name' => 'United Kingdom'
+                'name' => 'United Kingdom'
             ],
             [
                 'short_code' => 'US',
-                'default_name' => 'United States'
+                'name' => 'United States'
             ],
             [
                 'short_code' => 'SB',
-                'default_name' => 'Solomon Islands'
+                'name' => 'Solomon Islands'
             ],
             [
                 'short_code' => 'SO',
-                'default_name' => 'Somalia'
+                'name' => 'Somalia'
             ],
             [
                 'short_code' => 'SD',
-                'default_name' => 'Sudan'
+                'name' => 'Sudan'
             ],
             [
                 'short_code' => 'SR',
-                'default_name' => 'Suriname'
+                'name' => 'Suriname'
             ],
             [
                 'short_code' => 'SL',
-                'default_name' => 'Sierra Leone'
+                'name' => 'Sierra Leone'
             ],
             [
                 'short_code' => 'TJ',
-                'default_name' => 'Tajikistan'
+                'name' => 'Tajikistan'
             ],
             [
                 'short_code' => 'TH',
-                'default_name' => 'Thailand'
+                'name' => 'Thailand'
             ],
             [
                 'short_code' => 'TW',
-                'default_name' => 'Taiwan, Province of China'
+                'name' => 'Taiwan, Province of China'
             ],
             [
                 'short_code' => 'TZ',
-                'default_name' => 'Tanzania, United Republic Of'
+                'name' => 'Tanzania, United Republic Of'
             ],
             [
                 'short_code' => 'TL',
-                'default_name' => 'Timor-Leste'
+                'name' => 'Timor-Leste'
             ],
             [
                 'short_code' => 'TG',
-                'default_name' => 'Togo'
+                'name' => 'Togo'
             ],
             [
                 'short_code' => 'TK',
-                'default_name' => 'Tokelau'
+                'name' => 'Tokelau'
             ],
             [
                 'short_code' => 'TO',
-                'default_name' => 'Tonga'
+                'name' => 'Tonga'
             ],
             [
                 'short_code' => 'TT',
-                'default_name' => 'Trinidad and Tobago'
+                'name' => 'Trinidad and Tobago'
             ],
             [
                 'short_code' => 'TV',
-                'default_name' => 'Tuvalu'
+                'name' => 'Tuvalu'
             ],
             [
                 'short_code' => 'TN',
-                'default_name' => 'Tunisia'
+                'name' => 'Tunisia'
             ],
             [
                 'short_code' => 'TM',
-                'default_name' => 'Turkmenistan'
+                'name' => 'Turkmenistan'
             ],
             [
                 'short_code' => 'TR',
-                'default_name' => 'Turkey'
+                'name' => 'Turkey'
             ],
             [
                 'short_code' => 'UG',
-                'default_name' => 'Uganda'
+                'name' => 'Uganda'
             ],
             [
                 'short_code' => 'UZ',
-                'default_name' => 'Uzbekistan'
+                'name' => 'Uzbekistan'
             ],
             [
                 'short_code' => 'UA',
-                'default_name' => 'Ukraine'
+                'name' => 'Ukraine'
             ],
             [
                 'short_code' => 'WF',
-                'default_name' => 'Wallis and Futuna'
+                'name' => 'Wallis and Futuna'
             ],
             [
                 'short_code' => 'UY',
-                'default_name' => 'Uruguay'
+                'name' => 'Uruguay'
             ],
             [
                 'short_code' => 'FO',
-                'default_name' => 'Faroe Islands'
+                'name' => 'Faroe Islands'
             ],
             [
                 'short_code' => 'FJ',
-                'default_name' => 'Fiji'
+                'name' => 'Fiji'
             ],
             [
                 'short_code' => 'PH',
-                'default_name' => 'Philippines'
+                'name' => 'Philippines'
             ],
             [
                 'short_code' => 'FI',
-                'default_name' => 'Finland'
+                'name' => 'Finland'
             ],
             [
                 'short_code' => 'FK',
-                'default_name' => 'Falkland Islands (Malvinas)'
+                'name' => 'Falkland Islands (Malvinas)'
             ],
             [
                 'short_code' => 'FR',
-                'default_name' => 'France'
+                'name' => 'France'
             ],
             [
                 'short_code' => 'GF',
-                'default_name' => 'French Guiana'
+                'name' => 'French Guiana'
             ],
             [
                 'short_code' => 'PF',
-                'default_name' => 'French Polynesia'
+                'name' => 'French Polynesia'
             ],
             [
                 'short_code' => 'TF',
-                'default_name' => 'French Southern Territories'
+                'name' => 'French Southern Territories'
             ],
             [
                 'short_code' => 'HR',
-                'default_name' => 'Croatia'
+                'name' => 'Croatia'
             ],
             [
                 'short_code' => 'CF',
-                'default_name' => 'Central African Republic'
+                'name' => 'Central African Republic'
             ],
             [
                 'short_code' => 'TD',
-                'default_name' => 'Chad'
+                'name' => 'Chad'
             ],
             [
                 'short_code' => 'ME',
-                'default_name' => 'Montenegro'
+                'name' => 'Montenegro'
             ],
             [
                 'short_code' => 'CZ',
-                'default_name' => 'Czech Republic'
+                'name' => 'Czech Republic'
             ],
             [
                 'short_code' => 'CL',
-                'default_name' => 'Chile'
+                'name' => 'Chile'
             ],
             [
                 'short_code' => 'CH',
-                'default_name' => 'Switzerland'
+                'name' => 'Switzerland'
             ],
             [
                 'short_code' => 'SE',
-                'default_name' => 'Sweden'
+                'name' => 'Sweden'
             ],
             [
                 'short_code' => 'SJ',
-                'default_name' => 'Svalbard and Jan Mayen'
+                'name' => 'Svalbard and Jan Mayen'
             ],
             [
                 'short_code' => 'LK',
-                'default_name' => 'Sri Lanka'
+                'name' => 'Sri Lanka'
             ],
             [
                 'short_code' => 'EC',
-                'default_name' => 'Ecuador'
+                'name' => 'Ecuador'
             ],
             [
                 'short_code' => 'GQ',
-                'default_name' => 'Equatorial Guinea'
+                'name' => 'Equatorial Guinea'
             ],
             [
                 'short_code' => 'AX',
-                'default_name' => 'Åland Islands'
+                'name' => 'Åland Islands'
             ],
             [
                 'short_code' => 'SV',
-                'default_name' => 'El Salvador'
+                'name' => 'El Salvador'
             ],
             [
                 'short_code' => 'ER',
-                'default_name' => 'Eritrea'
+                'name' => 'Eritrea'
             ],
             [
                 'short_code' => 'SZ',
-                'default_name' => 'Eswatini'
+                'name' => 'Eswatini'
             ],
             [
                 'short_code' => 'EE',
-                'default_name' => 'Estonia'
+                'name' => 'Estonia'
             ],
             [
                 'short_code' => 'ET',
-                'default_name' => 'Ethiopia'
+                'name' => 'Ethiopia'
             ],
             [
                 'short_code' => 'ZA',
-                'default_name' => 'South Africa'
+                'name' => 'South Africa'
             ],
             [
                 'short_code' => 'GS',
-                'default_name' => 'South Georgia and the South Sandwich Islands'
+                'name' => 'South Georgia and the South Sandwich Islands'
             ],
             [
                 'short_code' => 'OS',
-                'default_name' => 'South Ossetia'
+                'name' => 'South Ossetia'
             ],
             [
                 'short_code' => 'SS',
-                'default_name' => 'South Sudan'
+                'name' => 'South Sudan'
             ],
             [
                 'short_code' => 'JM',
-                'default_name' => 'Jamaica'
+                'name' => 'Jamaica'
             ],
             [
                 'short_code' => 'JP',
-                'default_name' => 'Japan'
+                'name' => 'Japan'
             ]
         ];
 

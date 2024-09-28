@@ -18,7 +18,7 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('manage_roles') || $user->hasRole(Role::ROLE_OWNER);
+        return $user->hasPermissionTo('manage_roles') || $user->hasRole(User::ROLE_OWNER);
     }
 
     /**
@@ -41,7 +41,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('manage_roles') || $user->hasRole(Role::ROLE_OWNER);
+        return $user->hasPermissionTo('manage_roles') || $user->hasRole(User::ROLE_OWNER);
     }
 
     /**
@@ -56,11 +56,11 @@ class RolePolicy
         /**
          * The "Owner" role can only be changed by owner.
          */
-        if ($role->isOwnerRole() && !$user->hasRole(Role::ROLE_OWNER)) {
+        if ($role->isOwnerRole() && !$user->hasRole(User::ROLE_OWNER)) {
             return false;
         }
 
-        return $user->hasPermissionTo('edit_roles') || $user->hasRole(Role::ROLE_OWNER);
+        return $user->hasPermissionTo('edit_roles') || $user->hasRole(User::ROLE_OWNER);
     }
 
     /**
@@ -79,6 +79,6 @@ class RolePolicy
             return false;
         }
 
-        return $user->hasPermissionTo('delete_roles') || $user->hasRole(Role::ROLE_OWNER);
+        return $user->hasPermissionTo('delete_roles') || $user->hasRole(User::ROLE_OWNER);
     }
 }

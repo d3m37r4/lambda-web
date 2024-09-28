@@ -2,9 +2,9 @@
 
 namespace App\Helpers;
 
-use Str;
-use App\Models\AccessToken;
+use App\Models\GameServer\AccessToken;
 use Illuminate\Support\Carbon;
+use Str;
 
 class HelperAccessToken
 {
