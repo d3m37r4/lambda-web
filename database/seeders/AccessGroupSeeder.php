@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\GameServer\AccessGroup;
 use Arr;
 use DB;
 use Exception;
 use Illuminate\Database\Seeder;
-use App\Models\AccessGroup;
 
 class AccessGroupSeeder extends Seeder
 {
@@ -16,12 +16,12 @@ class AccessGroupSeeder extends Seeder
      * @return void
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
-        $servers = DB::table('servers')->pluck('id');
+        $servers = DB::table('game_servers')->pluck('id');
 
         if (is_null($servers)) {
-            throw new \Exception("Array containing servers indexes is empty!");
+            throw new Exception("Array containing servers indexes is empty!");
         }
 
         $accessGroups = [
@@ -50,7 +50,7 @@ class AccessGroupSeeder extends Seeder
         foreach ($servers as $server) {
             foreach ($accessGroups as $accessGroup) {
                 AccessGroup::create([
-                    'server_id' => $server,
+                    'game_server_id' => $server,
                     'title' => Arr::get($accessGroup, 'name'),
                     'flags' => Arr::get($accessGroup, 'flags'),
                     'prefix' => Arr::get($accessGroup, 'prefix'),

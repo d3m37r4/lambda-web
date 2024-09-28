@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use Request;
 use App\Models\User;
-use App\Models\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -25,7 +24,7 @@ class UserPolicy
          * To view a specific user's profile from control panel, user must have permissions.
          * Access is determined by middlewares 'auth' and 'can:manage_users'.
          * See:
-         * routes/admin.php
+         * routes/dashboard.php
          * routes/web.php
          */
         return true;
@@ -43,8 +42,8 @@ class UserPolicy
         /**
          * To perform actions from control panel.
          */
-        if (Request::routeIs('admin.users.*')) {
-            if ($user->hasRole(Role::ROLE_OWNER) || $user->hasPermissionTo('manage_users')) {
+        if (Request::routeIs('dashboard.users.*')) {
+            if ($user->hasRole(User::ROLE_OWNER) || $user->hasPermissionTo('manage_users')) {
                 return true;
             }
         }

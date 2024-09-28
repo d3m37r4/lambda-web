@@ -1,18 +1,18 @@
 <?php
 
-use App\Models\Map;
+use App\Models\GameServer\Map;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMapsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('maps', function (Blueprint $table) {
             $table->id();
@@ -26,8 +26,8 @@ class CreateMapsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('maps');
     }
-}
+};

@@ -4,22 +4,22 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlayersTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('players', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()
                 ->constrained('users')
                 ->cascadeOnDelete();
-            $table->foreignId('server_id')->nullable()
-                ->constrained('servers')
+            $table->foreignId('game_server_id')->nullable()
+                ->constrained('game_servers')
                 ->cascadeOnDelete();
             $table->string('name', 32)->nullable();
             $table->string('authid', 64)->nullable();
@@ -40,7 +40,7 @@ class CreatePlayersTable extends Migration
                 'auth_revemu2013',
                 'auth_sse3'
             ])->default('auth_none');
-            $table->unique(['server_id', 'authid', 'auth_type']);
+            $table->unique(['game_server_id', 'authid', 'auth_type']);
             $table->timestamps();
         });
     }
@@ -50,8 +50,8 @@ class CreatePlayersTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('players');
     }
-}
+};

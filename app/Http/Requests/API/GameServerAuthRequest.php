@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\Server;
+use App\Models\GameServer\GameServer;
 
 class GameServerAuthRequest extends GameServerApiRequest
 {
@@ -15,7 +15,7 @@ class GameServerAuthRequest extends GameServerApiRequest
     {
         return [
             'port' => ['required', 'integer', 'between:1,65535'],
-            'auth_token' => ['required', 'string', 'size:'.Server::MAX_AUTH_TOKEN_LENGTH]
+            'auth_token' => ['required', 'string', 'size:'.GameServer::MAX_AUTH_TOKEN_LENGTH]
         ];
     }
 

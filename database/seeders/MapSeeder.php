@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Map;
+use App\Models\GameServer\Map;
 use Illuminate\Database\Seeder;
 
 class MapSeeder extends Seeder
@@ -12,7 +12,7 @@ class MapSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $maps = [
             'cs_assault',

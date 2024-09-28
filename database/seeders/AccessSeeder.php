@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\GameServer\Access;
 use DB;
 use Exception;
 use Illuminate\Database\Seeder;
-use App\Models\Access;
 
 class AccessSeeder extends Seeder
 {
@@ -15,12 +15,12 @@ class AccessSeeder extends Seeder
      * @return void
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
-        $servers = DB::table('servers')->pluck('id');
+        $servers = DB::table('game_servers')->pluck('id');
 
         if (is_null($servers)) {
-            throw new \Exception("Array containing servers indexes is empty!");
+            throw new Exception("Array containing servers indexes is empty!");
         }
 
         $accesses = [
@@ -39,7 +39,7 @@ class AccessSeeder extends Seeder
         foreach ($servers as $server) {
             foreach ($accesses as $access) {
                 Access::create([
-                    'server_id' => $server,
+                    'game_server_id' => $server,
                     'key' => $access,
                     'description' => "This is original access description: $access",
                 ]);

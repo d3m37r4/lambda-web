@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Player;
-use App\Models\Server;
+use App\Models\GameServer\GameServer;
+use App\Models\GameServer\Player;
 use Illuminate\Http\Request;
 
 class PlayerAction
@@ -35,11 +35,11 @@ class PlayerAction
     /**
      * Retrieves an instance of the player model or creates a new instance.
      *
-     * @param Server $server
+     * @param GameServer $server
      * @param Request $request
      * @return mixed
      */
-    public static function findOrCreate(Server $server, Request $request)
+    public static function findOrCreate(GameServer $server, Request $request)
     {
         return $server->players()->firstOrCreate(
             [
