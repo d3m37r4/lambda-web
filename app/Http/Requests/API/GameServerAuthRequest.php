@@ -14,6 +14,7 @@ class GameServerAuthRequest extends GameServerApiRequest
     public function rules(): array
     {
         return [
+            'ip' => ['required', 'ip'],
             'port' => ['required', 'integer', 'between:1,65535'],
             'auth_token' => ['required', 'string', 'size:'.GameServer::MAX_AUTH_TOKEN_LENGTH]
         ];

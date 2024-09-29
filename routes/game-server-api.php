@@ -5,10 +5,10 @@ use App\Http\Controllers\API\GameServer\AuthController;
 use App\Http\Controllers\API\GameServer\PlayerActionController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'servers'], function () {
+Route::group(['prefix' => 'game-servers'], function () {
     Route::post('auth', AuthController::class);
     Route::group([
-        'prefix' => '{server}',
+        'prefix' => '{game_server}',
         'middleware' => ['game-server-api', 'access_token']
     ], function () {
         Route::post('info', [ActionController::class, 'info']);

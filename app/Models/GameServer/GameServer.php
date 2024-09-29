@@ -13,12 +13,14 @@ use Illuminate\Support\Collection;
  * @method static create(array $array)
  * @method static paginate(mixed $env)
  * @method static whereIn(mixed $var1, mixed $var2)
+ * @method static where(array[] $array)
  * @property int $id
  * @property int $port
  * @property string $name
  * @property string $ip
  * @property string $auth_token
  * @property string $rcon
+ * @property HasOne $access_token
  */
 class GameServer extends Model
 {
@@ -110,7 +112,7 @@ class GameServer extends Model
      *
      * @return HasOne
      */
-    public function access_token(): HasOne
+    public function accessToken(): HasOne
     {
         return $this->hasOne(AccessToken::class);
     }
