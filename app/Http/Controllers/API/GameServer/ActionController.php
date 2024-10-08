@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\GameServer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\GameServerInfoRequest;
+use App\Http\Requests\API\InfoRequest;
 use App\Models\GameServer\GameServer;
 use App\Models\GameServer\Map;
 use Arr;
@@ -16,11 +16,11 @@ class ActionController extends Controller
     /**
      * Gets information about server when a new map is launched or when the server is started.
      *
-     * @param GameServerInfoRequest $request
+     * @param InfoRequest $request
      * @param GameServer $server
      * @return JsonResponse
      */
-    public function info(GameServerInfoRequest $request, GameServer $server): JsonResponse
+    public function info(InfoRequest $request, GameServer $server): JsonResponse
     {
         $response = array();
         $server->max_players = $request->input('max_players');
