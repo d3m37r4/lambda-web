@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API\GameServer;
 
-use App\Exceptions\GameServerApiException;
-use App\Helpers\HelperAccessToken;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\API\GameServerAuthRequest;
 use App\Models\GameServer\GameServer;
-use Illuminate\Http\JsonResponse;
+use App\Models\GameServer\AccessToken;
+use App\Http\Controllers\Controller;
+use App\Exceptions\GameServerApiException;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\API\GameServer\AuthRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -18,17 +18,17 @@ class AuthController extends Controller
     /**
      * Handle an authorization the game server request to the application.
      *
-     * @param GameServerAuthRequest $request
+     * @param AuthRequest $request
      * @return JsonResponse
      * @throws GameServerApiException
      */
-    public function __invoke(GameServerAuthRequest $request): JsonResponse
+    public function __invoke(AuthRequest $request): JsonResponse
     {
-        $server = $this->getGameServer($request);
-        $authToken = $request->input('auth_token');
+        $gameServer = $this->getGameServer($request);
+        $authToken = $request->header('Server-Auth-token');
 
-        if ($this->attemptAuthorizationGameServer($server, $authToken)) {
-            return $this->sendResponseOnAuthorization($server);
+        if ($this->attemptAuthorizationGameServer($gameServer, $authToken)) {
+            return $this->sendResponseOnAuthorization($gameServer);
         }
 
         return $this->sendResponseOnFailedAuthorization();
@@ -43,9 +43,16 @@ class AuthController extends Controller
      */
     protected function getGameServer(Request $request): GameServer
     {
+        $ip = $request->header('Server-Ip');
+        $port = $request->header('Server-Port');
+
+        if ($request->ip() !== $ip) {
+            throw new GameServerApiException('IP address of the request does not match the IP address of the game server.', ResponseAlias::HTTP_FORBIDDEN);
+        }
+
         return GameServer::where([
-            ['ip', $request->ip()],
-            ['port', $request->input('port')]
+            ['ip', $ip],
+            ['port', $port]
         ])->firstOr(function () {
             throw new GameServerApiException('Game server not found.', ResponseAlias::HTTP_NOT_FOUND);
         });
@@ -54,33 +61,40 @@ class AuthController extends Controller
     /**
      * Attempt to auth the game server into the application.
      *
-     * @param GameServer $server
+     * @param GameServer $gameServer
      * @param string $authToken
      * @return bool
+     * @throws GameServerApiException
      */
-    protected function attemptAuthorizationGameServer(GameServer $server, string $authToken): bool
+    protected function attemptAuthorizationGameServer(GameServer $gameServer, string $authToken): bool
     {
-        return Hash::check($authToken, $server->auth_token);
+        if (empty($authToken)) {
+            throw new GameServerApiException('Authorization token is required.', ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return Hash::check($authToken, $gameServer->auth_token);
     }
 
     /**
      * Send the response after the game server was authorized.
      *
-     * @param  GameServer $server
+     * @param  GameServer $gameServer
      * @return JsonResponse
      */
-    protected function sendResponseOnAuthorization(GameServer $server): JsonResponse
+    protected function sendResponseOnAuthorization(GameServer $gameServer): JsonResponse
     {
-        $server->access_token()->updateOrCreate(
-            ['server_id' => $server->id],
-            [
-                'token' => HelperAccessToken::generateToken(),
-                'expires_in' => HelperAccessToken::createExpiresDate()
-            ]
-        );
-        $server->update(['active' => true]);
+        ['access_token' => $accessToken, 'plain_token' => $plainToken] = AccessToken::create([
+            'game_server_id' => $gameServer->id
+        ]);
+        $gameServer->update(['active' => true]);
 
-        return Response::json(['access_token' => $server->access_token], ResponseAlias::HTTP_OK);
+        return Response::json([
+            'access_token' => [
+                'game_server_id' => $accessToken->game_server_id,
+                'token' => $plainToken,
+                'expires_at' => $accessToken->expires_at,
+            ]
+        ], ResponseAlias::HTTP_OK);
     }
 
     /**
@@ -88,7 +102,10 @@ class AuthController extends Controller
      *
      * @throws GameServerApiException
      */
-    protected function sendResponseOnFailedAuthorization() {
-        return throw new GameServerApiException('Game server is unauthorized', ResponseAlias::HTTP_UNAUTHORIZED);
+    protected function sendResponseOnFailedAuthorization()
+    {
+//        TODO: Add logging.
+//        \Log::warning('Unauthorized access attempt to the game server.');
+        throw new GameServerApiException('Game server is unauthorized.', ResponseAlias::HTTP_UNAUTHORIZED);
     }
 }

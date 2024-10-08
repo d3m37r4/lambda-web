@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\API;
+namespace App\Http\Requests\API\GameServer;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-abstract class GameServerApiRequest extends FormRequest
+abstract class ApiRequest extends FormRequest
 {
     /**
      * Determine if the game server is authorized to make this request.
@@ -30,7 +30,7 @@ abstract class GameServerApiRequest extends FormRequest
     protected function failedValidation(Validator $validator): array
     {
         throw new HttpResponseException(
-            Response::json(['errors' => $validator->errors()], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            Response::json(['errors' => $validator->errors()], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY)
         );
     }
 }

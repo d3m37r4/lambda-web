@@ -2,15 +2,10 @@
 
 namespace App\Models\GameServer;
 
-use Carbon\Carbon;
+use App\Helpers\Token;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * @method static where(string $string, string $token)
- * @method static updateOrCreate(array $array)
- * @property Carbon expires_in
- */
 class AccessToken extends Model
 {
     /**
@@ -32,7 +27,14 @@ class AccessToken extends Model
      *
      * @var int
      */
-    const ACCESS_TOKEN_LITE_TIME = 64;
+    const ACCESS_TOKEN_LIFETIME_HOURS = 12;
+
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = ['token', 'game_server_id'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -42,18 +44,18 @@ class AccessToken extends Model
     public $timestamps = false;
 
     /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['token', 'server_id', 'expires_in'];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = ['id'];
+    protected $fillable = ['token', 'expires_at', 'game_server_id'];
 
     /**
      * The attributes that should be cast.
@@ -61,16 +63,38 @@ class AccessToken extends Model
      * @var array
      */
     protected $casts = [
-        'expires_in' => 'timestamp'
+        'expires_at' => 'timestamp'
     ];
 
     /**
-     * Gets server available for a specific server.
+     * Gets server available for a specific game server.
      *
      * @return BelongsTo
      */
-    public function server(): BelongsTo
+    public function gameServer(): BelongsTo
     {
         return $this->belongsTo(GameServer::class);
+    }
+
+    /**
+     * Create a new AccessToken instance and invalidate previous tokens for the same game server.
+     *
+     * @param array $attributes The attributes to create the AccessToken with.
+     * @return array
+     */
+    public static function create(array $attributes = []): array
+    {
+        $gameServerId = $attributes['game_server_id'];
+        self::where('game_server_id', $gameServerId)->delete();
+
+        $plainToken = Token::generate(self::MAX_ACCESS_TOKEN_LENGTH, 'access_tokens');
+        $hashedToken = bcrypt($plainToken);
+
+        $attributes['token'] = $hashedToken;
+        $attributes['expires_at'] = now()->addHours(self::ACCESS_TOKEN_LIFETIME_HOURS);
+
+        $accessToken = static::query()->create($attributes);
+
+        return ['access_token' => $accessToken, 'plain_token' => $plainToken];
     }
 }
