@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API;
 
 use App\Http\Requests\API\GameServer\ApiRequest;
+use App\Models\GameServer\Map;
 
 class InfoRequest extends ApiRequest
 {
@@ -14,7 +15,7 @@ class InfoRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'map' => ['required', 'max:64'],
+            'map' => ['required', 'max:'.Map::MAX_MAPNAME_LENGTH],
             'max_players' => ['required', 'integer', 'between:0,32'],
             'update_reasons' => ['boolean', 'nullable'],
             'update_access_groups' => ['boolean', 'nullable']

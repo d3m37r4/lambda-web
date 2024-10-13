@@ -64,14 +64,9 @@ class AuthController extends Controller
      * @param GameServer $gameServer
      * @param string $authToken
      * @return bool
-     * @throws GameServerApiException
      */
     protected function attemptAuthorizationGameServer(GameServer $gameServer, string $authToken): bool
     {
-        if (empty($authToken)) {
-            throw new GameServerApiException('Authorization token is required.', ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
         return Hash::check($authToken, $gameServer->auth_token);
     }
 
@@ -92,7 +87,7 @@ class AuthController extends Controller
             'access_token' => [
                 'game_server_id' => $accessToken->game_server_id,
                 'token' => $plainToken,
-                'expires_at' => $accessToken->expires_at,
+                'expires_at' => $accessToken->expires_at->timestamp,
             ]
         ], ResponseAlias::HTTP_OK);
     }

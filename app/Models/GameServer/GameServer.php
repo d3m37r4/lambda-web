@@ -16,11 +16,15 @@ use Illuminate\Support\Collection;
  * @method static where(array[] $array)
  * @property int $id
  * @property int $port
+ * @property int $max_players
+ * @property Map $map_id
  * @property string $name
  * @property string $ip
  * @property string $auth_token
  * @property string $rcon
- * @property HasOne $access_token
+ * @property AccessToken $access_token
+ * @property Reason $reasons
+ * @property AccessGroup $access_groups
  */
 class GameServer extends Model
 {
@@ -64,7 +68,7 @@ class GameServer extends Model
         'full_address',
         'num_players',
         'map_name',
-        'percent_players'
+//        'percent_players'
     ];
 
     /**
@@ -79,7 +83,7 @@ class GameServer extends Model
         'max_players' => 'int',
         'map_name' => 'string',
         'active' => 'boolean',
-        'percent_players' => 'int'
+//        'percent_players' => 'int'
     ];
 
     /**
@@ -187,7 +191,7 @@ class GameServer extends Model
         return Player::select('players.*')
             ->join('players_sessions', 'players.id', '=', 'players_sessions.player_id')
             ->where([
-                ['players_sessions.server_id', $this->id],
+                ['players_sessions.game_server_id', $this->id],
                 ['players_sessions.status', PlayerSession::STATUS_ONLINE]
             ])
             ->limit($this->max_players)

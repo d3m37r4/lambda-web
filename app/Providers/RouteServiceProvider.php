@@ -44,7 +44,7 @@ class RouteServiceProvider extends ServiceProvider
                     ->namespace($this->namespace)
                     ->group(base_path('routes/api.php'));
 
-                Route::middleware('game-server-api')
+                Route::middleware('game.server.api')
                     ->namespace($this->namespace)
                     ->group(base_path('routes/game-server-api.php'));
             });

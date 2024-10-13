@@ -2,10 +2,14 @@
 
 namespace App\Models\GameServer;
 
+
 use App\Helpers\Token;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @method static where(string $string, array|string|null $header)
+ */
 class AccessToken extends Model
 {
     /**
@@ -13,7 +17,7 @@ class AccessToken extends Model
      *
      * @var string
      */
-    const ACCESS_TOKEN_HEADER = 'Lambda-X-Access-Token';
+    const ACCESS_TOKEN_HEADER = 'Server-Access-Token';
 
     /**
      * The maximum buffer size required to store an access token.
@@ -63,7 +67,7 @@ class AccessToken extends Model
      * @var array
      */
     protected $casts = [
-        'expires_at' => 'timestamp'
+        'expires_at' => 'datetime'
     ];
 
     /**
