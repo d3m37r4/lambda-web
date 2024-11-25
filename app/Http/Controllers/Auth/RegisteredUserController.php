@@ -18,7 +18,7 @@ class RegisteredUserController extends Controller
     public function create()
     {
         return Inertia::render('Auth/Register', [
-            'title' => 'Регистрация аккаунта'
+            'title' => 'Регистрация'
         ]);
     }
 
@@ -28,7 +28,6 @@ class RegisteredUserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->validated());
-        $user->assignRole(User::DEFAULT_USER_ROLE);     // TODO: Move default role assignment to new user registration event handler.
 
         event(new Registered($user));
         Auth::login($user);
