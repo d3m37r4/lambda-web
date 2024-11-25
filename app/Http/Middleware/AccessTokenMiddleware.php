@@ -28,7 +28,7 @@ class AccessTokenMiddleware
         });
 
         if (!$accessToken) {
-            throw new GameServerApiException('Invalid access token.', Response::HTTP_NOT_FOUND);
+            throw new GameServerApiException('Invalid access token.', Response::HTTP_UNAUTHORIZED);
         }
 
         $gameServer = $accessToken->gameServer;
