@@ -1,8 +1,6 @@
-import '../css/app.css';
-
-import { createSSRApp, h } from 'vue'
+import { createSSRApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import AppLayout from './Layouts/Main.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Lambda';
@@ -18,7 +16,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         return createSSRApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(ZiggyVue, Ziggy)
+            .use(ZiggyVue)
             .mount(el);
     },
     progress: {
