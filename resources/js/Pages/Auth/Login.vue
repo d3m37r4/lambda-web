@@ -1,16 +1,19 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import InputError from "@/Components/InputError.vue";
 
 defineProps({
     title: String,
     canResetPassword: Boolean,
     status: String,
 });
+
 const form = useForm({
     email: '',
     password: '',
     remember: false,
 });
+
 const submit = () => {
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
@@ -20,16 +23,18 @@ const submit = () => {
 
 <template>
     <Head :title="title" />
-    <div class="container w-full lg:max-w-lg">
-        <h1 class="mb-4 text-xl">{{ title }}</h1>
+    <div class="container w-full lg:max-w-lg space-y-4">
+        <div class="flex items-center justify-between mx-4">
+            <h1 class="text-xl">{{ title }}</h1>
+        </div>
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
-        <div class="p-4 bg-base-200 rounded-box">
-            <form @submit.prevent="submit" class="space-y-4">
+        <form @submit.prevent="submit">
+            <div class="bg-base-200 rounded-box p-4">
                 <div>
-                    <label class="label">
-                        <span class="text-base label-text">Email</span>
+                    <label for="email" class="label">
+                        <span class="text-base label-text">{{ ('Эл. почта') }}</span>
                     </label>
                     <input
                         id="email"
@@ -38,11 +43,9 @@ const submit = () => {
                         v-model="form.email"
                         required
                         autofocus
-                        autocomplete="username"
+                        autocomplete="login"
                     />
-                    <div v-show="form.errors.email">
-                        <p class="text-sm text-red-600">{{ form.errors.email }}</p>
-                    </div>
+                    <InputError :message="form.errors.email" />
                 </div>
                 <div>
                     <label class="label">
@@ -54,14 +57,11 @@ const submit = () => {
                         class="input input-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                         v-model="form.password"
                         required
-                        autofocus
-                        autocomplete="username"
+                        autocomplete="login"
                     />
-                    <div v-show="form.errors.password">
-                        <p class="text-sm text-red-600">{{ form.errors.password }}</p>
-                    </div>
+                    <InputError :message="form.errors.password" />
                 </div>
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between my-4">
                     <label class="flex items-center">
                         <input type="checkbox" class="checkbox" v-model="form.remember"/>
                         <span class="ms-2 text-sm">{{ ('Запомнить меня') }}</span>
@@ -70,10 +70,10 @@ const submit = () => {
                         {{ ('Забыли свой пароль?') }}
                     </Link>
                 </div>
-                <div class="flex items-center justify-end">
-                    <button class="btn btn-success normal-case" :class="{ 'loading loading-spinner': form.processing }">{{ ('Войти') }}</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="flex justify-end m-4">
+                <button class="btn btn-success normal-case" :disabled="!form.isDirty">{{ ('Войти') }}</button>
+            </div>
+        </form>
     </div>
 </template>
