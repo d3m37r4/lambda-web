@@ -47,9 +47,9 @@ return [
             'hash' => false,
         ],
 
-        'game-server-api' => [
+        'game.server.api' => [
             'driver' => 'token',
-            'provider' => 'servers',
+            'provider' => 'game_servers',
         ],
     ],
 
@@ -75,12 +75,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-         'servers' => [
-             'driver' => 'eloquent',
-             'table' => 'servers',
-             'model' => App\Models\User::class,
-         ],
     ],
 
     /*

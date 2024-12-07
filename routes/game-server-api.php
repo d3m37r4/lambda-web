@@ -1,16 +1,13 @@
 <?php
 
-use App\Http\Controllers\API\GameServer\ActionController;
 use App\Http\Controllers\API\GameServer\AuthController;
+use App\Http\Controllers\API\GameServer\ActionController;
 use App\Http\Controllers\API\GameServer\PlayerActionController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'servers'], function () {
+Route::group(['prefix' => 'game-servers', 'middleware' => 'game.server.api'], function () {
     Route::post('auth', AuthController::class);
-    Route::group([
-        'prefix' => '{server}',
-        'middleware' => ['game-server-api', 'access_token']
-    ], function () {
+    Route::group(['prefix' => '{game_server}', 'middleware' => 'access.token'], function () {
         Route::post('info', [ActionController::class, 'info']);
         Route::post('ping', [ActionController::class, 'ping']);
         Route::group(['prefix' => 'players'], function () {

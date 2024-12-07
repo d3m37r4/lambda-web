@@ -74,7 +74,7 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
         ],
 
-        'game-server-api' => [
+        'game.server.api' => [
             // TODO: Add a limiter for game server api.
             SubstituteBindings::class,
         ],
@@ -100,6 +100,6 @@ class Kernel extends HttpKernel
         'role' => RoleMiddleware::class,
         'permission' => PermissionMiddleware::class,
         'role_or_permission' => RoleOrPermissionMiddleware::class,
-        'access_token' => AccessTokenMiddleware::class,
+        'access.token' => AccessTokenMiddleware::class,
     ];
 }

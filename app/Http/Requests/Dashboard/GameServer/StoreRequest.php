@@ -42,7 +42,7 @@ class StoreRequest extends FormRequest
             ],
             'rcon' => ['nullable', 'string', 'max:128'],
             // Should I check the token for uniqueness?
-            'auth_token' => ['nullable', 'string', 'max:' . GameServer::MAX_AUTH_TOKEN_LENGTH],
+            'auth_token' => ['nullable', 'string', 'size:' . GameServer::MAX_AUTH_TOKEN_LENGTH],
         ];
     }
 

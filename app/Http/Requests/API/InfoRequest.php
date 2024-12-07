@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\API;
 
-class GameServerInfoRequest extends GameServerApiRequest
+use App\Http\Requests\API\GameServer\ApiRequest;
+use App\Models\GameServer\Map;
+
+class InfoRequest extends ApiRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,7 +15,7 @@ class GameServerInfoRequest extends GameServerApiRequest
     public function rules(): array
     {
         return [
-            'map' => ['required', 'max:64'],
+            'map' => ['required', 'max:'.Map::MAX_MAPNAME_LENGTH],
             'max_players' => ['required', 'integer', 'between:0,32'],
             'update_reasons' => ['boolean', 'nullable'],
             'update_access_groups' => ['boolean', 'nullable']

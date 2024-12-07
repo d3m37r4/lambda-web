@@ -6,6 +6,7 @@ use Closure;
 use App\Models\GameServer\AccessToken;
 use App\Exceptions\GameServerApiException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class AccessTokenMiddleware
@@ -13,39 +14,34 @@ class AccessTokenMiddleware
     /**
      * Handle an incoming request from the game server.
      *
-     * @param Request $request
-     * @param Closure $next
-     * @return mixed
      * @throws GameServerApiException
      */
-    public function handle(Request $request, Closure $next): mixed
+    public function handle(Request $request, Closure $next)
     {
-        $token = $this->getAccessToken($request);
-        $server = $token->server();
+        if ($request->header('User-Agent') !== 'Lambda') {
+            return throw new GameServerApiException('Invalid User-Agent', Response::HTTP_FORBIDDEN);
+        }
 
-        if ($token->expires_in <= now()->timestamp) {
-            $server->update(['active' => false]);
-            throw new GameServerApiException('Bad access token.', Response::HTTP_FORBIDDEN);
+        $accessTokenHeader = $request->header(AccessToken::ACCESS_TOKEN_HEADER);
+        $accessToken = AccessToken::all()->first(function ($token) use ($accessTokenHeader) {
+            return Hash::check($accessTokenHeader, $token->token);
+        });
+
+        if (!$accessToken) {
+            throw new GameServerApiException('Invalid access token.', Response::HTTP_UNAUTHORIZED);
+        }
+
+        $gameServer = $accessToken->gameServer;
+
+        if (!$gameServer) {
+            throw new GameServerApiException('Server not found.', Response::HTTP_NOT_FOUND);
+        }
+
+        if ($accessToken->expires_at->isPast()) {
+            $gameServer->update(['active' => false]);
+            throw new GameServerApiException('Access token expired.', Response::HTTP_UNAUTHORIZED);
         }
 
         return $next($request);
-    }
-
-    /**
-     * Gets an instance of access token model based on request.
-     *
-     * @param Request $request
-     * @return AccessToken
-     * @throws GameServerApiException
-     */
-    protected function getAccessToken(Request $request): AccessToken
-    {
-        if (empty($request->header(AccessToken::ACCESS_TOKEN_HEADER))) {
-            return throw new GameServerApiException('Access token required.', Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        return AccessToken::where('token', $request->header(AccessToken::ACCESS_TOKEN_HEADER))->firstOr(function () {
-            return throw new GameServerApiException('Invalid access token.', Response::HTTP_NOT_FOUND);
-        });
     }
 }

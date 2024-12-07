@@ -38,7 +38,7 @@ class Map extends Model
      *
      * @return HasMany
      */
-    public function servers(): HasMany
+    public function gameServers(): HasMany
     {
         return $this->hasMany(GameServer::class);
     }
