@@ -23,7 +23,7 @@ use Illuminate\Support\Collection;
  * @property string $auth_token
  * @property string $rcon
  * @property AccessToken $access_token
- * @property Reason $reasons
+ * @property PunishmentReason $punishmentReasons
  * @property AccessGroup $access_groups
  */
 class GameServer extends Model
@@ -112,7 +112,7 @@ class GameServer extends Model
     }
 
     /**
-     * Gets access token available for a specific server.
+     * Gets access token available for a specific game server.
      *
      * @return HasOne
      */
@@ -122,7 +122,7 @@ class GameServer extends Model
     }
 
     /**
-     * Gets a map available for a specific server.
+     * Gets a map available for a specific game server.
      *
      * @return BelongsTo
      */
@@ -132,17 +132,17 @@ class GameServer extends Model
     }
 
     /**
-     * Gets reasons available for a specific server.
+     * Gets reasons available for a specific game server.
      *
      * @return HasMany
      */
-    public function reasons(): HasMany
+    public function punishmentReasons(): HasMany
     {
-        return $this->hasMany(Reason::class);
+        return $this->hasMany(PunishmentReason::class);
     }
 
     /**
-     * Gets accesses available for a specific server.
+     * Gets accesses available for a specific game server.
      *
      * @return HasMany
      */
@@ -152,7 +152,7 @@ class GameServer extends Model
     }
 
     /**
-     * Gets access groups available for a specific server.
+     * Gets access groups available for a specific game server.
      *
      * @return HasMany
      */
@@ -162,7 +162,7 @@ class GameServer extends Model
     }
 
     /**
-     * Gets players available for a specific server.
+     * Gets players available for a specific game server.
      *
      * @return HasMany
      */
@@ -172,7 +172,7 @@ class GameServer extends Model
     }
 
     /**
-     * Gets sessions currently on specified server.
+     * Gets sessions currently on specified game server.
      *
      * @return HasMany
      */
@@ -182,7 +182,7 @@ class GameServer extends Model
     }
 
     /**
-     * Gets online players currently on specified server.
+     * Gets online players currently on specified game server.
      *
      * @return Collection
      */
@@ -199,7 +199,7 @@ class GameServer extends Model
     }
 
     /**
-     * Checks if there are online players for a specific server.
+     * Checks if there are online players for a specific game server.
      *
      * @return bool
      */
