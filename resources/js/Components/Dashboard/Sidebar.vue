@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <ul class="menu rounded-box">
+    <ul class="sidebar">
         <li>
             <Link :href="route('dashboard.index')" :class="{ 'active': route().current('dashboard.index') }">
                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">

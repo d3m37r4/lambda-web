@@ -15,18 +15,6 @@
     .footer {
         @apply justify-between border-t border-neutral px-2 p-4 mt-10;
     }
-    .menu {
-        @apply p-0;
-    }
-    .menu li {
-        animation: button-pop var(--animation-btn, 0.25s) ease-out;
-    }
-    .menu li > :not(ul):not(.menu-title):not(details).active {
-        @apply bg-base-300 text-orange-500;
-    }
-    .menu a {
-        @apply hover:bg-base-200 hover:text-orange-500;
-    }
     .toast {
         @apply z-20;
     }
@@ -38,6 +26,12 @@
     }
 }
 
+.sidebar {
+    @apply menu p-0 gap-1;
+}
+.sidebar a {
+    @apply hover:bg-base-200 hover:text-orange-500;
+}
 .footer-content {
     @apply inline-flex items-center;
 }
