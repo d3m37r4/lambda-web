@@ -12,7 +12,7 @@ use App\Http\Requests\Dashboard\User\UpdateRequest;
 use App\Http\Requests\Dashboard\User\DestroyRequest;
 use App\Http\Requests\Dashboard\User\DeleteSelectedRequest;
 
-class UserManagementController extends Controller
+class UserController extends Controller
 {
     /**
      * The number of users to return for pagination.

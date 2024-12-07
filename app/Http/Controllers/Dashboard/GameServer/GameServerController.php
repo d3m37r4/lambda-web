@@ -11,7 +11,7 @@ use App\Http\Requests\Dashboard\GameServer\UpdateRequest;
 use App\Http\Requests\Dashboard\GameServer\DestroyRequest;
 use App\Http\Requests\Dashboard\GameServer\DeleteSelectedRequest;
 
-class GameServerManagementController extends Controller
+class GameServerController extends Controller
 {
     /**
      * The number of game servers to return for pagination.
@@ -89,6 +89,15 @@ class GameServerManagementController extends Controller
                 'ip' => $gameServer->ip,
                 'port' => $gameServer->port,
             ],
+            'punishmentReasons' => $gameServer->punishmentReasons->map(function ($punishmentReason) {
+                return [
+                    'id' => $punishmentReason->id,
+                    'name' => $punishmentReason->name,
+                    'time' => $punishmentReason->time_for_humans,
+                    'created_at' => $punishmentReason->created_at->format('d.m.Y - H:i:s'),
+                    'updated_at' => $punishmentReason->updated_at->format('d.m.Y - H:i:s'),
+                ];
+            }),
             'serverInfo' => $serverInfo,
         ]);
     }

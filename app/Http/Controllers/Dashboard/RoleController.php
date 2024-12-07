@@ -10,7 +10,7 @@ use App\Http\Requests\Dashboard\Role\UpdateRequest;
 use App\Http\Requests\Dashboard\Role\DestroyRequest;
 use App\Http\Requests\Dashboard\Role\DeleteSelectedRequest;
 
-class RoleManagementController extends Controller
+class RoleController extends Controller
 {
     /**
      * The number of roles to return for pagination.

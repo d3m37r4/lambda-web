@@ -7,7 +7,7 @@ use App\Models\GameServer\Player;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class PlayerManagementController extends Controller
+class PlayerController extends Controller
 {
     /**
      * Show the form for editing the specified player.

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 //use App\Http\Requests\UpdateRequest;
 
-class AccessGroupManagementController extends Controller
+class AccessGroupController extends Controller
 {
     /**
      * Show the form for creating a new access group.

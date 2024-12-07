@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 //use App\Http\Requests\StoreAccessRequest;
 //use App\Http\Requests\UpdateAccessRequest;
 
-class AccessManagementController extends Controller
+class AccessController extends Controller
 {
     /**
      * Show the form for creating a new access.
