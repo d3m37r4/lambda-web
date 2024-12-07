@@ -16,7 +16,7 @@ A system of interaction with game servers based on the GoldSource engine, realiz
 The application is based on the following stack:\
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
 ![Laravel](https://img.shields.io/badge/Laravel-EB5424?style=flat-square&logo=laravel&logoColor=white)
-![Inertia.js](https://img.shields.io/badge/Inertia.js-4FC08D?style=flat-square&logo=inertia&logoColor=white)
+![Inertia.js](https://img.shields.io/badge/Inertia.js-6D74ED?style=flat-square&logo=inertia&logoColor=white)
 ![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=flat-square&logo=vuedotjs&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 
