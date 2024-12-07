@@ -13,18 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reasons', function (Blueprint $table) {
+        Schema::create('punishment_reasons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('game_server_id')->nullable()
-                ->constrained('game_servers')
-                ->cascadeOnDelete();
-            $table->string('title');
+            $table->foreignId('game_server_id')->constrained('game_servers')->cascadeOnDelete();
+            $table->string('name');
             $table->unsignedInteger('time')->nullable();
-//            $table->unsignedTinyInteger('overall');
-//            $table->unsignedTinyInteger('menu');
-//            $table->unsignedTinyInteger('active');
             $table->timestamps();
-            $table->unique(['game_server_id', 'title']);
+            $table->unique(['game_server_id', 'name']);
         });
     }
 
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reasons');
+        Schema::dropIfExists('punishment_reasons');
     }
 };
