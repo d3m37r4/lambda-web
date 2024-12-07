@@ -4,8 +4,8 @@ import { useForm } from '@inertiajs/vue3';
 import { ref } from "vue";
 import { selectAll } from '@/Utils/selection';
 import InputError from "@/Components/InputError.vue";
-import BackButton from "@/Components/BackButton.vue";
-import CreateButton from "@/Components/CreateButton.vue";
+import BackButton from "@/Components/Buttons/BackButton.vue";
+import CreateButton from "@/Components/Buttons/CreateButton.vue";
 
 defineOptions({
     layout: DashboardLayout
@@ -41,7 +41,7 @@ const store = () => {
                 <h1 class="text-xl">{{ title }}</h1>
             </div>
             <div class="flex-none">
-                <BackButton :routeBack="route('dashboard.roles.index')" />
+                <BackButton title="Назад" :href="route('dashboard.roles.index')" />
             </div>
         </div>
         <form @submit.prevent="store">
@@ -95,7 +95,7 @@ const store = () => {
                 </div>
             </div>
             <div class="flex justify-end m-4">
-                <CreateButton :disabled="!form.isDirty" />
+                <CreateButton title="Добавить" :disabled="!form.isDirty" />
             </div>
         </form>
     </div>

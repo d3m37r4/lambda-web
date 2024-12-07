@@ -2,8 +2,8 @@
 import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref, watch, computed } from 'vue';
-import BackButton from "@/Components/BackButton.vue";
-import CreateButton from "@/Components/CreateButton.vue";
+import BackButton from "@/Components/Buttons/BackButton.vue";
+import CreateButton from "@/Components/Buttons/CreateButton.vue";
 import InputError from "@/Components/InputError.vue";
 
 defineOptions({
@@ -69,7 +69,7 @@ const store = () => {
     <div class="ml-4 space-y-4">
         <div class="flex items-center justify-between mx-4">
             <h1 class="text-xl">{{ title }}</h1>
-            <BackButton :routeBack="route('dashboard.users.index')" />
+            <BackButton title="Назад" :href="route('dashboard.users.index')" />
         </div>
         <form @submit.prevent="store">
             <div class="bg-base-200 rounded-box p-4">
@@ -270,7 +270,7 @@ const store = () => {
                 <!--                Maybe this will be added                -->
             </div>
             <div class="flex justify-end m-4">
-                <CreateButton :disabled="!form.isDirty" />
+                <CreateButton title="Создать" :disabled="!form.isDirty" />
             </div>
         </form>
     </div>

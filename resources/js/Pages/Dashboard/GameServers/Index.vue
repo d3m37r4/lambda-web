@@ -7,7 +7,7 @@ import Pagination from '@/Components/Pagination.vue';
 import ConfirmDeleteGameServer from '@/Components/Dashboard/ConfirmDeleteGameServer.vue';
 import SearchForm from "@/Components/Dashboard/SearchForm.vue";
 import DeleteSelectedItemsForm from "@/Components/Dashboard/DeleteSelectedItemsForm.vue";
-import CreateButton from "@/Components/CreateButton.vue";
+import CreateButton from "@/Components/Buttons/CreateButton.vue";
 import PlayerProgressCircular from "@/Components/PlayerProgressCircular.vue";
 
 defineOptions({
@@ -54,7 +54,7 @@ const confirmDeleteGameServer = (id) => {
                 <SearchForm />
             </div>
             <div class="flex-none">
-                <CreateButton :routeCreate="route('dashboard.game-servers.create')" />
+                <CreateButton title="Добавить" :href="route('dashboard.game-servers.create')" />
             </div>
         </div>
         <div class="space-x-4 mx-4">

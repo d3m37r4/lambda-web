@@ -67,7 +67,7 @@ class RoleController extends Controller
 
         return back()->with([
             'status' => 'success',
-            'message' => "Роль \"$role->name\" создана."
+            'message' => "Роль \"$role->name\" добавлена."
         ]);
     }
 

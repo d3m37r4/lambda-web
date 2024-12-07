@@ -2,8 +2,8 @@
 import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
-import BackButton from "@/Components/BackButton.vue";
-import CreateButton from "@/Components/CreateButton.vue";
+import BackButton from "@/Components/Buttons/BackButton.vue";
+import CreateButton from "@/Components/Buttons/CreateButton.vue";
 
 defineOptions({
     layout: DashboardLayout
@@ -31,7 +31,7 @@ const isActive = (tabId) => {
                 <h1 class="text-xl">{{ title }}</h1>
             </div>
             <div class="flex-none">
-                <BackButton :routeBack="route('dashboard.game-servers.index')" />
+                <BackButton title="Назад" :href="route('dashboard.game-servers.index')" />
             </div>
         </div>
         <div class="bg-base-200 rounded-box p-4">
@@ -193,8 +193,9 @@ const isActive = (tabId) => {
         <div id="tab-reasons" v-show="isActive('tab-reasons')" class="">
             <div class="pb-4">
                 <CreateButton
+                    title="Добавить"
                     class="btn-sm"
-                    :routeCreate="route('dashboard.game-servers.punishment-reasons.create', gameServer.id)" />
+                    :href="route('dashboard.game-servers.punishment-reasons.create', gameServer.id)" />
             </div>
             <div v-if="punishmentReasons.length > 0" class="bg-base-200 rounded-box p-4">
                 <div class="overflow-x-auto">

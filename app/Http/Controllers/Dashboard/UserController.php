@@ -95,7 +95,7 @@ class UserController extends Controller
             'page' => User::paginate($this->perPage)->lastPage()
         ])->with([
             'status' => 'success',
-            'message' => "Пользователь $user->login успешно создан!"
+            'message' => "Пользователь \"$user->login\" создан!"
         ]);
     }
 

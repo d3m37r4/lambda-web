@@ -7,7 +7,7 @@ import Pagination from '@/Components/Pagination.vue';
 import ConfirmDeleteUser from '@/Components/Dashboard/ConfirmDeleteUser.vue';
 import SearchForm from "@/Components/Dashboard/SearchForm.vue";
 import DeleteSelectedItemsForm from "@/Components/Dashboard/DeleteSelectedItemsForm.vue";
-import CreateButton from "@/Components/CreateButton.vue";
+import CreateButton from "@/Components/Buttons/CreateButton.vue";
 
 defineOptions({
     layout: DashboardLayout
@@ -53,7 +53,7 @@ const confirmDeleteUser = (id) => {
                 <SearchForm />
             </div>
             <div class="flex-none">
-                <CreateButton :routeCreate="route('dashboard.users.create')" />
+                <CreateButton title="Создать" :href="route('dashboard.users.create')" />
             </div>
         </div>
         <div class="space-x-4 mx-4">

@@ -3,8 +3,8 @@ import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { useForm } from '@inertiajs/vue3';
 import { useAuthToken } from '@/Composables/useAuthToken.js';
 import InputError from "@/Components/InputError.vue";
-import BackButton from "@/Components/BackButton.vue";
-import UpdateButton from "@/Components/UpdateButton.vue";
+import BackButton from "@/Components/Buttons/BackButton.vue";
+import UpdateButton from "@/Components/Buttons/UpdateButton.vue";
 import CopyToClipboard from "@/Components/CopyToClipboard.vue";
 
 defineOptions({
@@ -38,7 +38,7 @@ const update = () => {
                 <h1 class="text-xl">{{ title }}</h1>
             </div>
             <div class="flex-none">
-                <BackButton :routeBack="route('dashboard.game-servers.index')" />
+                <BackButton title="Назад" :href="route('dashboard.game-servers.index')" />
             </div>
         </div>
         <form @submit.prevent="update">
@@ -132,7 +132,7 @@ const update = () => {
                 </div>
             </div>
             <div class="flex justify-end m-4">
-                <UpdateButton :disabled="!form.isDirty" />
+                <UpdateButton title="Обновить" :disabled="!form.isDirty" />
             </div>
         </form>
     </div>

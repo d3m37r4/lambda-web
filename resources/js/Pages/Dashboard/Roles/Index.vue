@@ -8,7 +8,7 @@ import ConfirmDeleteRole from '@/Components/Dashboard/ConfirmDeleteRole.vue';
 import ShowRolePermissions from "@/Components/Dashboard/ShowRolePermissions.vue";
 import SearchForm from "@/Components/Dashboard/SearchForm.vue";
 import DeleteSelectedItemsForm from "@/Components/Dashboard/DeleteSelectedItemsForm.vue";
-import CreateButton from "@/Components/CreateButton.vue";
+import CreateButton from "@/Components/Buttons/CreateButton.vue";
 
 defineOptions({
     layout: DashboardLayout
@@ -68,7 +68,7 @@ const showPermissions = (role) => {
                 <SearchForm />
             </div>
             <div class="flex-none">
-                <CreateButton :routeCreate="route('dashboard.roles.create')" />
+                <CreateButton title="Добавить" :href="route('dashboard.roles.create')" />
             </div>
         </div>
         <div class="space-x-4 mx-4">

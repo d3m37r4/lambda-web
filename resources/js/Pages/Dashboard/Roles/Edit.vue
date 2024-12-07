@@ -4,8 +4,8 @@ import { useForm } from '@inertiajs/vue3';
 import { ref } from "vue";
 import { selectAll } from '@/Utils/selection';
 import InputError from "@/Components/InputError.vue";
-import BackButton from "@/Components/BackButton.vue";
-import UpdateButton from "@/Components/UpdateButton.vue";
+import BackButton from "@/Components/Buttons/BackButton.vue";
+import UpdateButton from "@/Components/Buttons/UpdateButton.vue";
 
 defineOptions({
     layout: DashboardLayout
@@ -42,7 +42,7 @@ const update = () => {
                 <h1 class="text-xl">{{ title }}</h1>
             </div>
             <div class="flex-none">
-                <BackButton :routeBack="route('dashboard.roles.index')" />
+                <BackButton title="Назад" :href="route('dashboard.roles.index')" />
             </div>
         </div>
         <form @submit.prevent="update">
@@ -93,7 +93,7 @@ const update = () => {
                 </div>
             </div>
             <div class="flex justify-end m-4">
-                <UpdateButton :disabled="!form.isDirty" />
+                <UpdateButton title="Обновить" :disabled="!form.isDirty" />
             </div>
         </form>
     </div>
