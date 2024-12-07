@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\GameServer\Reason\StoreReasonRequest;
 use App\Http\Requests\Dashboard\GameServer\Reason\UpdateReasonRequest;
 use App\Models\GameServer\GameServer;
-use App\Models\GameServer\Reason;
+use App\Models\GameServer\PunishmentReason;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class ReasonManagementController extends Controller
+class PunishmentReasonController extends Controller
 {
     /**
      * Show the form for creating a new reason.
@@ -32,7 +32,7 @@ class ReasonManagementController extends Controller
      */
     public function store(StoreReasonRequest $request, GameServer $server): RedirectResponse
     {
-        $reason = Reason::create($request->safe()->except('months', 'days', 'hours', 'minutes'));
+        $reason = PunishmentReason::create($request->safe()->except('months', 'days', 'hours', 'minutes'));
 
         return redirect()->route('admin.servers.show', $server->id)->with([
             'status' => 'success',
@@ -44,10 +44,10 @@ class ReasonManagementController extends Controller
      * Show the form for editing the specified reason.
      *
      * @param GameServer $server
-     * @param Reason $reason
+     * @param PunishmentReason $reason
      * @return View
      */
-    public function edit(GameServer $server, Reason $reason): View
+    public function edit(GameServer $server, PunishmentReason $reason): View
     {
         return view('admin.servers.reasons.edit', compact('server', 'reason'));
     }
@@ -57,10 +57,10 @@ class ReasonManagementController extends Controller
      *
      * @param UpdateReasonRequest $request
      * @param GameServer $server
-     * @param Reason $reason
+     * @param PunishmentReason $reason
      * @return RedirectResponse
      */
-    public function update(UpdateReasonRequest $request, GameServer $server, Reason $reason): RedirectResponse
+    public function update(UpdateReasonRequest $request, GameServer $server, PunishmentReason $reason): RedirectResponse
     {
         $reason->update($request->safe()->except('months', 'days', 'hours', 'minutes'));
 
@@ -74,10 +74,10 @@ class ReasonManagementController extends Controller
      * Remove the specified reason from storage.
      *
      * @param GameServer $server
-     * @param Reason $reason
+     * @param PunishmentReason $reason
      * @return RedirectResponse
      */
-    public function destroy(GameServer $server, Reason $reason): RedirectResponse
+    public function destroy(GameServer $server, PunishmentReason $reason): RedirectResponse
     {
         if (!$server) {
             return back()->with([
