@@ -48,9 +48,9 @@ class User extends Authenticatable
      */
     const PASSWORD_UNCOMPROMISED_COUNT = 0;
 
-    public const GENDER_NONE = 1;
-    public const GENDER_MALE = 2;
-    public const GENDER_FEMALE = 3;
+    public const GENDER_NONE = 0;
+    public const GENDER_MALE = 1;
+    public const GENDER_FEMALE = 2;
 
     /**
      * @var array
