@@ -89,7 +89,9 @@ class GameServerController extends Controller
                 'ip' => $gameServer->ip,
                 'port' => $gameServer->port,
             ],
-            'punishmentReasons' => $gameServer->punishmentReasons->map(function ($punishmentReason) {
+            'punishmentReasons' => $gameServer->punishmentReasons->sortBy(function($punishmentReason) {
+                return $punishmentReason->id;
+            })->values()->map(function ($punishmentReason) {
                 return [
                     'id' => $punishmentReason->id,
                     'name' => $punishmentReason->name,

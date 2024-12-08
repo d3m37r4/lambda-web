@@ -3,40 +3,38 @@
 namespace App\Http\Controllers\Dashboard\GameServer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\GameServer\Reason\StoreReasonRequest;
-use App\Http\Requests\Dashboard\GameServer\Reason\UpdateReasonRequest;
+use App\Http\Requests\Dashboard\GameServer\PunishmentReason\StoreRequest;
+use App\Http\Requests\Dashboard\GameServer\PunishmentReason\UpdateRequest;
 use App\Models\GameServer\GameServer;
 use App\Models\GameServer\PunishmentReason;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Request;
 
 class PunishmentReasonController extends Controller
 {
     /**
-     * Show the form for creating a new reason.
-     *
-     * @param GameServer $server
-     * @return View
+     * Show the form for creating a new punishment reason.
      */
-    public function create(GameServer $server): View
+    public function create(GameServer $gameServer)
     {
-        return view('admin.servers.reasons.create', compact('server'));
+        return inertia('Dashboard/GameServers/PunishmentReasons/Create', [
+            'title' => 'Новая причина наказания',
+            'gameServer' => $gameServer->only('id'),
+        ]);
     }
 
     /**
-     * Store a newly created reason in storage.
-     *
-     * @param StoreReasonRequest $request
-     * @param GameServer $server
-     * @return RedirectResponse
+     * Store a newly created punishment reason in storage.
      */
-    public function store(StoreReasonRequest $request, GameServer $server): RedirectResponse
+    public function store(StoreRequest $request, GameServer $gameServer)
     {
-        $reason = PunishmentReason::create($request->safe()->except('months', 'days', 'hours', 'minutes'));
+        $punishmentReason = PunishmentReason::create($request->safe()
+            ->except('months', 'days', 'hours', 'minutes'));
 
-        return redirect()->route('admin.servers.show', $server->id)->with([
+        return redirect()->route('dashboard.game-servers.show', $gameServer)->with([
             'status' => 'success',
-            'message' => "Причина наказания \"$reason->title\" успешно добавлена!"
+            'message' => "Причина наказания \"$punishmentReason->name\" добавлена!"
         ]);
     }
 
@@ -55,12 +53,12 @@ class PunishmentReasonController extends Controller
     /**
      * Update the specified reason in storage.
      *
-     * @param UpdateReasonRequest $request
+     * @param UpdateRequest $request
      * @param GameServer $server
      * @param PunishmentReason $reason
      * @return RedirectResponse
      */
-    public function update(UpdateReasonRequest $request, GameServer $server, PunishmentReason $reason): RedirectResponse
+    public function update(UpdateRequest $request, GameServer $server, PunishmentReason $reason): RedirectResponse
     {
         $reason->update($request->safe()->except('months', 'days', 'hours', 'minutes'));
 

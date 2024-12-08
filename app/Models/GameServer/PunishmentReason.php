@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @method static create(array $array)
  * @method map(Closure $param)
+ * @method sortBy(Closure $param)
  */
 class PunishmentReason extends Model
 {

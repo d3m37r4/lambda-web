@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Dashboard\GameServer\Reason;
+namespace App\Http\Requests\Dashboard\GameServer\PunishmentReason;
 
 use Illuminate\Validation\Rule;
 use Request;
@@ -8,7 +8,7 @@ use Request;
 /**
  * @property mixed reason
  */
-class UpdateReasonRequest extends StoreReasonRequest
+class UpdateRequest extends StoreRequest
 {
     public function rules(): array
     {
