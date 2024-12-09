@@ -70,8 +70,7 @@ const store = () => {
                                 type="number"
                                 class="input input-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                                 v-model.number="form.months"
-                                min="0"
-                                value="0" />
+                                min="0" />
                             <InputError :message="form.errors.months" />
                         </div>
                         <div>
@@ -84,8 +83,7 @@ const store = () => {
                                 type="number"
                                 class="input input-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                                 v-model.number="form.days"
-                                min="0"
-                                value="0" />
+                                min="0" />
                             <InputError :message="form.errors.days" />
                         </div>
                         <div>
@@ -98,8 +96,7 @@ const store = () => {
                                 type="number"
                                 class="input input-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                                 v-model.number="form.hours"
-                                min="0"
-                                value="0" />
+                                min="0" />
                             <InputError :message="form.errors.hours" />
                         </div>
                         <div>
@@ -112,8 +109,7 @@ const store = () => {
                                 type="number"
                                 class="input input-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                                 v-model.number="form.minutes"
-                                min="0"
-                                value="0" />
+                                min="0" />
                             <InputError :message="form.errors.minutes" />
                         </div>
                     </div>
