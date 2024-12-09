@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static create(array $array)
  * @method map(Closure $param)
  * @method sortBy(Closure $param)
+ * @property int $id
+ * @property string $name
  */
 class PunishmentReason extends Model
 {
@@ -80,16 +82,15 @@ class PunishmentReason extends Model
 
     /**
      * Gets special formatted time.
-     * See the constant $formats in Carbon/CarbonInterval.php
+     * See the constant $formats in Carbon/CarbonInterval.php (line 203-210).
      *
-     * @param $format
+     * @param string $format
      * @return string
+     * @see CarbonInterval
      * @link https://php.net/manual/en/dateinterval.format.php
      */
-    public function getTimeSpecialFormatted($format): string
+    public function formatTime(string $format): string
     {
-        return CarbonInterval::minutes($this->time)
-            ->cascade()
-            ->format($format);
+        return CarbonInterval::minutes($this->time)->cascade()->format($format);
     }
 }

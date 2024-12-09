@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard\GameServer;
 
+use App\Models\GameServer\PunishmentReason;
+use App\Models\GameServer\GameServer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\GameServer\PunishmentReason\StoreRequest;
 use App\Http\Requests\Dashboard\GameServer\PunishmentReason\UpdateRequest;
-use App\Models\GameServer\GameServer;
-use App\Models\GameServer\PunishmentReason;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Request;
 
 class PunishmentReasonController extends Controller
 {
@@ -39,32 +37,34 @@ class PunishmentReasonController extends Controller
     }
 
     /**
-     * Show the form for editing the specified reason.
-     *
-     * @param GameServer $server
-     * @param PunishmentReason $reason
-     * @return View
+     * Show the form for editing the specified punishment reason.
      */
-    public function edit(GameServer $server, PunishmentReason $reason): View
+    public function edit(GameServer $gameServer, PunishmentReason $punishmentReason)
     {
-        return view('admin.servers.reasons.edit', compact('server', 'reason'));
+        return inertia('Dashboard/GameServers/PunishmentReasons/Edit', [
+            'title' => "Редактирование причины $punishmentReason->name",
+            'gameServer' => $gameServer->only('id'),
+            'punishmentReason' => [
+                'id' => $punishmentReason->id,
+                'name' => $punishmentReason->name,
+                'months' => $punishmentReason->formatTime('%m'),
+                'days' => $punishmentReason->formatTime('%d'),
+                'hours' => $punishmentReason->formatTime('%h'),
+                'minutes' => $punishmentReason->formatTime('%i'),
+            ]
+        ]);
     }
 
     /**
-     * Update the specified reason in storage.
-     *
-     * @param UpdateRequest $request
-     * @param GameServer $server
-     * @param PunishmentReason $reason
-     * @return RedirectResponse
+     * Update the specified punishment reason in storage.
      */
-    public function update(UpdateRequest $request, GameServer $server, PunishmentReason $reason): RedirectResponse
+    public function update(UpdateRequest $request, GameServer $gameServer, PunishmentReason $punishmentReason)
     {
-        $reason->update($request->safe()->except('months', 'days', 'hours', 'minutes'));
+        $punishmentReason->update($request->safe()->except('id', 'months', 'days', 'hours', 'minutes'));
 
         return back()->with([
             'status' => 'success',
-            'message' => "Информация о причине наказания \"$reason->title\" успешно обновлена!"
+            'message' => "Информация о причине наказания \"$punishmentReason->name\" обновлена!"
         ]);
     }
 
