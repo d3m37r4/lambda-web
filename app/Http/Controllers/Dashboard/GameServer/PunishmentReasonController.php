@@ -7,7 +7,6 @@ use App\Models\GameServer\GameServer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\GameServer\PunishmentReason\StoreRequest;
 use App\Http\Requests\Dashboard\GameServer\PunishmentReason\UpdateRequest;
-use Illuminate\Http\RedirectResponse;
 
 class PunishmentReasonController extends Controller
 {
@@ -69,26 +68,15 @@ class PunishmentReasonController extends Controller
     }
 
     /**
-     * Remove the specified reason from storage.
-     *
-     * @param GameServer $server
-     * @param PunishmentReason $reason
-     * @return RedirectResponse
+     * Remove the specified punishment reason from storage.
      */
-    public function destroy(GameServer $server, PunishmentReason $reason): RedirectResponse
+    public function destroy(GameServer $gameServer, PunishmentReason $punishmentReason)
     {
-        if (!$server) {
-            return back()->with([
-                'status' => 'danger',
-                'message' => 'Ошибка!'
-            ]);
-        }
-
-        $reason->delete();
+        $punishmentReason->delete();
 
         return back()->with([
-            'status' => 'success',
-            'message' => "Причина \"$reason->title\" удалена!"
+            'status' => 'deleted',
+            'message' => "Причина \"$punishmentReason->name\" удалена."
         ]);
     }
 }
