@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
+use Illuminate\Http\Request;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -18,7 +18,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      */
-    public function version(Request $request): string|null
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -26,13 +26,16 @@ class HandleInertiaRequests extends Middleware
     /**
      * Define the props that are shared by default.
      *
-     * @return array<string, mixed>
+     * @param Request $request
+     * @return array
      */
     public function share(Request $request): array
     {
         return [
             ...parent::share($request),
+            'locales' => config('app.available_locales'),
             'auth' => [
+                // TODO: send only the required fields
                 'user' => $request->user(),
             ],
             'toast' => [
@@ -40,6 +43,7 @@ class HandleInertiaRequests extends Middleware
                 'message' => session('message'),
             ],
             'ziggy' => [
+                // TODO: send only the required fields
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
