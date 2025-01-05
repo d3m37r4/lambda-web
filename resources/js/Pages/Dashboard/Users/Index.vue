@@ -8,7 +8,7 @@ import ConfirmDeleteUser from '@/Components/Dashboard/ConfirmDeleteUser.vue';
 import SearchForm from "@/Components/Dashboard/SearchForm.vue";
 import DeleteSelectedItemsForm from "@/Components/Dashboard/DeleteSelectedItemsForm.vue";
 import CreateButton from "@/Components/Buttons/CreateButton.vue";
-import RoleBadge from '@/components/RoleBadge.vue';
+import RoleBadge from '@/Components/RoleBadge.vue';
 
 defineOptions({
     layout: DashboardLayout
