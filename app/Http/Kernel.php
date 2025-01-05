@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\AccessTokenMiddleware;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\SetUserLocale;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             HandleInertiaRequests::class,
+            SetUserLocale::class,
         ],
 
         'api' => [
