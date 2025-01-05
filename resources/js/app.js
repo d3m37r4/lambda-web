@@ -1,6 +1,7 @@
 import { createSSRApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { i18nVue } from 'laravel-vue-i18n'
 import AppLayout from './Layouts/Main.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Lambda';
@@ -17,6 +18,12 @@ createInertiaApp({
         return createSSRApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(i18nVue, {
+                resolve: async lang => {
+                    const langs = import.meta.glob('/resources/lang/*.json');
+                    return await langs[`/resources/lang/${lang}.json`]();
+                }
+            })
             .mount(el);
     },
     progress: {
