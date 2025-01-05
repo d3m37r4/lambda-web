@@ -25,7 +25,7 @@ const submit = () => {
     <Head :title="title" />
     <div class="container w-full lg:max-w-lg space-y-4">
         <div class="flex items-center justify-between mx-4">
-            <h1 class="text-xl">{{ title }}</h1>
+            <h1 class="text-xl">{{ $t(title) }}</h1>
         </div>
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
@@ -34,7 +34,7 @@ const submit = () => {
             <div class="bg-base-200 rounded-box p-4">
                 <div>
                     <label for="email" class="label">
-                        <span class="text-base label-text">{{ ('Эл. почта') }}</span>
+                        <span class="text-base label-text">{{ $t('auth.email') }}</span>
                     </label>
                     <input
                         id="email"

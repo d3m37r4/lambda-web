@@ -38,7 +38,7 @@ const store = () => {
                 <h1 class="text-xl">{{ title }}</h1>
             </div>
             <div class="flex-none">
-                <BackButton title="Назад" :href="route('dashboard.game-servers.index')" />
+                <BackButton :link="route('dashboard.game-servers.index')" />
             </div>
         </div>
         <form @submit.prevent="store">
@@ -132,7 +132,7 @@ const store = () => {
                 </div>
             </div>
             <div class="flex justify-end m-4">
-                <CreateButton title="Добавить" :disabled="!form.isDirty" />
+                <CreateButton title="button.add" :disabled="!form.isDirty" />
             </div>
         </form>
     </div>

@@ -6,13 +6,13 @@ defineProps({
         type: String,
         default: 'btn normal-case'
     },
-    href: String,
+    link: String,
 });
 
 </script>
 
 <template>
-    <Link v-if="href" :href="href" :class="className">
+    <Link v-if="link" :href="link" :class="className">
         <slot />
     </Link>
     <button v-else :class="className">

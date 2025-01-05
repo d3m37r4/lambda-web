@@ -68,8 +68,8 @@ const store = () => {
 <template>
     <div class="ml-4 space-y-4">
         <div class="flex items-center justify-between mx-4">
-            <h1 class="text-xl">{{ title }}</h1>
-            <BackButton title="Назад" :href="route('dashboard.users.index')" />
+            <h1 class="text-xl">{{ $t(title) }}</h1>
+            <BackButton :link="route('dashboard.users.index')" />
         </div>
         <form @submit.prevent="store">
             <div class="bg-base-200 rounded-box p-4">
@@ -270,7 +270,7 @@ const store = () => {
                 <!--                Maybe this will be added                -->
             </div>
             <div class="flex justify-end m-4">
-                <CreateButton title="Создать" :disabled="!form.isDirty" />
+                <CreateButton :disabled="!form.isDirty" />
             </div>
         </form>
     </div>
