@@ -26,7 +26,7 @@ class GameServerController extends Controller
     public function index()
     {
         return inertia('Dashboard/GameServers/Index', [
-            'title' => 'Управление серверами',
+            'title' => 'dashboard.page.game-servers.title',
             'gameServers' => GameServer::paginate($this->perPage)->through(fn ($gameServer) => [
                 'id' => $gameServer->id,
                 'name' => $gameServer->name,
