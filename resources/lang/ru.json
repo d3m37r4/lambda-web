@@ -1,0 +1,54 @@
+{
+    "auth.sign_in": "Войти",
+    "auth.create_account": "Создать аккаунт",
+    "auth.exit": "Выход",
+
+    "profile": "Профиль",
+    "game-accounts": "Игровые аккаунты",
+
+    "button.create": "Создать",
+    "button.add": "Добавить",
+    "button.update": "Обновить",
+    "button.back": "Назад",
+
+    "locale.en": "Английский",
+    "locale.ru": "Русский",
+    "locale.changed": "Язык изменен на :locale",
+
+    "role.name.owner": "Владелец",
+    "role.name.admin": "Администратор",
+    "role.name.moder": "Модератор",
+    "role.name.user": "Пользователь",
+    "role.name.unknown": "Неизвестная роль",
+
+    "dashboard.page.main.title": "Панель управления",
+    "dashboard.page.settings.title": "Настройки системы",
+
+    "dashboard.page.users.title": "Управление пользователями",
+    "dashboard.page.users.table.col.user": "Пользователь",
+    "dashboard.page.users.table.col.role": "Роль",
+    "dashboard.page.users.table.col.created-at": "Зарегистрирован",
+    "dashboard.page.users.table.col.actions": "Действия",
+
+    "dashboard.page.roles.title": "Управление ролями",
+    "dashboard.page.roles.table.col.role": "Роль",
+    "dashboard.page.roles.table.col.created-at": "Время создания",
+    "dashboard.page.roles.table.col.updated-at": "Последнее обновление",
+    "dashboard.page.roles.table.col.actions": "Действия",
+
+    "dashboard.page.game-servers.title": "Управление серверами",
+    "dashboard.page.game-servers.table.col.game-server": "Сервер",
+    "dashboard.page.game-servers.table.col.online": "Онлайн",
+    "dashboard.page.game-servers.table.col.created-at": "Добавлен",
+    "dashboard.page.game-servers.table.col.updated-at": "Последнее обновление",
+    "dashboard.page.game-servers.table.col.actions": "Действия",
+
+    "dashboard.table.actions.edit": "Редактировать",
+    "dashboard.table.actions.delete": "Удалить",
+    "dashboard.table.actions.show-role-permissions": "Показать доступные разрешения",
+    "dashboard.table.actions.show-game-server": "О сервере",
+
+    "Authorization": "Авторизация",
+    "user.name": "Имя",
+    "auth.email": "Эл. почта"
+}
