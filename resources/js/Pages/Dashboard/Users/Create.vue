@@ -2,6 +2,8 @@
 import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref, watch, computed } from 'vue';
+import { getRoleName } from '@/Utils/role';
+import { getGenderName } from "@/Utils/gender";
 import BackButton from "@/Components/Buttons/BackButton.vue";
 import CreateButton from "@/Components/Buttons/CreateButton.vue";
 import InputError from "@/Components/InputError.vue";
@@ -146,7 +148,7 @@ const store = () => {
                             class="select select-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                             v-model="form.role">
                             <option disabled value="">{{ ('Назначьте роль пользователю') }}</option>
-                            <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
+                            <option v-for="role in roles" :key="role.id" :value="role.id">{{ getRoleName(role) }}</option>
                         </select>
                         <InputError :message="form.errors.role" />
                     </div>
@@ -225,7 +227,7 @@ const store = () => {
                             class="select select-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                             v-model="form.gender">
                             <option disabled value="">{{ ('Укажите пол пользователя') }}</option>
-                            <option v-for="gender in genders" :value="gender.id">{{ gender.name }}</option>
+                            <option v-for="gender in genders" :value="gender.id">{{ getGenderName(gender) }}</option>
                         </select>
                         <InputError :message="form.errors.gender" />
                     </div>

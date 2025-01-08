@@ -1,21 +1,16 @@
 <script setup>
-import { computed } from 'vue';
-import { trans } from 'laravel-vue-i18n';
+import { getRoleName } from "@/Utils/role.js";
 
 const props = defineProps({
     role: {
-        type: String,
+        type: Object,
         required: true,
     },
-});
-
-const roleName = computed(() => {
-    return trans(`role.name.${props.role.toLowerCase()}`, 'role.name.unknown');
 });
 </script>
 
 <template>
     <div class="badge badge-secondary rounded">
-        {{ roleName }}
+        {{ getRoleName(role) }}
     </div>
 </template>

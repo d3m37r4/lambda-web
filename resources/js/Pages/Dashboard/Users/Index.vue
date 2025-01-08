@@ -116,7 +116,7 @@ const confirmDeleteUser = (id) => {
                                 </div>
                             </td>
                             <td>
-                                <RoleBadge :role="user.role.name" />
+                                <RoleBadge :role="user.role" />
                             </td>
                             <td>{{ user.created_at }}</td>
                             <td>

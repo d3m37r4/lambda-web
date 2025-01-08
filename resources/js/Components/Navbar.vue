@@ -36,7 +36,7 @@ import RoleBadge from "@/Components/RoleBadge.vue";
                             <p class="truncate">
                                 {{ $page.props.auth.user.login }}
                             </p>
-                            <RoleBadge :role="$page.props.auth.user.role.name" />
+                            <RoleBadge :role="$page.props.auth.user.role" />
                         </div>
                     </div>
                     <nav class="grid space-y-1 pt-2">

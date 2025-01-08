@@ -25,6 +25,10 @@
     "role.name.user": "Пользователь",
     "role.name.unknown": "Неизвестная роль",
 
+    "gender.name.male": "Мужской",
+    "gender.name.female": "Женский",
+    "gender.name.not-specified": "Не указано",
+
     "dashboard.page.main.title": "Панель управления",
     "dashboard.page.settings.title": "Настройки системы",
 

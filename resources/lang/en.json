@@ -25,6 +25,10 @@
     "role.name.user": "User",
     "role.name.unknown": "Unknown role",
 
+    "gender.name.male": "Male",
+    "gender.name.female": "Female",
+    "gender.name.not-specified": "Not specified",
+
     "dashboard.page.main.title": "Dashboard",
     "dashboard.page.settings.title": "System settings",
 
