@@ -6,6 +6,10 @@
     "profile": "Профиль",
     "game-accounts": "Игровые аккаунты",
 
+    "pagination.items_shown": "Показано с :from по :to из :total",
+    "pagination.previous": "« Назад",
+    "pagination.next": "Вперед »",
+
     "button.create": "Создать",
     "button.add": "Добавить",
     "button.update": "Обновить",

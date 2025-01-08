@@ -6,6 +6,10 @@
     "profile": "Profile",
     "game-accounts": "Game accounts",
 
+    "pagination.items_shown": "Showing from :from to :to of :total",
+    "pagination.previous": "« Previous",
+    "pagination.next": "Next »",
+
     "button.create": "Create",
     "button.add": "Add",
     "button.update": "Update",
