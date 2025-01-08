@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Inertia\Middleware;
-use Tightenco\Ziggy\Ziggy;
 use Illuminate\Http\Request;
+use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -42,8 +42,7 @@ class HandleInertiaRequests extends Middleware
                 'status' => session('status'),
                 'message' => session('message'),
             ],
-            'ziggy' => [
-                // TODO: send only the required fields
+            'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],

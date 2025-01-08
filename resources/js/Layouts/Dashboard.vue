@@ -13,7 +13,7 @@ defineProps({
     }
 });
 
-function url() {
+const url = () => {
     return location.pathname;
 }
 </script>

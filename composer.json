@@ -1,44 +1,62 @@
 {
     "name": "lambda/lambda-web",
+    "description": "A game server administration system for GoldSource-based games.",
+    "version": "0.1.0",
     "type": "project",
-    "description": "Lambda CMS",
     "authors": [
         {
             "name": "d3m37r4",
             "role": "Developer"
         }
     ],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/d3m37r4/lambda-web/issues",
+        "source": "https://github.com/d3m37r4/lambda-web"
+    },
     "keywords": [
         "web",
         "php",
         "cms",
         "goldsrc",
+        "gold-source",
         "cs",
+        "counter-strike",
         "panel",
+        "administration-panel",
+        "server-management",
+        "game-server",
         "laravel",
+        "inertiajs",
+        "vue",
+        "tailwindcss",
+        "vite",
         "webapp",
-        "management"
+        "management",
+        "automation",
+        "api",
+        "server-administrators",
+        "gamers"
     ],
-    "license": "MIT",
     "require": {
         "php": "^8.1",
-        "barryvdh/laravel-ide-helper": "2.15.1",
-        "guzzlehttp/guzzle": "7.9.2",
-        "inertiajs/inertia-laravel": "2.0",
-        "laravel/framework": "10.48.20",
-        "laravel/sanctum": "3.3.3",
-        "laravel/tinker": "2.9.0",
-        "spatie/laravel-permission": "6.9.0",
-        "tightenco/ziggy": "1.8.2"
+        "guzzlehttp/guzzle": "^7.9",
+        "inertiajs/inertia-laravel": "^2.0",
+        "laravel/framework": "^10.48",
+        "laravel/sanctum": "^3.3",
+        "laravel/tinker": "^2.9",
+        "spatie/laravel-permission": "^6.9",
+        "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
-        "fakerphp/faker": "1.23.1",
-        "laravel/breeze": "1.29.1",
-        "laravel/sail": "1.31.3",
-        "mockery/mockery": "1.6.12",
-        "nunomaduro/collision": "7.10.0",
-        "phpunit/phpunit": "10.5.33",
-        "spatie/laravel-ignition": "2.8.0"
+        "barryvdh/laravel-ide-helper": "^2.15",
+        "fakerphp/faker": "^1.23",
+        "laravel/breeze": "^1.29",
+        "laravel/sail": "^1.31",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^7.10",
+        "phpunit/phpunit": "^10.5",
+        "spatie/laravel-ignition": "^2.8"
     },
     "config": {
         "optimize-autoloader": true,

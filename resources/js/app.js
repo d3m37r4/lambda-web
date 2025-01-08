@@ -1,8 +1,8 @@
 import { createSSRApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { ZiggyVue } from 'ziggy-js';
 import { i18nVue } from 'laravel-vue-i18n'
-import AppLayout from './Layouts/Main.vue';
+import AppLayout from './Layouts/Main.vue'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Lambda';
 
