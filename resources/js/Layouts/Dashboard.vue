@@ -7,16 +7,19 @@ import Sidebar from '@/Components/Dashboard/Sidebar.vue';
 import Footer from '@/Components/Footer.vue';
 
 defineProps({
-    title: String,
+    title: {
+        type: String,
+        default: '',
+    }
 });
 
-function url() {
+const url = () => {
     return location.pathname;
 }
 </script>
 
 <template>
-    <Head :title="title" />
+    <Head :title="$t(title)" />
     <div class="max-w-screen-xl mx-auto h-screen grid grid-rows-layout">
         <ToastList />
         <Navbar />

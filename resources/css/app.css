@@ -11,6 +11,22 @@
 @layer components {
     .navbar {
         @apply bg-base-300 justify-between rounded-box h-14 mt-4 sticky top-0 z-10;
+
+        .navbar-content--btn {
+            @apply btn-ghost hover:text-orange-500 ml-2;
+        }
+        .dropdown-content {
+            @apply bg-base-200 text-base-content p-2 drop-shadow-xl border border-white/5 shadow-2xl outline outline-1 outline-black/5 rounded-box;
+        }
+        .dropdown-content--locale {
+            @apply overflow-y-auto w-52 max-h-[calc(75vh-10rem)];
+        }
+        .dropdown-content--profile {
+            @apply divide-y divide-neutral space-y-2 min-w-52;
+        }
+        .dropdown-content--btn {
+            @apply btn-ghost btn-sm btn-block hover:text-orange-500 justify-start no-animation;
+        }
     }
     .footer {
         @apply justify-between border-t border-neutral px-2 p-4 mt-10;

@@ -97,6 +97,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Available Application Locales
+    |--------------------------------------------------------------------------
+    |
+    | This array contains the list of locale codes that are supported by your application.
+    | These locales are used for translation management and language switching.
+    | You can add or remove locale codes as needed to match your application's requirements.
+    |
+    */
+
+    'available_locales' => [ 'en', 'ru' ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Faker Locale
     |--------------------------------------------------------------------------
     |

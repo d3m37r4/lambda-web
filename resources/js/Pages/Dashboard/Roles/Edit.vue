@@ -39,10 +39,10 @@ const update = () => {
     <div class="ml-4 space-y-4">
         <div class="flex items-center space-x-4 mx-4">
             <div class="grow">
-                <h1 class="text-xl">{{ title }}</h1>
+                <h1 class="text-xl">{{ $t(title) }}</h1>
             </div>
             <div class="flex-none">
-                <BackButton title="Назад" :href="route('dashboard.roles.index')" />
+                <BackButton :link="route('dashboard.roles.index')" />
             </div>
         </div>
         <form @submit.prevent="update">
@@ -93,7 +93,7 @@ const update = () => {
                 </div>
             </div>
             <div class="flex justify-end m-4">
-                <UpdateButton title="Обновить" :disabled="!form.isDirty" />
+                <UpdateButton :disabled="!form.isDirty" />
             </div>
         </form>
     </div>

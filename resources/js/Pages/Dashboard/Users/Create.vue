@@ -2,6 +2,8 @@
 import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref, watch, computed } from 'vue';
+import { getRoleName } from '@/Utils/role';
+import { getGenderName } from "@/Utils/gender";
 import BackButton from "@/Components/Buttons/BackButton.vue";
 import CreateButton from "@/Components/Buttons/CreateButton.vue";
 import InputError from "@/Components/InputError.vue";
@@ -68,8 +70,8 @@ const store = () => {
 <template>
     <div class="ml-4 space-y-4">
         <div class="flex items-center justify-between mx-4">
-            <h1 class="text-xl">{{ title }}</h1>
-            <BackButton title="Назад" :href="route('dashboard.users.index')" />
+            <h1 class="text-xl">{{ $t(title) }}</h1>
+            <BackButton :link="route('dashboard.users.index')" />
         </div>
         <form @submit.prevent="store">
             <div class="bg-base-200 rounded-box p-4">
@@ -146,7 +148,7 @@ const store = () => {
                             class="select select-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                             v-model="form.role">
                             <option disabled value="">{{ ('Назначьте роль пользователю') }}</option>
-                            <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
+                            <option v-for="role in roles" :key="role.id" :value="role.id">{{ getRoleName(role) }}</option>
                         </select>
                         <InputError :message="form.errors.role" />
                     </div>
@@ -225,7 +227,7 @@ const store = () => {
                             class="select select-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                             v-model="form.gender">
                             <option disabled value="">{{ ('Укажите пол пользователя') }}</option>
-                            <option v-for="gender in genders" :value="gender.id">{{ gender.name }}</option>
+                            <option v-for="gender in genders" :value="gender.id">{{ getGenderName(gender) }}</option>
                         </select>
                         <InputError :message="form.errors.gender" />
                     </div>
@@ -270,7 +272,7 @@ const store = () => {
                 <!--                Maybe this will be added                -->
             </div>
             <div class="flex justify-end m-4">
-                <CreateButton title="Создать" :disabled="!form.isDirty" />
+                <CreateButton :disabled="!form.isDirty" />
             </div>
         </form>
     </div>

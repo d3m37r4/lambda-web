@@ -52,7 +52,7 @@ class UserController extends Controller
     public function index()
     {
         return inertia('Dashboard/Users/Index', [
-            'title' => 'Управление пользователями',
+            'title' => 'dashboard.page.users.title',
             'users' => User::paginate($this->perPage)->through(fn ($user) => [
                 'id' => $user->id,
                 'login' => $user->login,

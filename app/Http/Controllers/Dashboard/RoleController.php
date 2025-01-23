@@ -35,7 +35,7 @@ class RoleController extends Controller
     public function index()
     {
         return inertia('Dashboard/Roles/Index', [
-            'title' => 'Управление ролями',
+            'title' => 'dashboard.page.roles.title',
             'roles' => Role::paginate($this->perPage)->through(fn ($role) => [
                 'id' => $role->id,
                 'name' => $role->name,

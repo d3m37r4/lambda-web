@@ -2,19 +2,19 @@
 import Button from "@/Components/Buttons/Button.vue";
 
 defineProps({
-    href: String,
+    link: String,
     title: {
         type: String,
-        default: 'Update'
+        default: 'button.update'
     },
 });
 </script>
 
 <template>
-    <Button :href="href" class="btn-primary">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M21.91,4.09a1,1,0,0,0-1.07.16L19.48,5.46A9.81,9.81,0,0,0,12,2a10,10,0,1,0,9.42,13.33,1,1,0,0,0-1.89-.66A8,8,0,1,1,12,4a7.86,7.86,0,0,1,6,2.78L16.34,8.25a1,1,0,0,0-.27,1.11A1,1,0,0,0,17,10h4.5a1,1,0,0,0,1-1V5A1,1,0,0,0,21.91,4.09Z"/>
+    <Button :link="link" class="btn-primary">
+        <svg class="fill-current h-5 w-5" viewBox="-1.5 -2.5 24 24">
+            <path d="m17.83 4.194.42-1.377a1 1 0 1 1 1.913.585l-1.17 3.825a1 1 0 0 1-1.248.664l-3.825-1.17a1 1 0 1 1 .585-1.912l1.672.511A7.381 7.381 0 0 0 3.185 6.584l-.26.633a1 1 0 1 1-1.85-.758l.26-.633A9.381 9.381 0 0 1 17.83 4.194zM2.308 14.807l-.327 1.311a1 1 0 1 1-1.94-.484l.967-3.88a1 1 0 0 1 1.265-.716l3.828.954a1 1 0 0 1-.484 1.941l-1.786-.445a7.384 7.384 0 0 0 13.216-1.792 1 1 0 1 1 1.906.608 9.381 9.381 0 0 1-5.38 5.831 9.386 9.386 0 0 1-11.265-3.328z"/>
         </svg>
-        {{ title }}
+        {{ $t(title) }}
     </Button>
 </template>
