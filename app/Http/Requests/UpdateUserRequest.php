@@ -35,7 +35,7 @@ class UpdateUserRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->user)],
             'password' => ['exclude_if:password_confirmation,null', Password::defaults(), 'confirmed', 'same:password_confirmation'],
             'full_name' => ['nullable', 'string', 'max:255'],
-            'gender' => [Rule::in(User::GENDERS)],
+            'gender' => [Rule::in(array_column(User::GENDERS, 'id'))],
             'birth_date' => ['nullable', 'date'],
             'country_id' => ['nullable', Rule::in(Country::all()->pluck('id'))],
             'biography' => ['nullable', 'string']

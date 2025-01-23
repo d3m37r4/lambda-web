@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\Dashboard\HomeController;
-use App\Http\Controllers\Dashboard\UserManagementController;
-use App\Http\Controllers\Dashboard\RoleManagementController;
-use App\Http\Controllers\Dashboard\GameServer\GameServerManagementController;
-use App\Http\Controllers\Dashboard\GameServer\PlayerManagementController;
-use App\Http\Controllers\Dashboard\GameServer\AccessManagementController;
-use App\Http\Controllers\Dashboard\GameServer\AccessGroupManagementController;
-use App\Http\Controllers\Dashboard\GameServer\ReasonManagementController;
+use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\RoleController;
+use App\Http\Controllers\Dashboard\GameServer\GameServerController;
+use App\Http\Controllers\Dashboard\GameServer\PlayerController;
+use App\Http\Controllers\Dashboard\GameServer\AccessController;
+use App\Http\Controllers\Dashboard\GameServer\AccessGroupController;
+use App\Http\Controllers\Dashboard\GameServer\PunishmentReasonController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -19,32 +19,32 @@ Route::group([
     Route::middleware([
         'middleware' => 'can:manage_users'
     ])->group(function () {
-        Route::delete('users/delete-selected', [UserManagementController::class, 'deleteSelected'])
+        Route::delete('users/delete-selected', [UserController::class, 'deleteSelected'])
             ->name('users.delete-selected');
-        Route::resource('users', UserManagementController::class)
+        Route::resource('users', UserController::class)
             ->except(['show']);
     });
     Route::middleware([
         'middleware' => 'can:manage_roles'
     ])->group(function () {
-        Route::delete('roles/delete-selected', [RoleManagementController::class, 'deleteSelected'])
+        Route::delete('roles/delete-selected', [RoleController::class, 'deleteSelected'])
             ->name('roles.delete-selected');
-        Route::resource('roles', RoleManagementController::class)
+        Route::resource('roles', RoleController::class)
             ->except(['show']);
     });
     Route::middleware([
         'middleware' => 'can:manage_servers'
     ])->group(function () {
-        Route::delete('game-servers/delete-selected', [GameServerManagementController::class, 'deleteSelected'])
+        Route::delete('game-servers/delete-selected', [GameServerController::class, 'deleteSelected'])
             ->name('game-servers.delete-selected');
-        Route::resource('game-servers', GameServerManagementController::class);
-        Route::resource('game-servers.players', PlayerManagementController::class)
+        Route::resource('game-servers', GameServerController::class);
+        Route::resource('game-servers.players', PlayerController::class)
             ->only(['edit', 'update', 'destroy']);
-        Route::resource('game-servers.accesses', AccessManagementController::class)
+        Route::resource('game-servers.accesses', AccessController::class)
             ->except(['index', 'show']);
-        Route::resource('game-servers.access-groups', AccessGroupManagementController::class)
+        Route::resource('game-servers.access-groups', AccessGroupController::class)
             ->except(['index', 'show']);
-        Route::resource('game-servers.reasons', ReasonManagementController::class)
+        Route::resource('game-servers.punishment-reasons', PunishmentReasonController::class)
             ->except(['index', 'show']);
     });
 });

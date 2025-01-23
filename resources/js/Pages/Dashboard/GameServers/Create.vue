@@ -3,8 +3,8 @@ import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { useForm } from '@inertiajs/vue3';
 import { useAuthToken } from '@/Composables/useAuthToken.js';
 import InputError from "@/Components/InputError.vue";
-import BackButton from "@/Components/BackButton.vue";
-import CreateButton from "@/Components/CreateButton.vue";
+import BackButton from "@/Components/Buttons/BackButton.vue";
+import CreateButton from "@/Components/Buttons/CreateButton.vue";
 import CopyToClipboard from "@/Components/CopyToClipboard.vue";
 
 defineOptions({
@@ -38,7 +38,7 @@ const store = () => {
                 <h1 class="text-xl">{{ title }}</h1>
             </div>
             <div class="flex-none">
-                <BackButton :routeBack="route('dashboard.game-servers.index')" />
+                <BackButton :link="route('dashboard.game-servers.index')" />
             </div>
         </div>
         <form @submit.prevent="store">
@@ -132,7 +132,7 @@ const store = () => {
                 </div>
             </div>
             <div class="flex justify-end m-4">
-                <CreateButton :disabled="!form.isDirty" />
+                <CreateButton title="button.add" :disabled="!form.isDirty" />
             </div>
         </form>
     </div>

@@ -1,0 +1,71 @@
+{
+    "auth.sign_in": "Sign in",
+    "auth.create_account": "Create account",
+    "auth.exit": "Exit",
+
+    "profile": "Profile",
+    "game-accounts": "Game accounts",
+
+    "pagination.items_shown": "Showing from :from to :to of :total",
+    "pagination.previous": "« Previous",
+    "pagination.next": "Next »",
+
+    "button.create": "Create",
+    "button.add": "Add",
+    "button.update": "Update",
+    "button.back": "Back",
+
+    "locale.en": "English",
+    "locale.ru": "Russian",
+    "locale.changed": "Language changed to :locale",
+
+    "role.name.owner": "Owner",
+    "role.name.admin": "Administrator",
+    "role.name.moder": "Moderator",
+    "role.name.user": "User",
+    "role.name.unknown": "Unknown role",
+
+    "gender.name.male": "Male",
+    "gender.name.female": "Female",
+    "gender.name.not-specified": "Not specified",
+
+    "dashboard.page.main.title": "Dashboard",
+    "dashboard.page.settings.title": "System settings",
+
+    "dashboard.page.users.title": "User management",
+    "dashboard.page.users.table.col.user": "User",
+    "dashboard.page.users.table.col.role": "Role",
+    "dashboard.page.users.table.col.created-at": "Registered on",
+    "dashboard.page.users.table.col.actions": "Actions",
+
+    "dashboard.page.users.create.title": "New user",
+    "dashboard.page.users.create.success": "User has been created",
+
+    "dashboard.page.users.edit.title": "Editing user :user",
+    "dashboard.page.users.edit.msg": "Information has been updated",
+
+    "dashboard.page.users.delete.msg": "User has been deleted",
+    "dashboard.page.users.deleted-selected": "Selected users have been deleted",
+
+    "dashboard.page.roles.title": "Role management",
+    "dashboard.page.roles.table.col.role": "Role",
+    "dashboard.page.roles.table.col.created-at": "Creation time",
+    "dashboard.page.roles.table.col.updated-at": "Last update",
+    "dashboard.page.roles.table.col.actions": "Actions",
+
+    "dashboard.page.game-servers.title": "Server management",
+    "dashboard.page.game-servers.table.col.game-server": "Game server",
+    "dashboard.page.game-servers.table.col.online": "Online",
+    "dashboard.page.game-servers.table.col.created-at": "Added",
+    "dashboard.page.game-servers.table.col.updated-at": "Last update",
+    "dashboard.page.game-servers.table.col.actions": "Actions",
+
+    "dashboard.table.actions.edit": "Edit",
+    "dashboard.table.actions.delete": "Delete",
+    "dashboard.table.actions.show-role-permissions": "Show available permissions",
+    "dashboard.table.actions.show-game-server": "About the game server",
+
+    "Authorization": "Authorization",
+    "user.name": "Name",
+    "auth.email": "E-mail"
+}

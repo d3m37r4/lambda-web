@@ -23,6 +23,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string email
  * @property string login
  * @property string password
+ * @property string locale
 // * @property string full_name
 // * @property Carbon birth_date
 // * @property CarbonInterval age
@@ -48,9 +49,9 @@ class User extends Authenticatable
      */
     const PASSWORD_UNCOMPROMISED_COUNT = 0;
 
-    public const GENDER_NONE = 1;
-    public const GENDER_MALE = 2;
-    public const GENDER_FEMALE = 3;
+    public const GENDER_NONE = 0;
+    public const GENDER_MALE = 1;
+    public const GENDER_FEMALE = 2;
 
     /**
      * @var array
@@ -86,6 +87,7 @@ class User extends Authenticatable
     protected $fillable = [
         'login',
         'email',
+        'locale',
         'password',
         'role',
         'gender',

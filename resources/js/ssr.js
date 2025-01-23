@@ -1,7 +1,8 @@
 import { createSSRApp, h } from 'vue';
 import { renderToString } from '@vue/server-renderer';
 import { createInertiaApp } from '@inertiajs/vue3';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { ZiggyVue } from 'ziggy-js';
+import { i18nVue } from 'laravel-vue-i18n'
 import createServer from '@inertiajs/vue3/server';
 import AppLayout from './Layouts/Main.vue';
 
@@ -24,6 +25,12 @@ createServer((page) =>
                 .use(ZiggyVue, {
                     ...page.props.ziggy,
                     location: new URL(page.props.ziggy.location),
+                })
+                .use(i18nVue, {
+                    resolve: lang => {
+                        const langs = import.meta.glob('/resources/lang/*.json', { eager: true });
+                        return langs[`/resources/lang/${lang}.json`].default;
+                    },
                 });
         },
         progress: {

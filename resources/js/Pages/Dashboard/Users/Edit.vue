@@ -2,8 +2,10 @@
 import DashboardLayout from '@/Layouts/Dashboard.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref, watch, computed } from 'vue';
-import BackButton from "@/Components/BackButton.vue";
-import UpdateButton from "@/Components/UpdateButton.vue";
+import { getRoleName } from '@/Utils/role';
+import { getGenderName } from "@/Utils/gender";
+import BackButton from "@/Components/Buttons/BackButton.vue";
+import UpdateButton from "@/Components/Buttons/UpdateButton.vue";
 import InputError from "@/Components/InputError.vue";
 
 defineOptions({
@@ -77,10 +79,10 @@ function update() {
     <div class="ml-4 space-y-4">
         <div class="flex items-center space-x-4 mx-4">
             <div class="grow">
-                <h1 class="text-xl">{{ title }}</h1>
+                <h1 class="text-xl">{{ $t(title) }}</h1>
             </div>
             <div class="flex-none">
-                <BackButton :routeBack="route('dashboard.users.index')" />
+                <BackButton :link="route('dashboard.users.index')" />
             </div>
         </div>
         <form @submit.prevent="update">
@@ -139,7 +141,7 @@ function update() {
                             v-model="form.role"
                             required>
                             <option disabled>{{ ('Назначьте роль пользователю...') }}</option>
-                            <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
+                            <option v-for="role in roles" :key="role.id" :value="role.id">{{ getRoleName(role) }}</option>
                         </select>
                         <InputError :message="form.errors.role"/>
                     </div>
@@ -218,7 +220,7 @@ function update() {
                             class="select select-bordered w-full focus:ring-1 focus:ring-offset-2 focus:ring-offset-base-200 focus:ring-orange-500"
                             v-model="form.gender">
                             <option disabled value="">{{ ('Укажите пол пользователя') }}</option>
-                            <option v-for="gender in genders" :value="gender.id">{{ gender.name }}</option>
+                            <option v-for="gender in genders" :value="gender.id">{{ getGenderName(gender) }}</option>
                         </select>
                         <InputError :message="form.errors.gender" />
                     </div>

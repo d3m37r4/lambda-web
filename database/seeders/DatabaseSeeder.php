@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(MapSeeder::class);
         $this->call(GameServerSeeder::class);
-        $this->call(ReasonSeeder::class);
+        $this->call(PunishmentReasonSeeder::class);
         $this->call(AccessSeeder::class);
         $this->call(AccessGroupSeeder::class);
         $this->call(CountrySeeder::class);
