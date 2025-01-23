@@ -38,6 +38,15 @@
     "dashboard.page.users.table.col.created-at": "Зарегистрирован",
     "dashboard.page.users.table.col.actions": "Действия",
 
+    "dashboard.page.users.create.title": "Новый пользователь",
+    "dashboard.page.users.create.msg": "Пользователь создан",
+
+    "dashboard.page.users.edit.title": "Редактирование пользователя :user",
+    "dashboard.page.users.edit.msg": "Информация обновлена",
+
+    "dashboard.page.users.delete.msg": "Пользователь удален",
+    "dashboard.page.users.deleted-selected": "Выбранные пользователи удалены",
+
     "dashboard.page.roles.title": "Управление ролями",
     "dashboard.page.roles.table.col.role": "Роль",
     "dashboard.page.roles.table.col.created-at": "Время создания",

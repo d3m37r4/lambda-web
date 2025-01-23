@@ -112,7 +112,7 @@ const showPermissions = (role) => {
                                 {{ role.id }}
                             </td>
                             <td>
-                                <RoleBadge :role="role.name" />
+                                <RoleBadge :role="role" />
                             </td>
                             <td>{{ role.created_at }}</td>
                             <td>{{ role.updated_at }}</td>

@@ -38,6 +38,15 @@
     "dashboard.page.users.table.col.created-at": "Registered on",
     "dashboard.page.users.table.col.actions": "Actions",
 
+    "dashboard.page.users.create.title": "New user",
+    "dashboard.page.users.create.success": "User has been created",
+
+    "dashboard.page.users.edit.title": "Editing user :user",
+    "dashboard.page.users.edit.msg": "Information has been updated",
+
+    "dashboard.page.users.delete.msg": "User has been deleted",
+    "dashboard.page.users.deleted-selected": "Selected users have been deleted",
+
     "dashboard.page.roles.title": "Role management",
     "dashboard.page.roles.table.col.role": "Role",
     "dashboard.page.roles.table.col.created-at": "Creation time",

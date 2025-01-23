@@ -69,7 +69,7 @@ class UserController extends Controller
     public function create()
     {
         return inertia('Dashboard/Users/Create', [
-            'title' => 'Новый пользователь',
+            'title' => 'dashboard.page.users.create.title',
             'roles' => Role::with(['permissions' => function ($query) {
                 $query->select('permissions.id', 'permissions.name');
             }])->get(['id', 'name']),
@@ -95,7 +95,7 @@ class UserController extends Controller
             'page' => User::paginate($this->perPage)->lastPage()
         ])->with([
             'status' => 'success',
-            'message' => "Пользователь \"$user->login\" создан!"
+            'message' => __('dashboard.page.users.create.msg')
         ]);
     }
 
@@ -105,7 +105,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return inertia('Dashboard/Users/Edit', [
-            'title' => "Редактирование пользователя $user->login",
+            'title' => __('dashboard.page.users.edit.title', ['user' => $user->login]),
             'user' => $user->only([
                 'id',
                 'login',
@@ -140,7 +140,7 @@ class UserController extends Controller
 
         return back()->with([
             'status' => 'success',
-            'message' => "Данные о \"$user->login\" обновлены."
+            'message' => __('dashboard.page.users.edit.msg')
         ]);
     }
 
@@ -158,7 +158,7 @@ class UserController extends Controller
             'page' => $redirectToPage
         ])->with([
             'status' => 'deleted',
-            'message' => "Пользователь \"$user->login\" удален."
+            'message' => __('dashboard.page.users.delete.msg')
         ]);
     }
 
@@ -176,7 +176,7 @@ class UserController extends Controller
             'page' => $redirectToPage
         ])->with([
             'status' => 'deleted',
-            'message' => 'Выбранные пользователи удалены.'
+            'message' => __('dashboard.page.users.deleted-selected')
         ]);
     }
 }
